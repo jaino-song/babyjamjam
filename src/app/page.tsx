@@ -44,7 +44,7 @@ export default function HomePage() {
             <div className="icon-lockup">
               <img src="/images/icon-cable.svg" alt="전담마크" className="icon-lockup__icon" />
               <div className="icon-lockup__content">
-                <span className="h5 icon-lockup__title" style={{ fontSize: '30px' }}>전담마크</span>
+                <span className="h5 icon-lockup__title">전담마크</span>
                 <p className="medium-p">바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.</p>
               </div>
             </div>
