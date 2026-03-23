@@ -26,7 +26,7 @@
 
 /* ===== RESET ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 16px; scroll-behavior: smooth; }
+html { font-size: 16px; scroll-behavior: smooth; word-break: keep-all; }
 body {
   font-family: var(--bjj-font-body);
   background: var(--bjj-color-bg);
@@ -75,7 +75,7 @@ img { max-width: 100%; display: block; }
 .service-detail__headline { white-space: pre-line; }
 .service-detail__description { max-width: 640px; }
 .service-detail__icons { display: flex; flex-wrap: nowrap; width: 100%; gap: 12px; padding-top: 24px; }
-.icon-lockup { flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 24px 12px 24px 0; border-top: 1px solid var(--bjj-color-divider); }
+.icon-lockup { flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 24px 12px 24px 0; border-top: 2px solid var(--bjj-color-divider); }
 .icon-lockup__icon { width: 16px; height: 16px; }
 .icon-lockup__content { display: flex; flex-direction: column; align-items: flex-start; width: 100%; gap: 12px; }
 .icon-lockup__title { color: var(--bjj-color-text-headline); }
@@ -110,8 +110,27 @@ img { max-width: 100%; display: block; }
 .logo-section__row img { height: 48px; width: auto; object-fit: contain; }
 .logo-section--edu { padding-top: 40px; padding-bottom: 0; }
 
+/* ===== CAROUSEL ===== */
+.carousel { position: relative; width: 100%; padding: 64px 0; }
+.carousel__btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--bjj-color-bg); border: 1px solid var(--bjj-color-divider); box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-size: 24px; line-height: 1; color: var(--bjj-color-primary); cursor: pointer; transition: background 0.2s, color 0.2s; padding: 0 0 2px; }
+.carousel__btn:hover { background: var(--bjj-color-primary); color: var(--bjj-color-bg); }
+.carousel__btn--prev { left: -60px; }
+.carousel__btn--next { right: -60px; }
+.carousel__track { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__slide { width: calc(50% - 12px); min-width: calc(50% - 12px); scroll-snap-align: start; flex-shrink: 0; }
+.carousel__card { display: flex; flex-direction: column; height: 100%; padding: 48px; border-radius: 16px; border: 2px solid var(--bjj-color-divider); background: var(--bjj-color-bg); }
+.carousel__card-header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+.carousel__card-footer { margin-top: auto; padding-top: 32px; border-top: 1px solid var(--bjj-color-divider); }
+.carousel__logo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.carousel__logo-cell { display: flex; align-items: center; justify-content: center; height: 80px; background: #F5F7FA; border-radius: 12px; }
+.carousel__logo-cell img { max-height: 40px; width: auto; object-fit: contain; }
+.carousel__dots { display: flex; justify-content: center; gap: 12px; margin-top: 32px; }
+.carousel__dot { width: 12px; height: 12px; border-radius: 50%; border: none; background: var(--bjj-color-divider); cursor: pointer; padding: 0; transition: background 0.2s; }
+.carousel__dot--active { background: var(--bjj-color-primary); }
+
 /* ===== PROCESS ===== */
-.process { display: flex; flex-direction: column; align-items: center; gap: 52px; padding: 64px var(--bjj-page-padding); background: var(--bjj-color-primary); width: 100vw; max-width: var(--bjj-page-max-width); border-top: 1px solid var(--bjj-color-divider); }
+.process { display: flex; flex-direction: column; align-items: center; gap: 52px; padding: 64px calc((100vw - var(--bjj-page-max-width)) / 2 + var(--bjj-page-padding)); background: var(--bjj-color-primary); width: 100vw; margin-left: calc(-50vw + 50%); align-self: flex-start; }
 .process__header { display: flex; justify-content: space-between; width: 100%; gap: 52px; }
 .process__title { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 40px; line-height: 1.2; color: var(--bjj-color-primary-light); }
 .process__steps { display: flex; width: 100%; gap: 12px; }

@@ -1,3 +1,5 @@
+import LogoCarousel from '@/components/LogoCarousel';
+
 export default function HomePage() {
   return (
     <div className="page">
@@ -106,41 +108,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Govt Logo */}
-        <section className="logo-section">
-          <div className="logo-section__title">
-            <h2 className="h2" style={{ textAlign: 'left' }}>
-              <span style={{ color: '#848484' }}>국가인증업체라서</span>{' '}
-              <span style={{ color: 'var(--bjj-color-primary)' }}>믿을 수 있으니까.</span>
-            </h2>
-          </div>
-          <p className="big-p logo-section__description" style={{ color: 'var(--bjj-color-text-dark)' }}>
-            아가잼잼은 대한민국 정부가 인증한 산모신생아건강관리사업 제공업체 입니다.
-          </p>
-          <div className="logo-section__row">
-            <img src="/images/logo-bokjiro.png" alt="복지로" />
-            <img src="/images/logo-ssis.png" alt="SSIS" />
-            <img src="/images/logo-mohw.png" alt="보건복지부" />
-            <img src="/images/logo-cert.png" alt="인증마크" />
-          </div>
-        </section>
-
-        {/* Edu Logo */}
-        <section className="logo-section logo-section--edu">
-          <div className="logo-section__title">
-            <h2 className="h2" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
-              자격증만 딴다고 다 <strong style={{ color: 'var(--bjj-color-primary)' }}>전문가</strong>는 아니죠.
-            </h2>
-          </div>
-          <p className="big-p logo-section__description" style={{ color: 'var(--bjj-color-text-dark)' }}>
-            아가잼잼은 관리사들이 최고의 서비스를 제공할 수 있도록 지속적으로 교육하고 있어요. 자체 컨퍼런스를 통한 케이스 스터디와, 필수 교육에 더해서 공인 기관을 통해 신생아 케어에 최적화된 교육 또한 진행하고 있어요. 자격증만 있다고 산모님께 보내는 주먹구구식 운영은 지양해요.
-          </p>
-          <div className="logo-section__row">
-            <img src="/images/edu-logo-1.png" alt="교육기관 1" />
-            <img src="/images/edu-logo-2.png" alt="교육기관 2" />
-            <img src="/images/edu-logo-3.png" alt="교육기관 3" />
-          </div>
-        </section>
+        {/* Logo Carousel */}
+        <LogoCarousel />
 
         {/* Process */}
         <section className="process">
