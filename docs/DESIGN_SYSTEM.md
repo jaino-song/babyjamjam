@@ -4,6 +4,8 @@ Figma Source: `jGowMtudTsckCqCGKKetT5`
 Mockup Reference: `mockup/index.html` (원본 1920px)
 Production: `babyjamjam/` (×0.64 축소, 1232px)
 
+Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should be translated into the current React implementation.
+
 > 모든 값은 Figma 원본 ×0.64 → 4px 배수 내림 적용.
 
 ---
