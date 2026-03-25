@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NavBar } from "./nav-bar";
 
 const NAV_ITEMS = [
   { label: "산후도우미", href: "/postpartum-care" },
@@ -100,18 +101,7 @@ export function SiteNavigation({ activeLabel }: SiteNavigationProps) {
         <Link href="/">
           <img src="/images/logo.png" alt="아가잼잼 로고" className="navigation__logo" />
         </Link>
-        <nav className="nav-bar">
-          {NAV_ITEMS.map((item) => (
-            <SmartLink
-              key={item.label}
-              href={item.href}
-              className={`nav-bar__item${activeLabel === item.label ? " nav-bar__item--active" : ""}`}
-              aria-current={activeLabel === item.label ? "page" : undefined}
-            >
-              {item.label}
-            </SmartLink>
-          ))}
-        </nav>
+        <NavBar items={NAV_ITEMS} activeLabel={activeLabel} />
         <SmartLink href="#" className="short-button">
           예약하기
         </SmartLink>

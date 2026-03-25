@@ -5,9 +5,7 @@ import { useState } from "react";
 export type CareCardData = {
   title: string;
   description: string;
-  label: string;
-  focus: string;
-  highlights: string[];
+  image: string;
 };
 
 export type CareSectionData = {
@@ -45,25 +43,8 @@ function CareCardItem({
   return (
     <article className={`care-card care-card--${tone}`}>
       <div className="care-card__preview">
-        <span className="care-card__label">{card.label}</span>
         <div className="care-card__panel">
-          <div className="care-card__metrics">
-            <div className="care-card__metric">
-              <span className="care-card__metric-label">집중 포인트</span>
-              <span className="care-card__metric-value">{card.focus}</span>
-            </div>
-            <div className="care-card__metric">
-              <span className="care-card__metric-label">운영 방식</span>
-              <span className="care-card__metric-value">맞춤 케어</span>
-            </div>
-          </div>
-          <ul className="care-card__highlights">
-            {card.highlights.map((highlight) => (
-              <li key={highlight} className="care-card__highlight">
-                {highlight}
-              </li>
-            ))}
-          </ul>
+          <img src={card.image} alt={card.title} className="care-card__image" />
         </div>
       </div>
       <div className="care-card__body">
@@ -77,18 +58,20 @@ function CareCardItem({
 export function CareSectionCarousel({ sections }: { sections: CareSectionData[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const goToPrevious = () => {
-    setActiveIndex((current) => (current - 1 + sections.length) % sections.length);
-  };
-
-  const goToNext = () => {
-    setActiveIndex((current) => (current + 1) % sections.length);
-  };
-
   return (
     <section className="service-catalog">
       <div className="care-carousel__toolbar">
-        <div className="care-carousel__tabs" role="tablist" aria-label="케어 섹션">
+        <div
+          className="care-carousel__tabs"
+          role="tablist"
+          aria-label="케어 섹션"
+          style={
+            {
+              "--care-tab-index": activeIndex,
+              "--care-tab-count": sections.length,
+            } as React.CSSProperties
+          }
+        >
           {sections.map((section, index) => (
             <button
               key={section.id}
@@ -101,24 +84,6 @@ export function CareSectionCarousel({ sections }: { sections: CareSectionData[] 
               {section.tabLabel}
             </button>
           ))}
-        </div>
-        <div className="care-carousel__actions">
-          <button
-            type="button"
-            className="care-carousel__nav"
-            onClick={goToPrevious}
-            aria-label="이전 케어 섹션"
-          >
-            이전
-          </button>
-          <button
-            type="button"
-            className="care-carousel__nav"
-            onClick={goToNext}
-            aria-label="다음 케어 섹션"
-          >
-            다음
-          </button>
         </div>
       </div>
 
