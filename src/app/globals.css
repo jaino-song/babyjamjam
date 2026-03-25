@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/* ===== Coming Soon ===== */
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--bjj-color-bg);
+  padding: 32px;
+  gap: 48px;
+}
+
+.coming-soon__logo {
+  width: min(360px, 60vw);
+  height: auto;
+}
+
+.coming-soon__text {
+  color: var(--bjj-color-primary);
+}
+
 /* ===== CSS Tokens ===== */
 :root {
   --bjj-color-primary: #004AAD;
