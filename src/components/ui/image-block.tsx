@@ -5,6 +5,7 @@ const IMAGE_BLOCK_VARIANT_CLASSES = {
   banner: "w-full h-254 rounded-card object-cover",
   phone: "w-[453px] h-[925px] object-contain",
   partner: "h-[72px] w-auto object-contain",
+  careCard: "h-full w-full object-cover",
 } as const;
 
 type ImageBlockVariant = keyof typeof IMAGE_BLOCK_VARIANT_CLASSES;

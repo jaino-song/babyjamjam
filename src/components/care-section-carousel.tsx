@@ -2,10 +2,16 @@
 
 import { useState } from "react";
 
+import { ImageBlock } from "@/components/ui/image-block";
+
 export type CareCardData = {
   title: string;
   description: string;
-  image: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  label?: string;
+  focus?: string;
+  highlights?: string[];
 };
 
 export type CareSectionData = {
@@ -16,6 +22,11 @@ export type CareSectionData = {
   primaryText: string;
   cards: CareCardData[];
 };
+
+const DEFAULT_CARE_CARD_IMAGE_BY_TONE = {
+  maternal: "/images/hero-image-1a35f6.png",
+  newborn: "/images/hero-bg-22ebe1.png",
+} as const;
 
 function CareSectionHeading({
   mutedText,
@@ -40,12 +51,18 @@ function CareCardItem({
   card: CareCardData;
   tone: "maternal" | "newborn";
 }) {
+  const imageSrc = card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[tone];
+  const imageAlt = card.imageAlt ?? `${card.title} 서비스 이미지`;
+
   return (
     <article className={`care-card care-card--${tone}`}>
       <div className="care-card__preview">
-        <div className="care-card__panel">
-          <img src={card.image} alt={card.title} className="care-card__image" />
-        </div>
+        <ImageBlock
+          variant="careCard"
+          src={imageSrc}
+          alt={imageAlt}
+          className="care-card__image"
+        />
       </div>
       <div className="care-card__body">
         <h3 className="care-card__title">{card.title}</h3>

@@ -15,11 +15,16 @@ export function NavBar({
   const navRef = useRef<HTMLElement>(null);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const initialIndex = items.findIndex((i) => i.label === activeLabel);
-  const [activeIndex, setActiveIndex] = useState(initialIndex === -1 ? 0 : initialIndex);
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [indicator, setIndicator] = useState({ x: 0, width: 0 });
   const [ready, setReady] = useState(false);
 
   const updateIndicator = useCallback(() => {
+    if (activeIndex < 0) {
+      setReady(false);
+      return;
+    }
+
     const el = itemRefs.current[activeIndex];
     if (!el) return;
     setIndicator({ x: el.offsetLeft, width: el.offsetWidth });

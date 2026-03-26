@@ -102,6 +102,8 @@ export default function HomePage() {
           <span className="h2 hero-image__text">검증 됐으니까. 믿을 수 있으니까.</span>
         </section>
 
+        <LogoCarousel />
+
         <section className="app-detail">
           <div className="app-detail__content">
             <div className="app-detail__title-block">
@@ -135,7 +137,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <LogoCarousel />
         <SiteProcessSection />
         <SiteMoreSection />
       </main>
