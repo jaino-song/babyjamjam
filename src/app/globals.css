@@ -474,7 +474,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-paragraph);
 }
 .addon-services__list {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px; width: 100%;
 }
 
