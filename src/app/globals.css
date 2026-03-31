@@ -371,7 +371,7 @@ img { max-width: 100%; display: block; }
   transition: filter 0.5s ease;
 }
 .pricing-section--hidden {
-  display: none;
+  display: none !important;
 }
 
 /* ===== PLAN CARDS ===== */
