@@ -55,6 +55,10 @@ export function AddonServicesSection({
         </h2>
       </div>
 
+      <p className="addon-services__note">
+        *모든 요금은 1인 1일 기준입니다.
+      </p>
+
       <div className="addon-services__groups">
         {groups.map((group, gi) => (
           <div key={gi} className="addon-services__group">
