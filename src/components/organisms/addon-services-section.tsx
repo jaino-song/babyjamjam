@@ -14,6 +14,8 @@ interface AddonServicesSectionProps {
   onRemove: (id: string) => void;
   onQuantityChange: (id: string, qty: number) => void;
   blurred?: boolean;
+  /** Selected plan duration — used as default quantity for care group */
+  planDuration?: number;
 }
 
 export function AddonServicesSection({
@@ -23,6 +25,7 @@ export function AddonServicesSection({
   onRemove,
   onQuantityChange,
   blurred = false,
+  planDuration,
 }: AddonServicesSectionProps) {
   // Group addons by their group key, preserving order
   const groups: AddonData[][] = [];
@@ -76,7 +79,7 @@ export function AddonServicesSection({
                 <AddonServiceCard
                   key={addon.id}
                   addon={addon}
-                  quantity={added ? qty : 1}
+                  quantity={added ? qty : (addon.group === "care" && planDuration ? planDuration : 1)}
                   added={added}
                   onAdd={() => onAdd(addon.id)}
                   onRemove={() => onRemove(addon.id)}

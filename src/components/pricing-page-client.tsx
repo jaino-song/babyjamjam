@@ -220,6 +220,7 @@ export function PricingPageClient() {
             dispatch({ type: "SET_ADDON_QTY", addonId: id, qty })
           }
           blurred={!state.pricesRevealed}
+          planDuration={state.plans.find((p) => p.id === state.selectedPlanId)?.duration}
         />
       </div>
 
