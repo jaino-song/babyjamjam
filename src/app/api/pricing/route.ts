@@ -152,6 +152,7 @@ export async function POST(request: Request) {
         return {
           id: `plan-${entry.id}`,
           name: `${duration}일`,
+          duration,
           description: getPlanDescription(i),
           price: `${Number(entry.actualPrice).toLocaleString()}원`,
           badge: "환급 가능",
@@ -168,6 +169,7 @@ export async function POST(request: Request) {
       {
         id: "unsub-5",
         name: "5일",
+        duration: 5,
         description: "소중한 아기와 함께하는 새로운 시작이 힘들지 않도록 필요한 만큼만.",
         price: "조회 후 안내",
         features: ["프리미엄 출퇴근 산후도우미 서비스", "산모 식사 서비스 제공", "신생아 케어 서비스 제공"],
@@ -175,6 +177,7 @@ export async function POST(request: Request) {
       {
         id: "unsub-10",
         name: "10일",
+        duration: 10,
         description: "임신 기간 동안 지친 몸과 마음을 돌보고 회복할 수 있도록.",
         price: "조회 후 안내",
         features: ["프리미엄 출퇴근 산후도우미 서비스", "산모 식사 서비스 제공", "신생아 케어 서비스 제공"],
@@ -182,6 +185,7 @@ export async function POST(request: Request) {
       {
         id: "unsub-15",
         name: "15일",
+        duration: 15,
         description: "전문가에게 육아 노하우를 배우고, 지친 몸과 마음의 완벽한 회복을 위해.",
         price: "조회 후 안내",
         features: ["프리미엄 출퇴근 산후도우미 서비스", "산모 식사 서비스 제공", "신생아 케어 서비스 제공"],

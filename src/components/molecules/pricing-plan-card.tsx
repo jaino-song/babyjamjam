@@ -9,6 +9,7 @@ export type PlanData = {
   price: string;
   badge?: string;
   features: string[];
+  duration?: number;
 };
 
 interface PricingPlanCardProps {

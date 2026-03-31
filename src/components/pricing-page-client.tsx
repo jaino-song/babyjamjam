@@ -104,11 +104,28 @@ function reducer(state: State, action: Action): State {
       };
     case "SUBMIT_ERROR":
       return { ...state, isLoading: false };
-    case "SELECT_PLAN":
-      return { ...state, selectedPlanId: action.planId };
+    case "SELECT_PLAN": {
+      const plan = state.plans.find((p) => p.id === action.planId);
+      const duration = plan?.duration ?? 1;
+      // Sync care group addon quantities to the selected plan's duration
+      const m = new Map(state.addonSelections);
+      for (const addon of state.addons) {
+        if (addon.group === "care" && m.has(addon.id)) {
+          m.set(addon.id, duration);
+        }
+      }
+      return { ...state, selectedPlanId: action.planId, addonSelections: m };
+    }
     case "ADD_ADDON": {
       const m = new Map(state.addonSelections);
-      m.set(action.addonId, 1);
+      const addon = state.addons.find((a) => a.id === action.addonId);
+      const selectedPlan = state.plans.find((p) => p.id === state.selectedPlanId);
+      // Care group addons default to the selected plan's duration
+      const defaultQty =
+        addon?.group === "care" && selectedPlan?.duration
+          ? selectedPlan.duration
+          : 1;
+      m.set(action.addonId, defaultQty);
       return { ...state, addonSelections: m };
     }
     case "REMOVE_ADDON": {
