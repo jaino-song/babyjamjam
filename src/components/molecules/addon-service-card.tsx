@@ -10,6 +10,8 @@ export type AddonData = {
   price: string;
   /** Optional check-mark note shown below description */
   note?: string;
+  /** Group key for visual grouping */
+  group?: string;
 };
 
 interface AddonServiceCardProps {

@@ -473,6 +473,9 @@ img { max-width: 100%; display: block; }
   font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px;
   line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-paragraph);
 }
+.addon-services__groups {
+  display: flex; flex-direction: column; gap: 48px; width: 100%;
+}
 .addon-services__list {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px; width: 100%;

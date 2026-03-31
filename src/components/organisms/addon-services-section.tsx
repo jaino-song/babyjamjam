@@ -24,6 +24,17 @@ export function AddonServicesSection({
   onQuantityChange,
   blurred = false,
 }: AddonServicesSectionProps) {
+  // Group addons by their group key, preserving order
+  const groups: AddonData[][] = [];
+  let currentGroup: string | undefined;
+  for (const addon of addons) {
+    if (addon.group !== currentGroup) {
+      groups.push([]);
+      currentGroup = addon.group;
+    }
+    groups[groups.length - 1].push(addon);
+  }
+
   return (
     <section
       className={cn(
@@ -48,22 +59,26 @@ export function AddonServicesSection({
         *모든 요금은 1인 1일 기준입니다.
       </p>
 
-      <div className="addon-services__list">
-        {addons.map((addon) => {
-          const qty = selections.get(addon.id);
-          const added = qty !== undefined && qty > 0;
-          return (
-            <AddonServiceCard
-              key={addon.id}
-              addon={addon}
-              quantity={added ? qty : 1}
-              added={added}
-              onAdd={() => onAdd(addon.id)}
-              onRemove={() => onRemove(addon.id)}
-              onQuantityChange={(q) => onQuantityChange(addon.id, q)}
-            />
-          );
-        })}
+      <div className="addon-services__groups">
+        {groups.map((group, gi) => (
+          <div key={gi} className="addon-services__list">
+            {group.map((addon) => {
+              const qty = selections.get(addon.id);
+              const added = qty !== undefined && qty > 0;
+              return (
+                <AddonServiceCard
+                  key={addon.id}
+                  addon={addon}
+                  quantity={added ? qty : 1}
+                  added={added}
+                  onAdd={() => onAdd(addon.id)}
+                  onRemove={() => onRemove(addon.id)}
+                  onQuantityChange={(q) => onQuantityChange(addon.id, q)}
+                />
+              );
+            })}
+          </div>
+        ))}
       </div>
     </section>
   );

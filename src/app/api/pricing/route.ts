@@ -39,24 +39,14 @@ const SUBSIDIZED_FEATURES: Record<string, string[]> = {
 
 /** Hardcoded add-on services (shared for both subsidized and unsubsidized). */
 const ADDON_SERVICES = [
-  {
-    id: "saturday",
-    name: "토요일 서비스",
-    description: "09:00 부터 14:00 까지\n파트타임 서비스 추가",
-    price: "126,500원",
-  },
-  {
-    id: "holiday",
-    name: "공휴일 서비스",
-    description: "법정공휴일 및 일요일에도 서비스 이용이 필요할 때.",
-    price: "202,500원",
-  },
+  // Group 1: 케어 서비스
   {
     id: "twins",
     name: "쌍둥이 케어 서비스",
     description:
       "우리 집에 찾아온 두배의 기적.\n비용은 두배 보다 적은 또다른 기적.",
     price: "40,000원",
+    group: "care",
   },
   {
     id: "school-age",
@@ -64,6 +54,7 @@ const ADDON_SERVICES = [
     description:
       "알아서 잘 하는 우리 아이지만\n엄마의 사랑은 똑같이 필요하니까.",
     price: "5,000원",
+    group: "care",
   },
   {
     id: "preschool",
@@ -71,6 +62,7 @@ const ADDON_SERVICES = [
     description:
       "부모님의 케어가 필요한 우리 아이가\n계속해서 잘 자랄 수 있도록.",
     price: "10,000원",
+    group: "care",
   },
   {
     id: "family",
@@ -78,13 +70,7 @@ const ADDON_SERVICES = [
     description:
       "지켜야할 소중한 가족이 우리 아기만\n있는건 아니니까.",
     price: "5,000원",
-  },
-  {
-    id: "extra-hours",
-    name: "서비스 추가 시간",
-    note: "정규 서비스 제공 시간 외 추가 시간",
-    description: "",
-    price: "시간 당 25,300원",
+    group: "care",
   },
   {
     id: "breast-pump",
@@ -92,6 +78,30 @@ const ADDON_SERVICES = [
     note: "정규 서비스 제공 시간 외 추가 시간",
     description: "",
     price: "5,000원",
+    group: "care",
+  },
+  // Group 2: 시간/일정 서비스
+  {
+    id: "saturday",
+    name: "토요일 서비스",
+    description: "09:00 부터 14:00 까지\n파트타임 서비스 추가",
+    price: "126,500원",
+    group: "schedule",
+  },
+  {
+    id: "holiday",
+    name: "공휴일 서비스",
+    description: "법정공휴일 및 일요일에도 서비스 이용이 필요할 때.",
+    price: "202,500원",
+    group: "schedule",
+  },
+  {
+    id: "extra-hours",
+    name: "서비스 추가 시간",
+    note: "정규 서비스 제공 시간 외 추가 시간",
+    description: "",
+    price: "시간 당 25,300원",
+    group: "schedule",
   },
 ];
 
