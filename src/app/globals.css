@@ -476,6 +476,9 @@ img { max-width: 100%; display: block; }
 .addon-services__groups {
   display: flex; flex-direction: column; gap: 48px; width: 100%;
 }
+.addon-services__group {
+  display: flex; flex-direction: column; gap: 16px; width: 100%;
+}
 .addon-services__list {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px; width: 100%;
