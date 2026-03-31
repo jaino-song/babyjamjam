@@ -507,6 +507,19 @@ img { max-width: 100%; display: block; }
 .addon-card__btn--added { background: white; color: var(--bjj-color-primary); border: 1px solid var(--bjj-color-primary); }
 .addon-card__btn:hover { opacity: 0.9; }
 
+/* ===== PRICING CLIENT LAYOUT ===== */
+.pricing-content-area {
+  display: flex; flex-direction: column; align-items: flex-start;
+  width: 100%; gap: 64px;
+  padding: 64px; background: linear-gradient(180deg, white 0%, #f9fafb 50%, white 100%);
+  border-radius: 20px;
+}
+.pricing-plans-wrapper { position: relative; width: 100%; }
+.pricing-modal-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   :root {
