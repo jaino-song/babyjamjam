@@ -365,10 +365,13 @@ img { max-width: 100%; display: block; }
 .pricing-modal__submit:hover { opacity: 0.9; }
 .pricing-modal__submit:disabled { opacity: 0.6; cursor: default; }
 
-/* ===== PRICING SECTION BLUR ===== */
+/* ===== PRICING SECTION BLUR / HIDDEN ===== */
 .pricing-section--blurred {
   filter: blur(12px); pointer-events: none; user-select: none;
   transition: filter 0.5s ease;
+}
+.pricing-section--hidden {
+  display: none;
 }
 
 /* ===== PLAN CARDS ===== */

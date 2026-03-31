@@ -28,7 +28,7 @@ export function AddonServicesSection({
     <section
       className={cn(
         "addon-services",
-        blurred && "pricing-section--blurred"
+        blurred && "pricing-section--hidden"
       )}
       data-component="organism-addon-services-section"
     >
