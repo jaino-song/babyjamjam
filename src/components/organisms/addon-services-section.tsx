@@ -55,13 +55,14 @@ export function AddonServicesSection({
         </h2>
       </div>
 
-      <p className="addon-services__note">
-        *모든 요금은 1인 1일 기준입니다.
-      </p>
-
       <div className="addon-services__groups">
         {groups.map((group, gi) => (
           <div key={gi} className="addon-services__group">
+            {gi === 0 && (
+              <p className="addon-services__note">
+                *모든 요금은 1인 1일 기준입니다.
+              </p>
+            )}
             {gi === 1 && (
               <p className="addon-services__note">
                 *토요일 및 공휴일 서비스는 1일 기준, 추가 시간은 1시간 기준입니다.
