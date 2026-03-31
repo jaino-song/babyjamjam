@@ -231,16 +231,16 @@ img { max-width: 100%; display: block; }
 /* ===== PRICING PAGE ===== */
 .pricing-page-main {
   display: flex; flex-direction: column; align-items: center; width: 100%;
-  gap: var(--bjj-section-gap); padding-bottom: var(--bjj-section-gap);
+  gap: var(--bjj-section-gap); padding: var(--bjj-section-gap) 0;
 }
 
 .pricing-hero {
   display: flex; flex-direction: column; align-items: center; width: 100%;
-  gap: 40px; padding-bottom: 40px; overflow: hidden;
+  gap: 64px; overflow: hidden;
 }
 
 .pricing-hero__bg {
-  position: relative; width: 100%; height: 320px;
+  position: relative; width: 100%; height: 488px;
   border-radius: 0 0 20px 20px; overflow: hidden;
 }
 .pricing-hero__bg-image { width: 100%; height: 100%; object-fit: cover; }
@@ -920,7 +920,6 @@ img { max-width: 100%; display: block; }
   .care-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .process__steps,
   .more__cards { flex-wrap: wrap; }
-  .pricing-hero__bg { height: 320px; }
   .pricing-plans__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .branches-hero__canvas { height: 380px; }
 
