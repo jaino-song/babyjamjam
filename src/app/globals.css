@@ -310,6 +310,57 @@ img { max-width: 100%; display: block; }
   line-height: 1; color: var(--bjj-color-text-headline);
 }
 
+/* ===== FORM QUESTION ===== */
+.form-question {
+  display: flex; flex-direction: column; gap: 8px;
+  transition: opacity 0.3s ease, max-height 0.4s ease;
+  overflow: hidden;
+}
+.form-question--visible { opacity: 1; max-height: 200px; }
+.form-question--hidden { opacity: 0; max-height: 0; pointer-events: none; }
+.form-question__header { display: flex; flex-direction: column; gap: 4px; }
+.form-question__label {
+  font-family: var(--bjj-font-heading); font-weight: 600; font-size: 13px;
+  line-height: 1.5; color: var(--bjj-color-text-dark);
+}
+.form-question__helper {
+  font-family: var(--bjj-font-body); font-weight: 500; font-size: 8px;
+  line-height: 1.5; color: var(--bjj-color-text-muted);
+}
+
+/* ===== PRICING MODAL ===== */
+.pricing-modal {
+  padding: 24px; background: var(--bjj-color-bg);
+  border-radius: 20px; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1);
+  display: flex; flex-direction: column; gap: 24px;
+  width: 100%; max-width: 400px; z-index: 10;
+}
+.pricing-modal__header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.pricing-modal__title {
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px;
+  line-height: 1.2; color: var(--bjj-color-primary);
+}
+.pricing-modal__body {
+  display: flex; flex-direction: column; gap: 24px;
+}
+.pricing-modal__link {
+  color: var(--bjj-color-primary); text-decoration: none; font-weight: 500;
+}
+.pricing-modal__link:hover { text-decoration: underline; }
+.pricing-modal__footer {
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+.pricing-modal__submit {
+  padding: 8px 24px; background: var(--bjj-color-primary); color: white;
+  border: none; border-radius: 999px; cursor: pointer;
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 9px;
+  line-height: 1.4; transition: opacity 0.2s;
+}
+.pricing-modal__submit:hover { opacity: 0.9; }
+.pricing-modal__submit:disabled { opacity: 0.6; cursor: default; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   :root {
