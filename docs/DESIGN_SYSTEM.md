@@ -38,8 +38,7 @@ Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should
   --bjj-font-caption: var(--font-roboto-mono), 'Roboto Mono', monospace;
 
   /* Layout */
-  --bjj-page-max-width: 1232px;
-  --bjj-page-padding: 128px;
+  /* Page uses padding: 0 20% instead of max-width + margin centering */
   --bjj-section-gap: 128px;
 }
 ```
@@ -260,7 +259,7 @@ font-number 9px/700 tracking-tight text-link hover:underline
 
 ### Page Container
 ```
-max-width: 1232px, margin: 0 auto, flex col center, px: 128px
+flex col center, padding: 0 20%
 ```
 
 ### Full-Bleed Sections

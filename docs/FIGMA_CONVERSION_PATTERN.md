@@ -105,7 +105,7 @@ Translate raw wrappers into these higher-level structures:
 
 | Raw Figma export pattern | Current React pattern |
 | --- | --- |
-| page root `w-[1920px] px-48 ...` | `.page` with `max-width: 1232px`, centered, `padding-inline: 128px` |
+| page root `w-[1920px] px-48 ...` | `.page` with `padding: 0 20%` (no max-width, no margin) |
 | large section gaps like `gap-24`, `py-48` | normalized section gap token `--bjj-section-gap: 128px` |
 | repeated icon/info columns | shared `icon-lockup` pattern |
 | numbered list rows | shared `app-detail__list-item` pattern |
