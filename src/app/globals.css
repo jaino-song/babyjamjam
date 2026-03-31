@@ -71,7 +71,7 @@ img { max-width: 100%; display: block; }
 .caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.4; letter-spacing: -0.01em; color: var(--bjj-color-text-caption); }
 
 /* ===== PAGE ===== */
-.page { display: flex; flex-direction: column; align-items: center; padding: 0 var(--bjj-page-padding); }
+.page { display: flex; flex-direction: column; align-items: center; padding: 0 20%; }
 
 /* ===== NAVIGATION ===== */
 .navigation { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 96px; position: relative; }
