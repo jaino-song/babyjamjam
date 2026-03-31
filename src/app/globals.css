@@ -445,7 +445,7 @@ img { max-width: 100%; display: block; }
   font-family: var(--bjj-font-heading); font-weight: 600; font-size: 13px;
   line-height: 1.5; cursor: pointer; transition: opacity 0.2s;
 }
-.plan-card__btn--default { background: var(--bjj-color-primary); color: white; }
+.plan-card__btn--default { background: var(--bjj-color-primary); color: white; border: 1px solid var(--bjj-color-primary); }
 .plan-card__btn--selected { background: white; color: var(--bjj-color-primary); border: 1px solid var(--bjj-color-primary); }
 .plan-card__btn:hover { opacity: 0.9; }
 .plan-card__features {
