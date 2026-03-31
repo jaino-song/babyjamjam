@@ -5,6 +5,7 @@ import {
   SiteMoreSection,
   SiteNavigation,
 } from "@/components/site-chrome";
+import { PricingPageClient } from "@/components/pricing-page-client";
 
 export const metadata: Metadata = {
   title: "서비스 비용 | 아가잼잼",
@@ -25,7 +26,7 @@ export default function PricingPage() {
       </section>
 
       <main className="pricing-page-main">
-        {/* PricingPageClient will be inserted here in Phase 7 */}
+        <PricingPageClient />
 
         <section className="hero-image pricing-page__banner">
           <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
