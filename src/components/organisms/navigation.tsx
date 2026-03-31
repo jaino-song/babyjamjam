@@ -6,7 +6,7 @@ import { NavItem } from "@/components/molecules/nav-item";
 
 const NAV_ITEMS = [
   { label: "산후도우미", href: "#" },
-  { label: "비용계산기", href: "#" },
+  { label: "서비스 비용", href: "/pricing" },
   { label: "지점 찾기", href: "#" },
   { label: "문의하기", href: "#" },
   { label: "고객센터", href: "#" },

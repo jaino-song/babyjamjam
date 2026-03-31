@@ -228,6 +228,30 @@ img { max-width: 100%; display: block; }
 .footer__bottom { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
 .footer__logo { width: 180px; height: 60px; object-fit: contain; }
 
+/* ===== PRICING PAGE ===== */
+.pricing-page-main {
+  display: flex; flex-direction: column; align-items: center; width: 100%;
+  gap: var(--bjj-section-gap); padding-bottom: var(--bjj-section-gap);
+}
+
+.pricing-hero {
+  display: flex; flex-direction: column; align-items: center; width: 100%;
+  gap: 64px; padding-bottom: var(--bjj-section-gap); overflow: hidden;
+}
+
+.pricing-hero__bg {
+  width: 100%; height: 488px;
+  border-radius: 0 0 20px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0) 100%);
+}
+
+.pricing-hero__title {
+  color: var(--bjj-color-primary); white-space: pre-line; width: 100%;
+  letter-spacing: 0.05em;
+}
+
+.pricing-page__banner { height: 576px; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   :root {
@@ -242,6 +266,7 @@ img { max-width: 100%; display: block; }
   .care-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .process__steps,
   .more__cards { flex-wrap: wrap; }
+  .pricing-hero__bg { height: 320px; }
 }
 
 @media (max-width: 780px) {
@@ -287,8 +312,11 @@ img { max-width: 100%; display: block; }
   .service-catalog { gap: 24px; }
   .care-section { padding: 32px 24px; }
   .care-card-grid { grid-template-columns: 1fr; }
+  .pricing-hero { gap: 40px; }
+  .pricing-hero__bg { height: 320px; }
   .hero-image,
-  .service-page__banner { height: 360px; }
+  .service-page__banner,
+  .pricing-page__banner { height: 360px; }
   .hero-image__text { white-space: normal; width: calc(100% - 48px); }
   .footer { gap: 24px; }
   .footer__links,
