@@ -154,6 +154,14 @@ export function PricingPageClient() {
 
   const isSubsidized = state.formAnswers.subsidy === "yes";
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showFormModal) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [showFormModal]);
+
   // Re-fetch when grade name changes (subsidized only)
   useEffect(() => {
     if (!state.pricesRevealed || !isSubsidized) return;
