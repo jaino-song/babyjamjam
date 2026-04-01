@@ -336,7 +336,7 @@ img { max-width: 100%; display: block; }
   padding: 24px; background: var(--bjj-color-bg);
   border-radius: 20px; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1);
   display: flex; flex-direction: column; gap: 24px;
-  width: 100%; max-width: 400px; z-index: 10;
+  width: 100%; max-width: 440px; z-index: 10;
   min-height: 620px;
 }
 .pricing-modal__header {
@@ -727,8 +727,8 @@ img { max-width: 100%; display: block; }
 .bv1-list__hours { font-family: var(--bjj-font-body); font-size: 11px; color: var(--bjj-color-text-muted); }
 
 /* Korea Region Map */
-.krm { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.krm__svg { width: 100%; height: 100%; }
+.krm { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.krm__svg { max-width: 100%; max-height: 100%; }
 .krm__tooltip {
   position: fixed; background: #1a1a1a; color: #fff;
   padding: 6px 14px; border-radius: 8px;
