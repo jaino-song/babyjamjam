@@ -264,7 +264,7 @@ img { max-width: 100%; display: block; }
   width: 100%; height: 40px; padding: 0 12px;
   background: var(--bjj-color-bg); border: 1px solid var(--bjj-color-divider);
   border-radius: 32px; cursor: pointer;
-  font-family: var(--bjj-font-body); font-size: 10px; font-weight: 500;
+  font-family: var(--bjj-font-body); font-size: 12px; font-weight: 500;
   line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-headline);
   transition: border-color 0.2s;
 }
@@ -286,7 +286,7 @@ img { max-width: 100%; display: block; }
 }
 .select-dropdown__option {
   padding: 8px 12px; cursor: pointer;
-  font-family: var(--bjj-font-body); font-size: 10px; font-weight: 500;
+  font-family: var(--bjj-font-body); font-size: 12px; font-weight: 500;
   line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-headline);
   transition: background 0.15s;
 }
