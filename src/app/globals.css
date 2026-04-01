@@ -539,6 +539,36 @@ img { max-width: 100%; display: block; }
   padding: 24px;
 }
 
+/* CTA card (replaces inline modal) */
+.pricing-cta-card {
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+  padding: 48px 40px; background: var(--bjj-color-bg);
+  border-radius: 20px; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.pricing-cta-card__title {
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 36px;
+  line-height: 1.2; color: var(--bjj-color-primary);
+}
+.pricing-cta-card__label {
+  font-family: var(--bjj-font-body); font-weight: 500; font-size: 18px;
+  line-height: 1.5; color: var(--bjj-color-text-paragraph);
+}
+.pricing-cta-card__btn {
+  padding: 12px 40px; background: var(--bjj-color-primary); color: white;
+  border: none; border-radius: 999px; cursor: pointer;
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 16px;
+  line-height: 1.4; transition: opacity 0.2s;
+}
+.pricing-cta-card__btn:hover { opacity: 0.9; }
+
+/* Full-screen form overlay */
+.pricing-form-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+}
+
 /* ===== FLOATING BUBBLE ===== */
 .floating-bubble {
   position: fixed; bottom: 32px; right: 32px; z-index: 50;

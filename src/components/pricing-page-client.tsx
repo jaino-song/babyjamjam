@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useCallback, useEffect, useRef } from "react";
+import { useReducer, useCallback, useEffect, useRef, useState } from "react";
 
 import {
   PricingFormModal,
@@ -149,6 +149,7 @@ function reducer(state: State, action: Action): State {
 
 export function PricingPageClient() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [showFormModal, setShowFormModal] = useState(false);
   const plansRef = useRef<HTMLDivElement>(null);
 
   const isSubsidized = state.formAnswers.subsidy === "yes";
@@ -168,7 +169,7 @@ export function PricingPageClient() {
 
   const handleSubmit = useCallback(async () => {
     await fetchPricing(state.formAnswers, state.selectedGradeName, dispatch);
-    // Scroll to plans after reveal
+    setShowFormModal(false);
     setTimeout(() => {
       plansRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 100);
@@ -200,12 +201,17 @@ export function PricingPageClient() {
 
           {!state.pricesRevealed && (
             <div className="pricing-modal-overlay">
-              <PricingFormModal
-                answers={state.formAnswers}
-                onAnswer={handleAnswer}
-                onSubmit={handleSubmit}
-                isLoading={state.isLoading}
-              />
+              <div className="pricing-cta-card">
+                <h2 className="pricing-cta-card__title">서비스 가격 조회</h2>
+                <p className="pricing-cta-card__label">정확한 가격을 알아볼까요?</p>
+                <button
+                  type="button"
+                  className="pricing-cta-card__btn"
+                  onClick={() => setShowFormModal(true)}
+                >
+                  시작하기
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -223,6 +229,19 @@ export function PricingPageClient() {
           planDuration={state.plans.find((p) => p.id === state.selectedPlanId)?.duration}
         />
       </div>
+
+      {showFormModal && (
+        <div className="pricing-form-overlay" onClick={() => setShowFormModal(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <PricingFormModal
+              answers={state.formAnswers}
+              onAnswer={handleAnswer}
+              onSubmit={handleSubmit}
+              isLoading={state.isLoading}
+            />
+          </div>
+        </div>
+      )}
 
       {state.pricesRevealed && (
         <FloatingBubble distinctCount={distinctCount} />
