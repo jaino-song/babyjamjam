@@ -112,7 +112,7 @@ export default function HomePage() {
                 <br />
                 출산 전부터 시작해요.
               </h2>
-              <p className="h3 app-detail__subtitle" style={{ color: "var(--bjj-color-text-paragraph)" }}>
+              <p className="h4 app-detail__subtitle" style={{ color: "var(--bjj-color-text-paragraph)" }}>
                 바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를
                 만든다.
               </p>

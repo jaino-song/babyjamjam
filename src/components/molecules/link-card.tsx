@@ -21,7 +21,7 @@ export function LinkCard({ title, description, buttonText, buttonHref, className
         data-component="molecule-link-card-content"
       >
         <h3
-          className="text-h3 font-extrabold font-heading text-bjj-primary"
+          className="text-h4 font-extrabold font-heading text-bjj-primary"
           data-component="molecule-link-card-title"
         >
           {title}

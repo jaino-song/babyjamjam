@@ -53,7 +53,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
             출산 전부터 시작해요.
           </h2>
           <p
-            className="text-h3 font-extrabold font-heading text-bjj-text-paragraph"
+            className="text-h4 font-extrabold font-heading text-bjj-text-paragraph"
             data-component="organism-app-detail-subtitle"
           >
             바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.

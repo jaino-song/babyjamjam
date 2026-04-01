@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { NavBar } from "./nav-bar";
+import { BookingButton } from "./booking-button";
 
 const NAV_ITEMS = [
   { label: "산후도우미", href: "/postpartum-care" },
   { label: "서비스 비용", href: "/pricing" },
-  { label: "지점 찾기", href: "#" },
+  { label: "지점 찾기", href: "/branches" },
   { label: "문의하기", href: "#" },
   { label: "고객센터", href: "#" },
 ];
@@ -102,9 +103,7 @@ export function SiteNavigation({ activeLabel }: SiteNavigationProps) {
           <img src="/images/logo.png" alt="아가잼잼 로고" className="navigation__logo" />
         </Link>
         <NavBar items={NAV_ITEMS} activeLabel={activeLabel} />
-        <SmartLink href="#" className="short-button">
-          예약하기
-        </SmartLink>
+        <BookingButton />
       </div>
     </header>
   );
@@ -139,7 +138,7 @@ export function SiteMoreSection() {
         {MORE_CARDS.map((card) => (
           <div key={card.title} className="link-card">
             <div className="link-card__content">
-              <h3 className="h3 link-card__title">{card.title}</h3>
+              <h3 className="h4 link-card__title">{card.title}</h3>
               <p className="medium-p link-card__description">{card.description}</p>
             </div>
             <SmartLink href={card.href} className="btn-primary">
