@@ -330,7 +330,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.2; color: var(--bjj-color-text-dark);
 }
 .form-question__helper {
-  font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px;
+  font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px;
   line-height: 1.5; color: var(--bjj-color-text-muted);
 }
 
