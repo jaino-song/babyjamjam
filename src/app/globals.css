@@ -319,7 +319,7 @@ img { max-width: 100%; display: block; }
 
 /* ===== FORM QUESTION ===== */
 .form-question {
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 16px;
   transition: opacity 0.3s ease, max-height 0.4s ease;
 }
 .form-question--visible { opacity: 1; }
