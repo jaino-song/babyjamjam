@@ -359,9 +359,9 @@ img { max-width: 100%; display: block; }
   display: flex; justify-content: flex-end; gap: 8px;
 }
 .pricing-modal__submit {
-  padding: 8px 24px; background: var(--bjj-color-primary); color: white;
+  padding: 12px 40px; background: var(--bjj-color-primary); color: white;
   border: none; border-radius: 999px; cursor: pointer;
-  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 9px;
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 16px;
   line-height: 1.4; transition: opacity 0.2s;
 }
 .pricing-modal__submit:hover { opacity: 0.9; }
