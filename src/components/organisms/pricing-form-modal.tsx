@@ -207,7 +207,7 @@ function buildSubsidizedQuestions(
     questions.push({
       id: "staffCount",
       label: "추가 인력이 필요하신가요?",
-      options: staffOptions(resolvedGrade),
+      options: YES_NO_OPTIONS,
     });
   }
 
