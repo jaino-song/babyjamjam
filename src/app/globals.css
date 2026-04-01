@@ -326,7 +326,7 @@ img { max-width: 100%; display: block; }
 .form-question--hidden { opacity: 0; max-height: 0; overflow: hidden; pointer-events: none; }
 .form-question__header { display: flex; flex-direction: column; gap: 4px; }
 .form-question__label {
-  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 20px;
+  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px;
   line-height: 1.2; color: var(--bjj-color-text-dark);
 }
 .form-question__helper {
