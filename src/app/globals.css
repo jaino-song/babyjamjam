@@ -66,7 +66,7 @@ img { max-width: 100%; display: block; }
 .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 18px; line-height: 1.2; }
 .big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 18px; line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-paragraph); }
 .medium-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px; line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-paragraph); }
-.small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 10px; line-height: 1.5; letter-spacing: 0.03em; }
+.small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 1.5; letter-spacing: 0.03em; }
 .link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.4; letter-spacing: -0.025em; }
 .caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.4; letter-spacing: -0.01em; color: var(--bjj-color-text-caption); }
 
@@ -327,7 +327,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.5; color: var(--bjj-color-text-dark);
 }
 .form-question__helper {
-  font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px;
+  font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px;
   line-height: 1.5; color: var(--bjj-color-text-muted);
 }
 

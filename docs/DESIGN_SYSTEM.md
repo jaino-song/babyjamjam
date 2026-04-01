@@ -57,7 +57,7 @@ Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should
 | H5 | 18px | 800 | 1.2 | — | heading | left |
 | Big P | 18px | 500 | 1.5 | 0.03em | body | left |
 | Medium P | 16px | 500 | 1.5 | 0.03em | body | left |
-| Small P | 10px | 500 | 1.5 | 0.03em | body | left |
+| Small P | 12px | 500 | 1.5 | 0.03em | body | left |
 | Nav / Button | 13px | 800 | 1.4 | -0.025em | heading | center |
 | Link | 9px | 700 | 1.4 | -0.025em | number | center |
 | Caption | 8px | 400 | 1.4 | -0.01em | caption | center |
