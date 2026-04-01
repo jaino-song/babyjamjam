@@ -68,6 +68,8 @@ export function PricingFormModal({
   const totalSteps = allSteps.length;
   const currentQuestion = allSteps[step];
   const isLastStep = step === totalSteps - 1;
+  // Show min 4 circles (unsubsidized count), 5 if subsidized
+  const displayStepCount = answers.subsidy === "yes" ? 5 : 4;
   const currentAnswered = currentQuestion
     ? answers[currentQuestion.id] !== undefined
     : false;
@@ -92,7 +94,7 @@ export function PricingFormModal({
 
       {/* Stepper */}
       <div className="wizard-stepper">
-        {allSteps.map((_, i) => (
+        {Array.from({ length: displayStepCount }, (_, i) => (
           <div key={i} className="wizard-stepper__item">
             <div
               className={`wizard-stepper__circle ${
@@ -105,7 +107,7 @@ export function PricingFormModal({
             >
               {i + 1}
             </div>
-            {i < allSteps.length - 1 && (
+            {i < displayStepCount - 1 && (
               <div
                 className={`wizard-stepper__connector ${
                   i < step ? "wizard-stepper__connector--done" : ""
