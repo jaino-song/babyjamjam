@@ -262,10 +262,17 @@ font-number 9px/700 tracking-tight text-link hover:underline
 flex col center, padding: 0 20%
 ```
 
+### Hero Pattern (all pages must match)
+```
+.hero__bg: height 488px, border-radius 0 0 20px 20px, gradient fade overlay
+hero → title gap: 64px
+<main> padding: var(--bjj-section-gap) 0, gap: var(--bjj-section-gap)
+```
+
 ### Full-Bleed Sections
 Logo Section, Process Section:
 ```
-width: 100vw, max-width: 1232px, px: 128px
+width: 100vw, px: 20%
 ```
 
 ### Section Order (Home `/`)
