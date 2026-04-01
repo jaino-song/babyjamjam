@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   SelectDropdown,
   type SelectOption,
@@ -67,6 +67,7 @@ export function PricingFormModal({
   isLoading = false,
 }: PricingFormModalProps) {
   const [step, setStep] = useState(0);
+  const [pendingAdvance, setPendingAdvance] = useState(false);
 
   const allSteps = buildAllSteps(answers);
   const totalSteps = allSteps.length;
@@ -74,21 +75,27 @@ export function PricingFormModal({
   const isLastStep = step === totalSteps - 1;
   const displayStepCount = answers.subsidy === "yes" ? 5 : 4;
 
-  const advance = useCallback(() => {
-    if (isLastStep) {
-      onSubmit();
-    } else if (step < totalSteps - 1) {
-      setStep((s) => s + 1);
-    }
-  }, [isLastStep, onSubmit, step, totalSteps]);
+  // Auto-advance after answer + re-render (so allSteps is up to date)
+  useEffect(() => {
+    if (!pendingAdvance) return;
+    setPendingAdvance(false);
+
+    const timer = setTimeout(() => {
+      if (isLastStep) {
+        onSubmit();
+      } else if (step < totalSteps - 1) {
+        setStep((s) => s + 1);
+      }
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [pendingAdvance, isLastStep, step, totalSteps, onSubmit]);
 
   const handleSelect = useCallback(
     (questionId: string, value: string) => {
       onAnswer(questionId, value);
-      // Auto-advance after a short delay for visual feedback
-      setTimeout(advance, 200);
+      setPendingAdvance(true);
     },
-    [onAnswer, advance]
+    [onAnswer]
   );
 
   return (
