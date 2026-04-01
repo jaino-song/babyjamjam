@@ -47,7 +47,7 @@ export function AddonServicesSection({
       data-component="organism-addon-services-section"
     >
       <div className="addon-services__heading">
-        <h2 className="h2-left addon-services__title">
+        <h2 className="h3-left addon-services__title">
           <span className="addon-services__title-muted">
             내가 원하는 대로 선택 가능.
           </span>

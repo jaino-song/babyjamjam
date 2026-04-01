@@ -20,7 +20,7 @@ export function BannerImageSection({ className }: BannerImageSectionProps) {
         data-component="organism-banner-image-section-image"
       />
       <span
-        className="h2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
+        className="h3 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
         style={{ textShadow: "1px 4px 8px rgba(0,0,0,0.25)", color: "white" }}
         data-component="organism-banner-image-section-text"
       >

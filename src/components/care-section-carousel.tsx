@@ -36,7 +36,7 @@ function CareSectionHeading({
   primaryText: string;
 }) {
   return (
-    <h2 className="h2-left care-section__title">
+    <h2 className="h3-left care-section__title">
       <span className="care-section__title-muted">{mutedText}</span>
       <br />
       <span className="care-section__title-primary">{primaryText}</span>

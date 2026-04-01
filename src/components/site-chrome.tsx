@@ -120,7 +120,7 @@ export function SiteProcessSection() {
           <div key={step.num} className="process__step">
             <span className="process__step-number">{step.num}</span>
             <div className="process__step-content">
-              <h3 className="h4 process__step-title">{step.title}</h3>
+              <h3 className="h6 process__step-title">{step.title}</h3>
               <p className="medium-p process__step-desc">{step.description}</p>
             </div>
           </div>
@@ -133,12 +133,12 @@ export function SiteProcessSection() {
 export function SiteMoreSection() {
   return (
     <section className="more">
-      <h2 className="h2 more__title">아가잼잼이면 해결되니까.</h2>
+      <h2 className="h3 more__title">아가잼잼이면 해결되니까.</h2>
       <div className="more__cards">
         {MORE_CARDS.map((card) => (
           <div key={card.title} className="link-card">
             <div className="link-card__content">
-              <h3 className="h4 link-card__title">{card.title}</h3>
+              <h3 className="h6 link-card__title">{card.title}</h3>
               <p className="medium-p link-card__description">{card.description}</p>
             </div>
             <SmartLink href={card.href} className="btn-primary">

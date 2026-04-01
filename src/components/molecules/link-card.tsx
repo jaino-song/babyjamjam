@@ -21,7 +21,7 @@ export function LinkCard({ title, description, buttonText, buttonHref, className
         data-component="molecule-link-card-content"
       >
         <h3
-          className="h4"
+          className="h6"
           style={{ color: "var(--bjj-color-primary)" }}
           data-component="molecule-link-card-title"
         >

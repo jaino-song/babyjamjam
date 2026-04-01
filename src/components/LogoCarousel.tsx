@@ -5,9 +5,11 @@ import { useRef, useState, useEffect } from 'react';
 const slides = [
   {
     title: (
-      <h2 className="h2" style={{ textAlign: 'left' }}>
-        <span style={{ color: '#848484' }}>국가인증업체라서</span>{' '}
-        <span style={{ color: 'var(--bjj-color-primary)' }}>믿을 수 있으니까.</span>
+      <h2 className="h3" style={{ textAlign: 'left' }}>
+        <span style={{ display: 'block', color: '#848484' }}>국가인증업체라서</span>
+        <span style={{ display: 'block', color: 'var(--bjj-color-primary)' }}>
+          믿을 수 있으니까.
+        </span>
       </h2>
     ),
     description:
@@ -21,7 +23,7 @@ const slides = [
   },
   {
     title: (
-      <h2 className="h2" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
+      <h2 className="h3" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
         자격증만 딴다고<br />다 <strong style={{ color: 'var(--bjj-color-primary)' }}>전문가</strong>는 아니죠.
       </h2>
     ),

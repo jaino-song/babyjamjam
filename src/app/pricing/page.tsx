@@ -36,7 +36,7 @@ export default function PricingPage() {
 
         <section className="hero-image pricing-page__banner">
           <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
-          <span className="h2 hero-image__text">
+          <span className="h3 hero-image__text">
             검증 됐으니까. 믿을 수 있으니까.
           </span>
         </section>

@@ -50,11 +50,14 @@ Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should
 | Token | Size | Weight | LH | LS | Font | Align |
 |-------|------|--------|----|----|------|-------|
 | H1 | 64px | 800 | 1.2 | 0.05em | heading | left |
-| H2 | 48px | 800 | 1.2 | — | heading | center |
-| H2-left | 48px | 800 | 1.2 | — | heading | left |
-| H3 | 36px | 800 | 1.2 | — | heading | left |
-| H4 | 24px | 800 | 1.2 | — | heading | left |
-| H5 | 18px | 800 | 1.2 | — | heading | left |
+| H2 | 56px | 800 | 1.2 | — | heading | center |
+| H2-left | 56px | 800 | 1.2 | — | heading | left |
+| H3 | 48px | 800 | 1.2 | — | heading | center |
+| H3-left | 48px | 800 | 1.2 | — | heading | left |
+| H4 | 40px | 800 | 1.2 | — | heading | left |
+| H5 | 32px | 800 | 1.2 | — | heading | left |
+| H6 | 24px | 800 | 1.2 | — | heading | left |
+| H7 | 20px | 800 | 1.2 | — | heading | left |
 | Big P | 18px | 500 | 1.5 | 0.03em | body | left |
 | Medium P | 16px | 500 | 1.5 | 0.03em | body | left |
 | Small P | 12px | 500 | 1.5 | 0.03em | body | left |

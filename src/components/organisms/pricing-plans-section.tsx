@@ -40,7 +40,7 @@ export function PricingPlansSection({
       data-component="organism-pricing-plans-section"
     >
       <div className="pricing-plans__heading">
-        <h2 className="h2-left pricing-plans__title">
+        <h2 className="h3-left pricing-plans__title">
           <span className="pricing-plans__title-muted">
             뭘 좋아하실지 몰라서 다 준비해 봤어요.
           </span>

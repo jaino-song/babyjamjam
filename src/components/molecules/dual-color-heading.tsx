@@ -20,7 +20,7 @@ export function DualColorHeading({
   return (
     <Tag
       className={cn(
-        align === "left" ? "h2-left" : "h2",
+        align === "left" ? "h3-left" : "h3",
         className
       )}
       data-component="molecule-dual-color-heading"

@@ -27,14 +27,14 @@ export default function HomePage() {
       <main className="main">
         <section className="service-detail">
           <div className="service-detail__header">
-            <h2 className="h2-left service-detail__headline">
+            <h2 className="h3-left service-detail__headline">
               <span style={{ color: "#848484" }}>방치되는 공장형?</span>
               <br />
               <span style={{ color: "var(--bjj-color-primary)" }}>
                 아가잼잼은 맞춤형 운영 시스템
               </span>
             </h2>
-            <p className="big-p service-detail__description">
+            <p className="big-p service-detail__description w-1/2">
               바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를
               만든다. 창가에 놓인 종이배는 길을 잃은 듯 천천히 고개를 돌리며, 고요한 박자에
               맞춰 말 없는 문장을 접었다 폈다 한다. 어딘가에서는 반짝이는 점들이 서로를
@@ -45,7 +45,7 @@ export default function HomePage() {
             <div className="icon-lockup">
               <img src="/images/icon-cable.svg" alt="전담마크" className="icon-lockup__icon" />
               <div className="icon-lockup__content">
-                <span className="h5 icon-lockup__title">전담마크</span>
+                <span className="h7 icon-lockup__title">전담마크</span>
                 <p className="medium-p">
                   바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의
                   그림자를 만든다.
@@ -59,7 +59,7 @@ export default function HomePage() {
                 className="icon-lockup__icon"
               />
               <div className="icon-lockup__content">
-                <span className="h5 icon-lockup__title">임신 기간 전체 관리</span>
+                <span className="h7 icon-lockup__title">임신 기간 전체 관리</span>
                 <p className="medium-p">
                   바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의
                   그림자를 만든다.
@@ -73,7 +73,7 @@ export default function HomePage() {
                 className="icon-lockup__icon"
               />
               <div className="icon-lockup__content">
-                <span className="h5 icon-lockup__title">기업형 운영 관리</span>
+                <span className="h7 icon-lockup__title">기업형 운영 관리</span>
                 <p className="medium-p">
                   바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의
                   그림자를 만든다.
@@ -87,7 +87,7 @@ export default function HomePage() {
                 className="icon-lockup__icon"
               />
               <div className="icon-lockup__content">
-                <span className="h5 icon-lockup__title">고객 피드백 응답형</span>
+                <span className="h7 icon-lockup__title">고객 피드백 응답형</span>
                 <p className="medium-p">
                   바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의
                   그림자를 만든다.
@@ -99,7 +99,7 @@ export default function HomePage() {
 
         <section className="hero-image">
           <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
-          <span className="h2 hero-image__text">검증 됐으니까. 믿을 수 있으니까.</span>
+          <span className="h3 hero-image__text">검증 됐으니까. 믿을 수 있으니까.</span>
         </section>
 
         <LogoCarousel />
@@ -107,12 +107,12 @@ export default function HomePage() {
         <section className="app-detail">
           <div className="app-detail__content">
             <div className="app-detail__title-block">
-              <h2 className="h2-left app-detail__title">
+              <h2 className="h3-left app-detail__title">
                 아가잼잼의 케어는
                 <br />
                 출산 전부터 시작해요.
               </h2>
-              <p className="h4 app-detail__subtitle" style={{ color: "var(--bjj-color-text-paragraph)" }}>
+              <p className="h6 app-detail__subtitle" style={{ color: "var(--bjj-color-text-paragraph)" }}>
                 바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를
                 만든다.
               </p>

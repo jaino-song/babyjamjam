@@ -40,7 +40,7 @@ export function MoreSection({ className }: MoreSectionProps) {
       data-component="organism-more-section"
     >
       <h2
-        className="h2"
+        className="h3"
         style={{ color: "var(--bjj-color-primary)" }}
         data-component="organism-more-section-title"
       >

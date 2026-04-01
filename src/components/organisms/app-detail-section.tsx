@@ -45,7 +45,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
           data-component="organism-app-detail-title-block"
         >
           <h2
-            className="h2-left"
+            className="h3-left"
             style={{ color: "var(--bjj-color-primary)" }}
             data-component="organism-app-detail-title"
           >
@@ -54,7 +54,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
             출산 전부터 시작해요.
           </h2>
           <p
-            className="h4"
+            className="h6"
             style={{ color: "var(--bjj-color-text-paragraph)" }}
             data-component="organism-app-detail-subtitle"
           >
