@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { FormQuestion } from "@/components/molecules/form-question";
 import {
   type GradeLetter,
@@ -25,14 +26,6 @@ const BIRTH_ORDER_OPTIONS = [
   { label: "셋째아 이상", value: "셋째아이상" },
 ];
 
-function staffOptions(grade: "B" | "C" | "D") {
-  return STAFF_OPTIONS[grade].map((n) => ({
-    label: `${n}명`,
-    value: String(n),
-  }));
-}
-
-// Unsubsidized service period options
 const SERVICE_PERIOD_OPTIONS = [
   { label: "5일", value: "5" },
   { label: "10일", value: "10" },
@@ -47,6 +40,14 @@ const LIVE_IN_OPTIONS = [
 
 export type FormAnswers = Record<string, string>;
 
+type QuestionDef = {
+  id: string;
+  label: string;
+  helperText?: React.ReactNode;
+  options: { label: string; value: string }[];
+  placeholder?: string;
+};
+
 interface PricingFormModalProps {
   answers: FormAnswers;
   onAnswer: (questionId: string, value: string) => void;
@@ -60,40 +61,28 @@ export function PricingFormModal({
   onSubmit,
   isLoading = false,
 }: PricingFormModalProps) {
-  const isSubsidized = answers.subsidy === "yes";
-  const isUnsubsidized = answers.subsidy === "no";
+  const [step, setStep] = useState(0);
 
-  // Resolve grade for subsidized path
-  const childType = answers.childType as
-    | "단태아"
-    | "쌍태아"
-    | "삼태아"
-    | "사태아이상"
-    | undefined;
-  const isPremature = answers.premature === "yes";
-  const hasDisability = answers.disability === "yes";
+  // Build all steps: Q1 (subsidy) + conditional questions
+  const allSteps = buildAllSteps(answers);
+  const totalSteps = allSteps.length;
+  const currentQuestion = allSteps[step];
+  const isLastStep = step === totalSteps - 1;
+  const currentAnswered = currentQuestion
+    ? answers[currentQuestion.id] !== undefined
+    : false;
 
-  const resolvedGrade: GradeLetter | null =
-    childType ? resolveGrade(childType, isPremature, hasDisability) : null;
+  const handleNext = () => {
+    if (isLastStep && currentAnswered) {
+      onSubmit();
+    } else if (currentAnswered && step < totalSteps - 1) {
+      setStep(step + 1);
+    }
+  };
 
-  // Determine which questions are answerable (progressive disclosure)
-  const subsidizedQuestions = buildSubsidizedQuestions(resolvedGrade);
-  const unsubsidizedQuestions = buildUnsubsidizedQuestions();
-
-  const questions = isSubsidized
-    ? subsidizedQuestions
-    : isUnsubsidized
-      ? unsubsidizedQuestions
-      : [];
-
-  // Calculate how many questions are visible (answered + next one)
-  const visibleCount = getVisibleCount(questions, answers);
-
-  // All questions answered?
-  const allAnswered =
-    answers.subsidy !== undefined &&
-    questions.length > 0 &&
-    questions.every((q) => answers[q.id] !== undefined);
+  const handlePrev = () => {
+    if (step > 0) setStep(step - 1);
+  };
 
   return (
     <div className="pricing-modal" data-component="organism-pricing-form-modal">
@@ -101,148 +90,145 @@ export function PricingFormModal({
         <h2 className="pricing-modal__title">서비스 가격 조회</h2>
       </div>
 
-      <div className="pricing-modal__body">
-        {/* Q1: Always visible */}
-        <FormQuestion
-          label="정부지원 바우처 지원 대상이신가요?"
-          helperText={
-            <>
-              지원 대상 여부는{" "}
-              <a
-                href="https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclInsertPwnbPage.do"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pricing-modal__link"
-              >
-                여기
-              </a>
-              에서 확인하실 수 있어요.
-            </>
-          }
-          options={YES_NO_OPTIONS}
-          value={answers.subsidy}
-          placeholder="항목을 선택해 주세요"
-          onChange={(v) => onAnswer("subsidy", v)}
-          visible
-        />
-
-        {/* Conditional questions */}
-        {questions.map((q, i) => (
-          <FormQuestion
-            key={q.id}
-            label={q.label}
-            helperText={q.helperText}
-            options={q.options}
-            value={answers[q.id]}
-            placeholder={q.placeholder}
-            onChange={(v) => onAnswer(q.id, v)}
-            visible={i < visibleCount}
-          />
-        ))}
-
-        {/* Submit button */}
-        {allAnswered && (
-          <div className="pricing-modal__footer">
-            <button
-              type="button"
-              className="pricing-modal__submit"
-              onClick={onSubmit}
-              disabled={isLoading}
+      {/* Stepper */}
+      <div className="wizard-stepper">
+        {allSteps.map((_, i) => (
+          <div key={i} className="wizard-stepper__item">
+            <div
+              className={`wizard-stepper__circle ${
+                i === step
+                  ? "wizard-stepper__circle--active"
+                  : i < step
+                    ? "wizard-stepper__circle--done"
+                    : "wizard-stepper__circle--pending"
+              }`}
             >
-              {isLoading ? "조회 중..." : "서비스 가격 보기"}
-            </button>
+              {i + 1}
+            </div>
+            {i < allSteps.length - 1 && (
+              <div
+                className={`wizard-stepper__connector ${
+                  i < step ? "wizard-stepper__connector--done" : ""
+                }`}
+              />
+            )}
           </div>
+        ))}
+      </div>
+
+      {/* Current question */}
+      <div className="pricing-modal__body">
+        {currentQuestion && (
+          <FormQuestion
+            key={currentQuestion.id}
+            label={currentQuestion.label}
+            helperText={currentQuestion.helperText}
+            options={currentQuestion.options}
+            value={answers[currentQuestion.id]}
+            placeholder={currentQuestion.placeholder}
+            onChange={(v) => onAnswer(currentQuestion.id, v)}
+            visible
+          />
         )}
+      </div>
+
+      {/* Actions */}
+      <div className="wizard-actions">
+        <button
+          type="button"
+          className={`wizard-actions__btn wizard-actions__btn--prev ${step === 0 ? "wizard-actions__btn--hidden" : ""}`}
+          onClick={handlePrev}
+          disabled={step === 0}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          이전
+        </button>
+        <button
+          type="button"
+          className="wizard-actions__btn wizard-actions__btn--next"
+          onClick={handleNext}
+          disabled={!currentAnswered || isLoading}
+        >
+          {isLoading
+            ? "조회 중..."
+            : isLastStep
+              ? "서비스 가격 보기"
+              : "다음"}
+          {!isLastStep && !isLoading && (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );
 }
 
-// --- Question builders ---
+// --- Build all steps as a flat array ---
 
-type QuestionDef = {
-  id: string;
-  label: string;
-  helperText?: React.ReactNode;
-  options: { label: string; value: string }[];
-  placeholder?: string;
-};
-
-function buildSubsidizedQuestions(
-  resolvedGrade: GradeLetter | null
-): QuestionDef[] {
-  const questions: QuestionDef[] = [
+function buildAllSteps(answers: FormAnswers): QuestionDef[] {
+  const steps: QuestionDef[] = [
     {
-      id: "childType",
-      label: "다태아인가요?",
-      options: CHILD_TYPE_OPTIONS,
-    },
-    {
-      id: "premature",
-      label: "미숙아인가요?",
-      helperText:
-        "37주 또는 체중 2.5kg 미만 출생아 가정은 더 많은 지원을 받을 수 있어요.",
-      options: YES_NO_OPTIONS,
-    },
-    {
-      id: "disability",
-      label: "중증 장애 등급이 있으신가요?",
-      helperText: "몸이 불편하신 분들께선 더 많은 지원을 받으실 수 있어요.",
-      options: YES_NO_OPTIONS,
+      id: "subsidy",
+      label: "정부지원 바우처 지원 대상이신가요?",
+      helperText: (
+        <>
+          지원 대상 여부는{" "}
+          <a
+            href="https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclInsertPwnbPage.do"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pricing-modal__link"
+          >
+            여기
+          </a>
+          에서 확인하실 수 있어요.
+        </>
+      ),
+      options: [
+        { label: "네", value: "yes" },
+        { label: "아니오", value: "no" },
+      ],
     },
   ];
 
-  // Last question depends on resolved grade
-  if (resolvedGrade === "A") {
-    questions.push({
-      id: "birthOrder",
-      label: "몇번째 출산이신가요?",
-      options: BIRTH_ORDER_OPTIONS,
-    });
-  } else if (
-    resolvedGrade === "B" ||
-    resolvedGrade === "C" ||
-    resolvedGrade === "D"
-  ) {
-    questions.push({
-      id: "staffCount",
-      label: "추가 인력이 필요하신가요?",
-      options: YES_NO_OPTIONS,
-    });
+  if (answers.subsidy === "yes") {
+    steps.push(
+      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS },
+      {
+        id: "premature",
+        label: "미숙아인가요?",
+        helperText: "37주 또는 체중 2.5kg 미만 출생아 가정은 더 많은 지원을 받을 수 있어요.",
+        options: YES_NO_OPTIONS,
+      },
+      {
+        id: "disability",
+        label: "중증 장애 등급이 있으신가요?",
+        helperText: "몸이 불편하신 분들께선 더 많은 지원을 받으실 수 있어요.",
+        options: YES_NO_OPTIONS,
+      },
+    );
+
+    // Last question depends on resolved grade
+    const childType = answers.childType as "단태아" | "쌍태아" | "삼태아" | "사태아이상" | undefined;
+    if (childType) {
+      const grade = resolveGrade(childType, answers.premature === "yes", answers.disability === "yes");
+      if (grade === "A") {
+        steps.push({ id: "birthOrder", label: "몇번째 출산이신가요?", options: BIRTH_ORDER_OPTIONS });
+      } else {
+        steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", options: YES_NO_OPTIONS });
+      }
+    }
+  } else if (answers.subsidy === "no") {
+    steps.push(
+      { id: "servicePeriod", label: "서비스 기간", options: SERVICE_PERIOD_OPTIONS, placeholder: "기간을 선택해 주세요" },
+      { id: "liveIn", label: "입주 서비스를 찾고 계시나요?", options: LIVE_IN_OPTIONS },
+      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS },
+    );
   }
 
-  return questions;
-}
-
-function buildUnsubsidizedQuestions(): QuestionDef[] {
-  return [
-    {
-      id: "servicePeriod",
-      label: "서비스 기간",
-      options: SERVICE_PERIOD_OPTIONS,
-      placeholder: "기간을 선택해 주세요",
-    },
-    {
-      id: "liveIn",
-      label: "입주 서비스를 찾고 계시나요?",
-      options: LIVE_IN_OPTIONS,
-    },
-    {
-      id: "childType",
-      label: "다태아인가요?",
-      options: CHILD_TYPE_OPTIONS,
-    },
-  ];
-}
-
-function getVisibleCount(
-  questions: QuestionDef[],
-  answers: FormAnswers
-): number {
-  let count = 0;
-  for (const q of questions) {
-    count++;
-    if (answers[q.id] === undefined) break;
-  }
-  return count;
+  return steps;
 }
