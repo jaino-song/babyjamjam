@@ -336,7 +336,7 @@ img { max-width: 100%; display: block; }
   padding: 24px; background: var(--bjj-color-bg);
   border-radius: 20px; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1);
   display: flex; flex-direction: column; gap: 24px;
-  width: 100%; max-width: 440px; z-index: 10;
+  width: 100%; max-width: 528px; z-index: 10;
   min-height: 620px;
 }
 .pricing-modal__header {
@@ -694,9 +694,9 @@ img { max-width: 100%; display: block; }
 
 .bv1-main { width: 100%; padding-bottom: var(--bjj-section-gap); }
 
-.bv1-split { display: grid; grid-template-columns: 1fr 380px; gap: 0; width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--bjj-color-divider); box-shadow: var(--bjj-shadow-card); }
+.bv1-split { display: grid; grid-template-columns: 1fr 32%; gap: 0; width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--bjj-color-divider); box-shadow: var(--bjj-shadow-card); }
 
-.bv1-map { position: relative; background: linear-gradient(135deg, #eef5ff 0%, #f8faff 100%); min-height: 580px; }
+.bv1-map { position: relative; background: linear-gradient(135deg, #eef5ff 0%, #f8faff 100%); aspect-ratio: 520 / 580; }
 .bv1-map__placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; color: var(--bjj-color-primary); opacity: 0.5; }
 .bv1-map__label { font-family: var(--bjj-font-heading); font-weight: 700; font-size: 16px; }
 .bv1-map__sublabel { font-family: var(--bjj-font-body); font-size: 12px; color: var(--bjj-color-text-paragraph); }
@@ -745,7 +745,10 @@ img { max-width: 100%; display: block; }
 .krm-province--unavailable { fill: #e8eaed; cursor: default; opacity: 0.7; pointer-events: none; }
 .krm-province--available:hover { fill: var(--bjj-color-primary); filter: brightness(1.15); }
 .krm-province--selected { fill: var(--bjj-color-primary); }
-.krm-province--selected:hover { filter: brightness(0.95); }
+.krm-muni { stroke: #fff; stroke-width: 0.8; transition: fill 0.2s, filter 0.2s; }
+.krm-muni--available { fill: #c5d8f0; cursor: pointer; }
+.krm-muni--unavailable { fill: #e8eaed; cursor: default; opacity: 0.6; pointer-events: none; }
+.krm-muni--available:hover { fill: var(--bjj-color-primary); filter: brightness(1.15); }
 
 /* Sidebar reset button */
 .bv1-sidebar__reset {
@@ -947,11 +950,12 @@ img { max-width: 100%; display: block; }
 .bm__breadcrumb-sep { color: #ccc; margin: 0 4px; }
 .bm__breadcrumb-current { color: var(--bjj-color-primary); font-weight: 700; }
 .bm__back {
-  padding: 8px 16px; background: #f0f2f5; border: 1px solid #ddd; border-radius: 8px;
-  font-family: var(--bjj-font-heading); font-size: 13px; font-weight: 600;
-  color: #555; cursor: pointer; transition: all 0.2s; align-self: flex-start;
+  padding: 0 20px; height: 40px; display: inline-flex; align-items: center;
+  background: var(--bjj-color-bg); border: 1px solid var(--bjj-color-primary); border-radius: 32px;
+  font-family: var(--bjj-font-heading); font-size: 15px; font-weight: 500;
+  color: var(--bjj-color-primary); cursor: pointer; transition: all 0.2s; align-self: flex-start;
 }
-.bm__back:hover { background: #e4e7ec; color: #333; }
+.bm__back:hover { background: var(--bjj-color-primary); color: #fff; }
 
 .bm__map-container {
   flex: 1; padding: 16px 32px 24px; display: flex; align-items: center; justify-content: center;
@@ -1045,7 +1049,7 @@ img { max-width: 100%; display: block; }
   .branches-hero__canvas { height: 380px; }
 
   /* Branches variants — tablet */
-  .bv1-split { grid-template-columns: 1fr 320px; }
+  .bv1-split { grid-template-columns: 1fr 36%; }
   .bv2-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bv3-card { flex-direction: column; }
   .bv3-card__right { border-left: none; border-top: 1px solid var(--bjj-color-divider); min-width: 0; }
@@ -1119,7 +1123,7 @@ img { max-width: 100%; display: block; }
 
   /* Branches variants — mobile */
   .bv1-split { grid-template-columns: 1fr; height: auto; }
-  .bv1-map { height: 280px; }
+  .bv1-map { aspect-ratio: 520 / 580; }
   .bv1-sidebar { border-left: none; border-top: 1px solid var(--bjj-color-divider); }
   .bv1-list { max-height: 400px; }
   .bv2-grid { grid-template-columns: 1fr; }
