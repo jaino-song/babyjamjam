@@ -336,7 +336,7 @@ img { max-width: 100%; display: block; }
 
 /* ===== PRICING MODAL ===== */
 .pricing-modal {
-  padding: 5%; background: var(--bjj-color-bg);
+  padding: 20px 40px; background: var(--bjj-color-bg);
   border-radius: 24px; box-shadow: 0 32px 80px rgba(0,36,87,0.18);
   display: flex; flex-direction: column; gap: 24px;
   width: 780px; height: fit-content; max-height: 80vh; overflow: visible; z-index: 10;
@@ -1053,7 +1053,7 @@ img { max-width: 100%; display: block; }
 
 /* Form panel */
 .bm__form-panel {
-  padding: 16px 40px; display: flex; flex-direction: column; gap: 16px;
+  padding: 24px 40px; display: flex; flex-direction: column; gap: 16px;
   overflow-y: auto; max-height: 70vh;
 }
 .bm__form-intro p { color: var(--bjj-color-text-paragraph); }
