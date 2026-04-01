@@ -16,13 +16,13 @@ export function ListItem({ number, description, className }: ListItemProps) {
       data-component="molecule-list-item"
     >
       <span
-        className="text-medium-p font-medium font-body text-bjj-text-paragraph shrink-0"
+        className="medium-p shrink-0"
         data-component="molecule-list-item-number"
       >
         {number}
       </span>
       <span
-        className="text-medium-p font-medium font-body text-bjj-text-paragraph"
+        className="medium-p"
         data-component="molecule-list-item-description"
       >
         {description}

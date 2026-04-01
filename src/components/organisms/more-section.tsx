@@ -40,7 +40,8 @@ export function MoreSection({ className }: MoreSectionProps) {
       data-component="organism-more-section"
     >
       <h2
-        className="text-h2 font-extrabold font-heading text-bjj-primary text-center"
+        className="h2"
+        style={{ color: "var(--bjj-color-primary)" }}
         data-component="organism-more-section-title"
       >
         아가잼잼이면 해결되니까.

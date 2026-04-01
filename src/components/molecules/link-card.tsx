@@ -21,13 +21,14 @@ export function LinkCard({ title, description, buttonText, buttonHref, className
         data-component="molecule-link-card-content"
       >
         <h3
-          className="text-h4 font-extrabold font-heading text-bjj-primary"
+          className="h4"
+          style={{ color: "var(--bjj-color-primary)" }}
           data-component="molecule-link-card-title"
         >
           {title}
         </h3>
         <p
-          className="text-medium-p font-medium font-body text-bjj-text-paragraph max-w-[350px]"
+          className="medium-p max-w-[350px]"
           data-component="molecule-link-card-description"
         >
           {description}

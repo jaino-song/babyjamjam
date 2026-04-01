@@ -20,21 +20,20 @@ export function DualColorHeading({
   return (
     <Tag
       className={cn(
-        "text-h2 font-extrabold font-heading",
-        align === "left" ? "text-left" : "text-center",
+        align === "left" ? "h2-left" : "h2",
         className
       )}
       data-component="molecule-dual-color-heading"
     >
       <span
-        className="text-bjj-text-muted"
+        style={{ color: "var(--bjj-color-text-muted)" }}
         data-component="molecule-dual-color-heading-muted"
       >
         {mutedText}
       </span>
       <br />
       <span
-        className="text-bjj-primary"
+        style={{ color: "var(--bjj-color-primary)" }}
         data-component="molecule-dual-color-heading-primary"
       >
         {primaryText}
