@@ -1,39 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { FormQuestion } from "@/components/molecules/form-question";
+import { useState, useCallback } from "react";
+import {
+  SelectDropdown,
+  type SelectOption,
+} from "@/components/ui/select-dropdown";
 import {
   type GradeLetter,
-  STAFF_OPTIONS,
   resolveGrade,
 } from "@/lib/voucher-type";
+import { cn } from "@/lib/utils";
 
-const YES_NO_OPTIONS = [
+const YES_NO_OPTIONS: SelectOption[] = [
   { label: "네", value: "yes" },
   { label: "아니오", value: "no" },
 ];
 
-const CHILD_TYPE_OPTIONS = [
+const CHILD_TYPE_OPTIONS: SelectOption[] = [
   { label: "단태아", value: "단태아" },
   { label: "쌍태아", value: "쌍태아" },
   { label: "삼태아", value: "삼태아" },
   { label: "사태아 이상", value: "사태아이상" },
 ];
 
-const BIRTH_ORDER_OPTIONS = [
+const BIRTH_ORDER_OPTIONS: SelectOption[] = [
   { label: "첫째아", value: "첫째아" },
   { label: "둘째아", value: "둘째아" },
   { label: "셋째아 이상", value: "셋째아이상" },
 ];
 
-const SERVICE_PERIOD_OPTIONS = [
+const SERVICE_PERIOD_OPTIONS: SelectOption[] = [
   { label: "5일", value: "5" },
   { label: "10일", value: "10" },
   { label: "15일", value: "15" },
   { label: "20일", value: "20" },
 ];
 
-const LIVE_IN_OPTIONS = [
+const LIVE_IN_OPTIONS: SelectOption[] = [
   { label: "네, 입주 서비스 희망", value: "yes" },
   { label: "아니오, 출퇴근 서비스 희망", value: "no" },
 ];
@@ -44,8 +47,10 @@ type QuestionDef = {
   id: string;
   label: string;
   helperText?: React.ReactNode;
-  options: { label: string; value: string }[];
+  options: SelectOption[];
   placeholder?: string;
+  /** "buttons" for 2-option yes/no, "dropdown" for multi-option */
+  inputType: "buttons" | "dropdown";
 };
 
 interface PricingFormModalProps {
@@ -63,28 +68,28 @@ export function PricingFormModal({
 }: PricingFormModalProps) {
   const [step, setStep] = useState(0);
 
-  // Build all steps: Q1 (subsidy) + conditional questions
   const allSteps = buildAllSteps(answers);
   const totalSteps = allSteps.length;
   const currentQuestion = allSteps[step];
   const isLastStep = step === totalSteps - 1;
-  // Show min 4 circles (unsubsidized count), 5 if subsidized
   const displayStepCount = answers.subsidy === "yes" ? 5 : 4;
-  const currentAnswered = currentQuestion
-    ? answers[currentQuestion.id] !== undefined
-    : false;
 
-  const handleNext = () => {
-    if (isLastStep && currentAnswered) {
+  const advance = useCallback(() => {
+    if (isLastStep) {
       onSubmit();
-    } else if (currentAnswered && step < totalSteps - 1) {
-      setStep(step + 1);
+    } else if (step < totalSteps - 1) {
+      setStep((s) => s + 1);
     }
-  };
+  }, [isLastStep, onSubmit, step, totalSteps]);
 
-  const handlePrev = () => {
-    if (step > 0) setStep(step - 1);
-  };
+  const handleSelect = useCallback(
+    (questionId: string, value: string) => {
+      onAnswer(questionId, value);
+      // Auto-advance after a short delay for visual feedback
+      setTimeout(advance, 200);
+    },
+    [onAnswer, advance]
+  );
 
   return (
     <div className="pricing-modal" data-component="organism-pricing-form-modal">
@@ -121,55 +126,50 @@ export function PricingFormModal({
       {/* Current question */}
       <div className="pricing-modal__body">
         {currentQuestion && (
-          <FormQuestion
-            key={currentQuestion.id}
-            label={currentQuestion.label}
-            helperText={currentQuestion.helperText}
-            options={currentQuestion.options}
-            value={answers[currentQuestion.id]}
-            placeholder={currentQuestion.placeholder}
-            onChange={(v) => onAnswer(currentQuestion.id, v)}
-            visible
-          />
-        )}
-      </div>
+          <div className="form-question form-question--visible" data-component="molecule-form-question">
+            <div className="form-question__header">
+              <span className="form-question__label">{currentQuestion.label}</span>
+              {currentQuestion.helperText && (
+                <span className="form-question__helper">{currentQuestion.helperText}</span>
+              )}
+            </div>
 
-      {/* Actions */}
-      <div className="wizard-actions">
-        <button
-          type="button"
-          className={`wizard-actions__btn wizard-actions__btn--prev ${step === 0 ? "wizard-actions__btn--hidden" : ""}`}
-          onClick={handlePrev}
-          disabled={step === 0}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="m15 18-6-6 6-6" />
-          </svg>
-          이전
-        </button>
-        <button
-          type="button"
-          className="wizard-actions__btn wizard-actions__btn--next"
-          onClick={handleNext}
-          disabled={!currentAnswered || isLoading}
-        >
-          {isLoading
-            ? "조회 중..."
-            : isLastStep
-              ? "서비스 가격 보기"
-              : "다음"}
-          {!isLastStep && !isLoading && (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          )}
-        </button>
+            {currentQuestion.inputType === "buttons" ? (
+              <div className="wizard-btn-group">
+                {currentQuestion.options.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    className={cn(
+                      "wizard-btn-group__btn",
+                      answers[currentQuestion.id] === opt.value && "wizard-btn-group__btn--selected"
+                    )}
+                    onClick={() => handleSelect(currentQuestion.id, opt.value)}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <SelectDropdown
+                options={currentQuestion.options}
+                value={answers[currentQuestion.id]}
+                placeholder={currentQuestion.placeholder}
+                onChange={(v) => handleSelect(currentQuestion.id, v)}
+              />
+            )}
+          </div>
+        )}
+
+        {isLoading && (
+          <p className="pricing-modal__loading">조회 중...</p>
+        )}
       </div>
     </div>
   );
 }
 
-// --- Build all steps as a flat array ---
+// --- Build all steps ---
 
 function buildAllSteps(answers: FormAnswers): QuestionDef[] {
   const steps: QuestionDef[] = [
@@ -190,45 +190,44 @@ function buildAllSteps(answers: FormAnswers): QuestionDef[] {
           에서 확인하실 수 있어요.
         </>
       ),
-      options: [
-        { label: "네", value: "yes" },
-        { label: "아니오", value: "no" },
-      ],
+      options: YES_NO_OPTIONS,
+      inputType: "buttons",
     },
   ];
 
   if (answers.subsidy === "yes") {
     steps.push(
-      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS },
+      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
       {
         id: "premature",
         label: "미숙아인가요?",
         helperText: "37주 또는 체중 2.5kg 미만 출생아 가정은 더 많은 지원을 받을 수 있어요.",
         options: YES_NO_OPTIONS,
+        inputType: "buttons",
       },
       {
         id: "disability",
         label: "중증 장애 등급이 있으신가요?",
         helperText: "몸이 불편하신 분들께선 더 많은 지원을 받으실 수 있어요.",
         options: YES_NO_OPTIONS,
+        inputType: "buttons",
       },
     );
 
-    // Last question depends on resolved grade
     const childType = answers.childType as "단태아" | "쌍태아" | "삼태아" | "사태아이상" | undefined;
     if (childType) {
       const grade = resolveGrade(childType, answers.premature === "yes", answers.disability === "yes");
       if (grade === "A") {
-        steps.push({ id: "birthOrder", label: "몇번째 출산이신가요?", options: BIRTH_ORDER_OPTIONS });
+        steps.push({ id: "birthOrder", label: "몇번째 출산이신가요?", options: BIRTH_ORDER_OPTIONS, inputType: "dropdown" });
       } else {
-        steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", options: YES_NO_OPTIONS });
+        steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", options: YES_NO_OPTIONS, inputType: "buttons" });
       }
     }
   } else if (answers.subsidy === "no") {
     steps.push(
-      { id: "servicePeriod", label: "서비스 기간", options: SERVICE_PERIOD_OPTIONS, placeholder: "기간을 선택해 주세요" },
-      { id: "liveIn", label: "입주 서비스를 찾고 계시나요?", options: LIVE_IN_OPTIONS },
-      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS },
+      { id: "servicePeriod", label: "서비스 기간", options: SERVICE_PERIOD_OPTIONS, placeholder: "기간을 선택해 주세요", inputType: "dropdown" },
+      { id: "liveIn", label: "입주 서비스를 찾고 계시나요?", options: LIVE_IN_OPTIONS, inputType: "buttons" },
+      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
     );
   }
 
