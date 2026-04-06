@@ -23,12 +23,6 @@ const CHILD_TYPE_OPTIONS: SelectOption[] = [
   { label: "사태아 이상", value: "사태아이상" },
 ];
 
-const BIRTH_ORDER_OPTIONS: SelectOption[] = [
-  { label: "첫째아", value: "첫째아" },
-  { label: "둘째아", value: "둘째아" },
-  { label: "셋째아 이상", value: "셋째아이상" },
-];
-
 const SERVICE_PERIOD_OPTIONS: SelectOption[] = [
   { label: "5일", value: "5" },
   { label: "10일", value: "10" },
@@ -56,7 +50,7 @@ type QuestionDef = {
 interface PricingFormModalProps {
   answers: FormAnswers;
   onAnswer: (questionId: string, value: string) => void;
-  onSubmit: () => void;
+  onSubmit: (finalAnswers: FormAnswers) => void;
   isLoading?: boolean;
 }
 
@@ -72,7 +66,8 @@ export function PricingFormModal({
   const totalSteps = allSteps.length;
   const currentQuestion = allSteps[step];
   const isLastStep = step === totalSteps - 1;
-  const displayStepCount = answers.subsidy === "yes" ? 5 : 4;
+  const isMultiple = answers.childType && answers.childType !== "단태아";
+  const displayStepCount = answers.subsidy === "yes" ? (isMultiple ? 5 : 4) : 4;
 
   const handleSelect = useCallback(
     (questionId: string, value: string) => {
@@ -85,7 +80,7 @@ export function PricingFormModal({
 
       setTimeout(() => {
         if (newIsLast) {
-          onSubmit();
+          onSubmit(newAnswers);
         } else {
           setStep((s) => s + 1);
         }
@@ -200,7 +195,7 @@ function buildAllSteps(answers: FormAnswers): QuestionDef[] {
 
   if (answers.subsidy === "yes") {
     steps.push(
-      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
+      { id: "childType", label: "다태아인가요?", helperText: "다태아는 더 많은 지원을 받을 수 있어요.", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
       {
         id: "premature",
         label: "미숙아인가요?",
@@ -218,13 +213,8 @@ function buildAllSteps(answers: FormAnswers): QuestionDef[] {
     );
 
     const childType = answers.childType as "단태아" | "쌍태아" | "삼태아" | "사태아이상" | undefined;
-    if (childType) {
-      const grade = resolveGrade(childType, answers.premature === "yes", answers.disability === "yes");
-      if (grade === "A") {
-        steps.push({ id: "birthOrder", label: "몇번째 출산이신가요?", options: BIRTH_ORDER_OPTIONS, inputType: "dropdown" });
-      } else {
-        steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", options: YES_NO_OPTIONS, inputType: "buttons" });
-      }
+    if (childType && childType !== "단태아") {
+      steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", helperText: "다태아 출산 가정은 2명 이상의 관리사 고용이 가능해요.", options: YES_NO_OPTIONS, inputType: "buttons" });
     }
   } else if (answers.subsidy === "no") {
     steps.push(

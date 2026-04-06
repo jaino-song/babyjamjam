@@ -1,13 +1,17 @@
+import type { LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface IconLockupProps {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   description: string;
   className?: string;
 }
 
 export function IconLockup({ icon, title, description, className }: IconLockupProps) {
+  const Icon = icon;
+
   return (
     <div
       className={cn(
@@ -16,12 +20,7 @@ export function IconLockup({ icon, title, description, className }: IconLockupPr
       )}
       data-component="molecule-icon-lockup"
     >
-      <img
-        src={icon}
-        alt=""
-        className="w-6 h-6"
-        data-component="molecule-icon-lockup-icon"
-      />
+      <Icon className="icon-lockup__icon" aria-hidden="true" data-component="molecule-icon-lockup-icon" />
       <div
         className="flex flex-col"
         data-component="molecule-icon-lockup-content"

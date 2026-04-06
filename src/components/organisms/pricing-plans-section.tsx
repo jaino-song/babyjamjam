@@ -17,6 +17,7 @@ interface PricingPlansSectionProps {
   showGradeToggle?: boolean;
   selectedGradeName?: GradeName;
   onGradeNameChange?: (name: GradeName) => void;
+  onRequery?: () => void;
   blurred?: boolean;
 }
 
@@ -27,6 +28,7 @@ export function PricingPlansSection({
   showGradeToggle = false,
   selectedGradeName = "통합",
   onGradeNameChange,
+  onRequery,
   blurred = false,
 }: PricingPlansSectionProps) {
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
@@ -52,30 +54,41 @@ export function PricingPlansSection({
       </div>
 
       {showGradeToggle && (
-        <div
-          className="pricing-plans__grade-toggle"
-          role="tablist"
-          aria-label="등급 선택"
-          style={{
-            "--grade-tab-index": activeIndex,
-            "--grade-tab-count": GRADE_NAMES.length,
-          } as React.CSSProperties}
-        >
-          {GRADE_NAMES.map((name) => (
+        <div className="pricing-plans__toggle-row">
+          <div
+            className="pricing-plans__grade-toggle"
+            role="tablist"
+            aria-label="등급 선택"
+            style={{
+              "--grade-tab-index": activeIndex,
+              "--grade-tab-count": GRADE_NAMES.length,
+            } as React.CSSProperties}
+          >
+            {GRADE_NAMES.map((name) => (
+              <button
+                key={name}
+                type="button"
+                role="tab"
+                aria-selected={name === selectedGradeName}
+                className={cn(
+                  "pricing-plans__grade-tab",
+                  name === selectedGradeName && "pricing-plans__grade-tab--active"
+                )}
+                onClick={() => onGradeNameChange?.(name)}
+              >
+                {name} 등급
+              </button>
+            ))}
+          </div>
+          {onRequery && (
             <button
-              key={name}
               type="button"
-              role="tab"
-              aria-selected={name === selectedGradeName}
-              className={cn(
-                "pricing-plans__grade-tab",
-                name === selectedGradeName && "pricing-plans__grade-tab--active"
-              )}
-              onClick={() => onGradeNameChange?.(name)}
+              className="pricing-plans__requery-btn"
+              onClick={onRequery}
             >
-              {name} 등급
+              다시 조회
             </button>
-          ))}
+          )}
         </div>
       )}
 

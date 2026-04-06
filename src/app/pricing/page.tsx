@@ -18,20 +18,20 @@ export default function PricingPage() {
     <div className="page">
       <SiteNavigation activeLabel="서비스 비용" />
 
-      <section className="pricing-hero">
-        <div className="pricing-hero__bg">
-          <img
-            src="/images/hero-bg-22ebe1.png"
-            alt="Hero background"
-            className="pricing-hero__bg-image"
-          />
-        </div>
-        <h1 className="h1 pricing-hero__title">
-          {"처음부터 숨김없이\n안내하는 서비스 가격"}
-        </h1>
-      </section>
-
       <main className="pricing-page-main">
+        <section className="pricing-hero">
+          <div className="pricing-hero__bg">
+            <img
+              src="/images/hero-bg-22ebe1.png"
+              alt="Hero background"
+              className="pricing-hero__bg-image"
+            />
+          </div>
+          <h1 className="h1 pricing-hero__title">
+            {"처음부터 숨김없이\n안내하는 서비스 가격"}
+          </h1>
+        </section>
+
         <PricingPageClient />
 
         <section className="hero-image pricing-page__banner">

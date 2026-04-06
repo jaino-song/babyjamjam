@@ -23,12 +23,6 @@ export function HeroSection({ className }: HeroSectionProps) {
           className="w-full h-full object-cover"
           data-component="organism-hero-section-image"
         />
-        {/* 상단 흰색 페이드 오버레이 */}
-        <div
-          className="absolute top-0 left-0 right-0 h-[15%] bg-gradient-to-b from-white to-transparent"
-          aria-hidden="true"
-          data-component="organism-hero-section-gradient"
-        />
       </div>
       <h1
         className="text-h1 font-extrabold font-heading text-bjj-primary whitespace-pre-line leading-tight tracking-widest w-full"

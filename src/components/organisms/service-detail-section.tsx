@@ -1,3 +1,5 @@
+import { Building2, CalendarCheck2, MessageSquareMore, UserCheck, type LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 import { DualColorHeading } from "@/components/molecules/dual-color-heading";
@@ -5,30 +7,30 @@ import { IconLockup } from "@/components/molecules/icon-lockup";
 
 const ICON_LOCKUP_ITEMS = [
   {
-    icon: "/images/icon-cable.svg",
+    icon: UserCheck,
     title: "전담마크",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "한 명의 담당자가 첫 상담부터 사후처리까지 전담해, 작은 내용 하나까지 빠짐없이 챙깁니다.",
   },
   {
-    icon: "/images/icon-earth.svg",
+    icon: CalendarCheck2,
     title: "임신 기간 전체 관리",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "출산 전부터 필요한 정보를 안내하고 산모님의 상황을 세심히 살펴, 서비스 종료 후까지 꼼꼼히 챙깁니다.",
   },
   {
-    icon: "/images/icon-account.svg",
+    icon: Building2,
     title: "기업형 운영 관리",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "주먹구구식 운영이 아닌, 체계적인 운영 기준으로 높은 서비스 품질을 안정적으로 유지합니다.",
   },
   {
-    icon: "/images/icon-chart.svg",
-    title: "고객 피드백 응답형",
+    icon: MessageSquareMore,
+    title: "실시간 고객 피드백 응답형",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "서비스를 이용하시는 동안 불편함이 없으시도록, 서비스 시작 후엔 산모님의 피드백을 실시간으로 확인하고 반영합니다.",
   },
-];
+] satisfies Array<{ icon: LucideIcon; title: string; description: string }>;
 
 interface ServiceDetailSectionProps {
   className?: string;
@@ -53,7 +55,9 @@ export function ServiceDetailSection({ className }: ServiceDetailSectionProps) {
           className="text-big-p font-medium font-body text-bjj-text-paragraph max-w-[1000px] tracking-wide leading-relaxed"
           data-component="organism-service-detail-description"
         >
-          바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다. 창가에 놓인 종이배는 길을 잃은 듯 천천히 고개를 돌리며, 고요한 박자에 맞춰 말 없는 문장을 접었다 폈다 한다. 어딘가에서는 반짝이는 점들이 서로를 지나치고, 또 다른 곳에서는 비슷한 모양의 단어들이 줄을 맞춰 서 있다.
+          아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
+          지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
+          서비스가 정확히 제공되도록 운영합니다.
         </p>
       </div>
       <div

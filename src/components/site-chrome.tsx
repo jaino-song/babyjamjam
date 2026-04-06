@@ -5,7 +5,7 @@ import { BookingButton } from "./booking-button";
 const NAV_ITEMS = [
   { label: "산후도우미", href: "/postpartum-care" },
   { label: "서비스 비용", href: "/pricing" },
-  { label: "지점 찾기", href: "/branches" },
+  { label: "지점 찾기", href: "/locations" },
   { label: "문의하기", href: "#" },
   { label: "고객센터", href: "#" },
 ];
@@ -15,25 +15,25 @@ const PROCESS_STEPS = [
     num: "01",
     title: "예약금 입금",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "예약금 입금으로 서비스 예약이 확정되면, 아가잼잼은 관리사 배정, 계약서 준비, 산모 등록 등 서비스 진행을 위한 절차를 준비합니다.",
   },
   {
     num: "02",
     title: "계약서 작성",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "서비스 진행에 필요한 계약서 작성을 모바일에서 전자문서로 완료합니다.",
   },
   {
     num: "03",
     title: "서비스 시작",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "서비스 기간 동안 실시간 고객 응대를 진행하며, 서비스 중 발생하는 문의 사항에 대해 즉각적으로 대응합니다.",
   },
   {
     num: "04",
     title: "마무리",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "서비스 종료 전에 종료 안내 연락을 드리고, 모니터링 설문과 환급 절차 설명 등 서비스 종료에 필요한 절차를 진행하고 종료하게 됩니다.",
   },
 ];
 
@@ -51,7 +51,7 @@ const MORE_CARDS = [
     href: "#",
   },
   {
-    title: "예약하기",
+    title: "자주하는 질문",
     description:
       "출산 일정과 원하는 돌봄 범위를 먼저 정리해 두면 상담이 훨씬 빨라집니다.",
     href: "#",
@@ -139,11 +139,16 @@ export function SiteMoreSection() {
           <div key={card.title} className="link-card">
             <div className="link-card__content">
               <h3 className="h6 link-card__title">{card.title}</h3>
-              <p className="medium-p link-card__description">{card.description}</p>
             </div>
-            <SmartLink href={card.href} className="btn-primary">
-              더 알아보기
-            </SmartLink>
+            {card.title === "산후도우미 서비스" ? (
+              <SmartLink href={card.href} className="btn-primary">
+                더 알아보기
+              </SmartLink>
+            ) : (
+              <button type="button" className="btn-primary" disabled>
+                출시 예정
+              </button>
+            )}
           </div>
         ))}
       </div>

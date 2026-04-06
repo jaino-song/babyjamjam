@@ -44,39 +44,50 @@ function CareSectionHeading({
   );
 }
 
-function CareCardItem({
+function CareCardOverlay({
   card,
+  index,
   tone,
 }: {
   card: CareCardData;
+  index: number;
   tone: "maternal" | "newborn";
 }) {
   const imageSrc = card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[tone];
   const imageAlt = card.imageAlt ?? `${card.title} 서비스 이미지`;
 
   return (
-    <article className={`care-card care-card--${tone}`}>
-      <div className="care-card__preview">
-        <ImageBlock
-          variant="careCard"
-          src={imageSrc}
-          alt={imageAlt}
-          className="care-card__image"
-        />
-      </div>
-      <div className="care-card__body">
-        <h3 className="care-card__title">{card.title}</h3>
-        <p className="medium-p care-card__description">{card.description}</p>
+    <article className={`care-overlay-card care-overlay-card--${tone}`}>
+      <ImageBlock
+        variant="careCard"
+        src={imageSrc}
+        alt={imageAlt}
+        className="care-overlay-card__image"
+      />
+      <div className="care-overlay-card__overlay">
+        <span className="care-overlay-card__badge">{index + 1}</span>
+        <div className="care-overlay-card__text">
+          <h3 className="h6 care-overlay-card__title">{card.title}</h3>
+          <p className="medium-p care-overlay-card__desc">{card.description}</p>
+        </div>
       </div>
     </article>
   );
 }
 
-export function CareSectionCarousel({ sections }: { sections: CareSectionData[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+export function CareSectionCarousel({
+  sections,
+  initialActiveIndex = 0,
+  mirrored = false,
+}: {
+  sections: CareSectionData[];
+  initialActiveIndex?: number;
+  mirrored?: boolean;
+}) {
+  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
   return (
-    <section className="service-catalog">
+    <section className={`service-catalog${mirrored ? " service-catalog--mirrored" : ""}`}>
       <div className="care-carousel__toolbar">
         <div
           className="care-carousel__tabs"
@@ -121,16 +132,18 @@ export function CareSectionCarousel({ sections }: { sections: CareSectionData[] 
               onClick={distance === 1 ? () => setActiveIndex(index) : undefined}
               aria-hidden={distance > 1}
             >
-              <div className={`care-section-shell care-section-shell--${section.tone}`}>
-                <div className="care-section">
-                  <CareSectionHeading
-                    mutedText={section.mutedText}
-                    primaryText={section.primaryText}
-                  />
-                  <div className="care-card-grid">
-                    {section.cards.map((card) => (
-                      <CareCardItem key={card.title} card={card} tone={section.tone} />
-                    ))}
+              <div className="care-carousel__panel">
+                <div className={`care-section-shell care-section-shell--${section.tone}`}>
+                  <div className="care-section">
+                    <CareSectionHeading
+                      mutedText={section.mutedText}
+                      primaryText={section.primaryText}
+                    />
+                    <div className="care-overlay-stack">
+                      {section.cards.map((card, i) => (
+                        <CareCardOverlay key={card.title} card={card} index={i} tone={section.tone} />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,5 +152,36 @@ export function CareSectionCarousel({ sections }: { sections: CareSectionData[] 
         })}
       </div>
     </section>
+  );
+}
+
+export function CareSection({
+  section,
+  mirrored = false,
+}: {
+  section: CareSectionData;
+  mirrored?: boolean;
+}) {
+  return (
+    <div className={`care-section${mirrored ? " care-section--mirrored" : ""}`} style={{ padding: 0, width: "min-content" }}>
+      <h2 className="h3-left care-section__title" style={{ whiteSpace: "nowrap" }}>
+        <span className="care-section__title-muted">{section.mutedText}</span>
+        <br />
+        <span className="care-section__title-primary">{section.primaryText}</span>
+      </h2>
+      <div className="care-overlay-stack">
+        {section.cards.map((card, i) => (
+          <article key={card.title} className={`care-overlay-card care-overlay-card--${section.tone}`}>
+            <div className="care-overlay-card__overlay">
+              <span className="care-overlay-card__badge">{i + 1}</span>
+              <div className="care-overlay-card__text">
+                <h3 className="h6 care-overlay-card__title">{card.title}</h3>
+                <p className="medium-p care-overlay-card__desc">{card.description}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
   );
 }

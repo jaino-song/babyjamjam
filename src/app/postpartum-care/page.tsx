@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import {
   CareSectionCarousel,
+  CareSection,
   type CareCardData,
   type CareSectionData,
 } from "@/components/care-section-carousel";
@@ -21,90 +22,42 @@ export const metadata: Metadata = {
 const MATERNAL_CARE_CARDS: CareCardData[] = [
   {
     title: "산모 식사",
-    description: "회복 속도와 수유 리듬을 고려해 균형 잡힌 산모 식사 준비를 도와드려요.",
-    label: "산모 회복",
-    focus: "영양 밸런스",
-    highlights: ["회복식 준비", "수분 보충", "주방 동선 정리"],
+    description: "산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.",
+    imageSrc: "/images/care-maternal-meal.jpg",
+    imageAlt: "산모 식사 서비스 이미지",
   },
   {
-    title: "산모 좌욕",
-    description: "산후 회복 단계에 맞는 좌욕 준비와 편안한 사용 환경 정돈을 함께 챙겨드려요.",
-    label: "회복 루틴",
-    focus: "편안한 컨디션",
-    highlights: ["좌욕 준비", "사용 환경 정리", "생활 리듬 유지"],
+    title: "산모 휴식 제공",
+    description: "신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.",
+    imageSrc: "/images/care-maternal-rest.png",
+    imageAlt: "산모 휴식 제공 서비스 이미지",
   },
   {
-    title: "유방 케어",
-    description: "수유 전후 컨디션을 살피며 부담을 줄이는 유방 관리 루틴을 보조해요.",
-    label: "수유 지원",
-    focus: "부드러운 적응",
-    highlights: ["수유 전후 보조", "컨디션 체크", "기본 루틴 관리"],
-  },
-  {
-    title: "복부 케어",
-    description: "산후 회복에 맞춰 복부 컨디션을 살피고 일상 움직임이 무리 없도록 도와드려요.",
-    label: "회복 집중",
-    focus: "안정적인 움직임",
-    highlights: ["온열 루틴", "자세 보조", "회복 동선 관리"],
-  },
-  {
-    title: "다리/발 케어",
-    description: "붓기와 피로가 쌓이기 쉬운 다리와 발의 휴식 루틴을 편안하게 이어가요.",
-    label: "순환 관리",
-    focus: "가벼운 하루",
-    highlights: ["붓기 완화", "휴식 루틴", "생활 밸런스"],
-  },
-  {
-    title: "기타가족관리",
-    description: "가족의 일정과 생활 리듬을 고려해 산후 회복에 집중할 수 있는 환경을 만들어요.",
-    label: "가정 운영",
-    focus: "생활 안정",
-    highlights: ["가족 동선 조율", "일과 정돈", "회복 우선 환경"],
+    title: "집안 정리",
+    description: "산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.",
+    imageSrc: "/images/care-maternal-cleaning.png",
+    imageAlt: "집안 정리 서비스 이미지",
   },
 ];
 
 const NEWBORN_CARE_CARDS: CareCardData[] = [
   {
-    title: "아기 케어",
-    description: "수유와 수면, 안정을 중심으로 신생아의 하루 리듬을 세심하게 돌봐드려요.",
-    label: "신생아 기본",
-    focus: "안정감 있는 시작",
-    highlights: ["수유 보조", "수면 루틴", "안정 케어"],
+    title: "아기 수유",
+    description: "아기 목욕, 기저귀 관리, 젖병 소독 등 신생아 건강에 필수적인 위생 관리를 실시합니다.",
+    imageSrc: "/images/care-newborn-feeding.png",
+    imageAlt: "아기 수유 서비스 이미지",
   },
   {
-    title: "위생 관리",
-    description: "아기의 생활 공간과 손위생, 사용 물품까지 위생 기준으로 차분히 관리해요.",
-    label: "위생 기준",
-    focus: "깨끗한 생활",
-    highlights: ["생활 공간 정리", "소독 보조", "물품 정돈"],
+    title: "아기 위생 관리",
+    description: "아기 목욕, 기저귀 관리, 젖병 소독 등 신생아 건강에 필수적인 위생 관리를 실시합니다.",
+    imageSrc: "/images/care-newborn-hygiene.png",
+    imageAlt: "아기 위생 관리 서비스 이미지",
   },
   {
-    title: "신생아 빨래",
-    description: "손수건과 의류를 분리해 세탁하고, 자주 쓰는 아기 용품을 정돈해드려요.",
-    label: "세탁 관리",
-    focus: "가벼운 준비",
-    highlights: ["분리 세탁", "의류 정리", "일상 준비"],
-  },
-  {
-    title: "육아 트러블 및 기타 관리",
-    description: "초보 부모가 당황하기 쉬운 순간을 함께 정리하며 육아 리듬을 맞춰드려요.",
-    label: "육아 적응",
-    focus: "차분한 대응",
-    highlights: ["상황 정리", "기본 응대", "생활 리듬 유지"],
-  },
-  {
-    title: "자녀 돌보기",
-    description: "첫째와 신생아의 일과가 충돌하지 않도록 가족 전체의 흐름을 부드럽게 연결해요.",
-    label: "형제 케어",
-    focus: "가족 균형",
-    highlights: ["등하원 보조", "놀이 연결", "일상 리듬 유지"],
-  },
-  {
-    title: "간단한 청소 및 세탁",
-    description: "회복과 돌봄에 필요한 기본 생활 공간을 무리 없이 안정적으로 유지해드려요.",
-    label: "생활 보조",
-    focus: "정돈된 공간",
-    highlights: ["가벼운 청소", "기본 세탁", "공간 정리"],
+    title: "전문가의 육아 팁 전수",
+    description: "수유, 목욕, 수면 등 신생아 건강에 필수적인 전문가의 지식과 노하우를 전수합니다.",
+    imageSrc: "/images/care-newborn-tips.png",
+    imageAlt: "전문가의 육아 팁 전수 서비스 이미지",
   },
 ];
 
@@ -127,40 +80,67 @@ const CARE_SECTIONS: CareSectionData[] = [
   },
 ];
 
+const CARE_SUMMARY: CareSectionData = {
+  id: "summary",
+  tone: "newborn",
+  tabLabel: "",
+  mutedText: "돈만 받으면 끝?",
+  primaryText: "아가잼잼은 처음부터 끝까지 집중 케어",
+  cards: NEWBORN_CARE_CARDS,
+};
+
 export default function PostpartumCarePage() {
   return (
     <div className="page">
       <SiteNavigation activeLabel="산후도우미" />
 
-      <section className="service-hero">
-        <div className="service-hero__canvas">
-          <div className="service-hero__orb service-hero__orb--left" />
-          <div className="service-hero__orb service-hero__orb--right" />
-          <div className="service-hero__note">
-            <span className="service-hero__eyebrow">POSTPARTUM CARE SYSTEM</span>
-            <div className="service-hero__metrics">
-              <div className="service-hero__metric-card">
-                <span className="service-hero__metric-label">회복 루틴</span>
-                <strong className="service-hero__metric-value">산모 케어</strong>
-              </div>
-              <div className="service-hero__metric-card">
-                <span className="service-hero__metric-label">돌봄 범위</span>
-                <strong className="service-hero__metric-value">신생아 케어</strong>
-              </div>
-              <div className="service-hero__metric-card">
-                <span className="service-hero__metric-label">생활 밸런스</span>
-                <strong className="service-hero__metric-value">가정 운영</strong>
-              </div>
+      <main className="service-page-main">
+        <section className="service-hero">
+          <div className="hero__bg">
+            <img
+              src="/images/hero-bg-22ebe1.png"
+              alt="Hero background"
+              className="hero__bg-image"
+            />
+          </div>
+          <h1 className="h1 service-hero__title">
+            {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
+          </h1>
+        </section>
+        <section
+          className="care-carousel-grid-bleed"
+          style={{
+            width: "100vw",
+            maxWidth: "100vw",
+            marginInline: "calc(50% - 50vw)",
+            paddingLeft: "clamp(24px, 5vw, 80px)",
+            paddingRight: 0,
+            boxSizing: "border-box",
+            display: "flex",
+            justifyContent: "center",
+            overflowX: "hidden",
+          }}
+        >
+          <div
+            className="care-carousel-grid"
+            style={{
+              display: "flex",
+              flexWrap: "nowrap",
+              justifyContent: "center",
+              gap: "100px",
+              width: "100%",
+              maxWidth: "100%",
+              alignItems: "start",
+            }}
+          >
+            <div style={{ minWidth: 0, width: "30vw" }}>
+              <CareSectionCarousel sections={CARE_SECTIONS} initialActiveIndex={0} />
+            </div>
+            <div style={{ minWidth: 0, width: "fit-content" }}>
+              <CareSection section={CARE_SUMMARY} mirrored />
             </div>
           </div>
-        </div>
-        <h1 className="h1 service-hero__title">
-          {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
-        </h1>
-      </section>
-
-      <main className="service-page-main">
-        <CareSectionCarousel sections={CARE_SECTIONS} />
+        </section>
 
         <section className="hero-image service-page__banner">
           <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
