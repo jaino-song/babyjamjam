@@ -113,7 +113,7 @@ export function SiteProcessSection() {
   return (
     <section className="process">
       <div className="process__header">
-        <h2 className="process__title">산후도우미 서비스 진행 절차</h2>
+        <h2 className="h2 process__title">산후도우미 서비스 진행 절차</h2>
       </div>
       <div className="process__steps">
         {PROCESS_STEPS.map((step) => (
@@ -133,7 +133,7 @@ export function SiteProcessSection() {
 export function SiteMoreSection() {
   return (
     <section className="more">
-      <h2 className="h3 more__title">아가잼잼이면 해결되니까.</h2>
+      <h2 className="h2 more__title">아가잼잼이면 해결되니까.</h2>
       <div className="more__cards">
         {MORE_CARDS.map((card) => (
           <div key={card.title} className="link-card">

@@ -74,6 +74,11 @@ range line 은 셀 자체가 아니라 `::after` 로 그린다.
 
 즉, 금요일 셀 안을 직선으로 꽉 채우고 둥근 끝을 만들지 않는다.
 
+이 규칙은 두 경우에 모두 쓴다.
+
+- 주말을 스킵하고 다음 주중으로 이어질 때
+- 이번 달 이후 다음 달로도 이어지는 느낌을 줄 때
+
 ### 4. 월요일 재시작도 왼쪽 끝에서 직선으로 시작한다
 
 주말을 지난 다음 월요일은 새로운 일정 시작처럼 보이면 안 된다. 이어지는 같은 일정처럼 보여야 하므로 `rangeResume` 을 사용한다.
@@ -103,15 +108,25 @@ range line 은 셀 자체가 아니라 `::after` 로 그린다.
 
 예시:
 
-- `21-23`: 주중 첫 구간
-- `24-25`: 주말, line 없음, dot 만 유지
-- `26-30`: 다음 주중 구간 재개
-- `31`: 현재는 dot 만 유지
+- `14-16`: 주중 첫 구간
+- `17-18`: 주말, line 없음
+- `19-23`: 다음 주중 구간 재개
+- `24-25`: 주말, line 없음
+- `26-30`: 다시 다음 주중 구간 재개
+- `30`: 다음 달로도 이어지는 느낌을 위해 `rangeContinue`
+- `31`: 현재는 line 없음
 
 구조 예시:
 
 ```html
-<div class="d range rangeStart">21</div>
+<div class="d range rangeStart">14</div>
+<div class="d range rangeMid">15</div>
+<div class="d range rangeEnd rangeContinue">16</div>
+<div class="d">17</div>
+<div class="d">18</div>
+<div class="d range rangeStart rangeResume">19</div>
+<div class="d range rangeMid">20</div>
+<div class="d range rangeMid">21</div>
 <div class="d range rangeMid">22</div>
 <div class="d range rangeEnd rangeContinue">23</div>
 <div class="d">24</div>
@@ -120,7 +135,7 @@ range line 은 셀 자체가 아니라 `::after` 로 그린다.
 <div class="d range rangeMid">27</div>
 <div class="d range rangeMid">28</div>
 <div class="d range rangeMid">29</div>
-<div class="d range rangeEnd">30</div>
+<div class="d range rangeEnd rangeContinue">30</div>
 ```
 
 ## 구현 원칙 요약
@@ -128,5 +143,6 @@ range line 은 셀 자체가 아니라 `::after` 로 그린다.
 - 시작점은 dot 기준에 맞춰 안쪽에서 시작한다.
 - 종료점은 진짜 종료일 때만 둥글게 끝낸다.
 - 주말 스킵 전 금요일은 끝까지 채우고 radius 를 없앤다.
+- 월말 이후로도 이어지는 마지막 평일도 끝까지 채우고 radius 를 없앤다.
 - 주말 뒤 월요일은 왼쪽 끝부터 직선으로 다시 시작한다.
 - seam 이 보이면 덮지 말고 좌우 좌표를 단순화한다.

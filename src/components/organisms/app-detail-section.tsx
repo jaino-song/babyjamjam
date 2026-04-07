@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { ListItem } from "@/components/molecules/list-item";
+import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 
 const LIST_ITEMS = [
   {
@@ -45,8 +46,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
           data-component="organism-app-detail-title-block"
         >
           <h2
-            className="h3-left"
-            style={{ color: "var(--bjj-color-primary)" }}
+            className="h2-left app-detail__hero-title"
             data-component="organism-app-detail-title"
           >
             아가잼잼 공식 앱은
@@ -55,10 +55,9 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
           </h2>
           <div
             className="app-detail__subtitle"
-            style={{ color: "var(--bjj-color-text-paragraph)" }}
             data-component="organism-app-detail-subtitle"
           >
-            <p className="h6">
+            <p className="app-detail__body-copy">
               아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
               복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
             </p>
@@ -76,20 +75,26 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
             />
           ))}
         </div>
-        <Button variant="primary" type="button" disabled>
-          출시 예정
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button variant="primary" type="button" disabled>
+            출시 예정
+          </Button>
+          <p className="text-xs text-gray-400">*출시 전까지는 유선으로 서비스 제공</p>
+        </div>
       </div>
       <div
         className="absolute right-0 top-0"
         data-component="organism-app-detail-phone"
       >
-        <img
-          src="/images/phone-mockup-294c7f.png"
-          alt="아가잼잼 앱"
-          className="w-[453px] h-[925px] object-contain"
-          data-component="organism-app-detail-phone-image"
-        />
+        <div className="app-detail__phone-shell" data-component="organism-app-detail-phone-image">
+          <div className="app-detail__phone-camera" />
+          <iframe
+            srcDoc={calendarMockups[0].html}
+            title="아가잼잼 앱 캘린더 목업"
+            className="app-detail__phone-screen"
+            scrolling="no"
+          />
+        </div>
       </div>
     </section>
   );

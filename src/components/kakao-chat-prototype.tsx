@@ -12,17 +12,105 @@ type Message = {
 };
 
 const MOCK_MESSAGES: Message[] = [
-  { id: 1, sender: "incoming", text: "안녕하세요,\n아가잼잼 상담 채널입니다.", time: "오후 2:18" },
-  { id: 2, sender: "incoming", text: "출산 예정일이 언제이신가요?", time: "오후 2:18" },
-  { id: 3, sender: "outgoing", text: "10월 초 예정이에요.", time: "오후 2:19" },
-  { id: 4, sender: "incoming", text: "좋아요. 정부지원 바우처 신청도\n함께 안내드릴게요.", time: "오후 2:19" },
-  { id: 5, sender: "incoming", text: "산모님 일정에 맞춰 추천 플랜을\n정리해서 보내드릴게요.", time: "오후 2:20" },
-  { id: 6, sender: "outgoing", text: "네, 비교해서 보고 싶어요.", time: "오후 2:21" },
-  { id: 7, sender: "incoming", text: "알겠습니다.\n잠시 후 바로 정리해드릴게요.", time: "오후 2:21" },
+  { id: 1, sender: "incoming", text: "안녕하세요,\n아가잼잼 채널입니다.\n무엇을 도와드릴까요? :)", time: "오후 2:18" },
+  { id: 2, sender: "outgoing", text: "안녕하세요! 저번에 말씀드린 요청사항은 반영이 되는 걸까요?", time: "오후 2:19" },
+  { id: 3, sender: "incoming", text: "안녕하세요 산모님 :) 그럼요, 저번에 말씀해주신 내용은 관리사님께 잘 전달하였으니 염려하지 않으셔도 됩니다.", time: "오후 2:20" },
+  { id: 4, sender: "outgoing", text: "다행이네요~ 감사합니다.", time: "오후 2:21" },
+  { id: 5, sender: "incoming", text: "추가로 궁금하시거나 필요하신 사항이 있으시면 언제든지 연락주세요 :)", time: "오후 2:21" },
 ];
 
-const STEP_MS = 1200;
+const STEP_MS = 2000;
 const RESET_DELAY_MS = 2600;
+
+export function KakaoChatPhone() {
+  const [cycle, setCycle] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(1);
+
+  useEffect(() => {
+    setVisibleCount(1);
+
+    const timeoutIds = MOCK_MESSAGES.slice(1).map((_, index) =>
+      window.setTimeout(() => {
+        setVisibleCount(index + 2);
+      }, STEP_MS * (index + 1))
+    );
+
+    const resetTimeoutId = window.setTimeout(() => {
+      setCycle((current) => current + 1);
+    }, STEP_MS * MOCK_MESSAGES.length + RESET_DELAY_MS);
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      window.clearTimeout(resetTimeoutId);
+    };
+  }, [cycle]);
+
+  return (
+    <div className={styles.phoneStage}>
+      <div className={styles.phoneShell}>
+        <div className={styles.screen}>
+          <div className={styles.screenTop}>
+            <div className={styles.topSpacer} aria-hidden="true" />
+            <div className={styles.navRow}>
+              <div className={styles.navLeft}>
+                <span className={styles.navBack} aria-hidden="true" />
+                <span className={styles.navCount}>42</span>
+              </div>
+              <div className={styles.navCenter}>
+                <strong className={styles.navTitle}>아가잼잼</strong>
+              </div>
+              <div className={styles.navActions}>
+                <span className={styles.navSearch} aria-hidden="true" />
+                <span className={styles.navMenu} aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+          <div className={styles.messagesViewport}>
+            <div className={styles.messagesTrack}>
+              <div className={styles.dateChip}>2026년 4월 3일 금요일</div>
+              {MOCK_MESSAGES.map((message, index) => {
+                const isVisible = index < visibleCount;
+                const isOutgoing = message.sender === "outgoing";
+                return (
+                  <div
+                    key={message.id}
+                    className={`${styles.messageRow} ${isOutgoing ? styles.right : styles.left}`}
+                  >
+                    {!isOutgoing && (
+                      <img
+                        className={`${styles.avatar} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
+                        src="/images/logo-agajamjam-icon.svg"
+                        alt="아가잼잼"
+                      />
+                    )}
+                    <div className={`${styles.bubbleWrap} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}>
+                      {!isOutgoing && <span className={styles.senderName}>아가잼잼</span>}
+                      <div className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}>
+                        {isOutgoing && <span className={styles.meta}>{message.time}</span>}
+                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming}`}>
+                          {message.text}
+                        </div>
+                        {!isOutgoing && <span className={styles.meta}>{message.time}</span>}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className={styles.composer}>
+            <div className={styles.composerBar}>
+              <span className={styles.plusButton} />
+              <span className={styles.composerPlaceholder}>메시지 입력</span>
+              <span className={styles.sendButton} />
+            </div>
+          </div>
+        </div>
+        <img className={styles.phoneFrame} src="/images/phone-mockup-294c7f.png" alt="아가잼잼 앱 목업" />
+      </div>
+    </div>
+  );
+}
 
 export function KakaoChatPrototype() {
   const [cycle, setCycle] = useState(0);
@@ -92,7 +180,7 @@ export function KakaoChatPrototype() {
                     <span className={styles.navCount}>42</span>
                   </div>
                   <div className={styles.navCenter}>
-                    <strong className={styles.navTitle}>아가잼잼 상담</strong>
+                    <strong className={styles.navTitle}>아가잼잼</strong>
                   </div>
                   <div className={styles.navActions}>
                     <span className={styles.navSearch} aria-hidden="true" />
@@ -115,23 +203,35 @@ export function KakaoChatPrototype() {
                           isOutgoing ? styles.right : styles.left
                         }`}
                       >
+                        {!isOutgoing && (
+                          <img
+                            className={`${styles.avatar} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
+                            src="/images/logo-agajamjam-icon.svg"
+                            alt="아가잼잼"
+                          />
+                        )}
                         <div
-                          className={`${styles.bubbleWrap} ${
-                            isVisible ? styles.bubbleWrapVisible : ""
+                          className={`${styles.bubbleWrap} ${styles.animateIn} ${
+                            isVisible ? styles.animateInVisible : ""
                           }`}
                         >
-                          <div
-                            className={`${styles.bubble} ${
-                              isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming
-                            }`}
-                          >
-                            {message.text}
-                          </div>
-                          <div
-                            className={`${styles.meta} ${isOutgoing ? styles.metaRight : ""}`}
-                          >
-                            <span>{message.time}</span>
-                            {isOutgoing ? <span>1</span> : null}
+                          {!isOutgoing && (
+                            <span className={styles.senderName}>아가잼잼</span>
+                          )}
+                          <div className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}>
+                            {isOutgoing && (
+                              <span className={styles.meta}>{message.time}</span>
+                            )}
+                            <div
+                              className={`${styles.bubble} ${
+                                isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming
+                              }`}
+                            >
+                              {message.text}
+                            </div>
+                            {!isOutgoing && (
+                              <span className={styles.meta}>{message.time}</span>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -141,9 +241,8 @@ export function KakaoChatPrototype() {
               </div>
 
               <div className={styles.composer}>
-                <div className={styles.composerPrompt}>여기를 탭하세요 ^</div>
                 <div className={styles.composerBar}>
-                  <span className={styles.plusButton}>+</span>
+                  <span className={styles.plusButton} />
                   <span className={styles.composerPlaceholder}>메시지 입력</span>
                   <span className={styles.sendButton} />
                 </div>

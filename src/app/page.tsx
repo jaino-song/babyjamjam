@@ -2,6 +2,9 @@ import { Building2, CalendarCheck2, MessageSquareMore, UserCheck } from "lucide-
 
 import HeroCarousel from "@/components/hero-carousel";
 import LogoCarousel from "@/components/LogoCarousel";
+import { ScrollExpandImage } from "@/components/organisms/scroll-expand-image";
+import { KakaoChatPhone } from "@/components/kakao-chat-prototype";
+import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import {
   SiteFooter,
   SiteMoreSection,
@@ -48,58 +51,64 @@ export default function HomePage() {
         <section className="hero">
           <HeroCarousel />
           <h1 className="h1 hero__text" style={{ color: "var(--bjj-color-primary)" }}>
-            {"엄마의 설레는 첫 만남.\n아기의 완벽한 첫 걸음."}
+            엄마의 설레는 첫 만남.<br />아기의 완벽한 첫 걸음.
           </h1>
         </section>
         <section className="service-detail">
-          <div className="service-detail__header">
-            <h2 className="h3-left service-detail__headline">
-              <span style={{ color: "#848484" }}>방치되는 공장형?</span>
-              <br />
-              <span style={{ color: "var(--bjj-color-primary)" }}>
-                아가잼잼은 맞춤형 운영 시스템
-              </span>
-            </h2>
-            <p className="big-p service-detail__description w-1/2">
-              아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
-              지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
-              서비스가 정확히 제공되도록 운영합니다.
-            </p>
-          </div>
-          <div className="service-detail__icons">
-            {SERVICE_DETAIL_ITEMS.map((item) => {
-              const Icon = item.icon;
+          <div className="service-detail__content">
+            <div className="service-detail__header">
+              <h2 className="h2-left service-detail__headline">
+                <span style={{ color: "#848484" }}>방치되는 공장형?</span>
+                <br />
+                <span style={{ color: "var(--bjj-color-primary)" }}>
+                  아가잼잼은 맞춤형 운영 시스템
+                </span>
+              </h2>
+              <p className="big-p service-detail__description">
+                아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
+                지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
+                서비스가 정확히 제공되도록 운영합니다.
+              </p>
+            </div>
+            <div className="service-detail__icons">
+              {SERVICE_DETAIL_ITEMS.map((item) => {
+                const Icon = item.icon;
 
-              return (
-                <div key={item.title} className="icon-lockup">
-                  <Icon className="icon-lockup__icon" aria-hidden="true" />
-                  <div className="icon-lockup__content">
-                    <span className="h7 icon-lockup__title">{item.title}</span>
-                    <p className="medium-p">{item.description}</p>
+                return (
+                  <div key={item.title} className="icon-lockup">
+                    <Icon className="icon-lockup__icon" aria-hidden="true" />
+                    <div className="icon-lockup__content">
+                      <span className="h7 icon-lockup__title">{item.title}</span>
+                      <p className="medium-p">{item.description}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </div>
+          <div className="service-detail__phone">
+            <KakaoChatPhone />
           </div>
         </section>
 
-        <section className="hero-image">
-          <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
-          <span className="h3 hero-image__text">검증 됐으니까. 믿을 수 있으니까.</span>
-        </section>
+        <ScrollExpandImage
+          src="/images/hero-image-1a35f6.png"
+          alt="아가잼잼 배너"
+          overlayText="검증 됐으니까. 믿을 수 있으니까."
+        />
 
         <LogoCarousel />
 
         <section className="app-detail">
           <div className="app-detail__content">
             <div className="app-detail__title-block">
-              <h2 className="h3-left app-detail__title">
+              <h2 className="h2-left app-detail__hero-title">
                 아가잼잼 공식 앱은
                 <br />
                 상담부터 환급 신청까지 일사천리.
               </h2>
-              <div className="app-detail__subtitle" style={{ color: "var(--bjj-color-text-paragraph)" }}>
-                <p className="h6">
+              <div className="app-detail__subtitle">
+                <p className="app-detail__body-copy">
                   아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
                   복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
                 </p>
@@ -113,12 +122,29 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <button type="button" className="btn-primary" disabled>
-              출시 예정
-            </button>
+            <div className="flex flex-col gap-2">
+              <button type="button" className="btn-primary" disabled>
+                출시 예정
+              </button>
+              <p className="text-xs text-gray-400">*출시 전까지는 유선으로 서비스 제공</p>
+            </div>
           </div>
           <div className="app-detail__phone">
-            <img src="/images/phone-mockup-294c7f.png" alt="아가잼잼 앱" />
+            <div className="app-detail__phone-shell">
+              <div className="app-detail__phone-screen-area">
+                <iframe
+                  srcDoc={calendarMockups[0].html}
+                  title="아가잼잼 앱 캘린더 목업"
+                  className="app-detail__phone-screen"
+                  scrolling="no"
+                />
+              </div>
+              <img
+                className="app-detail__phone-frame"
+                src="/images/phone-mockup-294c7f.png"
+                alt="아가잼잼 앱 목업"
+              />
+            </div>
           </div>
         </section>
 

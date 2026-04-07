@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
+
 const SLIDES = [
   { src: "/images/hero-bg-22ebe1.png", alt: "Hero background 1" },
   { src: "/images/hero-bg-2.png", alt: "Hero background 2" },
@@ -9,10 +10,13 @@ const SLIDES = [
 // Infinite loop track: [last, ...slides, first]
 const TRACK = [SLIDES[SLIDES.length - 1], ...SLIDES, SLIDES[0]];
 
+const AUTOPLAY_MS = 5000;
+
 export default function HeroCarousel() {
   const [index, setIndex] = useState(1); // start at first real slide
   const [animating, setAnimating] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [progressKey, setProgressKey] = useState(0);
   const animatingRef = useRef(false);
 
   const go = (dir: 1 | -1) => {
@@ -20,11 +24,35 @@ export default function HeroCarousel() {
     animatingRef.current = true;
     setAnimating(true);
     setIndex((i) => i + dir);
+    setProgressKey((k) => k + 1);
   };
 
+  const goToReal = (realTarget: number) => {
+    if (animatingRef.current) return;
+    const currentReal = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
+    if (realTarget === currentReal) return;
+    animatingRef.current = true;
+    setAnimating(true);
+    setIndex(realTarget + 1);
+    setProgressKey((k) => k + 1);
+  };
+
+  // Autoplay timer — keyed on progressKey so the snap-back transitionEnd
+  // (which only changes index, not progressKey) does not reset the timer.
   useEffect(() => {
-    const id = setInterval(() => go(1), 5000);
-    return () => clearInterval(id);
+    if (!playing) return;
+    const id = setTimeout(() => go(1), AUTOPLAY_MS);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progressKey, playing]);
+
+  // Pause when tab hidden
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden) setPlaying(false);
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
   const handleTransitionEnd = () => {
@@ -38,12 +66,10 @@ export default function HeroCarousel() {
     setAnimating(false);
   };
 
+  const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
+
   return (
-    <div
-      className="hero__bg"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <div className="hero__bg">
       <div
         className="hero__carousel-track"
         style={{
@@ -64,26 +90,51 @@ export default function HeroCarousel() {
 
       {SLIDES.length > 1 && (
         <>
-          <button
-            className="hero__carousel-btn hero__carousel-btn--prev"
-            style={{ opacity: hovered ? 1 : 0 }}
-            onClick={() => go(-1)}
-            aria-label="Previous slide"
+          <div
+            className="carousel__controls hero__controls"
+            data-theme="light"
+            style={{ ["--carousel-duration" as string]: `${AUTOPLAY_MS}ms` }}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <button
-            className="hero__carousel-btn hero__carousel-btn--next"
-            style={{ opacity: hovered ? 1 : 0 }}
-            onClick={() => go(1)}
-            aria-label="Next slide"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+            <button
+              type="button"
+              className="carousel__playpause"
+              onClick={() => setPlaying((p) => !p)}
+              aria-label={playing ? "슬라이드 일시 정지" : "슬라이드 재생"}
+            >
+              {playing ? (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <rect x="2" y="1.5" width="3" height="11" rx="0.8" fill="currentColor" />
+                  <rect x="9" y="1.5" width="3" height="11" rx="0.8" fill="currentColor" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M3 1.8 L12 7 L3 12.2 Z" fill="currentColor" />
+                </svg>
+              )}
+            </button>
+            <div className="carousel__dotnav" role="tablist">
+              {SLIDES.map((_, i) => {
+                const isActive = i === realIndex;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`슬라이드 ${i + 1}`}
+                    className={`carousel__dot${isActive ? " carousel__dot--active" : ""}${
+                      isActive && !playing ? " is-paused" : ""
+                    }`}
+                    onClick={() => goToReal(i)}
+                  >
+                    {isActive && (
+                      <span key={progressKey} className="carousel__dot-fill" aria-hidden="true" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </>
       )}
     </div>
