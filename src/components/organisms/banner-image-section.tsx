@@ -38,17 +38,19 @@ export function BannerImageSection({ className }: BannerImageSectionProps) {
   return (
     <div
       ref={wrapperRef}
-      className={cn("hero-image-expand", className)}
-      style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
+      className={cn("relative w-screen h-[752px] overflow-hidden will-change-[clip-path] max-mobile:h-[360px] flex items-center justify-center", className)}
+      style={{ marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
       data-component="organism-banner-image-section"
     >
       <img
         src="/images/hero-image-1a35f6.png"
         alt="아가잼잼 배너"
+        className="absolute! inset-0 w-full h-full object-cover"
         data-component="organism-banner-image-section-image"
       />
       <span
-        className="h3"
+        className="h3 relative! z-[1] text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)] whitespace-nowrap max-mobile:whitespace-normal max-mobile:w-[calc(100%-48px)]"
+        style={{ transform: "none" }}
         data-component="organism-banner-image-section-text"
       >
         검증 됐으니까. 믿을 수 있으니까.

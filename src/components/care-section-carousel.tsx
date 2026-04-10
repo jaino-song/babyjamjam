@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 
+import { cn } from "@/lib/utils";
 import { ImageBlock } from "@/components/ui/image-block";
 
 export type CareCardData = {
@@ -74,7 +75,7 @@ export function CareSectionCarousel({
 
     const handleScroll = () => {
       const cards = track.querySelectorAll<HTMLElement>(
-        ".care-carousel__card",
+        "[data-care-card]",
       );
       if (cards.length === 0) return;
       const cardWidth = cards[0].offsetWidth;
@@ -88,7 +89,7 @@ export function CareSectionCarousel({
   }, []);
 
   return (
-    <section className="care-carousel">
+    <section className="flex flex-col items-center gap-7 w-full max-mobile:gap-5">
       <div
         className="care-carousel__toggle"
         role="tablist"
@@ -106,7 +107,10 @@ export function CareSectionCarousel({
             type="button"
             role="tab"
             aria-selected={index === activeIndex}
-            className={`care-carousel__toggle-btn${index === activeIndex ? " care-carousel__toggle-btn--active" : ""}`}
+            className={cn(
+              "relative z-[1] inline-flex items-center justify-center min-w-0 h-10 border-none bg-transparent rounded-full px-5 max-mobile:px-4 font-heading font-extrabold text-[13px] leading-none tracking-[-0.025em] text-bjj-text-paragraph cursor-pointer transition-[color,transform] duration-[250ms] whitespace-nowrap",
+              index === activeIndex && "text-bjj-primary-light",
+            )}
             onClick={() => handleTabSwitch(index)}
           >
             {s.tabLabel}
@@ -114,26 +118,29 @@ export function CareSectionCarousel({
         ))}
       </div>
 
-      <div className="care-carousel__track-section">
+      <div className="w-screen overflow-hidden flex flex-col items-center gap-7 pt-7">
         <div
-          className="care-carousel__heading"
+          className="text-center p-0 m-0 transition-[opacity,transform] duration-300"
           style={{
             opacity: fanState === "entering" ? 0 : 1,
             transform: fanState === "entering" ? "translateY(8px)" : "translateY(0)",
           }}
         >
           <h2 className="h2-left">
-            <span className="care-carousel__heading-muted">
+            <span className="text-bjj-text-muted">
               {section.mutedText}
             </span>
             <br />
-            <span className="care-carousel__heading-primary">
+            <span className="text-bjj-primary">
               {section.primaryText}
             </span>
           </h2>
         </div>
 
-        <div className="care-carousel__track" ref={trackRef}>
+        <div
+          className="flex gap-5 max-mobile:gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-smooth py-20 max-mobile:py-2 max-mobile:pb-4 px-[20vw] max-mobile:px-5 scrollbar-none w-full [&::-webkit-scrollbar]:hidden"
+          ref={trackRef}
+        >
         {section.cards.map((card, i) => {
           const imageSrc =
             card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[section.tone];
@@ -142,25 +149,42 @@ export function CareSectionCarousel({
           return (
             <div
               key={`${section.id}-${card.title}`}
-              className={`care-carousel__card care-carousel__card--fan-${fanState} care-carousel__card--${section.tone}`}
+              data-care-card
+              className={cn(
+                "shrink-0 w-[360px] max-tablet:w-[260px] max-mobile:w-[260px] h-[440px] max-tablet:h-[340px] max-mobile:h-80 rounded-3xl overflow-hidden relative cursor-pointer shadow-[0_16px_48px_rgba(0,0,0,0.12)] snap-start max-tablet:snap-center max-mobile:snap-center",
+                "transition-[transform,opacity,box-shadow] duration-[0.65s,0.5s,0.3s] ease-[cubic-bezier(0.34,1.56,0.64,1),ease,ease]",
+                "hover:-translate-y-2 hover:scale-[1.03] hover:shadow-[0_24px_64px_rgba(0,0,0,0.2)]",
+                fanState === "entering"
+                  ? section.tone === "newborn"
+                    ? "opacity-0 -translate-x-10 -rotate-6 scale-90"
+                    : "opacity-0 translate-x-10 rotate-6 scale-90"
+                  : "opacity-100 translate-x-0 rotate-0 scale-100",
+              )}
               style={{ transitionDelay: `${i * 0.1}s` }}
             >
-              <div className="care-carousel__card-inner">
+              <div className="w-full h-full relative flex flex-col justify-end">
                 <ImageBlock
                   variant="careCard"
                   src={imageSrc}
                   alt={imageAlt}
-                  className="care-carousel__card-img"
+                  className="absolute inset-0 rounded-3xl w-full h-full object-cover"
                 />
                 <div
-                  className={`care-carousel__card-gradient care-carousel__card-gradient--${section.tone}`}
+                  className={cn(
+                    "absolute inset-0 rounded-3xl",
+                    section.tone === "maternal"
+                      ? "bg-gradient-to-b from-transparent from-25% to-[rgba(139,90,43,0.85)]"
+                      : "bg-gradient-to-b from-transparent from-25% to-[rgba(0,36,87,0.85)]",
+                  )}
                 />
-                <div className="care-carousel__card-overlay">
-                  <span className="care-carousel__card-badge">{i + 1}</span>
-                  <h3 className="h6 care-carousel__card-title">
+                <div className="relative z-[1] p-6 text-white">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-bjj-accent text-white font-heading text-[13px] font-extrabold mb-2.5">
+                    {i + 1}
+                  </span>
+                  <h3 className="h6 text-white">
                     {card.title}
                   </h3>
-                  <p className="medium-p care-carousel__card-desc">
+                  <p className="medium-p text-white/90 !text-[13px] leading-[1.55]">
                     {card.description}
                   </p>
                 </div>
@@ -171,11 +195,16 @@ export function CareSectionCarousel({
         </div>
       </div>
 
-      <div className="care-carousel__dots">
+      <div className="hidden max-mobile:flex justify-center gap-1.5 py-2">
         {section.cards.map((_, i) => (
           <div
             key={i}
-            className={`care-carousel__dot${i === activeDot ? " care-carousel__dot--active" : ""}`}
+            className={cn(
+              "h-1.5 rounded-full transition-all duration-300",
+              i === activeDot
+                ? "bg-bjj-primary w-[18px] rounded-[3px]"
+                : "bg-bjj-divider w-1.5",
+            )}
           />
         ))}
       </div>
@@ -192,7 +221,7 @@ export function CareSection({
 }) {
   return (
     <div
-      className={`care-section${mirrored ? " care-section--mirrored" : ""}`}
+      className={cn("care-section", mirrored && "care-section--mirrored")}
       style={{ padding: 0, width: "min-content" }}
     >
       <h2 className="h3-left care-section__title" style={{ whiteSpace: "nowrap" }}>

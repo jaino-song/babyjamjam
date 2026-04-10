@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <main className="main">
+      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
         <FaqPageClient />
         <MoreSection />
       </main>

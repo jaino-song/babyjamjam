@@ -528,9 +528,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
     }, [renderProvinces]);
 
     return (
-      <div className="krm">
-        <div className="krm__tooltip" ref={tooltipRef} />
-        <svg ref={svgRef} className="krm__svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" />
+      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <div
+          className="krm__tooltip"
+          ref={tooltipRef}
+        />
+        <svg ref={svgRef} className="max-w-full max-h-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" />
       </div>
     );
   }

@@ -69,9 +69,9 @@ export default function HeroCarousel() {
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
 
   return (
-    <div className="hero__bg">
+    <div className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef] max-mobile:h-[380px]">
       <div
-        className="hero__carousel-track"
+        className="flex w-full h-full"
         style={{
           transform: `translateX(-${index * 100}%)`,
           transition: animating ? "transform 1s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
@@ -83,7 +83,7 @@ export default function HeroCarousel() {
             key={i}
             src={slide.src}
             alt={slide.alt}
-            className="hero__bg-image"
+            className="w-full h-full object-cover object-[center_top] shrink-0"
           />
         ))}
       </div>
@@ -91,7 +91,7 @@ export default function HeroCarousel() {
       {SLIDES.length > 1 && (
         <>
           <div
-            className="carousel__controls hero__controls"
+            className="carousel__controls !top-auto bottom-6 z-10 backdrop-blur-[40px] saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
             data-theme="light"
             style={{ ["--carousel-duration" as string]: `${AUTOPLAY_MS}ms` }}
           >

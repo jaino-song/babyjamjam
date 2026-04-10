@@ -46,7 +46,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
           data-component="organism-app-detail-title-block"
         >
           <h2
-            className="h2-left app-detail__hero-title"
+            className="h2-left text-bjj-primary"
             data-component="organism-app-detail-title"
           >
             아가잼잼 공식 앱은
@@ -54,10 +54,10 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
             상담부터 환급 신청까지 일사천리.
           </h2>
           <div
-            className="app-detail__subtitle"
+            className="text-bjj-text-paragraph"
             data-component="organism-app-detail-subtitle"
           >
-            <p className="app-detail__body-copy">
+            <p className="font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
               아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
               복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
             </p>
@@ -86,12 +86,12 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
         className="absolute right-0 top-0"
         data-component="organism-app-detail-phone"
       >
-        <div className="app-detail__phone-shell" data-component="organism-app-detail-phone-image">
-          <div className="app-detail__phone-camera" />
+        <div className="relative w-full max-w-[312px] aspect-[1350/2760] drop-shadow-[0_28px_56px_rgba(2,22,56,0.18)]" data-component="organism-app-detail-phone-image">
+          <div className="absolute top-[0.85%] left-1/2 w-[calc(100%-26px)] h-[calc(100%-16px)] -translate-x-1/2 translate-y-[5px] rounded-[36px] overflow-hidden bg-[#eef2f6]" />
           <iframe
             srcDoc={calendarMockups[0].html}
             title="아가잼잼 앱 캘린더 목업"
-            className="app-detail__phone-screen"
+            className="block w-full h-full border-0 bg-[#eef2f6]"
             scrolling="no"
           />
         </div>

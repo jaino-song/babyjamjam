@@ -14,23 +14,23 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <>
-      <main className="pricing-page-main">
-        <section className="pricing-hero">
-          <div className="pricing-hero__bg">
+      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
+        <section className="flex flex-col items-center w-full gap-16 overflow-hidden max-mobile:gap-10">
+          <div className="relative w-full h-[488px] rounded-card overflow-hidden max-mobile:h-80">
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"
-              className="pricing-hero__bg-image"
+              className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="h1 pricing-hero__title">
+          <h1 className="h1 text-bjj-primary whitespace-pre-line w-full">
             {"처음부터 숨김없이\n안내하는 서비스 가격"}
           </h1>
         </section>
 
         <PricingPageClient />
 
-        <BannerImageSection className="pricing-page__banner" />
+        <BannerImageSection className="h-[576px] max-mobile:h-[360px]" />
 
         <MoreSection />
       </main>

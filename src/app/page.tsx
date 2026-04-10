@@ -42,38 +42,41 @@ export default function HomePage() {
 
   return (
     <>
-      <main className="main">
-        <section className="hero">
+      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
+        <section className="flex flex-col items-center w-full gap-16 max-mobile:gap-10">
           <HeroCarousel />
-          <h1 className="h1 hero__text" style={{ color: "var(--bjj-color-primary)" }}>
+          <h1
+            className="h1 whitespace-pre-line w-full"
+            style={{ color: "var(--bjj-color-primary)" }}
+          >
             엄마의 설레는 첫 만남.<br />아기의 완벽한 첫 걸음.
           </h1>
         </section>
-        <section className="service-detail">
-          <div className="service-detail__content">
-            <div className="service-detail__header">
-              <h2 className="h2-left service-detail__headline">
+        <section className="flex flex-row justify-between items-center w-full gap-12 max-mobile:flex-col">
+          <div className="flex-[0_1_650px] min-w-[650px] flex flex-col items-start gap-8 max-mobile:flex-[unset] max-mobile:w-full max-mobile:min-w-0">
+            <div className="flex flex-col items-start gap-8 w-full">
+              <h2 className="h2-left whitespace-pre-line">
                 <span style={{ color: "#848484" }}>방치되는 공장형?</span>
                 <br />
                 <span style={{ color: "var(--bjj-color-primary)" }}>
                   아가잼잼은 맞춤형 운영 시스템
                 </span>
               </h2>
-              <p className="big-p service-detail__description">
+              <p className="max-w-none font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
                 아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
                 지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
                 서비스가 정확히 제공되도록 운영합니다.
               </p>
             </div>
-            <div className="service-detail__icons">
+            <div className="grid grid-cols-2 w-full gap-0 max-mobile:grid-cols-1">
               {SERVICE_DETAIL_ITEMS.map((item) => {
                 const Icon = item.icon;
 
                 return (
-                  <div key={item.title} className="icon-lockup">
-                    <Icon className="icon-lockup__icon" aria-hidden="true" />
-                    <div className="icon-lockup__content">
-                      <span className="h7 icon-lockup__title">{item.title}</span>
+                  <div key={item.title} className="flex flex-col gap-4 py-6 pr-3 border-t-2 border-bjj-divider">
+                    <Icon className="w-4 h-4" aria-hidden="true" />
+                    <div className="flex flex-col items-start w-full gap-3">
+                      <span className="h7 text-bjj-text-headline">{item.title}</span>
                       <p className="medium-p">{item.description}</p>
                     </div>
                   </div>
@@ -81,7 +84,7 @@ export default function HomePage() {
               })}
             </div>
           </div>
-          <div className="service-detail__phone">
+          <div className="flex-[0_1_360px] flex justify-center items-center max-mobile:flex-[unset] max-mobile:w-full">
             <KakaoChatPhone />
           </div>
         </section>
@@ -94,48 +97,52 @@ export default function HomePage() {
 
         <LogoCarousel />
 
-        <section className="app-detail">
-          <div className="app-detail__content">
-            <div className="app-detail__title-block">
-              <h2 className="h2-left app-detail__hero-title">
+        <section className="flex justify-between items-center gap-12 w-full min-h-[588px] max-mobile:h-auto max-mobile:flex-col max-mobile:gap-8">
+          <div className="flex flex-col items-start gap-6 pb-[52px] flex-[7_1_0] max-mobile:w-full">
+            <div className="flex flex-col items-start gap-6 w-full">
+              <h2 className="h2-left text-bjj-primary">
                 아가잼잼 공식 앱은
                 <br />
                 상담부터 환급 신청까지 일사천리.
               </h2>
-              <div className="app-detail__subtitle">
-                <p className="app-detail__body-copy">
+              <div className="text-bjj-text-paragraph">
+                <p className="font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
                   아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
                   복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
                 </p>
               </div>
             </div>
-            <div className="app-detail__list">
+            <div className="flex flex-col items-start w-full">
               {["01", "02", "03", "04"].map((num, index) => (
-                <div key={num} className="app-detail__list-item">
-                  <span className="app-detail__step-number">{num}</span>
-                  <span className="app-detail__step-desc">{appDetailSteps[index]}</span>
+                <div key={num} className="flex items-center w-full gap-5 py-3 pr-[52px] border-t border-bjj-divider">
+                  <span className="font-body font-medium text-[16px] leading-[1.5] text-bjj-text-paragraph shrink-0">{num}</span>
+                  <span className="font-heading font-bold text-[16px] leading-[1.45] tracking-[-0.015em] text-bjj-text-paragraph">{appDetailSteps[index]}</span>
                 </div>
               ))}
             </div>
             <div className="flex flex-col gap-2">
-              <button type="button" className="btn-primary" disabled>
+              <button
+                type="button"
+                className="inline-flex justify-center items-center h-10 px-5 w-[164px] bg-bjj-primary rounded-[640px] font-heading font-extrabold text-[13px] leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline border-none cursor-pointer disabled:opacity-45 disabled:cursor-default disabled:pointer-events-none"
+                disabled
+              >
                 출시 예정
               </button>
               <p className="text-xs text-gray-400">*출시 전까지는 유선으로 서비스 제공</p>
             </div>
           </div>
-          <div className="app-detail__phone">
-            <div className="app-detail__phone-shell">
-              <div className="app-detail__phone-screen-area">
+          <div className="flex justify-center items-center flex-[3_1_0] max-mobile:static max-mobile:w-full">
+            <div className="relative w-full max-w-[312px] aspect-[1350/2760] drop-shadow-[0_28px_56px_rgba(2,22,56,0.18)]">
+              <div className="absolute top-[0.85%] left-1/2 w-[calc(100%-26px)] h-[calc(100%-16px)] -translate-x-1/2 translate-y-[5px] rounded-[36px] overflow-hidden bg-[#eef2f6]">
                 <iframe
                   srcDoc={calendarMockups[0].html}
                   title="아가잼잼 앱 캘린더 목업"
-                  className="app-detail__phone-screen"
+                  className="block w-full h-full border-0 bg-[#eef2f6]"
                   scrolling="no"
                 />
               </div>
               <img
-                className="app-detail__phone-frame"
+                className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 src="/images/phone-mockup-294c7f.png"
                 alt="아가잼잼 앱 목업"
               />
