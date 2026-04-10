@@ -6,23 +6,24 @@ const LINK_CARDS = [
   {
     title: "산후도우미 서비스",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "회복과 돌봄의 균형을 맞춘 아가잼잼의 핵심 서비스를 한눈에 살펴보세요.",
     buttonText: "더 알아보기",
-    buttonHref: "#",
+    buttonHref: "/postpartum-care",
   },
   {
     title: "아가잼잼 공식 앱",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
-    buttonText: "더 알아보기",
+      "서비스 일정과 컨디션 기록, 케어 히스토리를 더 편하게 확인할 수 있어요.",
+    buttonText: "출시 예정",
     buttonHref: "#",
+    disabled: true,
   },
   {
-    title: "예약하기",
+    title: "자주하는 질문",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "출산 일정과 원하는 돌봄 범위를 먼저 정리해 두면 상담이 훨씬 빨라집니다.",
     buttonText: "더 알아보기",
-    buttonHref: "#",
+    buttonHref: "/faq",
   },
 ];
 
@@ -57,6 +58,7 @@ export function MoreSection({ className }: MoreSectionProps) {
             description={card.description}
             buttonText={card.buttonText}
             buttonHref={card.buttonHref}
+            disabled={"disabled" in card ? card.disabled : false}
           />
         ))}
       </div>

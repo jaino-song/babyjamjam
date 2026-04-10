@@ -4,13 +4,13 @@ import { Logo } from "@/components/ui/logo";
 import { FooterLink } from "@/components/molecules/footer-link";
 
 const FOOTER_LINKS = [
-  "서비스 규정",
-  "서비스 가격",
-  "서비스 제공 항목",
-  "전국 지점",
-  "인재 영입",
-  "산후도우미 관리사 교육",
-  "고객센터",
+  { label: "서비스 규정", href: "#" },
+  { label: "서비스 가격", href: "/pricing" },
+  { label: "서비스 제공 항목", href: "#" },
+  { label: "전국 지점", href: "/locations" },
+  { label: "FAQ & 이용약관", href: "/faq" },
+  { label: "인재 영입", href: "#" },
+  { label: "고객센터", href: "#" },
 ];
 
 interface FooterProps {
@@ -34,9 +34,9 @@ export function Footer({ className }: FooterProps) {
           className="flex items-center gap-6"
           data-component="organism-footer-nav"
         >
-          {FOOTER_LINKS.map((label) => (
-            <FooterLink key={label} href="#">
-              {label}
+          {FOOTER_LINKS.map((link) => (
+            <FooterLink key={link.label} href={link.href}>
+              {link.label}
             </FooterLink>
           ))}
         </nav>

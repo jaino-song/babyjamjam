@@ -7,10 +7,11 @@ interface LinkCardProps {
   description: string;
   buttonText: string;
   buttonHref: string;
+  disabled?: boolean;
   className?: string;
 }
 
-export function LinkCard({ title, description, buttonText, buttonHref, className }: LinkCardProps) {
+export function LinkCard({ title, description, buttonText, buttonHref, disabled, className }: LinkCardProps) {
   return (
     <div
       className={cn("flex-1 flex flex-col items-center w-full gap-10", className)}
@@ -34,13 +35,15 @@ export function LinkCard({ title, description, buttonText, buttonHref, className
           {description}
         </p>
       </div>
-      <Button
-        href={buttonHref}
-        variant="primary"
-        data-component="molecule-link-card-button"
-      >
-        {buttonText}
-      </Button>
+      {disabled ? (
+        <Button variant="primary" disabled data-component="molecule-link-card-button">
+          {buttonText}
+        </Button>
+      ) : (
+        <Button href={buttonHref} variant="primary" data-component="molecule-link-card-button">
+          {buttonText}
+        </Button>
+      )}
     </div>
   );
 }

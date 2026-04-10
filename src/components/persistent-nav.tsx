@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { NavBar } from "./nav-bar";
 import { BookingButton } from "./booking-button";
-import { NAV_ITEMS } from "./site-chrome";
+import { NAV_ITEMS } from "@/data/nav-items";
 
 export function PersistentNav() {
   const pathname = usePathname();
