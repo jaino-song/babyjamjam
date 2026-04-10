@@ -1,5 +1,56 @@
 @import "tailwindcss";
 
+@theme inline {
+  /* Colors — backed by :root vars */
+  --color-bjj-primary: var(--bjj-color-primary);
+  --color-bjj-primary-light: var(--bjj-color-primary-light);
+  --color-bjj-accent: var(--bjj-color-accent);
+  --color-bjj-bg: var(--bjj-color-bg);
+  --color-bjj-text-headline: var(--bjj-color-text-headline);
+  --color-bjj-text-paragraph: var(--bjj-color-text-paragraph);
+  --color-bjj-text-dark: var(--bjj-color-text-dark);
+  --color-bjj-text-muted: var(--bjj-color-text-muted);
+  --color-bjj-text-caption: var(--bjj-color-text-caption);
+  --color-bjj-text-link: var(--bjj-color-text-link);
+  --color-bjj-divider: var(--bjj-color-divider);
+  --color-bjj-surface-muted: var(--bjj-color-surface-muted);
+
+  /* Font families */
+  --font-heading: var(--bjj-font-heading);
+  --font-body: var(--bjj-font-body);
+  --font-number: var(--bjj-font-number);
+  --font-caption: var(--bjj-font-caption);
+
+  /* Custom font sizes */
+  --text-h1: 64px;
+  --text-h2: 56px;
+  --text-h3: 48px;
+  --text-h4: 40px;
+  --text-h5: 32px;
+  --text-h6: 24px;
+  --text-h7: 20px;
+  --text-big-p: 18px;
+  --text-medium-p: 16px;
+  --text-caption: 8px;
+  --text-process-num: 52px;
+  --text-process-title: 56px;
+  --text-nav: 13px;
+  --text-link: 9px;
+  --text-btn: 14px;
+
+  /* Custom border radii */
+  --radius-pill: 999px;
+  --radius-nav: 64px;
+  --radius-card: 20px;
+
+  /* Breakpoints */
+  --breakpoint-mobile: 780px;
+  --breakpoint-tablet: 1100px;
+
+  /* Shadows */
+  --shadow-card: 0 24px 60px rgba(0, 36, 87, 0.06), 0 -8px 18px rgba(0, 36, 87, 0.035);
+}
+
 /* ===== Coming Soon ===== */
 .coming-soon {
   display: flex;
