@@ -5,11 +5,9 @@ import LogoCarousel from "@/components/LogoCarousel";
 import { ScrollExpandImage } from "@/components/organisms/scroll-expand-image";
 import { KakaoChatPhone } from "@/components/kakao-chat-prototype";
 import { calendarMockups } from "@/components/app-detail-calendar-mockups";
-import {
-  SiteFooter,
-  SiteMoreSection,
-  SiteProcessSection,
-} from "@/components/site-chrome";
+import { ProcessSection } from "@/components/organisms/process-section";
+import { MoreSection } from "@/components/organisms/more-section";
+import { Footer } from "@/components/organisms/footer";
 
 const SERVICE_DETAIL_ITEMS = [
   {
@@ -145,11 +143,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        <SiteProcessSection />
-        <SiteMoreSection />
+        <ProcessSection />
+        <MoreSection />
       </main>
 
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

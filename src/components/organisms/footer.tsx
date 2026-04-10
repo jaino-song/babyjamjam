@@ -21,17 +21,18 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        "flex flex-col items-center w-full gap-20 pt-10 pb-5 border-t border-bjj-divider",
+        "flex flex-col items-center w-full gap-[52px] pt-6 pb-3 mt-25 border-t border-bjj-divider",
+        "max-mobile:gap-6",
         className
       )}
       data-component="organism-footer"
     >
       <div
-        className="flex justify-between items-center w-full"
+        className="flex justify-between items-center w-full max-mobile:flex-col max-mobile:items-start max-mobile:gap-4"
         data-component="organism-footer-links"
       >
         <nav
-          className="flex items-center gap-6"
+          className="flex items-center gap-4 max-mobile:flex-wrap max-mobile:row-gap-2"
           data-component="organism-footer-nav"
         >
           {FOOTER_LINKS.map((link) => (
@@ -42,12 +43,12 @@ export function Footer({ className }: FooterProps) {
         </nav>
       </div>
       <div
-        className="flex justify-between items-end w-full"
+        className="flex justify-between items-end w-full max-mobile:flex-col max-mobile:items-start max-mobile:gap-4"
         data-component="organism-footer-bottom"
       >
-        <Logo variant="footer" />
+        <Logo variant="footer" className="!w-[180px] !h-[60px]" />
         <span
-          className="font-caption text-caption font-normal text-bjj-text-caption tracking-tight"
+          className="caption-text"
           data-component="organism-footer-caption"
         >
           2025 All Rights Reserved By Jaino Company

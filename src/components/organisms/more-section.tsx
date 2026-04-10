@@ -35,20 +35,19 @@ export function MoreSection({ className }: MoreSectionProps) {
   return (
     <section
       className={cn(
-        "flex flex-col items-center gap-25 pt-15 border-t border-bjj-divider w-full",
+        "flex flex-col items-center gap-16 pt-10 border-t border-bjj-divider w-full",
         className
       )}
       data-component="organism-more-section"
     >
       <h2
-        className="h3"
-        style={{ color: "var(--bjj-color-primary)" }}
+        className="h2 text-bjj-primary"
         data-component="organism-more-section-title"
       >
         아가잼잼이면 해결되니까.
       </h2>
       <div
-        className="flex justify-center items-start gap-15 w-full"
+        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:flex-col"
         data-component="organism-more-section-cards"
       >
         {LINK_CARDS.map((card) => (
@@ -59,6 +58,7 @@ export function MoreSection({ className }: MoreSectionProps) {
             buttonText={card.buttonText}
             buttonHref={card.buttonHref}
             disabled={"disabled" in card ? card.disabled : false}
+            className="max-mobile:w-full"
           />
         ))}
       </div>

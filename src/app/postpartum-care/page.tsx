@@ -5,11 +5,9 @@ import {
   type CareCardData,
   type CareSectionData,
 } from "@/components/care-section-carousel";
-import {
-  SiteFooter,
-  SiteMoreSection,
-  SiteProcessSection,
-} from "@/components/site-chrome";
+import { ProcessSection } from "@/components/organisms/process-section";
+import { MoreSection } from "@/components/organisms/more-section";
+import { Footer } from "@/components/organisms/footer";
 import { BannerImageSection } from "@/components/organisms/banner-image-section";
 
 export const metadata: Metadata = {
@@ -100,11 +98,11 @@ export default function PostpartumCarePage() {
 
         <BannerImageSection />
 
-        <SiteProcessSection />
-        <SiteMoreSection />
+        <ProcessSection />
+        <MoreSection />
       </main>
 
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

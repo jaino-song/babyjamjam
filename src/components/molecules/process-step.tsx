@@ -11,29 +11,29 @@ export function ProcessStep({ number, title, description, className }: ProcessSt
   return (
     <div
       className={cn(
-        "flex-1 flex flex-col items-start border-t border-bjj-divider gap-15 pt-15 pr-7 pb-5",
+        "flex-1 flex flex-col gap-10 pt-10 pr-5 pb-3 border-t border-bjj-divider",
         className
       )}
       data-component="molecule-process-step"
     >
       <span
-        className="font-number text-process-num font-normal leading-none tracking-tighter text-bjj-accent"
+        className="font-number text-process-num font-normal leading-none tracking-[-0.04em] text-bjj-accent"
         data-component="molecule-process-step-number"
       >
         {number}
       </span>
       <div
-        className="flex flex-col gap-5"
+        className="flex flex-col items-start w-full gap-3"
         data-component="molecule-process-step-content"
       >
-        <h4
-          className="text-h4 font-bold font-heading text-bjj-primary-light"
+        <h3
+          className="h6 text-bjj-primary-light"
           data-component="molecule-process-step-title"
         >
           {title}
-        </h4>
+        </h3>
         <p
-          className="text-medium-p font-medium font-body text-bjj-primary-light tracking-wide leading-relaxed"
+          className="medium-p !text-bjj-primary-light"
           data-component="molecule-process-step-description"
         >
           {description}

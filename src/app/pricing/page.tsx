@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 
-import {
-  SiteFooter,
-  SiteMoreSection,
-} from "@/components/site-chrome";
+import { MoreSection } from "@/components/organisms/more-section";
+import { Footer } from "@/components/organisms/footer";
 import { PricingPageClient } from "@/components/pricing-page-client";
 import { BannerImageSection } from "@/components/organisms/banner-image-section";
 
@@ -34,10 +32,10 @@ export default function PricingPage() {
 
         <BannerImageSection className="pricing-page__banner" />
 
-        <SiteMoreSection />
+        <MoreSection />
       </main>
 
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

@@ -37,24 +37,27 @@ export function ProcessSection({ className }: ProcessSectionProps) {
   return (
     <section
       className={cn(
-        "flex flex-col items-center gap-20 p-25 px-50 bg-bjj-primary w-screen max-w-480 border-t border-bjj-divider",
+        "flex flex-col items-center gap-[52px] bg-bjj-primary w-screen self-start",
+        "py-16 max-mobile:py-12 max-mobile:px-[var(--bjj-page-padding)]",
+        "px-[calc((100vw-var(--bjj-page-max-width))/2+var(--bjj-page-padding))]",
+        "ml-[calc(-50vw+50%)]",
         className
       )}
       data-component="organism-process-section"
     >
       <div
-        className="flex justify-between w-full gap-20"
+        className="flex justify-between w-full gap-[52px]"
         data-component="organism-process-header"
       >
         <h2
-          className="text-process-title font-extrabold font-heading text-bjj-primary-light"
+          className="h2 text-bjj-primary-light"
           data-component="organism-process-title"
         >
           산후도우미 서비스 진행 절차
         </h2>
       </div>
       <div
-        className="flex w-full gap-5"
+        className="flex w-full gap-3 max-tablet:flex-wrap max-mobile:flex-col"
         data-component="organism-process-steps"
       >
         {PROCESS_STEPS.map((step) => (
@@ -63,6 +66,7 @@ export function ProcessSection({ className }: ProcessSectionProps) {
             number={step.number}
             title={step.title}
             description={step.description}
+            className="max-mobile:w-full"
           />
         ))}
       </div>

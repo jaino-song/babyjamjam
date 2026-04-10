@@ -1,9 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback } from "react";
-import {
-  SiteFooter,
-} from "@/components/site-chrome";
+import { Footer } from "@/components/organisms/footer";
 import { KoreaRegionMap, type MunicipalityPin } from "@/components/korea-region-map";
 import { BookingModal } from "@/components/booking-modal";
 import { Badge } from "@/components/ui/badge";
@@ -229,7 +227,7 @@ export default function LocationsPage() {
         </div>
       </main>
 
-      <SiteFooter />
+      <Footer />
 
       <BookingModal
         open={bookingOpen}
