@@ -5,6 +5,7 @@ import {
   SiteMoreSection,
 } from "@/components/site-chrome";
 import { PricingPageClient } from "@/components/pricing-page-client";
+import { BannerImageSection } from "@/components/organisms/banner-image-section";
 
 export const metadata: Metadata = {
   title: "서비스 비용 | 아가잼잼",
@@ -31,12 +32,7 @@ export default function PricingPage() {
 
         <PricingPageClient />
 
-        <section className="hero-image pricing-page__banner">
-          <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
-          <span className="h3 hero-image__text">
-            검증 됐으니까. 믿을 수 있으니까.
-          </span>
-        </section>
+        <BannerImageSection className="pricing-page__banner" />
 
         <SiteMoreSection />
       </main>

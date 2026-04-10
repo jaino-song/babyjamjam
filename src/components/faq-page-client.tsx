@@ -9,10 +9,13 @@ import {
   CalendarDays,
   Heart,
   HelpCircle,
-  CalendarX2,
-  Wallet,
+  BookOpen,
+  FileCheck,
+  CreditCard,
   Handshake,
+  Building2,
   Shield,
+  Scale,
 } from "lucide-react";
 
 import { FAQ_SECTIONS, type FaqCategory, type FaqItem } from "@/data/faq-data";
@@ -22,10 +25,13 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   CalendarDays,
   Heart,
   HelpCircle,
-  CalendarX2,
-  Wallet,
+  BookOpen,
+  FileCheck,
+  CreditCard,
   Handshake,
+  Building2,
   Shield,
+  Scale,
 };
 
 /* ---------- Accordion Item ---------- */
@@ -167,7 +173,7 @@ export function FaqPageClient() {
       </aside>
 
       {/* Content */}
-      <div className="faq-content">
+      <div className="faq-content" key={activeCategoryId}>
         <header className="faq-content__header">
           <h3>{activeCategory.label}</h3>
           <span className="faq-content__count">
