@@ -77,37 +77,42 @@
   --bjj-shadow-card: 0 24px 60px rgba(0, 36, 87, 0.06), 0 -8px 18px rgba(0, 36, 87, 0.035);
 }
 
-/* ===== RESET ===== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 16px; scroll-behavior: smooth; word-break: keep-all; }
-body {
-  font-family: var(--bjj-font-body);
-  background: var(--bjj-color-bg);
-  color: var(--bjj-color-text-headline);
-  overflow-x: hidden;
-}
-img { max-width: 100%; display: block; }
+/* ===== RESET + TYPOGRAPHY (in @layer base so Tailwind utilities can override) ===== */
+@layer base {
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; scroll-behavior: smooth; word-break: keep-all; }
+  body {
+    font-family: var(--bjj-font-body);
+    background: var(--bjj-color-bg);
+    color: var(--bjj-color-text-headline);
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
 
-/* ===== TYPOGRAPHY — Heading Scale ===== */
-.h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 64px; line-height: 1.2; letter-spacing: 0.05em; }
-.h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-.h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-.h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-.h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-.h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 40px; line-height: 1.15; letter-spacing: -0.015em; }
-.h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 32px; line-height: 1.15; letter-spacing: -0.015em; }
-.h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px; line-height: 1.15; letter-spacing: -0.015em; }
-.h7 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 20px; line-height: 1.15; letter-spacing: -0.015em; }
-.big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 18px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
-.medium-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
-.small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 27px; letter-spacing: 0.231px; }
-.link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.52; letter-spacing: -0.015em; }
-.caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.52; letter-spacing: -0.015em; color: var(--bjj-color-text-caption); }
+  /* Typography — Heading Scale */
+  .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 64px; line-height: 1.2; letter-spacing: 0.05em; }
+  .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
+  .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
+  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
+  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
+  .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 40px; line-height: 1.15; letter-spacing: -0.015em; }
+  .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 32px; line-height: 1.15; letter-spacing: -0.015em; }
+  .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px; line-height: 1.15; letter-spacing: -0.015em; }
+  .h7 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 20px; line-height: 1.15; letter-spacing: -0.015em; }
+  .big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 18px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
+  .medium-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
+  .small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 27px; letter-spacing: 0.231px; }
+  .link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.52; letter-spacing: -0.015em; }
+  .caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.52; letter-spacing: -0.015em; color: var(--bjj-color-text-caption); }
+}
 
 /* ===== KEYFRAMES ===== */
 @keyframes page-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ===== NAV INDICATOR (glassmorphism — kept in CSS) ===== */
+/* ===== COMPONENT CSS (in @layer components so Tailwind utilities can override) ===== */
+@layer components {
+
+/* Nav indicator (glassmorphism) */
 .nav-indicator {
   position: absolute;
   top: 0;
@@ -324,6 +329,8 @@ img { max-width: 100%; display: block; }
 .krm-city--unavailable { fill: #e8eaed; cursor: default; opacity: 0.6; pointer-events: none; }
 .krm-city--available:hover, .krm-city--hover { fill: var(--bjj-color-primary) !important; filter: brightness(1.15); }
 
+} /* end @layer components */
+
 /* ===== KEYFRAMES ===== */
 @keyframes faq-content-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes faq-slide-in {
@@ -332,6 +339,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===== RESPONSIVE ===== */
+@layer base {
 @media (max-width: 1100px) {
   :root {
     --bjj-page-padding: 72px;
@@ -370,3 +378,4 @@ img { max-width: 100%; display: block; }
   .carousel__logo-cell img { max-height: 40px; }
   .carousel__controls { top: 20px; }
 }
+} /* end @layer base (responsive) */
