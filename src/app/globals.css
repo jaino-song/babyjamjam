@@ -51,27 +51,6 @@
   --shadow-card: 0 24px 60px rgba(0, 36, 87, 0.06), 0 -8px 18px rgba(0, 36, 87, 0.035);
 }
 
-/* ===== Coming Soon ===== */
-.coming-soon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100dvh;
-  background: var(--bjj-color-bg);
-  padding: 32px;
-  gap: 48px;
-}
-
-.coming-soon__logo {
-  width: min(360px, 60vw);
-  height: auto;
-}
-
-.coming-soon__text {
-  color: var(--bjj-color-primary);
-}
-
 /* ===== CSS Tokens ===== */
 :root {
   --bjj-color-primary: #004AAD;
@@ -125,9 +104,7 @@ img { max-width: 100%; display: block; }
 .link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.52; letter-spacing: -0.015em; }
 .caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.52; letter-spacing: -0.015em; color: var(--bjj-color-text-caption); }
 
-/* ===== PAGE ===== */
-.page { display: flex; flex-direction: column; align-items: center; padding: 0 20%; }
-.page-transition { display: flex; flex-direction: column; align-items: center; width: 100%; animation: page-enter 0.35s ease both; margin-top: 64px; }
+/* ===== KEYFRAMES ===== */
 @keyframes page-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ===== NAV INDICATOR (glassmorphism — kept in CSS) ===== */
@@ -320,30 +297,6 @@ img { max-width: 100%; display: block; }
   .carousel__dot-fill { display: none; }
 }
 
-/* ===== FLOATING BUBBLE ===== */
-.floating-bubble {
-  position: fixed; bottom: 32px; right: 32px; z-index: 50;
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-}
-.floating-bubble__btn {
-  width: 56px; height: 56px; border-radius: 50%; border: none;
-  background: var(--bjj-color-primary); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.floating-bubble__btn:hover { transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
-.floating-bubble__cart-wrapper { position: relative; }
-.floating-bubble__badge {
-  position: absolute; top: -4px; right: -4px;
-  min-width: 20px; height: 20px; padding: 0 6px;
-  background: #ef4444; border-radius: 999px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--bjj-font-heading); font-weight: 700; font-size: 12px;
-  line-height: 1; color: white;
-  box-shadow: 0 2px 4px -2px rgba(0,0,0,0.1);
-}
-
 /* ===== KOREA REGION MAP — SVG styling (D3-applied classes) ===== */
 .krm__tooltip {
   position: fixed; background: #1a1a1a; color: #fff;
@@ -405,8 +358,6 @@ img { max-width: 100%; display: block; }
   .h5 { font-size: 24px; }
   .h6 { font-size: 20px; }
   .h7, .big-p { font-size: 16px; }
-
-  .page { padding: 0 var(--bjj-page-padding); }
 
   .carousel__slide { width: 100%; min-width: 100%; }
   .carousel__card {

@@ -51,7 +51,7 @@ export default function RootLayout({
       <body
         className={`${pretendard.variable} ${paperlogy.variable} ${dmSans.variable} ${robotoMono.variable}`}
       >
-        <div className="page">
+        <div className="flex flex-col items-center px-[20%] max-mobile:px-[var(--bjj-page-padding)]">
           <PersistentNav />
           <AnnouncementRibbon />
           <PageTransition>{children}</PageTransition>

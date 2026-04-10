@@ -10,11 +10,11 @@ export function FloatingBubble({ distinctCount }: FloatingBubbleProps) {
   };
 
   return (
-    <div className="floating-bubble" data-component="organism-floating-bubble">
+    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-3" data-component="organism-floating-bubble">
       {/* Scroll indicator */}
       <button
         type="button"
-        className="floating-bubble__btn"
+        className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
         onClick={handleScrollDown}
         aria-label="아래로 스크롤"
       >
@@ -30,10 +30,10 @@ export function FloatingBubble({ distinctCount }: FloatingBubbleProps) {
       </button>
 
       {/* Cart button with badge */}
-      <div className="floating-bubble__cart-wrapper">
+      <div className="relative">
         <button
           type="button"
-          className="floating-bubble__btn"
+          className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
           aria-label={`선택한 서비스 ${distinctCount}개`}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -56,7 +56,7 @@ export function FloatingBubble({ distinctCount }: FloatingBubbleProps) {
         </button>
 
         {distinctCount > 0 && (
-          <span className="floating-bubble__badge">{distinctCount}</span>
+          <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center font-heading font-bold text-xs leading-none text-white shadow-[0_2px_4px_-2px_rgba(0,0,0,0.1)]">{distinctCount}</span>
         )}
       </div>
     </div>
