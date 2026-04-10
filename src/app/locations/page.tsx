@@ -3,7 +3,6 @@
 import { useMemo, useState, useCallback } from "react";
 import {
   SiteFooter,
-  SiteNavigation,
 } from "@/components/site-chrome";
 import { KoreaRegionMap, type MunicipalityPin } from "@/components/korea-region-map";
 import { BookingModal } from "@/components/booking-modal";
@@ -155,9 +154,7 @@ export default function LocationsPage() {
   }, []);
 
   return (
-    <div className="page">
-      <SiteNavigation activeLabel="지점 찾기" />
-
+    <>
       <main className="location-main">
         <section className="location-hero">
           <h1 className="h1 location-hero__title">지점 찾기</h1>
@@ -240,6 +237,6 @@ export default function LocationsPage() {
         initialRegion={bookingRegion}
         initialDistrict={bookingDistrict}
       />
-    </div>
+    </>
   );
 }

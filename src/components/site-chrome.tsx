@@ -2,12 +2,12 @@ import Link from "next/link";
 import { NavBar } from "./nav-bar";
 import { BookingButton } from "./booking-button";
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
   { label: "산후도우미", href: "/postpartum-care" },
   { label: "서비스 비용", href: "/pricing" },
   { label: "지점 찾기", href: "/locations" },
+  { label: "FAQ", href: "/faq" },
   { label: "문의하기", href: "#" },
-  { label: "고객센터", href: "#" },
 ];
 
 const PROCESS_STEPS = [
@@ -54,18 +54,18 @@ const MORE_CARDS = [
     title: "자주하는 질문",
     description:
       "출산 일정과 원하는 돌봄 범위를 먼저 정리해 두면 상담이 훨씬 빨라집니다.",
-    href: "#",
+    href: "/faq",
   },
 ];
 
 const FOOTER_LINKS = [
-  "서비스 규정",
-  "서비스 가격",
-  "서비스 제공 항목",
-  "전국 지점",
-  "인재 영입",
-  "산후도우미 관리사 교육",
-  "고객센터",
+  { label: "서비스 규정", href: "#" },
+  { label: "서비스 가격", href: "/pricing" },
+  { label: "서비스 제공 항목", href: "#" },
+  { label: "전국 지점", href: "/locations" },
+  { label: "FAQ & 이용약관", href: "/faq" },
+  { label: "인재 영입", href: "#" },
+  { label: "고객센터", href: "#" },
 ];
 
 type SmartLinkProps = {
@@ -140,7 +140,7 @@ export function SiteMoreSection() {
             <div className="link-card__content">
               <h3 className="h6 link-card__title">{card.title}</h3>
             </div>
-            {card.title === "산후도우미 서비스" ? (
+            {card.href !== "#" ? (
               <SmartLink href={card.href} className="btn-primary">
                 더 알아보기
               </SmartLink>
@@ -161,11 +161,17 @@ export function SiteFooter() {
     <footer className="footer">
       <div className="footer__links">
         <nav className="footer__nav">
-          {FOOTER_LINKS.map((link) => (
-            <a key={link} href="#" className="footer__link link-text">
-              {link}
-            </a>
-          ))}
+          {FOOTER_LINKS.map((link) =>
+            link.href.startsWith("/") ? (
+              <Link key={link.label} href={link.href} className="footer__link link-text">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.label} href={link.href} className="footer__link link-text">
+                {link.label}
+              </a>
+            )
+          )}
         </nav>
       </div>
       <div className="footer__bottom">

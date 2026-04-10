@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 
 import {
   CareSectionCarousel,
-  CareSection,
   type CareCardData,
   type CareSectionData,
 } from "@/components/care-section-carousel";
 import {
   SiteFooter,
   SiteMoreSection,
-  SiteNavigation,
   SiteProcessSection,
 } from "@/components/site-chrome";
+import { BannerImageSection } from "@/components/organisms/banner-image-section";
 
 export const metadata: Metadata = {
   title: "산후도우미 서비스 | 아가잼잼",
@@ -80,20 +79,10 @@ const CARE_SECTIONS: CareSectionData[] = [
   },
 ];
 
-const CARE_SUMMARY: CareSectionData = {
-  id: "summary",
-  tone: "newborn",
-  tabLabel: "",
-  mutedText: "돈만 받으면 끝?",
-  primaryText: "아가잼잼은 처음부터 끝까지 집중 케어",
-  cards: NEWBORN_CARE_CARDS,
-};
 
 export default function PostpartumCarePage() {
   return (
-    <div className="page">
-      <SiteNavigation activeLabel="산후도우미" />
-
+    <>
       <main className="service-page-main">
         <section className="service-hero">
           <div className="hero__bg">
@@ -107,51 +96,15 @@ export default function PostpartumCarePage() {
             {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
           </h1>
         </section>
-        <section
-          className="care-carousel-grid-bleed"
-          style={{
-            width: "100vw",
-            maxWidth: "100vw",
-            marginInline: "calc(50% - 50vw)",
-            paddingLeft: "clamp(24px, 5vw, 80px)",
-            paddingRight: 0,
-            boxSizing: "border-box",
-            display: "flex",
-            justifyContent: "center",
-            overflowX: "hidden",
-          }}
-        >
-          <div
-            className="care-carousel-grid"
-            style={{
-              display: "flex",
-              flexWrap: "nowrap",
-              justifyContent: "center",
-              gap: "100px",
-              width: "100%",
-              maxWidth: "100%",
-              alignItems: "start",
-            }}
-          >
-            <div style={{ minWidth: 0, width: "30vw" }}>
-              <CareSectionCarousel sections={CARE_SECTIONS} initialActiveIndex={0} />
-            </div>
-            <div style={{ minWidth: 0, width: "fit-content" }}>
-              <CareSection section={CARE_SUMMARY} mirrored />
-            </div>
-          </div>
-        </section>
+        <CareSectionCarousel sections={CARE_SECTIONS} initialActiveIndex={0} />
 
-        <section className="hero-image service-page__banner">
-          <img src="/images/hero-image-1a35f6.png" alt="아가잼잼 배너" />
-          <span className="h3 hero-image__text">검증 됐으니까. 믿을 수 있으니까.</span>
-        </section>
+        <BannerImageSection />
 
         <SiteProcessSection />
         <SiteMoreSection />
       </main>
 
       <SiteFooter />
-    </div>
+    </>
   );
 }

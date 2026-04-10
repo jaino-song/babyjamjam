@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useLayoutEffect, useEffect, useState } from "react";
 
 type NavItem = { label: string; href: string };
 
@@ -12,33 +12,45 @@ export function NavBar({
   items: NavItem[];
   activeLabel?: string;
 }) {
-  const navRef = useRef<HTMLElement>(null);
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
-  const initialIndex = items.findIndex((i) => i.label === activeLabel);
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const [activeIndex, setActiveIndex] = useState(() =>
+    items.findIndex((i) => i.label === activeLabel)
+  );
   const [indicator, setIndicator] = useState({ x: 0, width: 0 });
   const [ready, setReady] = useState(false);
 
-  const updateIndicator = useCallback(() => {
+  // Sync with activeLabel prop (shared layout navigation)
+  useEffect(() => {
+    const idx = items.findIndex((i) => i.label === activeLabel);
+    setActiveIndex(idx);
+  }, [activeLabel, items]);
+
+  // Position indicator synchronously before paint — prevents spurious slide-in animation
+  useLayoutEffect(() => {
     if (activeIndex < 0) {
       setReady(false);
       return;
     }
-
     const el = itemRefs.current[activeIndex];
     if (!el) return;
     setIndicator({ x: el.offsetLeft, width: el.offsetWidth });
     setReady(true);
   }, [activeIndex]);
 
+  // Resize handler
   useEffect(() => {
-    updateIndicator();
-    window.addEventListener("resize", updateIndicator);
-    return () => window.removeEventListener("resize", updateIndicator);
-  }, [updateIndicator]);
+    const handleResize = () => {
+      if (activeIndex < 0) return;
+      const el = itemRefs.current[activeIndex];
+      if (!el) return;
+      setIndicator({ x: el.offsetLeft, width: el.offsetWidth });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [activeIndex]);
 
   return (
-    <nav className="nav-bar" ref={navRef}>
+    <nav className="nav-bar">
       <span
         className="nav-bar__indicator"
         style={{
@@ -50,7 +62,9 @@ export function NavBar({
       {items.map((item, index) => {
         const isActive = index === activeIndex;
         const className = `nav-bar__item${isActive ? " nav-bar__item--active" : ""}`;
-        const ref = (el: HTMLElement | null) => { itemRefs.current[index] = el; };
+        const ref = (el: HTMLElement | null) => {
+          itemRefs.current[index] = el;
+        };
 
         if (item.href.startsWith("/")) {
           return (

@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import {
   SiteFooter,
   SiteMoreSection,
-  SiteNavigation,
 } from "@/components/site-chrome";
 import { PricingPageClient } from "@/components/pricing-page-client";
 
@@ -15,9 +14,7 @@ export const metadata: Metadata = {
 
 export default function PricingPage() {
   return (
-    <div className="page">
-      <SiteNavigation activeLabel="서비스 비용" />
-
+    <>
       <main className="pricing-page-main">
         <section className="pricing-hero">
           <div className="pricing-hero__bg">
@@ -45,6 +42,6 @@ export default function PricingPage() {
       </main>
 
       <SiteFooter />
-    </div>
+    </>
   );
 }

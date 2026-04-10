@@ -9,6 +9,7 @@ type Message = {
   sender: "incoming" | "outgoing";
   text: string;
   time: string;
+  large?: boolean;
 };
 
 const MOCK_MESSAGES: Message[] = [
@@ -17,6 +18,7 @@ const MOCK_MESSAGES: Message[] = [
   { id: 3, sender: "incoming", text: "안녕하세요 산모님 :) 그럼요, 저번에 말씀해주신 내용은 관리사님께 잘 전달하였으니 염려하지 않으셔도 됩니다.", time: "오후 2:20" },
   { id: 4, sender: "outgoing", text: "다행이네요~ 감사합니다.", time: "오후 2:21" },
   { id: 5, sender: "incoming", text: "추가로 궁금하시거나 필요하신 사항이 있으시면 언제든지 연락주세요 :)", time: "오후 2:21" },
+  { id: 6, sender: "outgoing", text: "😆", time: "오후 2:22", large: true },
 ];
 
 const STEP_MS = 2000;
@@ -87,7 +89,7 @@ export function KakaoChatPhone() {
                       {!isOutgoing && <span className={styles.senderName}>아가잼잼</span>}
                       <div className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}>
                         {isOutgoing && <span className={styles.meta}>{message.time}</span>}
-                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming}`}>
+                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming}`} style={message.large ? { fontSize: "22px" } : undefined}>
                           {message.text}
                         </div>
                         {!isOutgoing && <span className={styles.meta}>{message.time}</span>}

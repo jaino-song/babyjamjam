@@ -8,7 +8,6 @@ import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import {
   SiteFooter,
   SiteMoreSection,
-  SiteNavigation,
   SiteProcessSection,
 } from "@/components/site-chrome";
 
@@ -44,9 +43,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="page">
-      <SiteNavigation />
-
+    <>
       <main className="main">
         <section className="hero">
           <HeroCarousel />
@@ -153,6 +150,6 @@ export default function HomePage() {
       </main>
 
       <SiteFooter />
-    </div>
+    </>
   );
 }

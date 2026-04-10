@@ -7,21 +7,17 @@ interface BannerImageSectionProps {
 export function BannerImageSection({ className }: BannerImageSectionProps) {
   return (
     <section
-      className={cn(
-        "relative w-full h-254 rounded-card overflow-hidden",
-        className
-      )}
+      className={cn("hero__bg service-page__banner", className)}
       data-component="organism-banner-image-section"
     >
       <img
         src="/images/hero-image-1a35f6.png"
         alt="아가잼잼 배너"
-        className="w-full h-full object-cover"
+        className="hero__bg-image"
         data-component="organism-banner-image-section-image"
       />
       <span
-        className="h3 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
-        style={{ textShadow: "1px 4px 8px rgba(0,0,0,0.25)", color: "white" }}
+        className="h3 hero-image__text"
         data-component="organism-banner-image-section-text"
       >
         검증 됐으니까. 믿을 수 있으니까.
