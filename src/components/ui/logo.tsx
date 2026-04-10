@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 const LOGO_VARIANTS = {
-  header: { src: "/images/logo.png", alt: "아가잼잼 로고", className: "w-[225px] h-[75px] object-cover" },
-  footer: { src: "/images/footer-logo.png", alt: "아가잼잼", className: "w-[283px] h-[94px] object-contain" },
+  header: { src: "/images/logo.png", alt: "아가잼잼 로고", className: "w-[224px] h-[76px] object-cover" },
+  footer: { src: "/images/footer-logo.png", alt: "아가잼잼", className: "w-[284px] h-[96px] object-contain" },
 } as const;
 
 type LogoVariant = keyof typeof LOGO_VARIANTS;

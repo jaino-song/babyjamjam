@@ -9,7 +9,7 @@ const buttonVariants = cva(
       variant: {
         primary:
           "w-64 h-16 rounded-pill bg-bjj-primary text-bjj-primary-light text-btn",
-        cta: "px-[22px] py-[14px] rounded-pill bg-bjj-primary text-bjj-bg text-nav",
+        cta: "px-[24px] py-[16px] rounded-pill bg-bjj-primary text-bjj-bg text-nav",
       },
     },
     defaultVariants: {

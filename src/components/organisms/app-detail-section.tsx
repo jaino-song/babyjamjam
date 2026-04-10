@@ -38,7 +38,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
       data-component="organism-app-detail-section"
     >
       <div
-        className="flex flex-col items-start gap-10 w-[790px] pb-20"
+        className="flex flex-col items-start gap-10 w-[792px] pb-20"
         data-component="organism-app-detail-content"
       >
         <div

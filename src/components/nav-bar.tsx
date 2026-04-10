@@ -50,7 +50,7 @@ export function NavBar({
   }, [activeIndex]);
 
   return (
-    <nav className="absolute left-1/2 -translate-x-1/2 flex items-stretch h-10 gap-0 bg-bjj-primary backdrop-blur-[30px] rounded-nav p-0 max-mobile:static max-mobile:translate-x-0 max-mobile:w-full max-mobile:h-auto max-mobile:flex-wrap max-mobile:px-4 max-mobile:py-3">
+    <nav className="absolute left-1/2 -translate-x-1/2 flex items-stretch h-10 gap-0 bg-bjj-primary backdrop-blur-[32px] rounded-nav p-0 max-mobile:static max-mobile:translate-x-0 max-mobile:w-full max-mobile:h-auto max-mobile:flex-wrap max-mobile:px-4 max-mobile:py-3">
       <span
         className="nav-indicator"
         style={{
