@@ -127,7 +127,13 @@
   pointer-events: none;
 }
 
-/* ===== CARE CAROUSEL — Sliding pill toggle (CSS custom properties) ===== */
+/* ===== CARE CAROUSEL ===== */
+.care-carousel { display: flex; flex-direction: column; align-items: center; gap: 28px; width: 100%; }
+.care-carousel__heading { text-align: center; padding: 0; margin: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
+.care-carousel__heading h2 { padding: 0; margin: 0; }
+.care-carousel__heading-muted { color: var(--bjj-color-text-muted); }
+.care-carousel__heading-primary { color: var(--bjj-color-primary); }
+
 .care-carousel__toggle {
   position: relative; display: grid; grid-template-columns: repeat(var(--care-tab-count), minmax(0, 1fr));
   align-items: stretch; gap: 0; border-radius: 999px;
@@ -140,6 +146,56 @@
   transform: translateX(calc(var(--care-tab-index) * 100%));
   transition: transform 0.32s ease; z-index: 0;
 }
+.care-carousel__toggle-btn {
+  position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 0; height: 40px; border: none; background: transparent; border-radius: 999px;
+  padding: 0 20px; font-family: var(--bjj-font-heading); font-weight: 800; font-size: 13px;
+  line-height: 1; letter-spacing: -0.025em; color: var(--bjj-color-text-paragraph);
+  cursor: pointer; transition: color 0.25s, transform 0.25s; white-space: nowrap;
+}
+.care-carousel__toggle-btn--active { color: var(--bjj-color-primary-light); }
+
+.care-carousel__track-section {
+  width: 100vw; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+  padding-top: 28px;
+}
+.care-carousel__track {
+  display: flex; gap: 20px; overflow-x: auto;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 80px 20vw; scrollbar-width: none; width: 100%;
+}
+.care-carousel__track::-webkit-scrollbar { display: none; }
+
+.care-carousel__card {
+  flex: 0 0 360px; height: 440px; border-radius: 24px;
+  overflow: hidden; position: relative; cursor: pointer;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12); scroll-snap-align: start;
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease, box-shadow 0.3s ease;
+}
+.care-carousel__card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 24px 64px rgba(0,0,0,0.2); }
+.care-carousel__card-inner { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: flex-end; }
+.care-carousel__card-img { position: absolute; inset: 0; border-radius: 24px; width: 100%; height: 100%; object-fit: cover; }
+.care-carousel__card-gradient { position: absolute; inset: 0; border-radius: 24px; }
+.care-carousel__card-gradient--maternal { background: linear-gradient(transparent 25%, rgba(139,90,43,0.85) 100%); }
+.care-carousel__card-gradient--newborn { background: linear-gradient(transparent 25%, rgba(0,36,87,0.85) 100%); }
+.care-carousel__card-overlay { position: relative; z-index: 1; padding: 24px; color: white; }
+.care-carousel__card-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bjj-color-accent); color: white;
+  font-family: var(--bjj-font-heading); font-size: 13px; font-weight: 800; margin-bottom: 10px;
+}
+.care-carousel__card-title { color: white; }
+.care-carousel__card-desc { color: rgba(255,255,255,0.9); font-size: 13px; line-height: 1.55; }
+
+.care-carousel__card--fan-entering { opacity: 0; transform: translateX(40px) rotate(6deg) scale(0.9); }
+.care-carousel__card--fan-entering.care-carousel__card--newborn { transform: translateX(-40px) rotate(-6deg) scale(0.9); }
+.care-carousel__card--fan-entered { opacity: 1; transform: translateX(0) rotate(0deg) scale(1); }
+
+.care-carousel__dots { display: none; justify-content: center; gap: 6px; padding: 8px 0; }
+.care-carousel__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bjj-color-divider); transition: all 0.3s; }
+.care-carousel__dot--active { background: var(--bjj-color-primary); width: 18px; border-radius: 3px; }
 
 /* ===== PRICING — Grade toggle (sliding pill, CSS custom properties) ===== */
 .pricing-plans__grade-toggle {
