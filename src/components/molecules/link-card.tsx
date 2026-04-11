@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface LinkCardProps {
   title: string;
-  description: string;
+  description?: string;
   buttonText: string;
   buttonHref: string;
   disabled?: boolean;
@@ -27,12 +27,14 @@ export function LinkCard({ title, description, buttonText, buttonHref, disabled,
         >
           {title}
         </h3>
-        <p
-          className="medium-p max-w-[224px] text-center"
-          data-component="molecule-link-card-description"
-        >
-          {description}
-        </p>
+        {description && (
+          <p
+            className="medium-p max-w-[224px] text-center"
+            data-component="molecule-link-card-description"
+          >
+            {description}
+          </p>
+        )}
       </div>
       {disabled ? (
         <Button variant="primary" disabled data-component="molecule-link-card-button">

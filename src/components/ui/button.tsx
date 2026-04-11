@@ -3,13 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex justify-center items-center no-underline border-none cursor-pointer font-heading font-extrabold tracking-tight",
+  "inline-flex justify-center items-center no-underline border-none cursor-pointer font-heading font-extrabold tracking-tight disabled:opacity-45 disabled:cursor-default [color:var(--bjj-color-primary-light)]",
   {
     variants: {
       variant: {
         primary:
-          "w-64 h-16 rounded-pill bg-bjj-primary text-bjj-primary-light text-btn",
-        cta: "px-[24px] py-[16px] rounded-pill bg-bjj-primary text-bjj-bg text-nav",
+          "w-[164px] h-10 px-5 rounded-[640px] bg-bjj-primary text-[13px]",
+        cta: "px-5 h-10 rounded-pill bg-bjj-primary text-[13px]",
       },
     },
     defaultVariants: {

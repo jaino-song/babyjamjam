@@ -54,7 +54,6 @@ export function MoreSection({ className }: MoreSectionProps) {
           <LinkCard
             key={card.title}
             title={card.title}
-            description={card.description}
             buttonText={card.buttonText}
             buttonHref={card.buttonHref}
             disabled={"disabled" in card ? card.disabled : false}

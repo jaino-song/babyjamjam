@@ -1,0 +1,437 @@
+[
+  {
+    "path": "0",
+    "tag": "BODY",
+    "origClass": "pretendard_beba7241-module__YQVmna__variable paperlogy_8041b",
+    "migrClass": "pretendard_beba7241-module__YQVmna__variable paperlogy_8041b",
+    "origText": "",
+    "origRect": "1920x5864",
+    "migrRect": "1920x5980",
+    "diffs": {
+      "height": [
+        "5864.19px",
+        "5979.52px"
+      ]
+    }
+  },
+  {
+    "path": "0.1",
+    "tag": "DIV",
+    "origClass": "page",
+    "migrClass": "flex flex-col items-center px-[20%] max-mobile:px-[var(--bjj",
+    "origText": "",
+    "origRect": "1920x5864",
+    "migrRect": "1920x5980",
+    "diffs": {
+      "height": [
+        "5864.19px",
+        "5979.52px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1",
+    "tag": "DIV",
+    "origClass": "page-transition",
+    "migrClass": "flex flex-col items-center w-full animate-[page-enter_0.35s_",
+    "origText": "",
+    "origRect": "1152x5704",
+    "migrRect": "1152x5820",
+    "diffs": {
+      "height": [
+        "5704.19px",
+        "5819.52px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0",
+    "tag": "MAIN",
+    "origClass": "main",
+    "migrClass": "flex flex-col items-center w-full gap-[var(--bjj-section-gap",
+    "origText": "",
+    "origRect": "1152x5442",
+    "migrRect": "1152x5547",
+    "diffs": {
+      "height": [
+        "5441.52px",
+        "5546.52px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6",
+    "tag": "SECTION",
+    "origClass": "more",
+    "migrClass": "flex flex-col items-center gap-16 pt-10 border-t border-bjj-",
+    "origText": "",
+    "origRect": "1152x261",
+    "migrRect": "1152x366",
+    "diffs": {
+      "height": [
+        "260.984px",
+        "365.984px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1",
+    "tag": "DIV",
+    "origClass": "more__cards",
+    "migrClass": "flex justify-center items-start gap-10 w-full max-tablet:fle",
+    "origText": "",
+    "origRect": "1152x92",
+    "migrRect": "1152x197",
+    "diffs": {
+      "height": [
+        "91.5938px",
+        "196.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.0",
+    "tag": "DIV",
+    "origClass": "link-card",
+    "migrClass": "flex-1 flex flex-col items-center w-full gap-6 max-mobile:w-",
+    "origText": "",
+    "origRect": "357x92",
+    "migrRect": "357x197",
+    "diffs": {
+      "height": [
+        "91.5938px",
+        "196.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.0.0",
+    "tag": "DIV",
+    "origClass": "link-card__content",
+    "migrClass": "flex flex-col items-center w-full gap-6",
+    "origText": "",
+    "origRect": "357x28",
+    "migrRect": "357x133",
+    "diffs": {
+      "height": [
+        "27.5938px",
+        "132.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.0.1",
+    "tag": "A",
+    "origClass": "btn-primary",
+    "migrClass": "inline-flex justify-center items-center no-underline border-",
+    "origText": "더 알아보기",
+    "origRect": "164x40",
+    "migrRect": "164x40",
+    "diffs": {
+      "color": [
+        "rgb(251, 253, 255)",
+        "rgb(0, 0, 0)"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.1",
+    "tag": "DIV",
+    "origClass": "link-card",
+    "migrClass": "flex-1 flex flex-col items-center w-full gap-6 max-mobile:w-",
+    "origText": "",
+    "origRect": "357x92",
+    "migrRect": "357x197",
+    "diffs": {
+      "height": [
+        "91.5938px",
+        "196.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.1.0",
+    "tag": "DIV",
+    "origClass": "link-card__content",
+    "migrClass": "flex flex-col items-center w-full gap-6",
+    "origText": "",
+    "origRect": "357x28",
+    "migrRect": "357x133",
+    "diffs": {
+      "height": [
+        "27.5938px",
+        "132.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.1.1",
+    "tag": "BUTTON",
+    "origClass": "btn-primary",
+    "migrClass": "inline-flex justify-center items-center no-underline border-",
+    "origText": "출시 예정",
+    "origRect": "164x40",
+    "migrRect": "164x40",
+    "diffs": {
+      "color": [
+        "rgb(251, 253, 255)",
+        "rgb(0, 0, 0)"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.2",
+    "tag": "DIV",
+    "origClass": "link-card",
+    "migrClass": "flex-1 flex flex-col items-center w-full gap-6 max-mobile:w-",
+    "origText": "",
+    "origRect": "357x92",
+    "migrRect": "357x197",
+    "diffs": {
+      "height": [
+        "91.5938px",
+        "196.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.2.0",
+    "tag": "DIV",
+    "origClass": "link-card__content",
+    "migrClass": "flex flex-col items-center w-full gap-6",
+    "origText": "",
+    "origRect": "357x28",
+    "migrRect": "357x133",
+    "diffs": {
+      "height": [
+        "27.5938px",
+        "132.594px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.0.6.1.2.1",
+    "tag": "A",
+    "origClass": "btn-primary",
+    "migrClass": "inline-flex justify-center items-center no-underline border-",
+    "origText": "더 알아보기",
+    "origRect": "164x40",
+    "migrRect": "164x40",
+    "diffs": {
+      "color": [
+        "rgb(251, 253, 255)",
+        "rgb(0, 0, 0)"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1",
+    "tag": "FOOTER",
+    "origClass": "footer",
+    "migrClass": "flex flex-col items-center w-full gap-[52px] pt-6 pb-3 mt-25",
+    "origText": "",
+    "origRect": "1152x163",
+    "migrRect": "1152x173",
+    "diffs": {
+      "height": [
+        "162.672px",
+        "173px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0",
+    "tag": "DIV",
+    "origClass": "footer__links",
+    "migrClass": "flex justify-between items-center w-full max-mobile:flex-col",
+    "origText": "",
+    "origRect": "1152x14",
+    "migrRect": "1152x24",
+    "diffs": {
+      "height": [
+        "13.6719px",
+        "24px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0",
+    "tag": "NAV",
+    "origClass": "footer__nav",
+    "migrClass": "flex items-center gap-4 max-mobile:flex-wrap max-mobile:row-",
+    "origText": "",
+    "origRect": "393x14",
+    "migrRect": "609x24",
+    "diffs": {
+      "width": [
+        "392.562px",
+        "608.688px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.0",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "서비스 규정",
+    "origRect": "41x14",
+    "migrRect": "71x24",
+    "diffs": {
+      "width": [
+        "40.6094px",
+        "70.625px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.1",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "서비스 가격",
+    "origRect": "41x14",
+    "migrRect": "71x24",
+    "diffs": {
+      "width": [
+        "40.6094px",
+        "70.625px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.2",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "서비스 제공 항목",
+    "origRect": "58x14",
+    "migrRect": "101x24",
+    "diffs": {
+      "width": [
+        "58.2656px",
+        "100.906px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.3",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "전국 지점",
+    "origRect": "33x14",
+    "migrRect": "57x24",
+    "diffs": {
+      "width": [
+        "32.9531px",
+        "57.1875px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.4",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "FAQ & 이용약관",
+    "origRect": "61x14",
+    "migrRect": "102x24",
+    "diffs": {
+      "width": [
+        "60.5625px",
+        "102.391px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.5",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "인재 영입",
+    "origRect": "33x14",
+    "migrRect": "57x24",
+    "diffs": {
+      "width": [
+        "32.9531px",
+        "57.1875px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  },
+  {
+    "path": "0.1.1.1.0.0.6",
+    "tag": "A",
+    "origClass": "footer__link link-text",
+    "migrClass": "font-number font-bold tracking-tight text-bjj-text-link no-u",
+    "origText": "고객센터",
+    "origRect": "31x14",
+    "migrRect": "54x24",
+    "diffs": {
+      "width": [
+        "30.6094px",
+        "53.7656px"
+      ],
+      "height": [
+        "13.6719px",
+        "24px"
+      ],
+      "fontSize": [
+        "9px",
+        "16px"
+      ]
+    }
+  }
+]
