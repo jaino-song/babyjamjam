@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 import { Logo } from "@/components/ui/logo";
@@ -46,7 +47,9 @@ export function Footer({ className }: FooterProps) {
         className="flex justify-between items-end w-full max-mobile:flex-col max-mobile:items-start max-mobile:gap-4"
         data-component="organism-footer-bottom"
       >
-        <Logo variant="footer" className="!w-[180px] !h-[60px]" />
+        <Link href="/">
+          <Logo variant="footer" className="!w-[180px] !h-[60px]" />
+        </Link>
         <span
           className="caption-text"
           data-component="organism-footer-caption"

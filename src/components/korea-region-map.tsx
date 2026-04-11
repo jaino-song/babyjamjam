@@ -215,20 +215,23 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
     const currentProvinceRef = useRef<string | null>(null);
     const currentCityRef = useRef<string | null>(null);
 
-    const showTooltip = useCallback((event: MouseEvent, text: string) => {
+    const showTooltip = useCallback((pathEl: SVGPathElement, text: string) => {
       const tip = tooltipRef.current;
-      if (!tip) return;
+      const svgEl = svgRef.current;
+      const container = svgEl?.closest(".krm") as HTMLElement | null;
+      if (!tip || !svgEl || !container) return;
+      const bbox = pathEl.getBBox();
+      const ctm = svgEl.getScreenCTM();
+      if (!ctm) return;
+      const pt = svgEl.createSVGPoint();
+      pt.x = bbox.x + bbox.width / 2;
+      pt.y = bbox.y;
+      const screenPt = pt.matrixTransform(ctm);
+      const containerRect = container.getBoundingClientRect();
       tip.textContent = text;
       tip.style.opacity = "1";
-      tip.style.left = event.clientX - tip.offsetWidth / 2 + "px";
-      tip.style.top = event.clientY - tip.offsetHeight - 16 + "px";
-    }, []);
-
-    const moveTooltip = useCallback((event: MouseEvent) => {
-      const tip = tooltipRef.current;
-      if (!tip) return;
-      tip.style.left = event.clientX - tip.offsetWidth / 2 + "px";
-      tip.style.top = event.clientY - tip.offsetHeight - 16 + "px";
+      tip.style.left = screenPt.x - containerRect.left - tip.offsetWidth / 2 + "px";
+      tip.style.top = screenPt.y - containerRect.top - tip.offsetHeight - 8 + "px";
     }, []);
 
     const hideTooltip = useCallback(() => {
@@ -266,13 +269,11 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           ].filter(Boolean).join(" ");
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mouseenter", function (event: any, d: any) {
+        .on("mouseenter", function (_event: any, d: any) {
           const short = SHORT_LABELS[d.properties.name] || d.properties.name;
           if (!availableRegions.has(short)) return;
-          showTooltip(event, short);
+          showTooltip(this, short);
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mousemove", (event: any) => moveTooltip(event))
         .on("mouseleave", hideTooltip)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .on("click", (_event: any, d: any) => {
@@ -314,12 +315,10 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
             ].filter(Boolean).join(" ");
           })
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .on("mouseenter", (event: any, d: any) => {
+          .on("mouseenter", function (_event: any, d: any) {
             const pin = pinMap.get(d.properties.code);
-            if (pin) showTooltip(event, pin.label);
+            if (pin) showTooltip(this, pin.label);
           })
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .on("mousemove", (event: any) => moveTooltip(event))
           .on("mouseleave", hideTooltip)
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .on("click", (_event: any, d: any) => {
@@ -331,7 +330,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           });
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [availableRegions, municipalityPins, selectedRegion, isSimpleMode, onRegionSelect, showTooltip, moveTooltip, hideTooltip]);
+    }, [availableRegions, municipalityPins, selectedRegion, isSimpleMode, onRegionSelect, showTooltip,hideTooltip]);
 
     const drillToMunicipalities = useCallback((provinceName: string) => {
       const muniGeo = municipalitiesRef.current;
@@ -374,14 +373,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           return `krm-muni ${avail ? "krm-muni--available" : "krm-muni--unavailable"}`;
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mouseenter", function (event: any, d: any) {
+        .on("mouseenter", function (_event: any, d: any) {
           const avail = isMuniAvailable(d.properties.code, availSet);
           if (!avail) return;
           const name = DISPLAY_NAMES[d.properties.name] || d.properties.name;
-          showTooltip(event, name);
+          showTooltip(this, name);
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mousemove", (event: any) => moveTooltip(event))
         .on("mouseleave", hideTooltip)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .on("click", (_event: any, d: any) => {
@@ -391,7 +388,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           onMunicipalitySelect?.(shortProv, displayName);
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showTooltip, moveTooltip, hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
+    }, [showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
 
     const drillToCities = useCallback((provinceName: string) => {
       const muniGeo = municipalitiesRef.current;
@@ -474,13 +471,11 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           `krm-city ${d.properties.available ? "krm-city--available" : "krm-city--unavailable"}`
         )
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mouseenter", function (event: any, d: any) {
+        .on("mouseenter", function (_event: any, d: any) {
           if (!d.properties.available) return;
           d3.select(this).classed("krm-city--hover", true);
-          showTooltip(event, d.properties.name);
+          showTooltip(this, d.properties.name);
         })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .on("mousemove", (event: any) => moveTooltip(event))
         .on("mouseleave", function () {
           d3.select(this).classed("krm-city--hover", false);
           hideTooltip();
@@ -491,7 +486,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           onMunicipalitySelect?.(shortProv, d.properties.name);
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showTooltip, moveTooltip, hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
+    }, [showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
 
     const goToProvinces = useCallback(() => {
       currentProvinceRef.current = null;
@@ -528,12 +523,9 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
     }, [renderProvinces]);
 
     return (
-      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-        <div
-          className="krm__tooltip"
-          ref={tooltipRef}
-        />
-        <svg ref={svgRef} className="max-w-full max-h-full" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" />
+      <div className="krm">
+        <div className="krm__tooltip" ref={tooltipRef} />
+        <svg ref={svgRef} className="krm__svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" />
       </div>
     );
   }

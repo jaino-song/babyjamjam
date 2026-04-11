@@ -47,16 +47,12 @@ export function SelectDropdown({
   return (
     <div
       ref={containerRef}
-      className={cn("relative w-full", className)}
+      className={cn("select-dropdown", isOpen && "select-dropdown--open", className)}
       data-component="ui-select-dropdown"
     >
       <button
         type="button"
-        className={cn(
-          "flex justify-between items-center w-full h-12 px-3 bg-bjj-bg border-2 border-bjj-divider rounded-[32px] cursor-pointer font-body text-[16px] font-medium leading-[1.5] tracking-[0.03em] text-bjj-text-headline transition-[border-color] duration-200",
-          "hover:border-bjj-primary",
-          isOpen && "border-bjj-primary",
-        )}
+        className="select-dropdown__trigger"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
         aria-haspopup="listbox"
@@ -64,17 +60,14 @@ export function SelectDropdown({
       >
         <span
           className={cn(
-            "flex-1 text-left overflow-hidden text-ellipsis whitespace-nowrap",
-            !selectedOption && "text-[#9ca3af]",
+            "select-dropdown__value",
+            !selectedOption && "select-dropdown__value--placeholder"
           )}
         >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <svg
-          className={cn(
-            "shrink-0 w-4 h-4 text-[#9ca3af] transition-transform duration-200",
-            isOpen && "rotate-180",
-          )}
+          className="select-dropdown__chevron"
           width="16"
           height="16"
           viewBox="0 0 16 16"
@@ -92,19 +85,15 @@ export function SelectDropdown({
       </button>
 
       {isOpen && (
-        <ul
-          className="absolute top-[calc(100%+4px)] left-0 right-0 bg-bjj-bg border border-bjj-divider rounded-xl py-1 list-none z-20 shadow-[0_4px_12px_rgba(0,0,0,0.08)] max-h-[200px] overflow-y-auto"
-          role="listbox"
-        >
+        <ul className="select-dropdown__menu" role="listbox">
           {options.map((option) => (
             <li
               key={option.value}
               role="option"
               aria-selected={option.value === value}
               className={cn(
-                "py-2 px-3 cursor-pointer font-body text-[16px] font-medium leading-[1.5] tracking-[0.03em] text-bjj-text-headline transition-colors duration-150",
-                "hover:bg-[rgba(0,74,173,0.04)]",
-                option.value === value && "text-bjj-primary font-bold",
+                "select-dropdown__option",
+                option.value === value && "select-dropdown__option--selected"
               )}
               onClick={() => {
                 onChange?.(option.value);

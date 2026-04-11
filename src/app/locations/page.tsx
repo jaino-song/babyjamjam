@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useCallback } from "react";
 import { Footer } from "@/components/organisms/footer";
-import { KoreaRegionMap, type MunicipalityPin } from "@/components/korea-region-map";
+import { KoreaRegionMap } from "@/components/korea-region-map";
 import { BookingModal } from "@/components/booking-modal";
 import { Badge } from "@/components/ui/badge";
 import { PillCta } from "@/components/ui/circle-cta";
@@ -129,17 +129,8 @@ export default function LocationsPage() {
   const [bookingRegion, setBookingRegion] = useState<string | null>(null);
   const [bookingDistrict, setBookingDistrict] = useState<string | null>(null);
 
-  // Provinces that are fully available (all districts have branches)
-  // 경북 is excluded — only 경산시 is pinned individually
-  const PINNED_REGIONS = new Set(["경북"]);
-
   const availableRegions = useMemo(
-    () => new Set(BRANCHES.map((b) => b.region).filter((r) => !PINNED_REGIONS.has(r))),
-    []
-  );
-
-  const municipalityPins: MunicipalityPin[] = useMemo(
-    () => [{ code: "37100", label: "경산시", region: "경북" }],
+    () => new Set(["서울", "인천", "경기도", "경북"]),
     []
   );
 
@@ -153,59 +144,58 @@ export default function LocationsPage() {
 
   return (
     <>
-      <main className="flex flex-col items-center w-full pb-[var(--bjj-section-gap)]">
-        <section className="flex flex-col items-start w-full gap-3 pb-10">
-          <h1 className="h1 text-bjj-primary">지점 찾기</h1>
-          <p className="big-p max-w-[480px]">
+      <main className="location-main">
+        <section className="location-hero">
+          <h1 className="h1 location-hero__title">지점 찾기</h1>
+          <p className="big-p location-hero__subtitle">
             지도에서 지역을 클릭하면 해당 지점을 바로 확인할 수 있어요.
           </p>
         </section>
 
-        <div className="flex w-full h-[60vh] rounded-card overflow-hidden border border-bjj-divider shadow-card max-mobile:flex-col">
+        <div className="location-split">
           {/* 지도 영역 */}
-          <div className="relative bg-gradient-to-br from-[#eef5ff] to-[#f8faff] h-full aspect-square shrink-0 max-mobile:h-auto max-mobile:aspect-[520/580]">
+          <div className="location-map">
             <KoreaRegionMap
               availableRegions={availableRegions}
-              municipalityPins={municipalityPins}
               selectedRegion={selectedRegion}
               onRegionSelect={handleRegionSelect}
             />
           </div>
 
           {/* 사이드바 리스트 */}
-          <aside className="flex flex-col border-l border-bjj-divider bg-bjj-bg flex-1 min-w-0 max-mobile:border-l-0 max-mobile:border-t max-mobile:border-bjj-divider">
-            <div className="flex justify-between items-center py-5 px-6 border-b border-bjj-divider">
-              <h2 className="h6 text-bjj-text-headline">
+          <aside className="location-sidebar">
+            <div className="location-sidebar__header">
+              <h2 className="h6 location-sidebar__title">
                 {selectedRegion ? `${selectedRegion} 지점` : "전체 지점"}
               </h2>
-              <span className="small-p text-bjj-primary">{filtered.length}개</span>
+              <span className="small-p location-sidebar__count">{filtered.length}개</span>
             </div>
 
             {selectedRegion && (
               <button
-                className="medium-p flex items-center gap-1 py-2.5 px-6 border-none border-b border-bjj-divider bg-[rgba(0,74,173,0.04)] cursor-pointer text-bjj-primary transition-colors duration-150 hover:bg-[rgba(0,74,173,0.08)]"
+                className="medium-p location-sidebar__reset"
                 onClick={() => setSelectedRegion(null)}
               >
                 ← 전체 지점 보기
               </button>
             )}
 
-            <ul className="list-none p-0 m-0 overflow-y-auto flex-1 max-mobile:max-h-[400px]">
-              {filtered.map((branch) => (
+            <ul className="location-list">
+              {filtered.map((branch, idx) => (
                 <li
                   key={branch.id}
-                  className="flex items-center gap-4 py-4 px-6 border-b border-bjj-divider cursor-pointer transition-colors duration-150 hover:bg-[rgba(0,74,173,0.02)]"
+                  className="location-list__item"
                 >
-                  <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                  <div className="location-list__item-content">
+                    <div className="location-list__top">
                       <Badge tone={branch.type === "direct" ? "primary" : "green"}>
                         {branch.type === "direct" ? "직영점" : "가맹점"}
                       </Badge>
-                      <h3 className="h7 text-bjj-text-dark">{branch.name}</h3>
+                      <h3 className="h7 location-list__name">{branch.name}</h3>
                     </div>
-                    <p className="medium-p">{branch.address}</p>
-                    <div className="flex justify-between items-center">
-                      <a href={`tel:${branch.phone}`} className="medium-p text-bjj-primary no-underline hover:underline">
+                    <p className="medium-p location-list__address">{branch.address}</p>
+                    <div className="location-list__meta">
+                      <a href={`tel:${branch.phone}`} className="medium-p location-list__phone">
                         {branch.phone}
                       </a>
                     </div>

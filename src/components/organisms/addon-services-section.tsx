@@ -41,37 +41,37 @@ export function AddonServicesSection({
   return (
     <section
       className={cn(
-        "flex flex-col w-full gap-6",
-        blurred && "!hidden",
+        "addon-services",
+        blurred && "pricing-section--hidden"
       )}
       data-component="organism-addon-services-section"
     >
-      <div className="w-full">
-        <h2 className="h3-left">
-          <span className="text-bjj-text-muted">
+      <div className="addon-services__heading">
+        <h2 className="h3-left addon-services__title">
+          <span className="addon-services__title-muted">
             내가 원하는 대로 선택 가능.
           </span>
           <br />
-          <span className="text-bjj-primary">
+          <span className="addon-services__title-primary">
             산후도우미서비스 추가 서비스
           </span>
         </h2>
       </div>
 
-      <div className="flex flex-col gap-12 w-full">
+      <div className="addon-services__groups">
         {groups.map((group, gi) => (
-          <div key={gi} className="flex flex-col gap-4 w-full">
+          <div key={gi} className="addon-services__group">
             {gi === 0 && (
-              <p className="text-right w-full font-body font-medium text-[16px] leading-[1.5] tracking-[0.03em] text-bjj-text-paragraph">
+              <p className="addon-services__note">
                 *모든 요금은 1인 1일 기준입니다.
               </p>
             )}
             {gi === 1 && (
-              <p className="text-right w-full font-body font-medium text-[16px] leading-[1.5] tracking-[0.03em] text-bjj-text-paragraph">
+              <p className="addon-services__note">
                 *토요일 및 공휴일 서비스는 1일 기준, 추가 시간은 1시간 기준입니다.
               </p>
             )}
-            <div className="grid grid-cols-3 gap-4 w-full max-mobile:grid-cols-1">
+            <div className="addon-services__list">
             {group.map((addon) => {
               const qty = selections.get(addon.id);
               const added = qty !== undefined && qty > 0;

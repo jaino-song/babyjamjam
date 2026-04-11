@@ -75,7 +75,7 @@ export function PricingPageClient() {
 
   return (
     <>
-      <div className="relative w-full min-h-[600px]" ref={plansRef}>
+      <div className="pricing-plans-wrapper" ref={plansRef}>
         <PricingPlansSection
             plans={displayPlans}
             selectedPlanId={store.selectedPlanId}
@@ -88,17 +88,13 @@ export function PricingPageClient() {
           />
 
           {!store.pricesRevealed && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center p-6">
-              <div className="flex flex-col items-center gap-6 w-full max-w-[528px] py-12 px-10 bg-bjj-bg rounded-card shadow-[0_0_20px_rgba(0,0,0,0.08),0_0_6px_rgba(0,0,0,0.04)] text-center">
-                <h2 className="font-heading font-extrabold text-[40px] leading-[1.2] text-bjj-primary">
-                  서비스 가격 조회
-                </h2>
-                <p className="font-body font-medium text-[18px] leading-[1.5] text-bjj-text-paragraph">
-                  정확한 가격을 알아볼까요?
-                </p>
+            <div className="pricing-modal-overlay">
+              <div className="pricing-cta-card">
+                <h2 className="pricing-cta-card__title">서비스 가격 조회</h2>
+                <p className="pricing-cta-card__label">정확한 가격을 알아볼까요?</p>
                 <button
                   type="button"
-                  className="py-3 px-10 bg-bjj-primary text-white border-none rounded-full cursor-pointer font-heading font-extrabold text-[16px] leading-[1.4] transition-opacity duration-200 hover:opacity-90"
+                  className="pricing-cta-card__btn"
                   onClick={() => setShowFormModal(true)}
                 >
                   시작하기
@@ -119,10 +115,7 @@ export function PricingPageClient() {
       />
 
       {showFormModal && (
-        <div
-          className="fixed inset-0 z-100 flex items-center justify-center bg-black/40 backdrop-blur-[4px]"
-          onClick={() => setShowFormModal(false)}
-        >
+        <div className="pricing-form-overlay" onClick={() => setShowFormModal(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <PricingFormModal
               answers={store.formAnswers}

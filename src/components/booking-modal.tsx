@@ -111,6 +111,9 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
           action: () => {
             setView("map");
             mapRef.current?.goBack();
+            // drillToMunicipalities will be called by the map internally after goBack
+            // Actually goBack goes to provinces. We need to re-drill.
+            // The map component handles this - goBack from municipalities goes to provinces
           },
         },
         { label: municipality },
@@ -121,7 +124,12 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
 
   const handleBack = useCallback(() => {
     if (view === "form") {
+      // Go back to municipality map
       setView("map");
+      // The map should still be showing municipalities for the selected province
+      // We need to trigger a re-drill. Actually the map state persists.
+      // But we hid the map, so we need to just show it again.
+      // The map's internal state should still be on municipalities view.
       if (selectedProvince) {
         setBreadcrumb([
           {
@@ -165,37 +173,31 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
 
   return (
     <div
-      className="fixed inset-0 bg-black/45 backdrop-blur-[4px] flex items-center justify-center z-[1000]"
+      className="bm-overlay"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-bjj-bg rounded-3xl w-[780px] max-h-[90vh] overflow-hidden shadow-[0_32px_80px_rgba(0,36,87,0.18)] flex flex-col">
+      <div className="bm">
         {/* Header */}
-        <div className="flex items-center justify-between px-8 pt-6 shrink-0">
-          <h2 className="font-heading text-[24px] font-extrabold text-bjj-text-headline leading-[1.2]">
-            {headerTitle}
-          </h2>
-          <button
-            className="w-9 h-9 border-none bg-[#f5f5f5] rounded-full text-[18px] cursor-pointer flex items-center justify-center text-[#666] transition-colors duration-200 hover:bg-[#e8e8e8]"
-            onClick={onClose}
-            aria-label="닫기"
-          >
+        <div className="bm__header">
+          <h2 className="bm__title">{headerTitle}</h2>
+          <button className="bm__close" onClick={onClose} aria-label="닫기">
             ✕
           </button>
         </div>
 
         {/* Nav bar wrap: breadcrumb + back button */}
-        <div className="flex flex-col gap-4 px-8 py-4 shrink-0 border-b border-bjj-divider relative z-[1]">
-          <div className="flex items-center gap-1 font-heading text-[13px] font-semibold">
+        <div className="bm__nav-wrap">
+          <div className="bm__breadcrumb">
             {breadcrumb.map((part, i) => (
               <span key={i}>
-                {i > 0 && <span className="text-[#ccc] mx-1">›</span>}
+                {i > 0 && <span className="bm__breadcrumb-sep">›</span>}
                 {i === breadcrumb.length - 1 ? (
-                  <span className="text-bjj-primary font-bold">{part.label}</span>
+                  <span className="bm__breadcrumb-current">{part.label}</span>
                 ) : (
                   <span
-                    className="text-[#999] cursor-pointer transition-colors duration-200 hover:text-bjj-primary"
+                    className="bm__breadcrumb-link"
                     onClick={part.action}
                   >
                     {part.label}
@@ -205,10 +207,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
             ))}
           </div>
           {showBack && (
-            <button
-              className="px-5 h-10 inline-flex items-center bg-bjj-bg border border-bjj-primary rounded-[32px] font-heading text-[15px] font-medium text-bjj-primary cursor-pointer transition-all duration-200 self-start hover:bg-bjj-primary hover:text-white"
-              onClick={handleBack}
-            >
+            <button className="bm__back" onClick={handleBack}>
               ← 이전
             </button>
           )}
@@ -216,7 +215,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
 
         {/* Map view */}
         <div
-          className="flex-1 px-8 py-4 pb-6 flex items-center justify-center min-h-[460px]"
+          className="bm__map-container"
           style={{ display: view === "map" ? "flex" : "none" }}
         >
           <KoreaRegionMap
@@ -228,11 +227,9 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
           />
         </div>
         {view === "map" && (
-          <div className="px-8 py-4 flex items-center gap-2 bg-[#f9fafb] border-t border-bjj-divider shrink-0">
-            <div className="w-5 h-5 bg-bjj-primary text-white rounded-full flex items-center justify-center font-heading text-[12px] font-extrabold shrink-0">
-              !
-            </div>
-            <p className="font-body text-[13px] text-[#666] font-medium">
+          <div className="bm__footer">
+            <div className="bm__footer-icon">!</div>
+            <p>
               서비스 가능 지역만 선택할 수 있습니다. 추가 지역은 순차적으로
               오픈 예정이에요.
             </p>
@@ -241,34 +238,32 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
 
         {/* Form view */}
         {view === "form" && (
-          <div className="px-10 py-6 flex flex-col gap-4 overflow-y-auto max-h-[70vh]" ref={formRef}>
-            <div>
-              <p className="big-p text-bjj-text-paragraph">
+          <div className="bm__form-panel" ref={formRef}>
+            <div className="bm__form-intro">
+              <p className="big-p">
                 산후도우미 서비스에 대해서 궁금한 점이 있으시다면,
                 <br />
                 부담없이 상담 받으세요. 바로 예약하지 않으셔도 괜찮아요!
               </p>
             </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  담당 지점
-                </label>
+            <div className="bm__form-fields">
+              <div className="bm__form-group">
+                <label className="bm__form-label">담당 지점</label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-surface-muted text-bjj-text-muted cursor-default pointer-events-none"
+                  className="bm__form-input"
                   type="text"
                   value={selectedMuni ? `${selectedMuni.replace(/[구시군]$/, "")}점` : selectedProvince ?? ""}
                   readOnly
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  산모님 성함 <span className="text-[#e74c3c] text-[14px]">*</span>
+              <div className="bm__form-group">
+                <label className="bm__form-label">
+                  산모님 성함 <span className="bm__required">*</span>
                 </label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="text"
                   placeholder="성함을 입력해 주세요"
                   data-required
@@ -276,12 +271,12 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  산모님 연락처 <span className="text-[#e74c3c] text-[14px]">*</span>
+              <div className="bm__form-group">
+                <label className="bm__form-label">
+                  산모님 연락처 <span className="bm__required">*</span>
                 </label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="tel"
                   placeholder="010-0000-0000"
                   data-required
@@ -289,12 +284,12 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  주소 <span className="text-[#e74c3c] text-[14px]">*</span>
+              <div className="bm__form-group">
+                <label className="bm__form-label">
+                  주소 <span className="bm__required">*</span>
                 </label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="text"
                   placeholder="00구 00동 까지"
                   data-required
@@ -302,12 +297,12 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  출산 예정일 <span className="text-[#e74c3c] text-[14px]">*</span>
+              <div className="bm__form-group">
+                <label className="bm__form-label">
+                  출산 예정일 <span className="bm__required">*</span>
                 </label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="date"
                   data-required
                   onInput={validateForm}
@@ -315,11 +310,11 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  출산 경험 <span className="text-[#e74c3c] text-[14px]">*</span>
+              <div className="bm__form-group">
+                <label className="bm__form-label">
+                  출산 경험 <span className="bm__required">*</span>
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="bm__radio-group">
                   <RadioPill name="birthExp" value="초산" onChange={validateForm}>
                     초산
                   </RadioPill>
@@ -329,38 +324,33 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
-                  정부지원 바우처 유형
-                </label>
+              <div className="bm__form-group">
+                <label className="bm__form-label">정부지원 바우처 유형</label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="text"
                   placeholder="A통합-0형 (없으면 무기재)"
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
+              <div className="bm__form-group">
+                <label className="bm__form-label">
                   원하시는 관리사님 성함
                 </label>
                 <input
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary placeholder:text-bjj-text-muted"
+                  className="bm__form-input"
                   type="text"
                   placeholder="없으면 무기재"
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="font-heading text-[16px] font-semibold text-bjj-text-dark">
+              <div className="bm__form-group">
+                <label className="bm__form-label">
                   아가잼잼을 어떻게 알게 되셨나요?{" "}
-                  <span className="text-[#e74c3c] text-[14px]">*</span>
+                  <span className="bm__required">*</span>
                 </label>
                 <select
-                  className="h-11 px-4 border-2 border-bjj-divider rounded-[32px] font-body text-[15px] font-medium text-bjj-text-headline transition-[border-color] duration-200 outline-none bg-bjj-bg focus:border-bjj-primary appearance-none cursor-pointer bg-no-repeat bg-[right_16px_center] pr-10"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-                  }}
+                  className="bm__form-select"
                   defaultValue=""
                   data-required
                   onChange={validateForm}
@@ -377,9 +367,9 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 </select>
               </div>
 
-              <div className="flex justify-end">
+              <div className="bm__form-submit-row">
                 <button
-                  className="py-3.5 px-8 bg-bjj-primary text-white border-none rounded-[640px] font-heading font-extrabold text-[14px] cursor-pointer transition-opacity duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-default"
+                  className="bm__form-submit"
                   disabled={!formValid}
                   onClick={handleSubmit}
                 >

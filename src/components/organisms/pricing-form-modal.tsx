@@ -90,38 +90,31 @@ export function PricingFormModal({
   );
 
   return (
-    <div
-      className="p-10 bg-bjj-bg rounded-3xl shadow-[0_32px_80px_rgba(0,36,87,0.18)] flex flex-col gap-6 w-[780px] h-[340px] max-h-[80vh] overflow-visible z-10"
-      data-component="organism-pricing-form-modal"
-    >
-      <div className="flex justify-between items-start">
-        <h2 className="font-heading font-extrabold text-[40px] leading-[1.2] text-bjj-primary">
-          서비스 가격 조회
-        </h2>
+    <div className="pricing-modal" data-component="organism-pricing-form-modal">
+      <div className="pricing-modal__header">
+        <h2 className="pricing-modal__title">서비스 가격 조회</h2>
       </div>
 
       {/* Stepper */}
-      <div className="flex items-center justify-center gap-0 min-h-10 overflow-visible py-1">
+      <div className="wizard-stepper">
         {Array.from({ length: displayStepCount }, (_, i) => (
-          <div key={i} className="contents">
+          <div key={i} className="wizard-stepper__item">
             <div
-              className={cn(
-                "flex items-center justify-center w-7 h-7 rounded-full font-heading text-[12px] font-bold transition-all duration-300 shrink-0",
+              className={`wizard-stepper__circle ${
                 i === step
-                  ? "bg-bjj-primary text-white scale-110 shadow-[0_2px_12px_rgba(0,74,173,0.3)]"
+                  ? "wizard-stepper__circle--active"
                   : i < step
-                    ? "bg-bjj-primary text-white opacity-60"
-                    : "bg-[#f9fafb] text-bjj-text-muted border-2 border-bjj-divider",
-              )}
+                    ? "wizard-stepper__circle--done"
+                    : "wizard-stepper__circle--pending"
+              }`}
             >
               {i + 1}
             </div>
             {i < displayStepCount - 1 && (
               <div
-                className={cn(
-                  "mx-1.5 h-0.5 w-10 rounded-full shrink-0",
-                  i < step ? "bg-bjj-primary opacity-40" : "bg-bjj-divider",
-                )}
+                className={`wizard-stepper__connector ${
+                  i < step ? "wizard-stepper__connector--done" : ""
+                }`}
               />
             )}
           </div>
@@ -129,31 +122,25 @@ export function PricingFormModal({
       </div>
 
       {/* Current question */}
-      <div className="flex flex-col gap-6">
+      <div className="pricing-modal__body">
         {currentQuestion && (
-          <div className="flex flex-col gap-4 opacity-100" data-component="molecule-form-question">
-            <div className="flex flex-col gap-1">
-              <span className="font-heading font-extrabold text-[24px] leading-[1.2] text-bjj-text-dark">
-                {currentQuestion.label}
-              </span>
+          <div className="form-question form-question--visible" data-component="molecule-form-question">
+            <div className="form-question__header">
+              <span className="form-question__label">{currentQuestion.label}</span>
               {currentQuestion.helperText && (
-                <span className="font-body font-medium text-[16px] leading-[1.5] text-bjj-text-muted">
-                  {currentQuestion.helperText}
-                </span>
+                <span className="form-question__helper">{currentQuestion.helperText}</span>
               )}
             </div>
 
             {currentQuestion.inputType === "buttons" ? (
-              <div className="flex gap-3 w-full">
+              <div className="wizard-btn-group">
                 {currentQuestion.options.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
                     className={cn(
-                      "flex-1 h-12 rounded-full cursor-pointer font-heading font-bold text-[16px] transition-all duration-200",
-                      answers[currentQuestion.id] === opt.value
-                        ? "bg-bjj-primary text-white border-2 border-bjj-primary"
-                        : "bg-white text-bjj-text-dark border-2 border-bjj-divider hover:border-bjj-primary hover:text-bjj-primary",
+                      "wizard-btn-group__btn",
+                      answers[currentQuestion.id] === opt.value && "wizard-btn-group__btn--selected"
                     )}
                     onClick={() => handleSelect(currentQuestion.id, opt.value)}
                   >
@@ -173,9 +160,7 @@ export function PricingFormModal({
         )}
 
         {isLoading && (
-          <p className="font-body text-[16px] font-medium text-bjj-text-muted text-center py-6">
-            조회 중...
-          </p>
+          <p className="pricing-modal__loading">조회 중...</p>
         )}
       </div>
     </div>
@@ -196,7 +181,7 @@ function buildAllSteps(answers: FormAnswers): QuestionDef[] {
             href="https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclInsertPwnbPage.do"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-bjj-primary no-underline font-medium hover:underline"
+            className="pricing-modal__link"
           >
             여기
           </a>

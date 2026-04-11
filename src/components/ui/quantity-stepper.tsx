@@ -24,15 +24,12 @@ export function QuantityStepper({
 
   return (
     <div
-      className={cn(
-        "flex items-center w-[82px] h-[42px] px-0.5 bg-[#f3f4f6] rounded-full border border-transparent",
-        className,
-      )}
+      className={cn("qty-stepper", className)}
       data-component="ui-quantity-stepper"
     >
       <button
         type="button"
-        className="flex items-center justify-center w-6 h-6 shrink-0 border-none bg-transparent rounded-lg cursor-pointer text-[#9ca3af] transition-colors duration-150 hover:not-disabled:text-[#4b5563] disabled:opacity-40 disabled:cursor-default"
+        className="qty-stepper__btn"
         onClick={() => canDecrement && onChange?.(value - 1)}
         disabled={!canDecrement}
         aria-label="수량 줄이기"
@@ -47,13 +44,11 @@ export function QuantityStepper({
         </svg>
       </button>
 
-      <span className="flex-1 text-center font-heading text-[13px] font-semibold leading-none text-bjj-text-headline">
-        {value}
-      </span>
+      <span className="qty-stepper__value">{value}</span>
 
       <button
         type="button"
-        className="flex items-center justify-center w-6 h-6 shrink-0 border-none bg-transparent rounded-lg cursor-pointer text-[#9ca3af] transition-colors duration-150 hover:not-disabled:text-[#4b5563] disabled:opacity-40 disabled:cursor-default"
+        className="qty-stepper__btn"
         onClick={() => canIncrement && onChange?.(value + 1)}
         disabled={!canIncrement}
         aria-label="수량 늘리기"
