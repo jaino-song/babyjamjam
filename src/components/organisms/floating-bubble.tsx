@@ -1,15 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
 interface FloatingBubbleProps {
   distinctCount: number;
 }
 
 export function FloatingBubble({ distinctCount }: FloatingBubbleProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const handleScrollDown = () => {
     window.scrollBy({ top: window.innerHeight * 0.6, behavior: "smooth" });
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div className="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-3" data-component="organism-floating-bubble">
       {/* Scroll indicator */}
       <button
@@ -59,6 +67,7 @@ export function FloatingBubble({ distinctCount }: FloatingBubbleProps) {
           <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center font-heading font-bold text-xs leading-none text-white shadow-[0_2px_4px_-2px_rgba(0,0,0,0.1)]">{distinctCount}</span>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
