@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import {
   PricingFormModal,
@@ -114,18 +115,21 @@ export function PricingPageClient() {
         planDuration={store.plans.find((p) => p.id === store.selectedPlanId)?.duration}
       />
 
-      {showFormModal && (
-        <div className="pricing-form-overlay" onClick={() => setShowFormModal(false)}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <PricingFormModal
-              answers={store.formAnswers}
-              onAnswer={store.answer}
-              onSubmit={handleSubmit}
-              isLoading={store.isLoading}
-            />
-          </div>
-        </div>
-      )}
+      {showFormModal && typeof window !== "undefined" &&
+        createPortal(
+          <div className="pricing-form-overlay" onClick={() => setShowFormModal(false)}>
+            <div onClick={(e) => e.stopPropagation()}>
+              <PricingFormModal
+                answers={store.formAnswers}
+                onAnswer={store.answer}
+                onSubmit={handleSubmit}
+                isLoading={store.isLoading}
+              />
+            </div>
+          </div>,
+          document.body
+        )
+      }
 
       {store.pricesRevealed && (
         <FloatingBubble distinctCount={distinctCount} />
