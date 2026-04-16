@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { RadioPill } from "./ui/radio-pill";
 import {
   KoreaRegionMap,
@@ -8,7 +9,7 @@ import {
   type BreadcrumbPart,
 } from "./korea-region-map";
 
-const AVAILABLE_REGIONS = new Set(["서울", "인천", "경기도", "경북"]);
+const AVAILABLE_REGIONS = new Set(["인천", "경기도", "경북"]);
 
 type ModalView = "map" | "form";
 
@@ -22,6 +23,8 @@ interface BookingModalProps {
 }
 
 export function BookingModal({ open, onClose, initialRegion, initialDistrict }: BookingModalProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const [view, setView] = useState<ModalView>("map");
   const [breadcrumb, setBreadcrumb] = useState<BreadcrumbPart[]>([
     { label: "대한민국" },
@@ -167,11 +170,11 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
     onClose();
   }, [formValid, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
   const headerTitle = view === "map" ? "지역을 선택해 주세요" : "상담 신청";
 
-  return (
+  return createPortal(
     <div
       className="bm-overlay"
       onClick={(e) => {
@@ -253,7 +256,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 <input
                   className="bm__form-input"
                   type="text"
-                  value={selectedMuni ? `${selectedMuni.replace(/[구시군]$/, "")}점` : selectedProvince ?? ""}
+                  value={selectedMuni ? `${selectedMuni.replace(/시$/, "")}점` : selectedProvince ?? ""}
                   readOnly
                 />
               </div>
@@ -380,6 +383,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -66,14 +66,14 @@ const DISPLAY_NAMES: Record<string, string> = {
   부천시원미구: "원미구",
   부천시소사구: "소사구",
   부천시오정구: "오정구",
+  남구: "미추홀구",
 };
 
 // City groupings: provinces where municipalities drill into cities first, then districts
 const CITY_GROUPS: Record<string, Record<string, string[]>> = {
   "31": { // 경기도
     "부천시": ["31051", "31052", "31053"],
-    "고양시": ["31101", "31103", "31104"],
-    "파주시": ["31200"],
+    "고양파주": ["31101", "31103", "31104", "31200"],
   },
 };
 
@@ -420,12 +420,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         return m ? m[1] : muniName;
       };
 
-      // Group features by city
+      // Group features by city (CITY_GROUPS overrides derived name so merged cities like 고양파주 render as one)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const cityMap: Record<string, any[]> = {};
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       for (const f of allFeatures) {
-        const city = deriveCityName(f.properties.name);
+        const city = findCityForCode(provCode, f.properties.code) ?? deriveCityName(f.properties.name);
         (cityMap[city] ||= []).push(f);
       }
 

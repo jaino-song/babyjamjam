@@ -15,7 +15,7 @@ type PillCtaAsAnchor = {
 type PillCtaProps = PillCtaAsButton | PillCtaAsAnchor;
 
 const pillClasses =
-  "inline-flex items-center justify-center h-10 px-5 rounded-[640px] border-none shrink-0 bg-bjj-primary text-white no-underline cursor-pointer transition-opacity duration-200 whitespace-nowrap font-body font-medium text-[16px] leading-[27px] tracking-[0.231px] hover:opacity-90";
+  "inline-flex justify-center items-center h-10 px-5 bg-bjj-primary rounded-pill font-heading font-[800] text-[13px] leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline border-none cursor-pointer";
 
 export function PillCta({ className, children, href, ...rest }: PillCtaProps) {
   const classes = cn(pillClasses, className);

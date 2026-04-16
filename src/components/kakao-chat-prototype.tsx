@@ -89,7 +89,7 @@ export function KakaoChatPhone() {
                       {!isOutgoing && <span className={styles.senderName}>아가잼잼</span>}
                       <div className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}>
                         {isOutgoing && <span className={styles.meta}>{message.time}</span>}
-                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming}`} style={message.large ? { fontSize: "22px" } : undefined}>
+                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming} ${message.large ? styles.bubbleLarge : ""}`}>
                           {message.text}
                         </div>
                         {!isOutgoing && <span className={styles.meta}>{message.time}</span>}
