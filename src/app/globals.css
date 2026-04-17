@@ -1244,8 +1244,12 @@
 .faq-accordion__chevron {
   color: var(--bjj-color-text-muted); flex-shrink: 0;
   transition: transform 0.2s ease;
+  width: 16px; height: 16px;
 }
 .faq-accordion__chevron--open { transform: rotate(180deg); }
+@media (max-width: 780px) {
+  .faq-accordion__chevron { width: 24px; height: 24px; padding: 12px 0; box-sizing: content-box; margin: -12px 0; }
+}
 .faq-accordion__body { padding: 0 0 20px 38px; }
 .faq-accordion__body p {
   font-family: var(--bjj-font-body); font-weight: 500; font-size: 15px;
@@ -1262,7 +1266,7 @@
 /* Hamburger (mobile only) */
 .faq-hamburger {
   display: none; position: absolute; top: 16px; left: 16px; z-index: 10;
-  width: 40px; height: 40px; border-radius: 10px; border: none;
+  width: 44px; height: 44px; border-radius: 10px; border: none;
   background: var(--bjj-color-primary); color: var(--bjj-color-primary-light);
   align-items: center; justify-content: center; cursor: pointer;
 }
@@ -1346,7 +1350,7 @@
   .faq-sidebar--open { display: flex; position: fixed; top: 0; left: 0; bottom: 0; width: 280px; z-index: 200; animation: faq-slide-in 0.25s ease-out; }
   .faq-overlay { display: block; position: fixed; inset: 0; z-index: 199; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
   .faq-hamburger { display: flex; }
-  .faq-content { padding: 20px 24px 48px; }
+  .faq-content { padding: 20px 24px 48px; padding-top: 76px; }
   .faq-content__header { padding: 16px 0; }
   .faq-content__header h3 { font-size: 18px; }
   .faq-accordion { padding: 8px 0 48px; }
