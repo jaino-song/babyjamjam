@@ -996,6 +996,10 @@
 .krm-city--unavailable { fill: #e8eaed; cursor: default; opacity: 0.6; pointer-events: none; }
 .krm-city--available:hover, .krm-city--hover { fill: var(--bjj-color-primary) !important; filter: brightness(1.15); }
 
+@media (hover: none) {
+  .krm__tooltip { display: none !important; }
+}
+
 /* Sidebar reset button */
 .location-sidebar__reset {
   display: flex; align-items: center; gap: 4px;
@@ -1010,13 +1014,26 @@
 .bm-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center;
+  padding: 16px;
   z-index: 1000;
+}
+@media (max-width: 780px) {
+  .bm-overlay { padding: 0; }
 }
 
 .bm {
-  background: var(--bjj-color-bg); border-radius: 24px; width: 780px; max-height: 90vh;
+  background: var(--bjj-color-bg); border-radius: 24px;
+  width: min(780px, 100vw - 32px); max-height: min(90vh, calc(100dvh - 32px));
   overflow: hidden; box-shadow: 0 32px 80px rgba(0,36,87,0.18);
   display: flex; flex-direction: column;
+}
+@media (max-width: 780px) {
+  .bm {
+    width: 100vw; max-height: 100dvh; height: 100dvh;
+    border-radius: 0;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 .bm__header {
@@ -1058,7 +1075,10 @@
 
 .bm__map-container {
   flex: 1; padding: 16px 32px 24px; display: flex; align-items: center; justify-content: center;
-  min-height: 460px;
+  min-height: clamp(320px, 60vh, 460px);
+}
+@media (max-width: 780px) {
+  .bm__map-container { padding: 12px 16px 16px; }
 }
 
 .bm__footer {
@@ -1092,7 +1112,7 @@
 .bm__form-input, .bm__form-select {
   height: 44px; padding: 0 16px;
   border: 2px solid var(--bjj-color-divider); border-radius: 32px;
-  font-family: var(--bjj-font-body); font-size: 15px; font-weight: 500;
+  font-family: var(--bjj-font-body); font-size: 16px; font-weight: 500;
   color: var(--bjj-color-text-headline); transition: border-color 0.2s; outline: none;
   background: var(--bjj-color-bg);
 }
@@ -1124,9 +1144,14 @@
 
 .bm__form-submit-row { display: flex; justify-content: flex-end; }
 .bm__form-submit {
-  padding: 14px 32px; background: var(--bjj-color-primary); color: white; border: none;
+  padding: 14px 32px; min-height: 44px;
+  background: var(--bjj-color-primary); color: white; border: none;
   border-radius: 640px; font-family: var(--bjj-font-heading); font-weight: 800; font-size: 14px;
   cursor: pointer; transition: opacity 0.2s;
+}
+@media (max-width: 780px) {
+  .bm__form-submit-row { justify-content: stretch; }
+  .bm__form-submit { width: 100%; }
 }
 .bm__form-submit:hover { opacity: 0.9; }
 .bm__form-submit:disabled { opacity: 0.4; cursor: default; }

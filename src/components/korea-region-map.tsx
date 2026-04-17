@@ -269,6 +269,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           ].filter(Boolean).join(" ");
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("role", (d: any) => availableRegions.has(SHORT_LABELS[d.properties.name] || d.properties.name) ? "button" : null)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("tabindex", (d: any) => availableRegions.has(SHORT_LABELS[d.properties.name] || d.properties.name) ? 0 : null)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("aria-label", (d: any) => SHORT_LABELS[d.properties.name] || d.properties.name)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .on("mouseenter", function (_event: any, d: any) {
           const short = SHORT_LABELS[d.properties.name] || d.properties.name;
           if (!availableRegions.has(short)) return;
