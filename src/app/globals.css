@@ -205,7 +205,7 @@
   grid-template-columns: repeat(var(--grade-tab-count), minmax(0, 1fr));
   align-items: stretch; gap: 0; border-radius: 999px;
   background: rgba(0, 74, 173, 0.06); overflow: hidden; isolation: isolate;
-  max-width: 320px;
+  max-width: min(320px, 100%);
 }
 .pricing-plans__grade-toggle::before {
   content: ""; position: absolute; inset: 0 auto 0 0;
@@ -496,10 +496,11 @@
 
 /* ===== PRICING MODAL ===== */
 .pricing-modal {
-  padding: 40px; background: var(--bjj-color-bg);
+  padding: clamp(20px, 3vw + 8px, 40px); background: var(--bjj-color-bg);
   border-radius: 24px; box-shadow: 0 32px 80px rgba(0,36,87,0.18);
   display: flex; flex-direction: column; gap: 24px;
-  width: 780px; height: 340px; max-height: 80vh; overflow: visible; z-index: 10;
+  width: min(780px, 100vw - 32px); max-height: min(80vh, calc(100dvh - 48px));
+  overflow: visible; z-index: 10;
 }
 .pricing-modal__header {
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -603,7 +604,7 @@
   grid-template-columns: repeat(var(--grade-tab-count), minmax(0, 1fr));
   align-items: stretch; gap: 0; border-radius: 999px;
   background: rgba(0, 74, 173, 0.06); overflow: hidden; isolation: isolate;
-  max-width: 320px;
+  max-width: min(320px, 100%);
 }
 .pricing-plans__grade-toggle::before {
   content: ""; position: absolute; inset: 0 auto 0 0;
@@ -625,8 +626,15 @@
 .pricing-plans__grade-tab--active { color: var(--bjj-color-primary-light); }
 
 .pricing-plans__grid {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: 1fr;
   gap: 20px; width: 100%;
+  container-type: inline-size;
+}
+@media (min-width: 520px) {
+  .pricing-plans__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .pricing-plans__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Single plan card */
@@ -697,8 +705,14 @@
   display: flex; flex-direction: column; gap: 16px; width: 100%;
 }
 .addon-services__list {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: 1fr;
   gap: 16px; width: 100%;
+}
+@media (min-width: 520px) {
+  .addon-services__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .addon-services__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .addon-card {
@@ -752,7 +766,7 @@
 .pricing-modal-overlay {
   position: absolute; inset: 0; z-index: 10;
   display: flex; align-items: center; justify-content: center;
-  padding: 24px;
+  padding: clamp(12px, 2vw + 4px, 24px);
 }
 
 /* CTA card (replaces inline modal) */
