@@ -85,7 +85,6 @@
     font-family: var(--bjj-font-body);
     background: var(--bjj-color-bg);
     color: var(--bjj-color-text-headline);
-    overflow-x: hidden;
   }
   img { max-width: 100%; display: block; }
 
