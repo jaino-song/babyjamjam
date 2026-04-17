@@ -1259,35 +1259,13 @@
   to { transform: translateX(0); }
 }
 
-/* ===== RESPONSIVE ===== */
-@layer base {
+/* ===== RESPONSIVE LAYOUT (not size resets — those come from fluid tokens) ===== */
+@layer components {
 @media (max-width: 1100px) {
-  :root {
-    --bjj-page-padding: 72px;
-    --bjj-section-gap: 96px;
-  }
-
-  .h1 { font-size: 52px; }
-  .h2, .h2-left { font-size: 44px; }
-  .h3, .h3-left { font-size: 40px; }
-
   .carousel__card { padding: 96px 56px 56px; min-height: 540px; }
 }
 
 @media (max-width: 780px) {
-  :root {
-    --bjj-page-padding: 24px;
-    --bjj-section-gap: 64px;
-  }
-
-  .h1 { font-size: 40px; }
-  .h2, .h2-left { font-size: 36px; }
-  .h3, .h3-left { font-size: 32px; }
-  .h4 { font-size: 28px; }
-  .h5 { font-size: 24px; }
-  .h6 { font-size: 20px; }
-  .h7, .big-p { font-size: 16px; }
-
   .carousel__slide { width: 100%; min-width: 100%; }
   .carousel__card {
     min-height: 540px;
@@ -1299,4 +1277,4 @@
   .carousel__logo-cell img { max-height: 40px; }
   .carousel__controls { top: 20px; }
 }
-} /* end @layer base (responsive) */
+} /* end @layer components (responsive layout) */
