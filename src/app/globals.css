@@ -1220,6 +1220,62 @@
 /* Overlay (mobile only) */
 .faq-overlay { display: none; }
 
+/* Nav drawer — hamburger, overlay, slide-in panel (mobile only) */
+.nav-hamburger {
+  display: none;
+  width: 44px; height: 44px; border-radius: 10px; border: none;
+  background: var(--bjj-color-primary); color: var(--bjj-color-primary-light);
+  align-items: center; justify-content: center; cursor: pointer;
+}
+.nav-overlay { display: none; }
+.nav-drawer { display: none; }
+
+@media (max-width: 780px) {
+  .nav-hamburger { display: inline-flex; }
+  .nav-overlay {
+    display: block; position: fixed; inset: 0; z-index: 199;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+  }
+  .nav-drawer {
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(320px, 82vw);
+    padding: 20px 24px max(24px, env(safe-area-inset-bottom));
+    padding-top: max(20px, env(safe-area-inset-top));
+    z-index: 200;
+    background: var(--bjj-color-primary);
+    color: var(--bjj-color-primary-light);
+    animation: nav-drawer-slide-in 0.25s ease-out;
+  }
+}
+
+.nav-drawer__close {
+  align-self: flex-end;
+  width: 44px; height: 44px; border: none; border-radius: 10px;
+  background: transparent; color: inherit; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.nav-drawer__items {
+  display: flex; flex-direction: column; gap: 4px; margin-top: 12px;
+}
+.nav-drawer__link {
+  display: block;
+  padding: 14px 12px;
+  font-family: var(--bjj-font-heading); font-weight: 700;
+  font-size: 18px; line-height: 1.3;
+  color: inherit; text-decoration: none;
+  border-radius: 10px;
+}
+.nav-drawer__link:hover,
+.nav-drawer__link:focus-visible { background: rgba(255, 255, 255, 0.08); }
+.nav-drawer__link[aria-current="page"] { background: rgba(255, 255, 255, 0.12); }
+.nav-drawer__cta { margin-top: auto; padding-top: 24px; }
+
+@keyframes nav-drawer-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
 @keyframes faq-slide-in {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
