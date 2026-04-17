@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { DM_Sans, Roboto_Mono } from "next/font/google";
 import "./globals.css";
@@ -41,6 +41,12 @@ export const metadata: Metadata = {
     "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -51,7 +57,7 @@ export default function RootLayout({
       <body
         className={`${pretendard.variable} ${paperlogy.variable} ${dmSans.variable} ${robotoMono.variable}`}
       >
-        <div className="flex flex-col items-center px-[20%] max-mobile:px-[var(--bjj-page-padding)]">
+        <div className="flex flex-col items-center w-full px-[var(--bjj-page-padding)] max-w-[var(--bjj-page-max-width)] mx-auto">
           <PersistentNav />
           <AnnouncementRibbon />
           <PageTransition>{children}</PageTransition>

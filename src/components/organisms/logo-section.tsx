@@ -29,8 +29,8 @@ export function LogoSection({ variant, className }: LogoSectionProps) {
   return (
     <section
       className={cn(
-        "flex flex-col items-start gap-12 p-25 px-50 w-screen max-w-480",
-        isEdu ? "pt-15 pb-0" : "",
+        "flex flex-col items-start gap-12 w-full py-12",
+        isEdu ? "pt-12 pb-0" : "",
         className
       )}
       data-component="organism-logo-section"

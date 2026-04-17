@@ -21,19 +21,19 @@
   --font-number: var(--bjj-font-number);
   --font-caption: var(--bjj-font-caption);
 
-  /* Custom font sizes */
-  --text-h1: 64px;
-  --text-h2: 56px;
-  --text-h3: 48px;
-  --text-h4: 40px;
-  --text-h5: 32px;
-  --text-h6: 24px;
-  --text-h7: 20px;
-  --text-big-p: 18px;
+  /* Custom font sizes — fluid between 380px and 1440px viewport via linear interpolation */
+  --text-h1: clamp(36px, calc(36px + (64 - 36) * ((100vw - 380px) / 1060)), 64px);
+  --text-h2: clamp(32px, calc(32px + (56 - 32) * ((100vw - 380px) / 1060)), 56px);
+  --text-h3: clamp(28px, calc(28px + (48 - 28) * ((100vw - 380px) / 1060)), 48px);
+  --text-h4: clamp(24px, calc(24px + (40 - 24) * ((100vw - 380px) / 1060)), 40px);
+  --text-h5: clamp(20px, calc(20px + (32 - 20) * ((100vw - 380px) / 1060)), 32px);
+  --text-h6: clamp(18px, calc(18px + (24 - 18) * ((100vw - 380px) / 1060)), 24px);
+  --text-h7: 20px; /* too small to benefit from fluid */
+  --text-big-p: clamp(16px, calc(16px + (18 - 16) * ((100vw - 380px) / 1060)), 18px);
   --text-medium-p: 16px;
   --text-caption: 8px;
-  --text-process-num: 52px;
-  --text-process-title: 56px;
+  --text-process-num: clamp(32px, calc(32px + (52 - 32) * ((100vw - 380px) / 1060)), 52px);
+  --text-process-title: clamp(28px, calc(28px + (56 - 28) * ((100vw - 380px) / 1060)), 56px);
   --text-nav: 13px;
   --text-link: 9px;
   --text-btn: 14px;
@@ -72,8 +72,8 @@
   --bjj-font-caption: var(--font-roboto-mono), 'Roboto Mono', monospace;
 
   --bjj-page-max-width: 1232px;   /* 1920 × 0.64 ≈ 1228 → 1232 */
-  --bjj-page-padding: 128px;      /* 200 × 0.64 = 128 */
-  --bjj-section-gap: 200px;       /* gap-50 */
+  --bjj-page-padding: clamp(20px, calc(20px + (128 - 20) * ((100vw - 380px) / 1060)), 128px);
+  --bjj-section-gap: clamp(64px, calc(64px + (200 - 64) * ((100vw - 380px) / 1060)), 200px);
   --bjj-shadow-card: 0 24px 60px rgba(0, 36, 87, 0.06), 0 -8px 18px rgba(0, 36, 87, 0.035);
 }
 
@@ -89,17 +89,17 @@
   }
   img { max-width: 100%; display: block; }
 
-  /* Typography — Heading Scale */
-  .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 64px; line-height: 1.2; letter-spacing: 0.05em; }
-  .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-  .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 56px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 48px; line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 40px; line-height: 1.15; letter-spacing: -0.015em; }
-  .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 32px; line-height: 1.15; letter-spacing: -0.015em; }
-  .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px; line-height: 1.15; letter-spacing: -0.015em; }
-  .h7 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: 20px; line-height: 1.15; letter-spacing: -0.015em; }
-  .big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 18px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
+  /* Typography — Heading Scale (font-size pulls from fluid @theme tokens) */
+  .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h1); line-height: 1.2; letter-spacing: 0.05em; }
+  .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
+  .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
+  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
+  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
+  .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h4); line-height: 1.15; letter-spacing: -0.015em; }
+  .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h5); line-height: 1.15; letter-spacing: -0.015em; }
+  .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h6); line-height: 1.15; letter-spacing: -0.015em; }
+  .h7 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h7); line-height: 1.15; letter-spacing: -0.015em; }
+  .big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: var(--text-big-p); line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
   .medium-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
   .small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 27px; letter-spacing: 0.231px; }
   .link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.52; letter-spacing: -0.015em; }
