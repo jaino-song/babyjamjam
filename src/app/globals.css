@@ -1399,17 +1399,16 @@
 /* ===== SKELETON LOADING ===== */
 .skeleton {
   display: inline-block;
-  background: linear-gradient(90deg, #eef1f5 0%, #f7f9fc 50%, #eef1f5 100%);
+  background: linear-gradient(90deg, #d8dde5 0%, #f2f5fa 50%, #d8dde5 100%);
   background-size: 200% 100%;
-  animation: skeleton-shimmer 1.2s ease-in-out infinite;
-  border-radius: 6px;
+  animation: skeleton-shimmer 0.9s linear infinite;
+  border-radius: 999px;
 }
 @keyframes skeleton-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-.skeleton--price   { width: 60%; height: 28px; }
-.skeleton--feature { width: 80%; height: 14px; }
+.skeleton--price { width: 60%; height: 28px; }
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }
 }
