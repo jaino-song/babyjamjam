@@ -163,7 +163,9 @@
   display: flex; gap: 20px; overflow-x: auto;
   scroll-snap-type: x mandatory; scroll-behavior: smooth;
   padding-block: clamp(24px, 3vw + 12px, 80px);
-  padding-inline: max(20px, calc(50% - 180px));
+  /* Center the 3-card group (~1120px) when viewport fits it; otherwise
+     20px edge padding so mobile shows a peek of card 2. */
+  padding-inline: max(20px, calc((100% - 1120px) / 2));
   scrollbar-width: none; width: 100%;
 }
 .care-carousel__track::-webkit-scrollbar { display: none; }
