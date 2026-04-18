@@ -86,6 +86,7 @@ export function PricingPageClient() {
             onGradeNameChange={store.setGradeName}
             onRequery={() => setShowFormModal(true)}
             blurred={!store.pricesRevealed}
+            isLoading={store.isLoading}
           />
 
           {!store.pricesRevealed && (

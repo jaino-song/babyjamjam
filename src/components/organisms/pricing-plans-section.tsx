@@ -19,6 +19,7 @@ interface PricingPlansSectionProps {
   onGradeNameChange?: (name: GradeName) => void;
   onRequery?: () => void;
   blurred?: boolean;
+  isLoading?: boolean;
 }
 
 export function PricingPlansSection({
@@ -30,6 +31,7 @@ export function PricingPlansSection({
   onGradeNameChange,
   onRequery,
   blurred = false,
+  isLoading = false,
 }: PricingPlansSectionProps) {
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
 
@@ -99,6 +101,7 @@ export function PricingPlansSection({
             plan={plan}
             selected={plan.id === selectedPlanId}
             onSelect={() => onSelectPlan(plan.id)}
+            isLoading={isLoading}
           />
         ))}
       </div>
