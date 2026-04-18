@@ -22,7 +22,7 @@ export function LinkCard({ title, description, buttonText, buttonHref, disabled,
         data-component="molecule-link-card-content"
       >
         <h3
-          className="h6 text-bjj-primary text-center"
+          className="h6 text-bjj-primary text-center whitespace-pre-line"
           data-component="molecule-link-card-title"
         >
           {title}

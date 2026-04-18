@@ -11,7 +11,7 @@ const LINK_CARDS = [
     buttonHref: "/postpartum-care",
   },
   {
-    title: "아가잼잼 공식 앱",
+    title: "아가잼잼\n공식 앱",
     description:
       "서비스 일정과 컨디션 기록, 케어 히스토리를 더 편하게 확인할 수 있어요.",
     buttonText: "출시 예정",
