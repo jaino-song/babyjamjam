@@ -85,19 +85,20 @@ export function PricingPlansSection({
         </div>
       )}
 
-      {onRequery && (
-        <div className="pricing-plans__requery-row">
-          <button
-            type="button"
-            className="pricing-plans__requery-btn"
-            onClick={onRequery}
-          >
-            다시 조회
-          </button>
-        </div>
-      )}
+      <div className="pricing-plans__grid-wrapper">
+        {onRequery && (
+          <div className="pricing-plans__requery-row">
+            <button
+              type="button"
+              className="pricing-plans__requery-btn"
+              onClick={onRequery}
+            >
+              다시 조회
+            </button>
+          </div>
+        )}
 
-      <div className="pricing-plans__grid">
+        <div className="pricing-plans__grid">
         {plans.map((plan) => (
           <PricingPlanCard
             key={plan.id}
@@ -107,6 +108,7 @@ export function PricingPlansSection({
             isLoading={isLoading}
           />
         ))}
+        </div>
       </div>
     </section>
   );
