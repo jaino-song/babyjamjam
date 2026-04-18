@@ -92,8 +92,8 @@
   .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h1); line-height: 1.2; letter-spacing: 0.05em; }
   .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
   .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
+  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.2; letter-spacing: -0.015em; text-align: center; }
+  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.2; letter-spacing: -0.015em; text-align: left; }
   .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h4); line-height: 1.15; letter-spacing: -0.015em; }
   .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h5); line-height: 1.15; letter-spacing: -0.015em; }
   .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h6); line-height: 1.15; letter-spacing: -0.015em; }
