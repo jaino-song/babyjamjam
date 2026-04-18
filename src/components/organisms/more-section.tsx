@@ -47,7 +47,7 @@ export function MoreSection({ className }: MoreSectionProps) {
         아가잼잼이면 해결되니까.
       </h2>
       <div
-        className="flex justify-center items-stretch gap-10 w-full max-tablet:flex-wrap max-mobile:gap-4"
+        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:items-stretch max-mobile:gap-4"
         data-component="organism-more-section-cards"
       >
         {LINK_CARDS.map((card) => (

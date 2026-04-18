@@ -14,15 +14,15 @@ interface LinkCardProps {
 export function LinkCard({ title, description, buttonText, buttonHref, disabled, className }: LinkCardProps) {
   return (
     <div
-      className={cn("flex-1 flex flex-col items-center w-full gap-6 justify-between", className)}
+      className={cn("flex-1 flex flex-col items-center w-full gap-6 max-mobile:justify-between", className)}
       data-component="molecule-link-card"
     >
       <div
-        className="flex flex-col items-center w-full gap-6 flex-1"
+        className="flex flex-col items-center w-full gap-6 max-mobile:flex-1"
         data-component="molecule-link-card-content"
       >
         <h3
-          className="h6 text-bjj-primary text-center whitespace-pre-line"
+          className="h6 text-bjj-primary text-center max-mobile:whitespace-pre-line"
           data-component="molecule-link-card-title"
         >
           {title}
