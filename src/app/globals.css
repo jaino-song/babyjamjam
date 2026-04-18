@@ -735,6 +735,7 @@
   font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px;
   line-height: 1.5; letter-spacing: 0.03em; color: var(--bjj-color-text-paragraph);
   width: 100%;
+  min-height: calc(1.5em * 3);
 }
 .addon-card__note { display: flex; align-items: center; gap: 8px; width: 100%; }
 .addon-card__note-check {
