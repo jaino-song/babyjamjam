@@ -82,15 +82,18 @@ export function PricingPlansSection({
               </button>
             ))}
           </div>
-          {onRequery && (
-            <button
-              type="button"
-              className="pricing-plans__requery-btn"
-              onClick={onRequery}
-            >
-              다시 조회
-            </button>
-          )}
+        </div>
+      )}
+
+      {onRequery && (
+        <div className="pricing-plans__requery-row">
+          <button
+            type="button"
+            className="pricing-plans__requery-btn"
+            onClick={onRequery}
+          >
+            다시 조회
+          </button>
         </div>
       )}
 

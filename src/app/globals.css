@@ -595,16 +595,18 @@
   position: relative; display: flex; justify-content: center; align-items: center;
   width: 100%;
 }
-.pricing-plans__requery-btn {
-  position: absolute; right: 0;
-  display: inline-flex; align-items: center; justify-content: center;
-  height: 40px; padding: 0 20px; border: none; border-radius: 999px;
-  background: var(--bjj-color-primary); color: var(--bjj-color-primary-light);
-  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 13px;
-  line-height: 1; letter-spacing: -0.025em;
-  cursor: pointer; white-space: nowrap; transition: opacity 0.2s;
+.pricing-plans__requery-row {
+  display: flex; justify-content: flex-end; width: 100%;
 }
-.pricing-plans__requery-btn:hover { opacity: 0.85; }
+.pricing-plans__requery-btn {
+  display: inline-flex; align-items: center; padding: 0; border: none;
+  background: transparent; color: var(--bjj-color-text-muted);
+  font-family: var(--bjj-font-heading); font-weight: 600; font-size: 13px;
+  line-height: 1.4; letter-spacing: -0.025em;
+  cursor: pointer; white-space: nowrap; transition: color 0.2s;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.pricing-plans__requery-btn:hover { color: var(--bjj-color-primary); }
 .pricing-plans__grade-toggle {
   position: relative; display: grid;
   grid-template-columns: repeat(var(--grade-tab-count), minmax(0, 1fr));
