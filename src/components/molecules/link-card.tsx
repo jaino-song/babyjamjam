@@ -37,11 +37,11 @@ export function LinkCard({ title, description, buttonText, buttonHref, disabled,
         )}
       </div>
       {disabled ? (
-        <Button variant="primary" disabled data-component="molecule-link-card-button">
+        <Button variant="primary" disabled className="max-mobile:w-full max-mobile:px-2 max-mobile:text-[11px]" data-component="molecule-link-card-button">
           {buttonText}
         </Button>
       ) : (
-        <Button href={buttonHref} variant="primary" data-component="molecule-link-card-button">
+        <Button href={buttonHref} variant="primary" className="max-mobile:w-full max-mobile:px-2 max-mobile:text-[11px]" data-component="molecule-link-card-button">
           {buttonText}
         </Button>
       )}
