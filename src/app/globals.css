@@ -1409,6 +1409,19 @@
   100% { background-position: -200% 0; }
 }
 .skeleton--price { width: 60%; height: 28px; }
+
+/* Crossfade between real price and skeleton */
+.plan-card__price { position: relative; }
+.plan-card__price-value { transition: opacity 0.25s ease; }
+.plan-card__price .skeleton--price {
+  position: absolute; inset: 0;
+  width: 60%; height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.plan-card__price--loading .plan-card__price-value { opacity: 0; }
+.plan-card__price--loading .skeleton--price { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }
 }

@@ -40,12 +40,14 @@ export function PricingPlanCard({
           <p className="plan-card__description">{plan.description}</p>
         )}
 
-        <p className="plan-card__price">
-          {isLoading ? (
-            <span className="skeleton skeleton--price" aria-hidden="true" />
-          ) : (
-            plan.price
+        <p
+          className={cn(
+            "plan-card__price",
+            isLoading && "plan-card__price--loading"
           )}
+        >
+          <span className="plan-card__price-value">{plan.price}</span>
+          <span className="skeleton skeleton--price" aria-hidden="true" />
         </p>
 
         <button
