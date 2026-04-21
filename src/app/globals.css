@@ -94,9 +94,6 @@
   .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
   .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
   .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  @media (max-width: 780px) {
-    .h2, .h2-left, .h3, .h3-left, .h4, .h5, .h6, .h7 { line-height: 1.2; }
-  }
   .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h4); line-height: 1.15; letter-spacing: -0.015em; }
   .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h5); line-height: 1.15; letter-spacing: -0.015em; }
   .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h6); line-height: 1.15; letter-spacing: -0.015em; }
@@ -106,6 +103,23 @@
   .small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 27px; letter-spacing: 0.231px; }
   .link-text { font-family: var(--bjj-font-number); font-weight: 700; font-size: 9px; line-height: 1.52; letter-spacing: -0.015em; }
   .caption-text { font-family: var(--bjj-font-caption); font-weight: 400; font-size: 8px; line-height: 1.52; letter-spacing: -0.015em; color: var(--bjj-color-text-caption); }
+
+  /* Mobile typography — calibrated against apple.com/macbook-air at 430×920.
+     Apple's tracking curve: large display slightly negative, headlines/sub-heads slightly
+     positive (+0.004 to +0.012em), body tight negative (-0.022em), caption light negative. */
+  @media (max-width: 780px) {
+    .h1           { font-size: 32px; line-height: 1.125; letter-spacing: -0.003em; }
+    .h2, .h2-left { font-size: 28px; line-height: 1.143; letter-spacing: 0.004em; }
+    .h3, .h3-left { font-size: 21px; line-height: 1.19;  letter-spacing: 0.007em; }
+    .h4           { font-size: 19px; line-height: 1.21;  letter-spacing: 0.009em; }
+    .h5           { font-size: 17px; line-height: 1.47;  letter-spacing: 0.011em; }
+    .h6, .h7      { font-size: 15px; line-height: 1.33;  letter-spacing: 0.012em; }
+    .big-p            { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
+    .medium-p         { font-size: 15px; line-height: 1.47; letter-spacing: -0.022em; }
+    .small-p          { font-size: 13px; line-height: 1.38; letter-spacing: -0.016em; }
+    .link-text        { font-size: 11px; line-height: 1.33; letter-spacing: -0.01em; }
+    .caption-text     { font-size: 11px; line-height: 1.33; letter-spacing: -0.01em; }
+  }
 }
 
 /* ===== KEYFRAMES ===== */
@@ -1399,7 +1413,11 @@
   .carousel__card-caption { max-width: 100%; }
   .carousel__logo-cell { flex: 1 1 calc(50% - 8px); height: 80px; }
   .carousel__logo-cell img { max-height: 40px; }
-  .carousel__controls { top: 20px; }
+  .carousel__controls { top: 20px; gap: 4px; padding: 3px 7px 3px 3px; }
+  .carousel__playpause { width: 16px; height: 16px; }
+  .carousel__playpause svg { width: 8px; height: 8px; }
+  .carousel__dotnav { gap: 4px; padding: 0 3px; }
+  .carousel__dot { padding: 0; margin: 0; background-clip: border-box; }
 }
 } /* end @layer components (responsive layout) */
 
