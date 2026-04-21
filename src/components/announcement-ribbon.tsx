@@ -27,18 +27,18 @@ export function AnnouncementRibbon() {
 
   return (
     <div
-      className="announcement-ribbon"
+      className="flex items-center justify-center gap-2 w-screen px-[var(--bjj-page-padding)] py-2.5 text-nav font-medium font-body tracking-[-0.01em] text-center max-mobile:px-6 max-mobile:text-xs"
       style={{ background: config.backgroundColor, color: config.textColor }}
     >
       <span
-        className="announcement-ribbon__dot"
+        className="w-1.5 h-1.5 rounded-full shrink-0"
         style={{ background: config.linkColor }}
       />
       <span>{config.message}</span>
       {config.linkText && config.linkHref && (
         <Link
           href={config.linkHref}
-          className="announcement-ribbon__link"
+          className="no-underline font-semibold whitespace-nowrap hover:underline"
           style={{ color: config.linkColor }}
         >
           {config.linkText} ›

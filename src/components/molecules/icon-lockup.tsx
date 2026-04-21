@@ -20,7 +20,7 @@ export function IconLockup({ icon, title, description, className }: IconLockupPr
       )}
       data-component="molecule-icon-lockup"
     >
-      <Icon className="icon-lockup__icon" aria-hidden="true" data-component="molecule-icon-lockup-icon" />
+      <Icon className="w-4 h-4" aria-hidden="true" data-component="molecule-icon-lockup-icon" />
       <div
         className="flex flex-col"
         data-component="molecule-icon-lockup-content"

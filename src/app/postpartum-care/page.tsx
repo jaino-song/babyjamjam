@@ -5,11 +5,9 @@ import {
   type CareCardData,
   type CareSectionData,
 } from "@/components/care-section-carousel";
-import {
-  SiteFooter,
-  SiteMoreSection,
-  SiteProcessSection,
-} from "@/components/site-chrome";
+import { ProcessSection } from "@/components/organisms/process-section";
+import { MoreSection } from "@/components/organisms/more-section";
+import { Footer } from "@/components/organisms/footer";
 import { BannerImageSection } from "@/components/organisms/banner-image-section";
 
 export const metadata: Metadata = {
@@ -83,16 +81,16 @@ const CARE_SECTIONS: CareSectionData[] = [
 export default function PostpartumCarePage() {
   return (
     <>
-      <main className="service-page-main">
-        <section className="service-hero">
-          <div className="hero__bg">
+      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
+        <section className="flex flex-col items-center w-full gap-16 max-mobile:gap-10">
+          <div className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef] max-mobile:h-[380px]">
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"
-              className="hero__bg-image"
+              className="w-full h-full object-cover object-[center_top] shrink-0"
             />
           </div>
-          <h1 className="h1 service-hero__title">
+          <h1 className="h1 text-bjj-primary whitespace-pre-line w-full">
             {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
           </h1>
         </section>
@@ -100,11 +98,11 @@ export default function PostpartumCarePage() {
 
         <BannerImageSection />
 
-        <SiteProcessSection />
-        <SiteMoreSection />
+        <ProcessSection />
+        <MoreSection />
       </main>
 
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

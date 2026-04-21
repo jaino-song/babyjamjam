@@ -39,11 +39,15 @@ export function ScrollExpandImage({ src, alt, overlayText }: ScrollExpandImagePr
   return (
     <div
       ref={wrapperRef}
-      className="hero-image-expand"
-      style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
+      className="relative w-screen h-[752px] overflow-hidden will-change-[clip-path] max-mobile:h-[360px]"
+      style={{ marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
     >
-      <img src={src} alt={alt} />
-      {overlayText && <span className="h2 hero-image__text">{overlayText}</span>}
+      <img src={src} alt={alt} className="w-full h-full object-cover block" />
+      {overlayText && (
+        <span className="h2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)] whitespace-nowrap max-mobile:whitespace-normal max-mobile:w-[calc(100%-48px)]">
+          {overlayText}
+        </span>
+      )}
     </div>
   );
 }

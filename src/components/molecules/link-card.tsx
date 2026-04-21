@@ -4,43 +4,47 @@ import { Button } from "@/components/ui/button";
 
 interface LinkCardProps {
   title: string;
-  description: string;
+  description?: string;
   buttonText: string;
   buttonHref: string;
+  disabled?: boolean;
   className?: string;
 }
 
-export function LinkCard({ title, description, buttonText, buttonHref, className }: LinkCardProps) {
+export function LinkCard({ title, description, buttonText, buttonHref, disabled, className }: LinkCardProps) {
   return (
     <div
-      className={cn("flex-1 flex flex-col items-center w-full gap-10", className)}
+      className={cn("flex-1 flex flex-col items-center w-full gap-6", className)}
       data-component="molecule-link-card"
     >
       <div
-        className="flex flex-col items-center gap-10"
+        className="flex flex-col items-center w-full gap-6"
         data-component="molecule-link-card-content"
       >
         <h3
-          className="h6"
-          style={{ color: "var(--bjj-color-primary)" }}
+          className="h6 text-bjj-primary"
           data-component="molecule-link-card-title"
         >
           {title}
         </h3>
-        <p
-          className="medium-p max-w-[350px]"
-          data-component="molecule-link-card-description"
-        >
-          {description}
-        </p>
+        {description && (
+          <p
+            className="medium-p max-w-[224px] text-center"
+            data-component="molecule-link-card-description"
+          >
+            {description}
+          </p>
+        )}
       </div>
-      <Button
-        href={buttonHref}
-        variant="primary"
-        data-component="molecule-link-card-button"
-      >
-        {buttonText}
-      </Button>
+      {disabled ? (
+        <Button variant="primary" disabled data-component="molecule-link-card-button">
+          {buttonText}
+        </Button>
+      ) : (
+        <Button href={buttonHref} variant="primary" data-component="molecule-link-card-button">
+          {buttonText}
+        </Button>
+      )}
     </div>
   );
 }

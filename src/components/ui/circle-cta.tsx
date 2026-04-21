@@ -14,8 +14,11 @@ type PillCtaAsAnchor = {
 
 type PillCtaProps = PillCtaAsButton | PillCtaAsAnchor;
 
+const pillClasses =
+  "inline-flex justify-center items-center h-10 px-5 bg-bjj-primary rounded-pill font-heading font-[800] text-[13px] leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline border-none cursor-pointer";
+
 export function PillCta({ className, children, href, ...rest }: PillCtaProps) {
-  const classes = cn("pill-cta medium-p", className);
+  const classes = cn(pillClasses, className);
 
   if (href !== undefined) {
     return (

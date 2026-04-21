@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 const IMAGE_BLOCK_VARIANT_CLASSES = {
   hero: "w-full h-190 rounded-b-card object-cover",
   banner: "w-full h-254 rounded-card object-cover",
-  phone: "w-[453px] h-[925px] object-contain",
+  phone: "w-[452px] h-[924px] object-contain",
   partner: "h-[72px] w-auto object-contain",
   careCard: "h-full w-full object-cover",
 } as const;

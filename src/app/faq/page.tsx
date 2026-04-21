@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 
-import {
-  SiteFooter,
-  SiteMoreSection,
-} from "@/components/site-chrome";
+import { MoreSection } from "@/components/organisms/more-section";
+import { Footer } from "@/components/organisms/footer";
 import { FaqPageClient } from "@/components/faq-page-client";
 
 export const metadata: Metadata = {
@@ -15,12 +13,12 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <main className="main">
+      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
         <FaqPageClient />
-        <SiteMoreSection />
+        <MoreSection />
       </main>
 
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

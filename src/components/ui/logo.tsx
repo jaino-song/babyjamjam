@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
-const LOGO_VARIANT_CLASSES = {
-  header: "w-[225px] h-[75px] object-cover",
-  footer: "w-[283px] h-[94px] object-contain",
+const LOGO_VARIANTS = {
+  header: { src: "/images/logo.png", alt: "아가잼잼 로고", className: "w-[224px] h-[76px] object-cover" },
+  footer: { src: "/images/footer-logo.png", alt: "아가잼잼", className: "w-[284px] h-[96px] object-contain" },
 } as const;
 
-type LogoVariant = keyof typeof LOGO_VARIANT_CLASSES;
+type LogoVariant = keyof typeof LOGO_VARIANTS;
 
 interface LogoProps {
   variant: LogoVariant;
@@ -13,11 +13,12 @@ interface LogoProps {
 }
 
 export function Logo({ variant, className }: LogoProps) {
+  const config = LOGO_VARIANTS[variant];
   return (
     <img
-      src="/images/logo.svg"
-      alt="BabyJamJam"
-      className={cn(LOGO_VARIANT_CLASSES[variant], className)}
+      src={config.src}
+      alt={config.alt}
+      className={cn(config.className, className)}
       data-component="ui-logo"
     />
   );

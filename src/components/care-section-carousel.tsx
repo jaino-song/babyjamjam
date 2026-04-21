@@ -142,7 +142,7 @@ export function CareSectionCarousel({
           return (
             <div
               key={`${section.id}-${card.title}`}
-              className={`care-carousel__card care-carousel__card--fan-${fanState}`}
+              className={`care-carousel__card care-carousel__card--fan-${fanState} care-carousel__card--${section.tone}`}
               style={{ transitionDelay: `${i * 0.1}s` }}
             >
               <div className="care-carousel__card-inner">

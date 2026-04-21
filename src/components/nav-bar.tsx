@@ -50,9 +50,9 @@ export function NavBar({
   }, [activeIndex]);
 
   return (
-    <nav className="nav-bar">
+    <nav className="absolute left-1/2 -translate-x-1/2 flex items-stretch h-10 gap-0 bg-bjj-primary backdrop-blur-[32px] rounded-nav p-0 max-mobile:static max-mobile:translate-x-0 max-mobile:w-full max-mobile:h-auto max-mobile:flex-wrap max-mobile:px-4 max-mobile:py-3">
       <span
-        className="nav-bar__indicator"
+        className="nav-indicator"
         style={{
           transform: `translateX(${indicator.x}px)`,
           width: indicator.width,
@@ -61,7 +61,7 @@ export function NavBar({
       />
       {items.map((item, index) => {
         const isActive = index === activeIndex;
-        const className = `nav-bar__item${isActive ? " nav-bar__item--active" : ""}`;
+        const itemClasses = "relative z-[1] flex items-center font-heading font-[800] text-nav leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline whitespace-nowrap px-4 rounded-nav";
         const ref = (el: HTMLElement | null) => {
           itemRefs.current[index] = el;
         };
@@ -71,7 +71,7 @@ export function NavBar({
             <Link
               key={item.label}
               href={item.href}
-              className={className}
+              className={itemClasses}
               aria-current={isActive ? "page" : undefined}
               ref={ref}
               onClick={() => setActiveIndex(index)}
@@ -85,7 +85,7 @@ export function NavBar({
           <a
             key={item.label}
             href={item.href}
-            className={className}
+            className={itemClasses}
             ref={ref}
             onClick={(e) => {
               e.preventDefault();

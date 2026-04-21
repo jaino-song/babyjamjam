@@ -1,0 +1,218 @@
+[
+  {
+    "component": "navigation",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "nav-bar",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "nav-bar__item",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "short-button",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "main",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "hero",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "hero__bg",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h1 hero__text",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "service-detail",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h2-left service-detail__headline",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "icon-lockup",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "app-detail",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h2-left app-detail__hero-title",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "btn-primary",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "process",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h2 process__title",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "process__step",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h6 process__step-title",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "more",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h2 more__title",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "link-card",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "h6 link-card__title",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "footer",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "footer__nav",
+    "issue": "MISSING in migrated"
+  },
+  {
+    "component": "flex flex-col justify-center items-center w-full h",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "absolute left-1/2 -translate-x-1/2 flex items-stre",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "flex flex-col items-center w-full gap-[var(--bjj-s",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "h1 whitespace-pre-line w-full",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "h2-left whitespace-pre-line",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "h2-left text-bjj-primary",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-process-section",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-process-header",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-process-title",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-process-steps",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-process-step",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-process-step-number",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-process-step-content",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-process-step-title",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-process-step-description",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-more-section",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-more-section-title",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-more-section-cards",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-link-card",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-link-card-content",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-link-card-title",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-link-card-description",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-link-card-button",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-footer",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-footer-links",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-footer-nav",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "molecule-footer-link",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-footer-bottom",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "ui-logo",
+    "issue": "MISSING in original"
+  },
+  {
+    "component": "organism-footer-caption",
+    "issue": "MISSING in original"
+  }
+]

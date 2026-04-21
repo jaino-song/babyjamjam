@@ -7,13 +7,13 @@ const PROCESS_STEPS = [
     number: "01",
     title: "예약금 입금",
     description:
-      "바람결에 숫자 같은 소리가 스르르 흘러가고, 둥근 조각들이 모여 사각의 그림자를 만든다.",
+      "예약금 입금으로 서비스 예약이 확정되면, 아가잼잼은 관리사 배정, 계약서 준비, 산모 등록 등 서비스 진행을 위한 절차를 준비합니다.",
   },
   {
     number: "02",
     title: "계약서 작성",
     description:
-      "서비스 진행에 필요한 계약서 작성을 모바일에서 전자문서로 완료합니다.",
+      "서비스 진행에 필요한 계약서 작성을 모바일에서 전자문서로 완료합니다. 번거로운 종이 작성없이, 휴대폰으로 계약서 작성이 가능합니다.",
   },
   {
     number: "03",
@@ -37,24 +37,27 @@ export function ProcessSection({ className }: ProcessSectionProps) {
   return (
     <section
       className={cn(
-        "flex flex-col items-center gap-20 p-25 px-50 bg-bjj-primary w-screen max-w-480 border-t border-bjj-divider",
+        "flex flex-col items-center gap-[52px] bg-bjj-primary w-screen self-start",
+        "py-16 max-mobile:py-12 max-mobile:px-[var(--bjj-page-padding)]",
+        "px-[calc((100vw-var(--bjj-page-max-width))/2+var(--bjj-page-padding))]",
+        "ml-[calc(-50vw+50%)]",
         className
       )}
       data-component="organism-process-section"
     >
       <div
-        className="flex justify-between w-full gap-20"
+        className="flex justify-between w-full gap-[52px]"
         data-component="organism-process-header"
       >
         <h2
-          className="text-process-title font-extrabold font-heading text-bjj-primary-light"
+          className="h2 text-bjj-primary-light"
           data-component="organism-process-title"
         >
           산후도우미 서비스 진행 절차
         </h2>
       </div>
       <div
-        className="flex w-full gap-5"
+        className="flex w-full gap-3 max-tablet:flex-wrap max-mobile:flex-col"
         data-component="organism-process-steps"
       >
         {PROCESS_STEPS.map((step) => (
@@ -63,6 +66,7 @@ export function ProcessSection({ className }: ProcessSectionProps) {
             number={step.number}
             title={step.title}
             description={step.description}
+            className="max-mobile:w-full"
           />
         ))}
       </div>

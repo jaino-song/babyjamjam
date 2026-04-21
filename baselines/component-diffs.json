@@ -1,0 +1,19 @@
+[
+  {
+    "component": "BUTTON:출시 예정",
+    "diffs": {
+      "color": {
+        "orig": "rgb(251, 253, 255)",
+        "migr": "rgb(0, 0, 0)"
+      },
+      "border": {
+        "orig": "0px none rgb(251, 253, 255)",
+        "migr": "0px none rgb(0, 0, 0)"
+      },
+      "borderTop": {
+        "orig": "0px none rgb(251, 253, 255)",
+        "migr": "0px none rgb(0, 0, 0)"
+      }
+    }
+  }
+]

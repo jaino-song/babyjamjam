@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { PillCta } from "./ui/circle-cta";
 import { BookingModal } from "./booking-modal";
 
 export function BookingButton() {
@@ -9,9 +10,7 @@ export function BookingButton() {
 
   return (
     <>
-      <button className="short-button" onClick={() => setOpen(true)}>
-        예약하기
-      </button>
+      <PillCta onClick={() => setOpen(true)}>예약하기</PillCta>
       <BookingModal open={open} onClose={handleClose} />
     </>
   );
