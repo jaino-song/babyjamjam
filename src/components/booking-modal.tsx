@@ -26,7 +26,24 @@ interface BookingModalProps {
   initialDistrict?: string | null;
   /** Public branch slug used by the staff backend for inquiry routing */
   initialBranchSlug?: string | null;
+  selectedServices?: ConsultationSelectedServices;
 }
+
+export type ConsultationSelectedServices = {
+  plan: {
+    id: string;
+    name: string;
+    priceLabel: string;
+    durationDays: number | null;
+  } | null;
+  addons: Array<{
+    id: string;
+    name: string;
+    priceLabel: string;
+    quantity: number;
+    group: string | null;
+  }>;
+};
 
 type ConsultationFormState = {
   motherName: string;
@@ -166,7 +183,14 @@ function FieldLabel({
   );
 }
 
-export function BookingModal({ open, onClose, initialRegion, initialDistrict, initialBranchSlug }: BookingModalProps) {
+export function BookingModal({
+  open,
+  onClose,
+  initialRegion,
+  initialDistrict,
+  initialBranchSlug,
+  selectedServices = { plan: null, addons: [] },
+}: BookingModalProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
   const [view, setView] = useState<ModalView>("map");
@@ -366,6 +390,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict, in
           preferredCaregiverName: form.preferredCaregiverName.trim(),
           referralSource: form.referralSource,
           privacyAccepted: form.privacyAccepted,
+          selectedServices,
         }),
       });
 
@@ -390,7 +415,7 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict, in
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, selectedBranch?.id, selectedBranchSlug]);
+  }, [form, selectedBranch?.id, selectedBranchSlug, selectedServices]);
 
   const handleSuccessBack = useCallback(() => {
     setSubmitted(false);

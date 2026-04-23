@@ -19,6 +19,7 @@ interface PricingPlansSectionProps {
   onGradeNameChange?: (name: GradeName) => void;
   onRequery?: () => void;
   blurred?: boolean;
+  isLoading?: boolean;
 }
 
 export function PricingPlansSection({
@@ -30,6 +31,7 @@ export function PricingPlansSection({
   onGradeNameChange,
   onRequery,
   blurred = false,
+  isLoading = false,
 }: PricingPlansSectionProps) {
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
 
@@ -44,7 +46,9 @@ export function PricingPlansSection({
       <div className="pricing-plans__heading">
         <h2 className="h3-left pricing-plans__title">
           <span className="pricing-plans__title-muted">
-            뭘 좋아하실지 몰라서 다 준비해 봤어요.
+            뭘 좋아하실지 몰라서
+            <br />
+            다 준비해 봤어요.
           </span>
           <br />
           <span className="pricing-plans__title-primary">
@@ -80,7 +84,12 @@ export function PricingPlansSection({
               </button>
             ))}
           </div>
-          {onRequery && (
+        </div>
+      )}
+
+      <div className="pricing-plans__grid-wrapper">
+        {onRequery && (
+          <div className="pricing-plans__requery-row">
             <button
               type="button"
               className="pricing-plans__requery-btn"
@@ -88,19 +97,20 @@ export function PricingPlansSection({
             >
               다시 조회
             </button>
-          )}
-        </div>
-      )}
+          </div>
+        )}
 
-      <div className="pricing-plans__grid">
+        <div className="pricing-plans__grid">
         {plans.map((plan) => (
           <PricingPlanCard
             key={plan.id}
             plan={plan}
             selected={plan.id === selectedPlanId}
             onSelect={() => onSelectPlan(plan.id)}
+            isLoading={isLoading}
           />
         ))}
+        </div>
       </div>
     </section>
   );

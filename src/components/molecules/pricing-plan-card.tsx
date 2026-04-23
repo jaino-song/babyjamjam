@@ -16,12 +16,14 @@ interface PricingPlanCardProps {
   plan: PlanData;
   selected?: boolean;
   onSelect?: () => void;
+  isLoading?: boolean;
 }
 
 export function PricingPlanCard({
   plan,
   selected = false,
   onSelect,
+  isLoading = false,
 }: PricingPlanCardProps) {
   return (
     <div
@@ -38,10 +40,19 @@ export function PricingPlanCard({
           <p className="plan-card__description">{plan.description}</p>
         )}
 
-        <p className="plan-card__price">{plan.price}</p>
+        <p
+          className={cn(
+            "plan-card__price",
+            isLoading && "plan-card__price--loading"
+          )}
+        >
+          <span className="plan-card__price-value">{plan.price}</span>
+          <span className="skeleton skeleton--price" aria-hidden="true" />
+        </p>
 
         <button
           type="button"
+          disabled={isLoading}
           className={cn(
             "plan-card__btn",
             selected ? "plan-card__btn--selected" : "plan-card__btn--default"

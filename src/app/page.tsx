@@ -62,7 +62,7 @@ export default function HomePage() {
                   아가잼잼은 맞춤형 운영 시스템
                 </span>
               </h2>
-              <p className="max-w-none font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
+              <p className="big-p max-w-none">
                 아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
                 지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
                 서비스가 정확히 제공되도록 운영합니다.
@@ -106,7 +106,7 @@ export default function HomePage() {
                 상담부터 환급 신청까지 일사천리.
               </h2>
               <div className="text-bjj-text-paragraph">
-                <p className="font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
+                <p className="big-p">
                   아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
                   복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
                 </p>

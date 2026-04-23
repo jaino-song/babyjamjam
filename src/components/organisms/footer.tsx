@@ -22,18 +22,18 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        "flex flex-col items-center w-full gap-[52px] pt-6 pb-3 mt-25 border-t border-bjj-divider",
-        "max-mobile:gap-6",
+        "flex flex-col items-center w-full gap-6 pt-6 pb-3 mt-[100px] border-t border-bjj-divider",
+        "mobile:gap-[52px]",
         className
       )}
       data-component="organism-footer"
     >
       <div
-        className="flex justify-between items-center w-full max-mobile:flex-col max-mobile:items-start max-mobile:gap-4"
+        className="flex flex-col items-start gap-4 w-full mobile:flex-row mobile:items-center mobile:justify-between mobile:gap-0"
         data-component="organism-footer-links"
       >
         <nav
-          className="flex items-center gap-4 max-mobile:flex-wrap max-mobile:row-gap-2"
+          className="flex flex-wrap items-center gap-x-4 gap-y-2 mobile:flex-nowrap"
           data-component="organism-footer-nav"
         >
           {FOOTER_LINKS.map((link) => (
@@ -44,7 +44,7 @@ export function Footer({ className }: FooterProps) {
         </nav>
       </div>
       <div
-        className="flex justify-between items-end w-full max-mobile:flex-col max-mobile:items-start max-mobile:gap-4"
+        className="flex flex-col items-start gap-4 w-full mobile:flex-row mobile:items-end mobile:justify-between mobile:gap-0"
         data-component="organism-footer-bottom"
       >
         <Link href="/">

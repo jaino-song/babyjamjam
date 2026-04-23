@@ -20,6 +20,7 @@ export type PricingState = {
 type PricingActions = {
   answer: (questionId: string, value: string) => void;
   selectPlan: (planId: string) => void;
+  clearSelectedPlan: () => void;
   addAddon: (addonId: string) => void;
   removeAddon: (addonId: string) => void;
   setAddonQty: (addonId: string, qty: number) => void;
@@ -68,6 +69,8 @@ export const usePricingStore = create<PricingState & PricingActions>()(
           }
           return { selectedPlanId: planId, addonSelections: m };
         }),
+
+      clearSelectedPlan: () => set({ selectedPlanId: null }),
 
       addAddon: (addonId) =>
         set((state) => {

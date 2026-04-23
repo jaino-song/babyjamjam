@@ -41,17 +41,6 @@ export function AddonServiceCard({
 
         {addon.note ? (
           <div className="addon-card__note">
-            <span className="addon-card__note-check" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M2.33 7L5.83 10.5L11.67 3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
             <span className="addon-card__note-text">{addon.note}</span>
           </div>
         ) : (

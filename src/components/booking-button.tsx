@@ -10,7 +10,7 @@ export function BookingButton() {
 
   return (
     <>
-      <PillCta onClick={() => setOpen(true)}>예약하기</PillCta>
+      <PillCta onClick={() => setOpen(true)}>상담 신청</PillCta>
       <BookingModal open={open} onClose={handleClose} />
     </>
   );

@@ -57,7 +57,7 @@ export function AppDetailSection({ className }: AppDetailSectionProps) {
             className="text-bjj-text-paragraph"
             data-component="organism-app-detail-subtitle"
           >
-            <p className="font-heading font-bold text-[22px] leading-[1.52] tracking-[-0.015em] text-bjj-text-paragraph">
+            <p className="big-p">
               아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
               복잡한 신청 절차도 앱에서 더 간편하게 진행하실 수 있어요.
             </p>

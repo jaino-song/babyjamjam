@@ -69,7 +69,7 @@ export default function HeroCarousel() {
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
 
   return (
-    <div className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef] max-mobile:h-[380px]">
+    <div className="relative w-full h-[380px] mobile:h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef]">
       <div
         className="flex w-full h-full"
         style={{

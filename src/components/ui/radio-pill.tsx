@@ -10,7 +10,15 @@ type RadioPillProps = {
   checked?: boolean;
 };
 
-export function RadioPill({ name, value, children, className, onChange, defaultChecked, checked }: RadioPillProps) {
+export function RadioPill({
+  name,
+  value,
+  children,
+  className,
+  onChange,
+  defaultChecked,
+  checked,
+}: RadioPillProps) {
   return (
     <label className={cn("radio-pill", className)} data-component="ui-radio-pill">
       <input

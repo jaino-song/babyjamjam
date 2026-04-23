@@ -11,7 +11,7 @@ const LINK_CARDS = [
     buttonHref: "/postpartum-care",
   },
   {
-    title: "아가잼잼 공식 앱",
+    title: "아가잼잼\n공식 앱",
     description:
       "서비스 일정과 컨디션 기록, 케어 히스토리를 더 편하게 확인할 수 있어요.",
     buttonText: "출시 예정",
@@ -47,7 +47,7 @@ export function MoreSection({ className }: MoreSectionProps) {
         아가잼잼이면 해결되니까.
       </h2>
       <div
-        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:flex-col"
+        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:items-stretch max-mobile:gap-4"
         data-component="organism-more-section-cards"
       >
         {LINK_CARDS.map((card) => (
@@ -57,7 +57,6 @@ export function MoreSection({ className }: MoreSectionProps) {
             buttonText={card.buttonText}
             buttonHref={card.buttonHref}
             disabled={"disabled" in card ? card.disabled : false}
-            className="max-mobile:w-full"
           />
         ))}
       </div>

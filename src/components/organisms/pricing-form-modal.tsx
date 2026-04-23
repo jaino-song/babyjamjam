@@ -159,9 +159,6 @@ export function PricingFormModal({
           </div>
         )}
 
-        {isLoading && (
-          <p className="pricing-modal__loading">조회 중...</p>
-        )}
       </div>
     </div>
   );
