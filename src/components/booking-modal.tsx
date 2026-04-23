@@ -416,7 +416,6 @@ export function BookingModal({
       setIsSubmitting(false);
     }
   }, [form, selectedBranch?.id, selectedBranchSlug, selectedServices]);
-  }, [form, selectedBranch?.id, selectedBranchSlug, selectedServices]);
 
   const handleSuccessBack = useCallback(() => {
     setSubmitted(false);
