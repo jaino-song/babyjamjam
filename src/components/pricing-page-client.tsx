@@ -16,6 +16,7 @@ import {
 import { FloatingBubble } from "@/components/organisms/floating-bubble";
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
+import type { ConsultationSelectedServices } from "@/components/booking-modal";
 import { usePricingStore } from "@/lib/pricing-store";
 
 // --- Placeholder data shown behind blur ---
@@ -73,6 +74,33 @@ export function PricingPageClient() {
 
   const displayPlans = store.pricesRevealed ? store.plans : PLACEHOLDER_PLANS;
   const displayAddons = store.pricesRevealed ? store.addons : PLACEHOLDER_ADDONS;
+  const selectedPlan =
+    store.plans.find((plan) => plan.id === store.selectedPlanId) ?? null;
+  const selectedAddons = Array.from(store.addonSelections.entries())
+    .map(([addonId, quantity]) => {
+      const addon = store.addons.find((item) => item.id === addonId);
+      return addon && quantity > 0 ? { addon, quantity } : null;
+    })
+    .filter(
+      (item): item is { addon: AddonData; quantity: number } => item !== null
+    );
+  const selectedServices: ConsultationSelectedServices = {
+    plan: selectedPlan
+      ? {
+          id: selectedPlan.id,
+          name: selectedPlan.name,
+          priceLabel: selectedPlan.price,
+          durationDays: selectedPlan.duration ?? null,
+        }
+      : null,
+    addons: selectedAddons.map(({ addon, quantity }) => ({
+      id: addon.id,
+      name: addon.name,
+      priceLabel: addon.price,
+      quantity,
+      group: addon.group ?? null,
+    })),
+  };
 
   return (
     <>
@@ -132,9 +160,15 @@ export function PricingPageClient() {
         )
       }
 
-      {store.pricesRevealed && (
-        <FloatingBubble distinctCount={distinctCount} />
-      )}
+      <FloatingBubble
+        distinctCount={distinctCount}
+        selectedPlan={selectedPlan}
+        selectedAddons={selectedAddons}
+        selectedServices={selectedServices}
+        onRemovePlan={store.clearSelectedPlan}
+        onRemoveAddon={store.removeAddon}
+        onQuantityChange={store.setAddonQty}
+      />
     </>
   );
 }
