@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
@@ -33,7 +36,77 @@ export function PricingPlansSection({
   blurred = false,
   isLoading = false,
 }: PricingPlansSectionProps) {
+  const gridRef = useRef<HTMLDivElement>(null);
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
+  const [mobileGalleryIndex, setMobileGalleryIndex] = useState(0);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    let frameId = 0;
+
+    const updateIndex = () => {
+      const cards = Array.from(grid.children) as HTMLElement[];
+      if (!cards.length) {
+        setMobileGalleryIndex(0);
+        return;
+      }
+
+      const gridRect = grid.getBoundingClientRect();
+      const gridCenter = gridRect.left + gridRect.width / 2;
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const distance = Math.abs(center - gridCenter);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      setMobileGalleryIndex(nearestIndex);
+    };
+
+    const requestUpdate = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        updateIndex();
+      });
+    };
+
+    updateIndex();
+    grid.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+      grid.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, [plans.length]);
+
+  const scrollMobileGallery = (direction: -1 | 1) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const cards = Array.from(grid.children) as HTMLElement[];
+    if (!cards.length) return;
+
+    const nextIndex = Math.max(
+      0,
+      Math.min(cards.length - 1, mobileGalleryIndex + direction),
+    );
+    const nextCard = cards[nextIndex];
+    nextCard?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    setMobileGalleryIndex(nextIndex);
+  };
 
   return (
     <section
@@ -100,7 +173,7 @@ export function PricingPlansSection({
           </div>
         )}
 
-        <div className="pricing-plans__grid">
+        <div className="pricing-plans__grid" ref={gridRef}>
         {plans.map((plan) => (
           <PricingPlanCard
             key={plan.id}
@@ -110,6 +183,26 @@ export function PricingPlansSection({
             isLoading={isLoading}
           />
         ))}
+        </div>
+        <div className="pricing-plans__paddlenav" aria-hidden="false">
+          <button
+            type="button"
+            className="pricing-plans__paddle pricing-plans__paddle-left"
+            onClick={() => scrollMobileGallery(-1)}
+            disabled={mobileGalleryIndex === 0}
+            aria-label="이전 플랜"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="pricing-plans__paddle pricing-plans__paddle-right"
+            onClick={() => scrollMobileGallery(1)}
+            disabled={mobileGalleryIndex === plans.length - 1}
+            aria-label="다음 플랜"
+          >
+            <ChevronRight size={18} strokeWidth={2.5} aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>

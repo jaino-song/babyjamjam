@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import {
   AddonServiceCard,
@@ -38,6 +42,112 @@ export function AddonServicesSection({
     groups[groups.length - 1].push(addon);
   }
 
+  const groupRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [mobileGroupIndices, setMobileGroupIndices] = useState<number[]>(
+    () => groups.map(() => 0)
+  );
+
+  useEffect(() => {
+    setMobileGroupIndices((current) => {
+      const next = groups.map((_, index) => current[index] ?? 0);
+      return next;
+    });
+  }, [groups.length]);
+
+  useEffect(() => {
+    const cleanups: Array<() => void> = [];
+
+    groups.forEach((group, groupIndex) => {
+      const list = groupRefs.current[groupIndex];
+      if (!list) return;
+
+      let frameId = 0;
+
+      const updateIndex = () => {
+        const cards = Array.from(list.children) as HTMLElement[];
+        if (!cards.length) {
+          setMobileGroupIndices((current) => {
+            const next = [...current];
+            next[groupIndex] = 0;
+            return next;
+          });
+          return;
+        }
+
+        const listRect = list.getBoundingClientRect();
+        const listCenter = listRect.left + listRect.width / 2;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const center = rect.left + rect.width / 2;
+          const distance = Math.abs(center - listCenter);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setMobileGroupIndices((current) => {
+          const next = [...current];
+          next[groupIndex] = nearestIndex;
+          return next;
+        });
+      };
+
+      const requestUpdate = () => {
+        if (frameId) return;
+        frameId = window.requestAnimationFrame(() => {
+          frameId = 0;
+          updateIndex();
+        });
+      };
+
+      updateIndex();
+      list.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate, { passive: true });
+
+      cleanups.push(() => {
+        if (frameId) {
+          window.cancelAnimationFrame(frameId);
+        }
+        list.removeEventListener("scroll", requestUpdate);
+        window.removeEventListener("resize", requestUpdate);
+      });
+    });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [groups.length]);
+
+  const scrollAddonGroup = (groupIndex: number, direction: -1 | 1) => {
+    const list = groupRefs.current[groupIndex];
+    if (!list) return;
+
+    const cards = Array.from(list.children) as HTMLElement[];
+    if (!cards.length) return;
+
+    const currentIndex = mobileGroupIndices[groupIndex] ?? 0;
+    const nextIndex = Math.max(
+      0,
+      Math.min(cards.length - 1, currentIndex + direction),
+    );
+    const nextCard = cards[nextIndex];
+    nextCard?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+
+    setMobileGroupIndices((current) => {
+      const next = [...current];
+      next[groupIndex] = nextIndex;
+      return next;
+    });
+  };
+
   return (
     <section
       className={cn(
@@ -71,22 +181,44 @@ export function AddonServicesSection({
                 *토요일 및 공휴일 서비스는 1일 기준, 추가 시간은 1시간 기준입니다.
               </p>
             )}
-            <div className="addon-services__list">
-            {group.map((addon) => {
-              const qty = selections.get(addon.id);
-              const added = qty !== undefined && qty > 0;
-              return (
-                <AddonServiceCard
-                  key={addon.id}
-                  addon={addon}
-                  quantity={added ? qty : (addon.group === "care" && planDuration ? planDuration : 1)}
-                  added={added}
-                  onAdd={() => onAdd(addon.id)}
-                  onRemove={() => onRemove(addon.id)}
-                  onQuantityChange={(q) => onQuantityChange(addon.id, q)}
-                />
-              );
-            })}
+            <div className="addon-services__list" ref={(node) => {
+              groupRefs.current[gi] = node;
+            }}>
+              {group.map((addon) => {
+                const qty = selections.get(addon.id);
+                const added = qty !== undefined && qty > 0;
+                return (
+                  <AddonServiceCard
+                    key={addon.id}
+                    addon={addon}
+                    quantity={added ? qty : (addon.group === "care" && planDuration ? planDuration : 1)}
+                    added={added}
+                    onAdd={() => onAdd(addon.id)}
+                    onRemove={() => onRemove(addon.id)}
+                    onQuantityChange={(q) => onQuantityChange(addon.id, q)}
+                  />
+                );
+              })}
+            </div>
+            <div className="addon-services__paddlenav" aria-hidden="false">
+              <button
+                type="button"
+                className="addon-services__paddle addon-services__paddle-left"
+                onClick={() => scrollAddonGroup(gi, -1)}
+                disabled={(mobileGroupIndices[gi] ?? 0) === 0}
+                aria-label="이전 추가 서비스"
+              >
+                <ChevronLeft size={18} strokeWidth={2.5} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="addon-services__paddle addon-services__paddle-right"
+                onClick={() => scrollAddonGroup(gi, 1)}
+                disabled={(mobileGroupIndices[gi] ?? 0) === group.length - 1}
+                aria-label="다음 추가 서비스"
+              >
+                <ChevronRight size={18} strokeWidth={2.5} aria-hidden="true" />
+              </button>
             </div>
           </div>
         ))}
