@@ -12,10 +12,12 @@ export function GlobalFloatingBubble() {
   const distinctCount = (selectedPlanId ? 1 : 0) + addonSelections.size;
   const isPricingPage = pathname?.startsWith("/pricing") ?? false;
 
+  if (isPricingPage) return null;
+
   return (
     <FloatingBubble
       distinctCount={distinctCount}
-      showCart={isPricingPage || distinctCount > 0}
+      showCart={false}
     />
   );
 }
