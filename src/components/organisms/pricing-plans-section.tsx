@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
   type PlanData,
 } from "@/components/molecules/pricing-plan-card";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 import type { GradeName } from "@/lib/voucher-type";
 
 const GRADE_NAMES: GradeName[] = ["가", "통합", "라"];
@@ -39,6 +38,15 @@ export function PricingPlansSection({
   const gridRef = useRef<HTMLDivElement>(null);
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 780px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -117,7 +125,7 @@ export function PricingPlansSection({
       data-component="organism-pricing-plans-section"
     >
       <div className="pricing-plans__heading">
-        <h2 className="h3-left pricing-plans__title">
+        <h2 className={cn(isMobile ? "h2-left" : "h3-left", "pricing-plans__title")}>
           <span className="pricing-plans__title-muted">
             뭘 좋아하실지 몰라서
             <br />
@@ -184,26 +192,15 @@ export function PricingPlansSection({
           />
         ))}
         </div>
-        <div className="pricing-plans__paddlenav" aria-hidden="false">
-          <button
-            type="button"
-            className="pricing-plans__paddle pricing-plans__paddle-left"
-            onClick={() => scrollMobileGallery(-1)}
-            disabled={mobileGalleryIndex === 0}
-            aria-label="이전 플랜"
-          >
-            <ChevronLeft size={18} strokeWidth={2.5} aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className="pricing-plans__paddle pricing-plans__paddle-right"
-            onClick={() => scrollMobileGallery(1)}
-            disabled={mobileGalleryIndex === plans.length - 1}
-            aria-label="다음 플랜"
-          >
-            <ChevronRight size={18} strokeWidth={2.5} aria-hidden="true" />
-          </button>
-        </div>
+        <GalleryPaddlenav
+          className="pricing-plans__paddlenav"
+          previousLabel="이전 플랜"
+          nextLabel="다음 플랜"
+          previousDisabled={mobileGalleryIndex === 0}
+          nextDisabled={mobileGalleryIndex === plans.length - 1}
+          onPrevious={() => scrollMobileGallery(-1)}
+          onNext={() => scrollMobileGallery(1)}
+        />
       </div>
     </section>
   );

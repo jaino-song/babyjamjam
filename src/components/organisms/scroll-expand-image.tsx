@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
 
+const START_INSET_MULTIPLIER = 2.2;
+const START_RADIUS_PX = 24;
+
 interface ScrollExpandImageProps {
   src: string;
   alt: string;
@@ -11,34 +14,45 @@ export function ScrollExpandImage({ src, alt, overlayText }: ScrollExpandImagePr
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      window.matchMedia("(hover: none)").matches
-    ) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
     const el = wrapperRef.current;
     if (!el) return;
+    let frameId = 0;
 
     const update = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const h = el.offsetHeight;
       const contentLeft = el.parentElement?.getBoundingClientRect().left ?? 0;
       const sideInset = (contentLeft / window.innerWidth) * 100;
+      const startInset = sideInset * START_INSET_MULTIPLIER;
 
-      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh / 2 + h / 2)));
+      const startLine = vh * 1.16;
+      const endLine = vh * 0.18;
+      const progress = Math.max(0, Math.min(1, (startLine - rect.top) / (startLine - endLine)));
       const eased = 1 - Math.pow(1 - progress, 2);
 
-      el.style.clipPath = `inset(0% ${sideInset * (1 - eased)}% round ${20 * (1 - eased)}px)`;
+      el.style.clipPath = `inset(0% ${startInset * (1 - eased)}% round ${START_RADIUS_PX * (1 - eased)}px)`;
     };
 
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
+    const requestUpdate = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        update();
+      });
+    };
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
     update();
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
     };
   }, []);
 
@@ -46,7 +60,12 @@ export function ScrollExpandImage({ src, alt, overlayText }: ScrollExpandImagePr
     <div
       ref={wrapperRef}
       className="relative w-screen h-[360px] mobile:h-[752px] overflow-hidden will-change-[clip-path]"
-      style={{ marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
+      style={{
+        marginLeft: "calc(-50vw + 50%)",
+        alignSelf: "flex-start",
+        clipPath: "inset(0% 23.3213% round 24px)",
+        transition: "clip-path 160ms ease-out",
+      }}
     >
       <img src={src} alt={alt} className="w-full h-full object-cover block" />
       {overlayText && (

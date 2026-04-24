@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import {
   AddonServiceCard,
   type AddonData,
 } from "@/components/molecules/addon-service-card";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
 interface AddonServicesSectionProps {
   addons: AddonData[];
@@ -46,6 +45,15 @@ export function AddonServicesSection({
   const [mobileGroupIndices, setMobileGroupIndices] = useState<number[]>(
     () => groups.map(() => 0)
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 780px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     setMobileGroupIndices((current) => {
@@ -157,7 +165,7 @@ export function AddonServicesSection({
       data-component="organism-addon-services-section"
     >
       <div className="addon-services__heading">
-        <h2 className="h3-left addon-services__title">
+        <h2 className={cn(isMobile ? "h2-left" : "h3-left", "addon-services__title")}>
           <span className="addon-services__title-muted">
             내가 원하는 대로 선택 가능.
           </span>
@@ -178,7 +186,9 @@ export function AddonServicesSection({
             )}
             {gi === 1 && (
               <p className="addon-services__note">
-                *토요일 및 공휴일 서비스는 1일 기준, 추가 시간은 1시간 기준입니다.
+                *토요일 및 공휴일 서비스는 1일 기준,
+                <br />
+                추가 시간은 1시간 기준입니다.
               </p>
             )}
             <div className="addon-services__list" ref={(node) => {
@@ -200,26 +210,15 @@ export function AddonServicesSection({
                 );
               })}
             </div>
-            <div className="addon-services__paddlenav" aria-hidden="false">
-              <button
-                type="button"
-                className="addon-services__paddle addon-services__paddle-left"
-                onClick={() => scrollAddonGroup(gi, -1)}
-                disabled={(mobileGroupIndices[gi] ?? 0) === 0}
-                aria-label="이전 추가 서비스"
-              >
-                <ChevronLeft size={18} strokeWidth={2.5} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="addon-services__paddle addon-services__paddle-right"
-                onClick={() => scrollAddonGroup(gi, 1)}
-                disabled={(mobileGroupIndices[gi] ?? 0) === group.length - 1}
-                aria-label="다음 추가 서비스"
-              >
-                <ChevronRight size={18} strokeWidth={2.5} aria-hidden="true" />
-              </button>
-            </div>
+            <GalleryPaddlenav
+              className="addon-services__paddlenav"
+              previousLabel="이전 추가 서비스"
+              nextLabel="다음 추가 서비스"
+              previousDisabled={(mobileGroupIndices[gi] ?? 0) === 0}
+              nextDisabled={(mobileGroupIndices[gi] ?? 0) === group.length - 1}
+              onPrevious={() => scrollAddonGroup(gi, -1)}
+              onNext={() => scrollAddonGroup(gi, 1)}
+            />
           </div>
         ))}
       </div>

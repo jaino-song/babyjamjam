@@ -15,8 +15,8 @@ export default function PricingPage() {
   return (
     <>
       <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
-        <section className="flex flex-col items-center w-full gap-16 overflow-hidden max-mobile:gap-10">
-          <div className="relative w-full h-[488px] rounded-card overflow-hidden max-mobile:h-80">
+        <section className="flex flex-col items-center w-full overflow-hidden">
+          <div className="relative w-full h-[488px] rounded-card overflow-hidden mb-16 max-mobile:h-80 max-mobile:mb-10">
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"

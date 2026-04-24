@@ -5,6 +5,7 @@ import "./globals.css";
 import { PersistentNav } from "@/components/persistent-nav";
 import { PageTransition } from "@/components/page-transition";
 import { AnnouncementRibbon } from "@/components/announcement-ribbon";
+import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
 
 const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
@@ -62,6 +63,7 @@ export default function RootLayout({
           <AnnouncementRibbon />
           <PageTransition>{children}</PageTransition>
         </div>
+        <GlobalFloatingBubble />
       </body>
     </html>
   );

@@ -13,7 +13,6 @@ import {
 import {
   AddonServicesSection,
 } from "@/components/organisms/addon-services-section";
-import { FloatingBubble } from "@/components/organisms/floating-bubble";
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
 import { usePricingStore } from "@/lib/pricing-store";
@@ -67,9 +66,6 @@ export function PricingPageClient() {
       plansRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 100);
   }, [store.selectedGradeName, store.fetchPricing]);
-
-  const distinctCount =
-    (store.selectedPlanId ? 1 : 0) + store.addonSelections.size;
 
   const displayPlans = store.pricesRevealed ? store.plans : PLACEHOLDER_PLANS;
   const displayAddons = store.pricesRevealed ? store.addons : PLACEHOLDER_ADDONS;
@@ -131,10 +127,6 @@ export function PricingPageClient() {
           document.body
         )
       }
-
-      {store.pricesRevealed && (
-        <FloatingBubble distinctCount={distinctCount} />
-      )}
     </>
   );
 }

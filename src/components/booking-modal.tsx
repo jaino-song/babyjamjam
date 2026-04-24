@@ -11,7 +11,7 @@ import {
 
 const AVAILABLE_REGIONS = new Set(["인천", "경기도", "경북"]);
 
-type ModalView = "map" | "form";
+type ModalView = "map" | "form" | "success";
 
 interface BookingModalProps {
   open: boolean;
@@ -166,13 +166,18 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
 
   const handleSubmit = useCallback(() => {
     if (!formValid) return;
-    alert("상담 신청이 완료되었습니다!\n빠른 시일 내에 연락 드리겠습니다.");
-    onClose();
-  }, [formValid, onClose]);
+    setView("success");
+    setShowBack(false);
+    setBreadcrumb([]);
+  }, [formValid]);
 
   if (!open || !mounted) return null;
 
-  const headerTitle = view === "map" ? "지역을 선택해 주세요" : "상담 신청";
+  const headerTitle = view === "map"
+    ? "지역을 선택해 주세요"
+    : view === "form"
+      ? "상담 신청"
+      : "상담 신청 완료";
 
   return createPortal(
     <div
@@ -191,30 +196,32 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
         </div>
 
         {/* Nav bar wrap: breadcrumb + back button */}
-        <div className="bm__nav-wrap">
-          <div className="bm__breadcrumb">
-            {breadcrumb.map((part, i) => (
-              <span key={i}>
-                {i > 0 && <span className="bm__breadcrumb-sep">›</span>}
-                {i === breadcrumb.length - 1 ? (
-                  <span className="bm__breadcrumb-current">{part.label}</span>
-                ) : (
-                  <span
-                    className="bm__breadcrumb-link"
-                    onClick={part.action}
-                  >
-                    {part.label}
-                  </span>
-                )}
-              </span>
-            ))}
+        {view !== "success" && (
+          <div className="bm__nav-wrap">
+            <div className="bm__breadcrumb">
+              {breadcrumb.map((part, i) => (
+                <span key={i}>
+                  {i > 0 && <span className="bm__breadcrumb-sep">›</span>}
+                  {i === breadcrumb.length - 1 ? (
+                    <span className="bm__breadcrumb-current">{part.label}</span>
+                  ) : (
+                    <span
+                      className="bm__breadcrumb-link"
+                      onClick={part.action}
+                    >
+                      {part.label}
+                    </span>
+                  )}
+                </span>
+              ))}
+            </div>
+            {showBack && (
+              <button className="bm__back" onClick={handleBack}>
+                ← 이전
+              </button>
+            )}
           </div>
-          {showBack && (
-            <button className="bm__back" onClick={handleBack}>
-              ← 이전
-            </button>
-          )}
-        </div>
+        )}
 
         {/* Map view */}
         <div
@@ -380,6 +387,20 @@ export function BookingModal({ open, onClose, initialRegion, initialDistrict }: 
                 </button>
               </div>
             </div>
+          </div>
+        )}
+        {view === "success" && (
+          <div className="bm__success-panel" role="status" aria-live="polite">
+            <div className="bm__success-mark" aria-hidden="true">✓</div>
+            <div className="bm__success-copy">
+              <h3 className="bm__success-title">상담 신청이 완료되었습니다</h3>
+              <p className="bm__success-description">
+                빠른 시일 내에 담당 지점에서 연락드리겠습니다.
+              </p>
+            </div>
+            <button className="bm__success-button" onClick={onClose}>
+              확인
+            </button>
           </div>
         )}
       </div>

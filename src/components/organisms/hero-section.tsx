@@ -25,7 +25,7 @@ export function HeroSection({ className }: HeroSectionProps) {
         />
       </div>
       <h1
-        className="text-h1 font-extrabold font-heading text-bjj-primary whitespace-pre-line leading-tight tracking-widest w-full"
+        className="h1 text-bjj-primary whitespace-pre-line w-full"
         data-component="organism-hero-section-text"
       >
         {"엄마의 설레는 첫 만남.\n아기의 완벽한 첫 걸음."}
