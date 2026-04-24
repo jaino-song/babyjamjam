@@ -27,11 +27,43 @@ const LINK_CARDS = [
   },
 ];
 
+const FAQ_PAGE_LINK_CARDS = LINK_CARDS.map((card) =>
+  card.buttonHref === "/faq"
+    ? {
+        title: "지점 찾기",
+        description:
+          "가까운 아가잼잼 지점을 확인하고 우리 지역 서비스 가능 여부를 살펴보세요.",
+        buttonText: "더 알아보기",
+        buttonHref: "/locations",
+      }
+    : card
+);
+
+const POSTPARTUM_CARE_PAGE_LINK_CARDS = LINK_CARDS.map((card) =>
+  card.buttonHref === "/postpartum-care"
+    ? {
+        title: "서비스 비용",
+        description:
+          "정부지원 유형과 이용 기간에 따라 달라지는 서비스 비용을 확인해 보세요.",
+        buttonText: "더 알아보기",
+        buttonHref: "/pricing",
+      }
+    : card
+);
+
 interface MoreSectionProps {
   className?: string;
+  currentPage?: "faq" | "postpartum-care";
 }
 
-export function MoreSection({ className }: MoreSectionProps) {
+export function MoreSection({ className, currentPage }: MoreSectionProps) {
+  const cards =
+    currentPage === "faq"
+      ? FAQ_PAGE_LINK_CARDS
+      : currentPage === "postpartum-care"
+        ? POSTPARTUM_CARE_PAGE_LINK_CARDS
+        : LINK_CARDS;
+
   return (
     <section
       className={cn(
@@ -50,7 +82,7 @@ export function MoreSection({ className }: MoreSectionProps) {
         className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:items-stretch max-mobile:gap-4"
         data-component="organism-more-section-cards"
       >
-        {LINK_CARDS.map((card) => (
+        {cards.map((card) => (
           <LinkCard
             key={card.title}
             title={card.title}

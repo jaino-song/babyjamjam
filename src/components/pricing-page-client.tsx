@@ -159,7 +159,6 @@ export function PricingPageClient() {
           document.body
         )
       }
-
       <FloatingBubble
         distinctCount={distinctCount}
         selectedPlan={selectedPlan}

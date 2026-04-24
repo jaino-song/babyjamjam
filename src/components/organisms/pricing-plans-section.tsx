@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
   type PlanData,
 } from "@/components/molecules/pricing-plan-card";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 import type { GradeName } from "@/lib/voucher-type";
 
 const GRADE_NAMES: GradeName[] = ["가", "통합", "라"];
@@ -33,7 +35,86 @@ export function PricingPlansSection({
   blurred = false,
   isLoading = false,
 }: PricingPlansSectionProps) {
+  const gridRef = useRef<HTMLDivElement>(null);
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
+  const [mobileGalleryIndex, setMobileGalleryIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 780px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    let frameId = 0;
+
+    const updateIndex = () => {
+      const cards = Array.from(grid.children) as HTMLElement[];
+      if (!cards.length) {
+        setMobileGalleryIndex(0);
+        return;
+      }
+
+      const gridRect = grid.getBoundingClientRect();
+      const gridCenter = gridRect.left + gridRect.width / 2;
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const distance = Math.abs(center - gridCenter);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      setMobileGalleryIndex(nearestIndex);
+    };
+
+    const requestUpdate = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        updateIndex();
+      });
+    };
+
+    updateIndex();
+    grid.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+      grid.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, [plans.length]);
+
+  const scrollMobileGallery = (direction: -1 | 1) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const cards = Array.from(grid.children) as HTMLElement[];
+    if (!cards.length) return;
+
+    const nextIndex = Math.max(
+      0,
+      Math.min(cards.length - 1, mobileGalleryIndex + direction),
+    );
+    const nextCard = cards[nextIndex];
+    nextCard?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    setMobileGalleryIndex(nextIndex);
+  };
 
   return (
     <section
@@ -44,7 +125,7 @@ export function PricingPlansSection({
       data-component="organism-pricing-plans-section"
     >
       <div className="pricing-plans__heading">
-        <h2 className="h3-left pricing-plans__title">
+        <h2 className={cn(isMobile ? "h2-left" : "h3-left", "pricing-plans__title")}>
           <span className="pricing-plans__title-muted">
             뭘 좋아하실지 몰라서
             <br />
@@ -100,7 +181,7 @@ export function PricingPlansSection({
           </div>
         )}
 
-        <div className="pricing-plans__grid">
+        <div className="pricing-plans__grid" ref={gridRef}>
         {plans.map((plan) => (
           <PricingPlanCard
             key={plan.id}
@@ -111,6 +192,15 @@ export function PricingPlansSection({
           />
         ))}
         </div>
+        <GalleryPaddlenav
+          className="pricing-plans__paddlenav"
+          previousLabel="이전 플랜"
+          nextLabel="다음 플랜"
+          previousDisabled={mobileGalleryIndex === 0}
+          nextDisabled={mobileGalleryIndex === plans.length - 1}
+          onPrevious={() => scrollMobileGallery(-1)}
+          onNext={() => scrollMobileGallery(1)}
+        />
       </div>
     </section>
   );

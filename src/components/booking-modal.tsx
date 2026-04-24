@@ -15,7 +15,7 @@ import {
 
 const AVAILABLE_REGIONS = new Set(["인천", "경기도", "경북"]);
 
-type ModalView = "map" | "form";
+type ModalView = "map" | "form" | "success";
 
 interface BookingModalProps {
   open: boolean;
@@ -409,6 +409,8 @@ export function BookingModal({
       }
 
       setSubmitted(true);
+      setShowBack(false);
+      setBreadcrumb([]);
       setForm(EMPTY_FORM);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "상담 신청에 실패했습니다.");
@@ -503,16 +505,17 @@ export function BookingModal({
         )}
 
         {/* Form view */}
-        {view === "form" && submitted && (
-          <div className="bm-success-card">
-            <h2 className="bm-success-card__title">상담 신청 완료</h2>
-            <p className="bm-success-card__label">담당자가 곧 연락드릴 거예요 :)</p>
-            <button
-              type="button"
-              className="bm-success-card__btn"
-              onClick={handleSuccessBack}
-            >
-              돌아가기
+        {submitted && (
+          <div className="bm__success-panel" role="status" aria-live="polite">
+            <div className="bm__success-mark" aria-hidden="true">✓</div>
+            <div className="bm__success-copy">
+              <h3 className="bm__success-title">상담 신청이 완료되었습니다</h3>
+              <p className="bm__success-description">
+                빠른 시일 내에 담당 지점에서 연락드리겠습니다.
+              </p>
+            </div>
+            <button className="bm__success-button" onClick={handleSuccessBack}>
+              확인
             </button>
           </div>
         )}

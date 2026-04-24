@@ -36,11 +36,18 @@ export function PersistentNav() {
     <>
       <header className="flex justify-between items-center w-full h-24 relative max-mobile:h-16">
         <Link href="/" className="flex-shrink-0">
-          <img
-            src="/images/logo.png"
-            alt="아가잼잼 로고"
-            className="w-36 h-12 object-cover max-mobile:w-24 max-mobile:h-8"
-          />
+          <>
+            <img
+              src="/images/logo.png"
+              alt="아가잼잼 로고"
+              className="w-36 h-12 object-cover max-mobile:hidden"
+            />
+            <img
+              src="/images/logo.svg"
+              alt="아가잼잼 로고"
+              className="hidden h-[58px] w-[58px] object-contain max-mobile:block"
+            />
+          </>
         </Link>
         <div className="max-mobile:hidden flex-1 flex justify-center">
           <NavBar items={NAV_ITEMS} activeLabel={activeLabel} />
@@ -99,10 +106,8 @@ export function PersistentNav() {
                   {item.label}
                 </Link>
               ))}
+              <BookingButton onModalClose={() => setDrawerOpen(false)} />
             </nav>
-            <div className="nav-drawer__cta">
-              <BookingButton />
-            </div>
           </aside>
         </>
       )}

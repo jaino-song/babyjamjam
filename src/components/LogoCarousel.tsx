@@ -15,14 +15,14 @@ const slides: Slide[] = [
   {
     theme: 'dark',
     title: (
-      <h2 className="h3" style={{ textAlign: 'left' }}>
+      <h3 className="h3" style={{ textAlign: 'left' }}>
         <span style={{ display: 'block', color: 'rgba(251, 253, 255, 0.7)' }}>
           국가인증업체라서
         </span>
         <span style={{ display: 'block', color: 'var(--bjj-color-primary-light)' }}>
           믿을 수 있으니까.
         </span>
-      </h2>
+      </h3>
     ),
     description: (
       <p className="big-p" style={{ color: 'rgba(251, 253, 255, 0.85)' }}>
@@ -40,10 +40,10 @@ const slides: Slide[] = [
   {
     theme: 'light',
     title: (
-      <h2 className="h3" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
+      <h3 className="h3" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
         자격증만 딴다고
         <br />다 <strong style={{ color: 'var(--bjj-color-primary)' }}>전문가</strong>는 아니죠.
-      </h2>
+      </h3>
     ),
     description: (
       <p className="big-p" style={{ color: 'var(--bjj-color-text-dark)' }}>

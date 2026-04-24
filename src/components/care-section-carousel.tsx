@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
 import { ImageBlock } from "@/components/ui/image-block";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
 export type CareCardData = {
   title: string;
@@ -87,6 +88,28 @@ export function CareSectionCarousel({
     return () => track.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollCard = (direction: -1 | 1) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const cards = Array.from(
+      track.querySelectorAll<HTMLElement>(".care-carousel__card"),
+    );
+    if (!cards.length) return;
+
+    const nextIndex = Math.max(
+      0,
+      Math.min(cards.length - 1, activeDot + direction),
+    );
+
+    cards[nextIndex]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+    setActiveDot(nextIndex);
+  };
+
   return (
     <section className="care-carousel">
       <div
@@ -133,41 +156,49 @@ export function CareSectionCarousel({
           </h2>
         </div>
 
-        <div className="care-carousel__track" ref={trackRef}>
-        {section.cards.map((card, i) => {
-          const imageSrc =
-            card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[section.tone];
-          const imageAlt = card.imageAlt ?? `${card.title} 서비스 이미지`;
+        <div className="care-carousel__track-wrap">
+          <div className="care-carousel__track" ref={trackRef}>
+          {section.cards.map((card, i) => {
+            const imageSrc =
+              card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[section.tone];
+            const imageAlt = card.imageAlt ?? `${card.title} 서비스 이미지`;
 
-          return (
-            <div
-              key={`${section.id}-${card.title}`}
-              className={`care-carousel__card care-carousel__card--fan-${fanState} care-carousel__card--${section.tone}`}
-              style={{ transitionDelay: `${i * 0.1}s` }}
-            >
-              <div className="care-carousel__card-inner">
-                <ImageBlock
-                  variant="careCard"
-                  src={imageSrc}
-                  alt={imageAlt}
-                  className="care-carousel__card-img"
-                />
-                <div
-                  className={`care-carousel__card-gradient care-carousel__card-gradient--${section.tone}`}
-                />
-                <div className="care-carousel__card-overlay">
-                  <span className="care-carousel__card-badge">{i + 1}</span>
-                  <h3 className="h6 care-carousel__card-title">
+            return (
+              <div
+                key={`${section.id}-${card.title}`}
+                className={`care-carousel__card care-carousel__card--fan-${fanState} care-carousel__card--${section.tone}`}
+                style={{ transitionDelay: `${i * 0.1}s` }}
+              >
+                <div className="care-carousel__card-inner">
+                  <ImageBlock
+                    variant="careCard"
+                    src={imageSrc}
+                    alt={imageAlt}
+                    className="care-carousel__card-img"
+                  />
+                </div>
+                <div className="care-carousel__caption">
+                  <h3 className="h6 care-carousel__caption-title">
                     {card.title}
                   </h3>
-                  <p className="medium-p care-carousel__card-desc">
+                  <p className="medium-p care-carousel__caption-desc">
                     {card.description}
                   </p>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+          </div>
+
+          <GalleryPaddlenav
+            className="care-carousel__paddlenav"
+            previousLabel="이전 케어 서비스"
+            nextLabel="다음 케어 서비스"
+            previousDisabled={activeDot === 0}
+            nextDisabled={activeDot === section.cards.length - 1}
+            onPrevious={() => scrollCard(-1)}
+            onNext={() => scrollCard(1)}
+          />
         </div>
       </div>
 

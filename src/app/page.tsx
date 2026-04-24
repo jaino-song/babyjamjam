@@ -1,36 +1,11 @@
-import { Building2, CalendarCheck2, MessageSquareMore, UserCheck } from "lucide-react";
-
 import HeroCarousel from "@/components/hero-carousel";
 import LogoCarousel from "@/components/LogoCarousel";
 import { ScrollExpandImage } from "@/components/organisms/scroll-expand-image";
-import { KakaoChatPhone } from "@/components/kakao-chat-prototype";
 import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import { ProcessSection } from "@/components/organisms/process-section";
 import { MoreSection } from "@/components/organisms/more-section";
 import { Footer } from "@/components/organisms/footer";
-
-const SERVICE_DETAIL_ITEMS = [
-  {
-    icon: UserCheck,
-    title: "전담마크",
-    description: "한 명의 담당자가 첫 상담부터 사후처리까지 전담해, 작은 내용 하나까지 빠짐없이 챙깁니다.",
-  },
-  {
-    icon: CalendarCheck2,
-    title: "임신 기간 전체 관리",
-    description: "출산 전부터 필요한 정보를 안내하고 산모님의 상황을 세심히 살펴, 서비스 종료 후까지 꼼꼼히 챙깁니다.",
-  },
-  {
-    icon: Building2,
-    title: "기업형 운영 관리",
-    description: "주먹구구식 운영이 아닌, 체계적인 운영 기준으로 높은 서비스 품질을 안정적으로 유지합니다.",
-  },
-  {
-    icon: MessageSquareMore,
-    title: "실시간 고객 피드백 응답형",
-    description: "서비스를 이용하시는 동안 불편함이 없으시도록, 서비스 시작 후엔 산모님의 피드백을 실시간으로 확인하고 반영합니다.",
-  },
-];
+import { ServiceDetailSection } from "@/components/organisms/service-detail-section";
 
 export default function HomePage() {
   const appDetailSteps = [
@@ -44,50 +19,17 @@ export default function HomePage() {
     <>
       <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
         <section className="flex flex-col items-center w-full gap-16 max-mobile:gap-10">
-          <HeroCarousel />
+          <HeroCarousel
+            headlineLines={["엄마의 설레는 첫 만남.", "아기의 완벽한 첫 걸음."]}
+          />
           <h1
-            className="h1 whitespace-pre-line w-full"
-            style={{ color: "var(--bjj-color-primary)" }}
+            className="h1 hidden w-full whitespace-pre-line text-bjj-primary mobile:block"
+            data-component="desktop-home-hero-headline"
           >
             엄마의 설레는 첫 만남.<br />아기의 완벽한 첫 걸음.
           </h1>
         </section>
-        <section className="flex flex-row justify-between items-center w-full gap-12 max-mobile:flex-col">
-          <div className="flex-[0_1_650px] min-w-[650px] flex flex-col items-start gap-8 max-mobile:flex-[unset] max-mobile:w-full max-mobile:min-w-0">
-            <div className="flex flex-col items-start gap-8 w-full">
-              <h2 className="h2-left whitespace-pre-line">
-                <span style={{ color: "#848484" }}>방치되는 공장형?</span>
-                <br />
-                <span style={{ color: "var(--bjj-color-primary)" }}>
-                  아가잼잼은 맞춤형 운영 시스템
-                </span>
-              </h2>
-              <p className="big-p max-w-none">
-                아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
-                지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
-                서비스가 정확히 제공되도록 운영합니다.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 w-full gap-0 max-mobile:grid-cols-1">
-              {SERVICE_DETAIL_ITEMS.map((item) => {
-                const Icon = item.icon;
-
-                return (
-                  <div key={item.title} className="flex flex-col gap-4 py-6 pr-3 border-t-2 border-bjj-divider">
-                    <Icon className="w-4 h-4" aria-hidden="true" />
-                    <div className="flex flex-col items-start w-full gap-3">
-                      <span className="h7 text-bjj-text-headline">{item.title}</span>
-                      <p className="medium-p">{item.description}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex-[0_1_360px] flex justify-center items-center max-mobile:flex-[unset] max-mobile:w-full">
-            <KakaoChatPhone />
-          </div>
-        </section>
+        <ServiceDetailSection />
 
         <ScrollExpandImage
           src="/images/hero-image-1a35f6.png"

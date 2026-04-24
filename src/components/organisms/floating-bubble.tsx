@@ -4,14 +4,14 @@ import { X } from "lucide-react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import type { AddonData } from "@/components/molecules/addon-service-card";
-import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import {
   BookingModal,
   type ConsultationSelectedServices,
 } from "@/components/booking-modal";
-import { QuantityStepper } from "@/components/ui/quantity-stepper";
+import type { AddonData } from "@/components/molecules/addon-service-card";
+import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import { PillCta } from "@/components/ui/circle-cta";
+import { QuantityStepper } from "@/components/ui/quantity-stepper";
 
 type SelectedAddonCartItem = {
   addon: AddonData;
@@ -42,22 +42,24 @@ const removeButtonStyle = {
 
 interface FloatingBubbleProps {
   distinctCount: number;
-  selectedPlan: PlanData | null;
-  selectedAddons: SelectedAddonCartItem[];
-  selectedServices: ConsultationSelectedServices;
-  onRemovePlan: () => void;
-  onRemoveAddon: (addonId: string) => void;
-  onQuantityChange: (addonId: string, quantity: number) => void;
+  showCart?: boolean;
+  selectedPlan?: PlanData | null;
+  selectedAddons?: SelectedAddonCartItem[];
+  selectedServices?: ConsultationSelectedServices;
+  onRemovePlan?: () => void;
+  onRemoveAddon?: (addonId: string) => void;
+  onQuantityChange?: (addonId: string, quantity: number) => void;
 }
 
 export function FloatingBubble({
   distinctCount,
-  selectedPlan,
-  selectedAddons,
-  selectedServices,
-  onRemovePlan,
-  onRemoveAddon,
-  onQuantityChange,
+  showCart = true,
+  selectedPlan = null,
+  selectedAddons = [],
+  selectedServices = { plan: null, addons: [] },
+  onRemovePlan = () => {},
+  onRemoveAddon = () => {},
+  onQuantityChange = () => {},
 }: FloatingBubbleProps) {
   const [mounted, setMounted] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -66,7 +68,9 @@ export function FloatingBubble({
   const cartTitleId = useId();
   const cartButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const closeCart = useCallback(() => {
     setIsCartOpen(false);
@@ -101,7 +105,7 @@ export function FloatingBubble({
       className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3 max-mobile:bottom-4 max-mobile:right-4"
       data-component="organism-floating-bubble"
     >
-      {isCartOpen && (
+      {showCart && isCartOpen && (
         <aside
           id={cartPanelId}
           className="floating-cart-panel"
@@ -136,7 +140,7 @@ export function FloatingBubble({
               className="floating-cart-panel__cta"
               onClick={() => setIsBookingOpen(true)}
             >
-              상담 신청
+              상담신청
             </PillCta>
           </header>
 
@@ -149,7 +153,9 @@ export function FloatingBubble({
                 className="floating-cart-panel__empty"
                 data-component="organism-floating-cart-panel-empty"
               >
-                <p className="floating-cart-panel__empty-title">선택한 서비스가 없습니다.</p>
+                <p className="floating-cart-panel__empty-title">
+                  선택한 서비스가 없습니다.
+                </p>
                 <p className="floating-cart-panel__empty-copy">
                   플랜과 추가 서비스를 선택하면 여기에 표시됩니다.
                 </p>
@@ -200,7 +206,9 @@ export function FloatingBubble({
                   className="floating-cart-panel__item-main"
                   data-component="organism-floating-cart-panel-addon-main"
                 >
-                  <span className="floating-cart-panel__eyebrow">추가 서비스</span>
+                  <span className="floating-cart-panel__eyebrow">
+                    추가 서비스
+                  </span>
                   <h3 className="floating-cart-panel__item-name">
                     {addon.name}
                   </h3>
@@ -232,7 +240,6 @@ export function FloatingBubble({
         </aside>
       )}
 
-      {/* Scroll to top */}
       <button
         type="button"
         className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
@@ -240,7 +247,13 @@ export function FloatingBubble({
         aria-label="위로 스크롤"
         data-component="organism-floating-bubble-scroll-top-button"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
           <path
             d="M6 15L12 9L18 15"
             stroke="white"
@@ -251,51 +264,69 @@ export function FloatingBubble({
         </svg>
       </button>
 
-      {/* Cart button with badge */}
-      <div className="relative" data-component="organism-floating-bubble-cart">
-        <button
-          ref={cartButtonRef}
-          type="button"
-          className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
-          onClick={() => setIsCartOpen((current) => !current)}
-          aria-label={`선택한 서비스 ${distinctCount}개`}
-          aria-expanded={isCartOpen}
-          aria-controls={cartPanelId}
-          data-component="organism-floating-bubble-cart-button"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M3 6H21" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path
-              d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        {distinctCount > 0 && (
-          <span
-            className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center font-heading font-bold text-xs leading-none text-white shadow-[0_2px_4px_-2px_rgba(0,0,0,0.1)]"
-            data-component="organism-floating-bubble-cart-badge"
+      {showCart && (
+        <>
+          <div
+            className="relative"
+            data-component="organism-floating-bubble-cart"
           >
-            {distinctCount}
-          </span>
-        )}
-      </div>
-      <BookingModal
-        open={isBookingOpen}
-        onClose={closeBooking}
-        selectedServices={selectedServices}
-      />
+            <button
+              ref={cartButtonRef}
+              type="button"
+              className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
+              onClick={() => setIsCartOpen((current) => !current)}
+              aria-label={`선택한 서비스 ${distinctCount}개`}
+              aria-expanded={isCartOpen}
+              aria-controls={cartPanelId}
+              data-component="organism-floating-bubble-cart-button"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3 6H21"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {distinctCount > 0 && (
+              <span
+                className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center font-heading font-bold text-xs leading-none text-white shadow-[0_2px_4px_-2px_rgba(0,0,0,0.1)]"
+                data-component="organism-floating-bubble-cart-badge"
+              >
+                {distinctCount}
+              </span>
+            )}
+          </div>
+          <BookingModal
+            open={isBookingOpen}
+            onClose={closeBooking}
+            selectedServices={selectedServices}
+          />
+        </>
+      )}
     </div>,
     document.body
   );

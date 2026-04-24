@@ -10,8 +10,6 @@ const FOOTER_LINKS = [
   { label: "서비스 제공 항목", href: "#" },
   { label: "전국 지점", href: "/locations" },
   { label: "FAQ & 이용약관", href: "/faq" },
-  { label: "인재 영입", href: "#" },
-  { label: "고객센터", href: "#" },
 ];
 
 interface FooterProps {
@@ -54,7 +52,7 @@ export function Footer({ className }: FooterProps) {
           className="caption-text"
           data-component="organism-footer-caption"
         >
-          2025 All Rights Reserved By Jaino Company
+          2026 All Rights Reserved By Covenant Labs
         </span>
       </div>
     </footer>

@@ -2,8 +2,6 @@
 
 import { useCallback, useState } from "react";
 import {
-  Menu,
-  X,
   ChevronDown,
   MessageCircle,
   CalendarDays,
@@ -85,7 +83,6 @@ export function FaqPageClient() {
   const allCategories = FAQ_SECTIONS.flatMap((s) => s.categories);
   const [activeCategoryId, setActiveCategoryId] = useState(allCategories[0].id);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const activeCategory =
     allCategories.find((c) => c.id === activeCategoryId) ?? allCategories[0];
@@ -94,7 +91,6 @@ export function FaqPageClient() {
   const handleCategoryChange = useCallback((cat: FaqCategory) => {
     setActiveCategoryId(cat.id);
     setOpenItems(new Set());
-    setSidebarOpen(false);
   }, []);
 
   const toggleItem = useCallback((itemId: string) => {
@@ -107,46 +103,37 @@ export function FaqPageClient() {
   }, []);
 
   return (
-    <div className="faq-page">
-      {/* Mobile hamburger */}
-      <button
-        className="faq-hamburger"
-        onClick={() => setSidebarOpen(true)}
-        aria-label="메뉴 열기"
-      >
-        <Menu size={20} />
-      </button>
+    <section className="faq-section">
+      <h1 className="h1 faq-mobile-title">자주하는 질문</h1>
 
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className="faq-overlay"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <aside
-        className={`faq-sidebar${sidebarOpen ? " faq-sidebar--open" : ""}`}
-      >
-        {sidebarOpen && (
-          <button
-            className="faq-hamburger"
-            onClick={() => setSidebarOpen(false)}
-            aria-label="메뉴 닫기"
-            style={{
-              display: "flex",
-              position: "absolute",
-              top: 12,
-              right: 12,
-              left: "auto",
-              background: "rgba(255,255,255,0.15)",
+      {/* Mobile select */}
+      <div className="faq-mobile-menu">
+        <div className="faq-mobile-select-wrap">
+          <select
+            className="faq-mobile-select"
+            value={activeCategoryId}
+            onChange={(event) => {
+              const cat = allCategories.find((item) => item.id === event.target.value);
+              if (cat) handleCategoryChange(cat);
             }}
+            aria-label="FAQ 카테고리 선택"
           >
-            <X size={20} />
-          </button>
-        )}
+            {FAQ_SECTIONS.map((section) => (
+              <optgroup key={section.id} label={section.title}>
+                {section.categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+      </div>
 
+      <div className="faq-page">
+      {/* Sidebar */}
+      <aside className="faq-sidebar">
         <h2 className="faq-sidebar__title">도움말</h2>
         <p className="faq-sidebar__subtitle">FAQ &amp; 이용약관</p>
 
@@ -175,10 +162,13 @@ export function FaqPageClient() {
       {/* Content */}
       <div className="faq-content" key={activeCategoryId}>
         <header className="faq-content__header">
-          <h3>{activeCategory.label}</h3>
-          <span className="faq-content__count">
-            {activeCategory.items.length}개 항목
-          </span>
+          <h1 className="h1 faq-content__title">자주하는 질문</h1>
+          <div className="faq-content__meta">
+            <h3>{activeCategory.label}</h3>
+            <span className="faq-content__count">
+              {activeCategory.items.length}개 항목
+            </span>
+          </div>
         </header>
 
         <div className="faq-accordion">
@@ -192,7 +182,8 @@ export function FaqPageClient() {
             />
           ))}
         </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,4 +1,9 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 import { cn } from "@/lib/utils";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
 import { ProcessStep } from "@/components/molecules/process-step";
 
@@ -34,11 +39,81 @@ interface ProcessSectionProps {
 }
 
 export function ProcessSection({ className }: ProcessSectionProps) {
+  const mobileTrackRef = useRef<HTMLDivElement>(null);
+  const mobileCardRefs = useRef<Array<HTMLElement | null>>([]);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 780px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const track = mobileTrackRef.current;
+    if (!track) return;
+
+    let frameId = 0;
+
+    const updateActiveIndex = () => {
+      const trackRect = track.getBoundingClientRect();
+      const trackCenter = trackRect.left + trackRect.width / 2;
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      mobileCardRefs.current.forEach((card, index) => {
+        if (!card) return;
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const distance = Math.abs(cardCenter - trackCenter);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      setMobileActiveIndex(nearestIndex);
+    };
+
+    const requestUpdate = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        updateActiveIndex();
+      });
+    };
+
+    updateActiveIndex();
+    track.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+      track.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, []);
+
+  const scrollMobileStep = (direction: -1 | 1) => {
+    const nextIndex = Math.max(
+      0,
+      Math.min(PROCESS_STEPS.length - 1, mobileActiveIndex + direction),
+    );
+    const nextCard = mobileCardRefs.current[nextIndex];
+    nextCard?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    setMobileActiveIndex(nextIndex);
+  };
+
   return (
     <section
       className={cn(
-        "flex flex-col items-center gap-[52px] bg-bjj-primary w-screen self-start",
-        "py-16 max-mobile:py-12 max-mobile:px-[var(--bjj-page-padding)]",
+        "flex flex-col items-center gap-6 bg-bjj-primary w-screen self-start",
+        "py-16 max-mobile:py-12 max-mobile:px-[var(--bjj-page-padding)] max-mobile:bg-white",
         "px-[calc((100vw-var(--bjj-page-max-width))/2+var(--bjj-page-padding))]",
         "ml-[calc(-50vw+50%)]",
         className
@@ -46,18 +121,15 @@ export function ProcessSection({ className }: ProcessSectionProps) {
       data-component="organism-process-section"
     >
       <div
-        className="flex justify-between w-full gap-[52px]"
+        className="flex justify-between w-full gap-6"
         data-component="organism-process-header"
       >
-        <h2
-          className="h2 text-bjj-primary-light"
-          data-component="organism-process-title"
-        >
+        <h2 className={cn(isMobile ? "h2 text-bjj-primary" : "h2 text-bjj-primary-light")} data-component="organism-process-title">
           산후도우미 서비스 진행 절차
         </h2>
       </div>
       <div
-        className="flex w-full gap-3 max-tablet:flex-wrap max-mobile:flex-col"
+        className="flex w-full gap-3 max-tablet:flex-wrap max-mobile:hidden"
         data-component="organism-process-steps"
       >
         {PROCESS_STEPS.map((step) => (
@@ -69,6 +141,49 @@ export function ProcessSection({ className }: ProcessSectionProps) {
             className="max-mobile:w-full"
           />
         ))}
+      </div>
+      <div
+        className="hidden max-mobile:flex max-mobile:w-full max-mobile:flex-col max-mobile:gap-4"
+        data-component="organism-process-gallery"
+      >
+        <div className="process-gallery__frame">
+          <div
+            ref={mobileTrackRef}
+            className="process-gallery__track"
+            aria-label="산후도우미 서비스 진행 절차"
+          >
+            {PROCESS_STEPS.map((step, index) => (
+              <article
+                key={step.number}
+                ref={(node) => {
+                  mobileCardRefs.current[index] = node;
+                }}
+                className={cn(
+                  "process-gallery__card",
+                  index === mobileActiveIndex && "process-gallery__card--active",
+                )}
+                aria-current={index === mobileActiveIndex ? "true" : undefined}
+              >
+                <span className="process-gallery__number" data-component="molecule-process-step-number">
+                  {step.number}
+                </span>
+                <div className="process-gallery__content">
+                  <h3 className="h6 process-gallery__title">{step.title}</h3>
+                  <p className="medium-p process-gallery__description">{step.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <GalleryPaddlenav
+            className="process-gallery__paddlenav"
+            previousLabel="이전 단계"
+            nextLabel="다음 단계"
+            previousDisabled={mobileActiveIndex === 0}
+            nextDisabled={mobileActiveIndex === PROCESS_STEPS.length - 1}
+            onPrevious={() => scrollMobileStep(-1)}
+            onNext={() => scrollMobileStep(1)}
+          />
+        </div>
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ export default function FaqPage() {
     <>
       <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
         <FaqPageClient />
-        <MoreSection />
+        <MoreSection currentPage="faq" />
       </main>
 
       <Footer />

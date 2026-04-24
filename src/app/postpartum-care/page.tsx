@@ -99,7 +99,7 @@ export default function PostpartumCarePage() {
         <BannerImageSection />
 
         <ProcessSection />
-        <MoreSection />
+        <MoreSection currentPage="postpartum-care" />
       </main>
 
       <Footer />

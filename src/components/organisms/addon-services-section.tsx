@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 import { cn } from "@/lib/utils";
 import {
   AddonServiceCard,
   type AddonData,
 } from "@/components/molecules/addon-service-card";
+import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
 interface AddonServicesSectionProps {
   addons: AddonData[];
@@ -38,6 +41,121 @@ export function AddonServicesSection({
     groups[groups.length - 1].push(addon);
   }
 
+  const groupRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [mobileGroupIndices, setMobileGroupIndices] = useState<number[]>(
+    () => groups.map(() => 0)
+  );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 780px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    setMobileGroupIndices((current) => {
+      const next = groups.map((_, index) => current[index] ?? 0);
+      return next;
+    });
+  }, [groups.length]);
+
+  useEffect(() => {
+    const cleanups: Array<() => void> = [];
+
+    groups.forEach((group, groupIndex) => {
+      const list = groupRefs.current[groupIndex];
+      if (!list) return;
+
+      let frameId = 0;
+
+      const updateIndex = () => {
+        const cards = Array.from(list.children) as HTMLElement[];
+        if (!cards.length) {
+          setMobileGroupIndices((current) => {
+            const next = [...current];
+            next[groupIndex] = 0;
+            return next;
+          });
+          return;
+        }
+
+        const listRect = list.getBoundingClientRect();
+        const listCenter = listRect.left + listRect.width / 2;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const center = rect.left + rect.width / 2;
+          const distance = Math.abs(center - listCenter);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setMobileGroupIndices((current) => {
+          const next = [...current];
+          next[groupIndex] = nearestIndex;
+          return next;
+        });
+      };
+
+      const requestUpdate = () => {
+        if (frameId) return;
+        frameId = window.requestAnimationFrame(() => {
+          frameId = 0;
+          updateIndex();
+        });
+      };
+
+      updateIndex();
+      list.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate, { passive: true });
+
+      cleanups.push(() => {
+        if (frameId) {
+          window.cancelAnimationFrame(frameId);
+        }
+        list.removeEventListener("scroll", requestUpdate);
+        window.removeEventListener("resize", requestUpdate);
+      });
+    });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [groups.length]);
+
+  const scrollAddonGroup = (groupIndex: number, direction: -1 | 1) => {
+    const list = groupRefs.current[groupIndex];
+    if (!list) return;
+
+    const cards = Array.from(list.children) as HTMLElement[];
+    if (!cards.length) return;
+
+    const currentIndex = mobileGroupIndices[groupIndex] ?? 0;
+    const nextIndex = Math.max(
+      0,
+      Math.min(cards.length - 1, currentIndex + direction),
+    );
+    const nextCard = cards[nextIndex];
+    nextCard?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+
+    setMobileGroupIndices((current) => {
+      const next = [...current];
+      next[groupIndex] = nextIndex;
+      return next;
+    });
+  };
+
   return (
     <section
       className={cn(
@@ -47,7 +165,7 @@ export function AddonServicesSection({
       data-component="organism-addon-services-section"
     >
       <div className="addon-services__heading">
-        <h2 className="h3-left addon-services__title">
+        <h2 className={cn(isMobile ? "h2-left" : "h3-left", "addon-services__title")}>
           <span className="addon-services__title-muted">
             내가 원하는 대로 선택 가능.
           </span>
@@ -68,26 +186,39 @@ export function AddonServicesSection({
             )}
             {gi === 1 && (
               <p className="addon-services__note">
-                *토요일 및 공휴일 서비스는 1일 기준, 추가 시간은 1시간 기준입니다.
+                *토요일 및 공휴일 서비스는 1일 기준,
+                <br />
+                추가 시간은 1시간 기준입니다.
               </p>
             )}
-            <div className="addon-services__list">
-            {group.map((addon) => {
-              const qty = selections.get(addon.id);
-              const added = qty !== undefined && qty > 0;
-              return (
-                <AddonServiceCard
-                  key={addon.id}
-                  addon={addon}
-                  quantity={added ? qty : (addon.group === "care" && planDuration ? planDuration : 1)}
-                  added={added}
-                  onAdd={() => onAdd(addon.id)}
-                  onRemove={() => onRemove(addon.id)}
-                  onQuantityChange={(q) => onQuantityChange(addon.id, q)}
-                />
-              );
-            })}
+            <div className="addon-services__list" ref={(node) => {
+              groupRefs.current[gi] = node;
+            }}>
+              {group.map((addon) => {
+                const qty = selections.get(addon.id);
+                const added = qty !== undefined && qty > 0;
+                return (
+                  <AddonServiceCard
+                    key={addon.id}
+                    addon={addon}
+                    quantity={added ? qty : (addon.group === "care" && planDuration ? planDuration : 1)}
+                    added={added}
+                    onAdd={() => onAdd(addon.id)}
+                    onRemove={() => onRemove(addon.id)}
+                    onQuantityChange={(q) => onQuantityChange(addon.id, q)}
+                  />
+                );
+              })}
             </div>
+            <GalleryPaddlenav
+              className="addon-services__paddlenav"
+              previousLabel="이전 추가 서비스"
+              nextLabel="다음 추가 서비스"
+              previousDisabled={(mobileGroupIndices[gi] ?? 0) === 0}
+              nextDisabled={(mobileGroupIndices[gi] ?? 0) === group.length - 1}
+              onPrevious={() => scrollAddonGroup(gi, -1)}
+              onNext={() => scrollAddonGroup(gi, 1)}
+            />
           </div>
         ))}
       </div>
