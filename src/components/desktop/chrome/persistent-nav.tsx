@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { BookingButton } from "@/components/booking-button";
 import { NAV_ITEMS } from "@/data/nav-items";
 
+import { DesktopBookingButton } from "./booking-button";
 import { DesktopNavBar } from "./nav-bar";
 
 export function DesktopPersistentNav() {
@@ -27,7 +27,7 @@ export function DesktopPersistentNav() {
         <DesktopNavBar items={NAV_ITEMS} activeLabel={activeLabel} />
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
-        <BookingButton />
+        <DesktopBookingButton />
       </div>
     </header>
   );

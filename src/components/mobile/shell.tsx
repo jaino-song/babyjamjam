@@ -1,6 +1,6 @@
 import { MobileAnnouncementRibbon } from "@/components/mobile/chrome/announcement-ribbon";
+import { MobileGlobalFloatingBubble } from "@/components/mobile/chrome/global-floating-bubble";
 import { MobilePersistentNav } from "@/components/mobile/chrome/persistent-nav";
-import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
 import { PageTransition } from "@/components/shared/page-transition";
 
 export default function MobileShell({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function MobileShell({ children }: { children: React.ReactNode })
         <MobileAnnouncementRibbon />
         <PageTransition>{children}</PageTransition>
       </div>
-      <GlobalFloatingBubble />
+      <MobileGlobalFloatingBubble />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { DesktopAnnouncementRibbon } from "@/components/desktop/chrome/announcement-ribbon";
+import { DesktopGlobalFloatingBubble } from "@/components/desktop/chrome/global-floating-bubble";
 import { DesktopPersistentNav } from "@/components/desktop/chrome/persistent-nav";
-import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
 import { PageTransition } from "@/components/shared/page-transition";
 
 export default function DesktopShell({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function DesktopShell({ children }: { children: React.ReactNode }
         <DesktopAnnouncementRibbon />
         <PageTransition>{children}</PageTransition>
       </div>
-      <GlobalFloatingBubble />
+      <DesktopGlobalFloatingBubble />
     </>
   );
 }

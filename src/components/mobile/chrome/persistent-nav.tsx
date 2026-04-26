@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { BookingButton } from "@/components/booking-button";
 import { NAV_ITEMS } from "@/data/nav-items";
+
+import { MobileBookingButton } from "./booking-button";
 
 export function MobilePersistentNav() {
   const pathname = usePathname();
@@ -98,7 +99,7 @@ export function MobilePersistentNav() {
                   {item.label}
                 </Link>
               ))}
-              <BookingButton onModalClose={() => setDrawerOpen(false)} />
+              <MobileBookingButton onModalClose={() => setDrawerOpen(false)} />
             </nav>
           </aside>
         </>
