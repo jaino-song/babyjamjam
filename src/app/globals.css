@@ -972,24 +972,22 @@
   gap: 8px;
   padding: 0 4px;
 }
-@media (max-width: 780px) {
-  .gallery-paddlenav__paddle {
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 999px;
-    background: var(--bjj-color-bg-gray);
-    color: var(--bjj-color-text-muted);
-    box-shadow: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  .gallery-paddlenav__paddle:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
+[data-bjj-shell="mobile"] .gallery-paddlenav__paddle {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 999px;
+  background: var(--bjj-color-bg-gray);
+  color: var(--bjj-color-text-muted);
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+[data-bjj-shell="mobile"] .gallery-paddlenav__paddle:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Single plan card */
@@ -2250,118 +2248,116 @@
   letter-spacing: 0;
 }
 
-@media (max-width: 780px) {
-  .process-gallery__frame {
-    position: relative;
-    width: calc(100% + (var(--bjj-page-padding) * 2));
-    margin-inline: calc(var(--bjj-page-padding) * -1);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overflow: visible;
-  }
-  .process-gallery__track {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    gap: 24px;
-    width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scroll-padding-inline: var(--bjj-page-padding);
-    padding: 0 var(--bjj-page-padding);
-    scrollbar-width: none;
-  }
-  .process-gallery__track::-webkit-scrollbar { display: none; }
-  .process-gallery__card {
-    flex: 0 0 240px;
-    width: 240px;
-    min-height: 336px;
-    padding: 24px 22px 22px;
-    border-radius: 28px;
-    background: var(--bjj-color-primary);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    scroll-snap-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.25s ease;
-  }
-  .process-gallery__card--active {
-    transform: translateY(-2px);
-  }
-  .process-gallery__number {
-    font-family: var(--bjj-font-number);
-    font-size: 42px;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--bjj-color-accent);
-  }
-  .process-gallery__content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .process-gallery__title {
-    color: var(--bjj-color-primary-light);
-  }
-  .process-gallery__description {
-    color: rgba(251, 253, 255, 0.88);
-  }
-  .process-gallery__paddlenav {
-    position: static;
-    width: 100%;
-    min-height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 0 calc(var(--bjj-page-padding) + 4px);
-    pointer-events: auto;
-  }
+[data-bjj-shell="mobile"] .process-gallery__frame {
+  position: relative;
+  width: calc(100% + (var(--bjj-page-padding) * 2));
+  margin-inline: calc(var(--bjj-page-padding) * -1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: visible;
+}
+[data-bjj-shell="mobile"] .process-gallery__track {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: var(--bjj-page-padding);
+  padding: 0 var(--bjj-page-padding);
+  scrollbar-width: none;
+}
+.process-gallery__track::-webkit-scrollbar { display: none; }
+[data-bjj-shell="mobile"] .process-gallery__card {
+  flex: 0 0 240px;
+  width: 240px;
+  min-height: 336px;
+  padding: 24px 22px 22px;
+  border-radius: 28px;
+  background: var(--bjj-color-primary);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease;
+}
+[data-bjj-shell="mobile"] .process-gallery__card--active {
+  transform: translateY(-2px);
+}
+[data-bjj-shell="mobile"] .process-gallery__number {
+  font-family: var(--bjj-font-number);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--bjj-color-accent);
+}
+[data-bjj-shell="mobile"] .process-gallery__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+[data-bjj-shell="mobile"] .process-gallery__title {
+  color: var(--bjj-color-primary-light);
+}
+[data-bjj-shell="mobile"] .process-gallery__description {
+  color: rgba(251, 253, 255, 0.88);
+}
+[data-bjj-shell="mobile"] .process-gallery__paddlenav {
+  position: static;
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 calc(var(--bjj-page-padding) + 4px);
+  pointer-events: auto;
+}
 
-  .care-carousel__paddlenav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    width: 100%;
-    padding: 0 calc(var(--bjj-page-padding) + 4px);
-  }
-  .carousel__slide { width: 100%; min-width: 100%; }
-  .carousel__card {
-    min-height: 540px;
-    padding: 88px 28px 40px;
-    gap: 28px;
-  }
-  .carousel__card-caption { max-width: 100%; }
-  .carousel__logo-cell { flex: 1 1 calc(50% - 8px); height: 80px; }
-  .carousel__logo-cell img { max-height: 40px; }
-  .carousel__controls {
-    top: 20px;
-    gap: 4px;
-    padding: 2px 6px 2px 2px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .carousel__playpause {
-    width: 32px;
-    height: 32px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .carousel__playpause svg { width: 14px; height: 14px; }
-  .carousel__dotnav { gap: 4px; padding: 0 3px; }
-  .carousel__dot {
-    padding: 0;
-    margin: 0;
-    background-clip: border-box;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
+[data-bjj-shell="mobile"] .care-carousel__paddlenav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  padding: 0 calc(var(--bjj-page-padding) + 4px);
+}
+.carousel__slide { width: 100%; min-width: 100%; }
+[data-bjj-shell="mobile"] .carousel__card {
+  min-height: 540px;
+  padding: 88px 28px 40px;
+  gap: 28px;
+}
+.carousel__card-caption { max-width: 100%; }
+.carousel__logo-cell { flex: 1 1 calc(50% - 8px); height: 80px; }
+.carousel__logo-cell img { max-height: 40px; }
+[data-bjj-shell="mobile"] .carousel__controls {
+  top: 20px;
+  gap: 4px;
+  padding: 2px 6px 2px 2px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-bjj-shell="mobile"] .carousel__playpause {
+  width: 32px;
+  height: 32px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.carousel__playpause svg { width: 14px; height: 14px; }
+.carousel__dotnav { gap: 4px; padding: 0 3px; }
+[data-bjj-shell="mobile"] .carousel__dot {
+  padding: 0;
+  margin: 0;
+  background-clip: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 [data-bjj-shell="mobile"] .addon-services__groups {
   gap: 40px;

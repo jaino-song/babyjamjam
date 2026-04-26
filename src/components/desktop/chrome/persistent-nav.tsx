@@ -15,7 +15,7 @@ export function DesktopPersistentNav() {
   )?.label;
 
   return (
-    <header className="flex justify-between items-center w-full h-24 relative max-mobile:h-16">
+    <header className="flex justify-between items-center w-full h-24 relative">
       <Link href="/" className="flex-shrink-0">
         <img
           src="/images/logo.png"
