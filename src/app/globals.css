@@ -946,37 +946,37 @@
 @media (min-width: 1100px) {
   .pricing-plans__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+[data-bjj-shell="mobile"] .pricing-plans__grid-wrapper {
+  gap: 12px;
+}
+[data-bjj-shell="mobile"] .pricing-plans__grid {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: var(--bjj-page-padding);
+  padding-left: var(--bjj-page-padding);
+  padding-right: calc(var(--bjj-page-padding) + 48px);
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+[data-bjj-shell="mobile"] .pricing-plans__grid::-webkit-scrollbar {
+  display: none;
+}
+[data-bjj-shell="mobile"] .pricing-plans__grid > .plan-card {
+  flex: 0 0 min(80vw, 324px);
+  scroll-snap-align: start;
+}
+[data-bjj-shell="mobile"] .pricing-plans__paddlenav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 4px;
+}
 @media (max-width: 780px) {
-  .pricing-plans__grid-wrapper {
-    gap: 12px;
-  }
-  .pricing-plans__grid {
-    display: flex;
-    gap: 16px;
-    width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scroll-padding-inline: var(--bjj-page-padding);
-    padding-left: var(--bjj-page-padding);
-    padding-right: calc(var(--bjj-page-padding) + 48px);
-    padding-bottom: 8px;
-    scrollbar-width: none;
-  }
-  .pricing-plans__grid::-webkit-scrollbar {
-    display: none;
-  }
-  .pricing-plans__grid > .plan-card {
-    flex: 0 0 min(80vw, 324px);
-    scroll-snap-align: start;
-  }
-  .pricing-plans__paddlenav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 0 4px;
-  }
   .gallery-paddlenav__paddle {
     width: 42px;
     height: 42px;
@@ -1180,6 +1180,11 @@
 
 /* Full-screen form overlay */
 .pricing-form-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+}
+.pricing-form-overlay-mobile {
   position: fixed; inset: 0; z-index: 100;
   display: flex; align-items: center; justify-content: center;
   background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
@@ -2303,47 +2308,6 @@
     pointer-events: auto;
   }
 
-  .addon-services__groups {
-    gap: 40px;
-  }
-  .addon-services__group {
-    gap: 14px;
-    width: calc(100% + (var(--bjj-page-padding) * 2));
-    margin-inline: calc(var(--bjj-page-padding) * -1);
-  }
-  .addon-services__note {
-    text-align: right;
-    font-size: 14px;
-    line-height: 1.45;
-    padding-inline: var(--bjj-page-padding);
-  }
-  .addon-services__list {
-    display: flex;
-    gap: 16px;
-    width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scroll-padding-inline: var(--bjj-page-padding);
-    padding-left: var(--bjj-page-padding);
-    padding-right: calc(var(--bjj-page-padding) + 48px);
-    padding-bottom: 8px;
-    scrollbar-width: none;
-  }
-  .addon-services__list::-webkit-scrollbar {
-    display: none;
-  }
-  .addon-services__list > .addon-card {
-    flex: 0 0 min(80vw, 324px);
-    scroll-snap-align: start;
-  }
-  .addon-services__paddlenav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 0 calc(var(--bjj-page-padding) + 4px);
-  }
   .care-carousel__paddlenav {
     display: flex;
     align-items: center;
@@ -2352,49 +2316,6 @@
     width: 100%;
     padding: 0 calc(var(--bjj-page-padding) + 4px);
   }
-  .addon-card {
-    background: var(--bjj-color-primary);
-    box-shadow: none;
-  }
-  .addon-card .qty-stepper {
-    background: white;
-  }
-  .addon-card .qty-stepper__btn {
-    color: #6b7280;
-  }
-  .addon-card .qty-stepper__value {
-    color: var(--bjj-color-text-dark);
-  }
-  .addon-card__name,
-  .addon-card__price,
-  .addon-card__description,
-  .addon-card__note-text {
-    color: rgba(251, 253, 255, 0.92);
-  }
-  .addon-card__note-check {
-    background: rgba(255, 255, 255, 0.14);
-    color: var(--bjj-color-accent);
-  }
-  .addon-card__btn--default {
-    background: white;
-    color: var(--bjj-color-primary);
-    border-color: white;
-  }
-  .addon-card__btn--added {
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.22);
-  }
-  .qty-stepper {
-    background: rgba(255, 255, 255, 0.16);
-  }
-  .qty-stepper__btn {
-    color: rgba(255, 255, 255, 0.82);
-  }
-  .qty-stepper__value {
-    color: white;
-  }
-
   .carousel__slide { width: 100%; min-width: 100%; }
   .carousel__card {
     min-height: 540px;
@@ -2426,6 +2347,89 @@
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
+}
+[data-bjj-shell="mobile"] .addon-services__groups {
+  gap: 40px;
+}
+[data-bjj-shell="mobile"] .addon-services__group {
+  gap: 14px;
+  width: calc(100% + (var(--bjj-page-padding) * 2));
+  margin-inline: calc(var(--bjj-page-padding) * -1);
+}
+[data-bjj-shell="mobile"] .addon-services__note {
+  text-align: right;
+  font-size: 14px;
+  line-height: 1.45;
+  padding-inline: var(--bjj-page-padding);
+}
+[data-bjj-shell="mobile"] .addon-services__list {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline: var(--bjj-page-padding);
+  padding-left: var(--bjj-page-padding);
+  padding-right: calc(var(--bjj-page-padding) + 48px);
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+[data-bjj-shell="mobile"] .addon-services__list::-webkit-scrollbar {
+  display: none;
+}
+[data-bjj-shell="mobile"] .addon-services__list > .addon-card {
+  flex: 0 0 min(80vw, 324px);
+  scroll-snap-align: start;
+}
+[data-bjj-shell="mobile"] .addon-services__paddlenav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 calc(var(--bjj-page-padding) + 4px);
+}
+[data-bjj-shell="mobile"] .addon-card {
+  background: var(--bjj-color-primary);
+  box-shadow: none;
+}
+[data-bjj-shell="mobile"] .addon-card .qty-stepper {
+  background: white;
+}
+[data-bjj-shell="mobile"] .addon-card .qty-stepper__btn {
+  color: #6b7280;
+}
+[data-bjj-shell="mobile"] .addon-card .qty-stepper__value {
+  color: var(--bjj-color-text-dark);
+}
+[data-bjj-shell="mobile"] .addon-card__name,
+[data-bjj-shell="mobile"] .addon-card__price,
+[data-bjj-shell="mobile"] .addon-card__description,
+[data-bjj-shell="mobile"] .addon-card__note-text {
+  color: rgba(251, 253, 255, 0.92);
+}
+[data-bjj-shell="mobile"] .addon-card__note-check {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--bjj-color-accent);
+}
+[data-bjj-shell="mobile"] .addon-card__btn--default {
+  background: white;
+  color: var(--bjj-color-primary);
+  border-color: white;
+}
+[data-bjj-shell="mobile"] .addon-card__btn--added {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+[data-bjj-shell="mobile"] .qty-stepper {
+  background: rgba(255, 255, 255, 0.16);
+}
+[data-bjj-shell="mobile"] .qty-stepper__btn {
+  color: rgba(255, 255, 255, 0.82);
+}
+[data-bjj-shell="mobile"] .qty-stepper__value {
+  color: white;
 }
 } /* end @layer components (responsive layout) */
 

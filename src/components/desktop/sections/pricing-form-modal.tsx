@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, type ReactNode } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
@@ -27,29 +27,26 @@ const helperContent: Record<string, ReactNode> = {
   ),
 };
 
-interface PricingFormModalProps {
+interface DesktopPricingFormModalProps {
   answers: PricingFormAnswers;
   onAnswer: (questionId: string, value: string) => void;
   onSubmit: (finalAnswers: PricingFormAnswers) => void;
   isLoading?: boolean;
 }
 
-export function PricingFormModal({
+export function DesktopPricingFormModal({
   answers,
   onAnswer,
   onSubmit,
-  isLoading = false,
-}: PricingFormModalProps) {
+}: DesktopPricingFormModalProps) {
   const [step, setStep] = useState(0);
 
   const allSteps = buildAllSteps(answers);
-  const totalSteps = allSteps.length;
   const currentQuestion = allSteps[step];
   const currentHelper =
     helperContent[currentQuestion?.helperKey ?? ""] ??
     currentQuestion?.helperKey ??
     null;
-  const isLastStep = step === totalSteps - 1;
   const isMultiple = answers.childType && answers.childType !== "단태아";
   const displayStepCount = answers.subsidy === "yes" ? (isMultiple ? 5 : 4) : 4;
 
@@ -57,17 +54,17 @@ export function PricingFormModal({
     (questionId: string, value: string) => {
       onAnswer(questionId, value);
 
-      // Pre-compute steps with the new answer to know where to go
-      const newAnswers = { ...answers, [questionId]: value };
-      const newSteps = buildAllSteps(newAnswers);
-      const newIsLast = step >= newSteps.length - 1;
+      const nextAnswers = { ...answers, [questionId]: value };
+      const nextSteps = buildAllSteps(nextAnswers);
+      const shouldSubmit = step >= nextSteps.length - 1;
 
       setTimeout(() => {
-        if (newIsLast) {
-          onSubmit(newAnswers);
-        } else {
-          setStep((s) => s + 1);
+        if (shouldSubmit) {
+          onSubmit(nextAnswers);
+          return;
         }
+
+        setStep((currentStep) => currentStep + 1);
       }, 200);
     },
     [answers, onAnswer, onSubmit, step]
@@ -79,25 +76,24 @@ export function PricingFormModal({
         <h2 className="pricing-modal__title">서비스 가격 조회</h2>
       </div>
 
-      {/* Stepper */}
       <div className="wizard-stepper">
-        {Array.from({ length: displayStepCount }, (_, i) => (
-          <div key={i} className="wizard-stepper__item">
+        {Array.from({ length: displayStepCount }, (_, index) => (
+          <div key={index} className="wizard-stepper__item">
             <div
               className={`wizard-stepper__circle ${
-                i === step
+                index === step
                   ? "wizard-stepper__circle--active"
-                  : i < step
+                  : index < step
                     ? "wizard-stepper__circle--done"
                     : "wizard-stepper__circle--pending"
               }`}
             >
-              {i + 1}
+              {index + 1}
             </div>
-            {i < displayStepCount - 1 && (
+            {index < displayStepCount - 1 && (
               <div
                 className={`wizard-stepper__connector ${
-                  i < step ? "wizard-stepper__connector--done" : ""
+                  index < step ? "wizard-stepper__connector--done" : ""
                 }`}
               />
             )}
@@ -105,10 +101,12 @@ export function PricingFormModal({
         ))}
       </div>
 
-      {/* Current question */}
       <div className="pricing-modal__body">
         {currentQuestion && (
-          <div className="form-question form-question--visible" data-component="molecule-form-question">
+          <div
+            className="form-question form-question--visible"
+            data-component="molecule-form-question"
+          >
             <div className="form-question__header">
               <span className="form-question__label">{currentQuestion.label}</span>
               {currentHelper && (
@@ -118,17 +116,18 @@ export function PricingFormModal({
 
             {currentQuestion.inputType === "buttons" ? (
               <div className="wizard-btn-group">
-                {currentQuestion.options.map((opt) => (
+                {currentQuestion.options.map((option) => (
                   <button
-                    key={opt.value}
+                    key={option.value}
                     type="button"
                     className={cn(
                       "wizard-btn-group__btn",
-                      answers[currentQuestion.id] === opt.value && "wizard-btn-group__btn--selected"
+                      answers[currentQuestion.id] === option.value &&
+                        "wizard-btn-group__btn--selected"
                     )}
-                    onClick={() => handleSelect(currentQuestion.id, opt.value)}
+                    onClick={() => handleSelect(currentQuestion.id, option.value)}
                   >
-                    {opt.label}
+                    {option.label}
                   </button>
                 ))}
               </div>
@@ -137,12 +136,11 @@ export function PricingFormModal({
                 options={currentQuestion.options}
                 value={answers[currentQuestion.id]}
                 placeholder={currentQuestion.placeholder}
-                onChange={(v) => handleSelect(currentQuestion.id, v)}
+                onChange={(value) => handleSelect(currentQuestion.id, value)}
               />
             )}
           </div>
         )}
-
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
@@ -11,11 +12,10 @@ import type { GradeName } from "@/lib/voucher-type";
 
 const GRADE_NAMES: GradeName[] = ["가", "통합", "라"];
 
-interface PricingPlansSectionProps {
+interface MobilePricingPlansSectionProps {
   plans: PlanData[];
   selectedPlanId: string | null;
   onSelectPlan: (id: string) => void;
-  /** Show grade toggle only for subsidized */
   showGradeToggle?: boolean;
   selectedGradeName?: GradeName;
   onGradeNameChange?: (name: GradeName) => void;
@@ -24,7 +24,7 @@ interface PricingPlansSectionProps {
   isLoading?: boolean;
 }
 
-export function PricingPlansSection({
+export function MobilePricingPlansSection({
   plans,
   selectedPlanId,
   onSelectPlan,
@@ -34,23 +34,16 @@ export function PricingPlansSection({
   onRequery,
   blurred = false,
   isLoading = false,
-}: PricingPlansSectionProps) {
+}: MobilePricingPlansSectionProps) {
   const gridRef = useRef<HTMLDivElement>(null);
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 780px)");
-    const update = () => setIsMobile(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
 
   useEffect(() => {
     const grid = gridRef.current;
-    if (!grid) return;
+    if (!grid) {
+      return;
+    }
 
     let frameId = 0;
 
@@ -80,7 +73,10 @@ export function PricingPlansSection({
     };
 
     const requestUpdate = () => {
-      if (frameId) return;
+      if (frameId) {
+        return;
+      }
+
       frameId = window.requestAnimationFrame(() => {
         frameId = 0;
         updateIndex();
@@ -102,30 +98,35 @@ export function PricingPlansSection({
 
   const scrollMobileGallery = (direction: -1 | 1) => {
     const grid = gridRef.current;
-    if (!grid) return;
+    if (!grid) {
+      return;
+    }
 
     const cards = Array.from(grid.children) as HTMLElement[];
-    if (!cards.length) return;
+    if (!cards.length) {
+      return;
+    }
 
     const nextIndex = Math.max(
       0,
-      Math.min(cards.length - 1, mobileGalleryIndex + direction),
+      Math.min(cards.length - 1, mobileGalleryIndex + direction)
     );
     const nextCard = cards[nextIndex];
-    nextCard?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    nextCard?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
     setMobileGalleryIndex(nextIndex);
   };
 
   return (
     <section
-      className={cn(
-        "pricing-plans",
-        blurred && "pricing-section--blurred"
-      )}
+      className={cn("pricing-plans", blurred && "pricing-section--blurred")}
       data-component="organism-pricing-plans-section"
     >
       <div className="pricing-plans__heading">
-        <h2 className={cn(isMobile ? "h2-left" : "h3-left", "pricing-plans__title")}>
+        <h2 className={cn("h2-left", "pricing-plans__title")}>
           <span className="pricing-plans__title-muted">
             뭘 좋아하실지 몰라서
             <br />
@@ -144,10 +145,12 @@ export function PricingPlansSection({
             className="pricing-plans__grade-toggle"
             role="tablist"
             aria-label="등급 선택"
-            style={{
-              "--grade-tab-index": activeIndex,
-              "--grade-tab-count": GRADE_NAMES.length,
-            } as React.CSSProperties}
+            style={
+              {
+                "--grade-tab-index": activeIndex,
+                "--grade-tab-count": GRADE_NAMES.length,
+              } as React.CSSProperties
+            }
           >
             {GRADE_NAMES.map((name) => (
               <button
@@ -182,16 +185,17 @@ export function PricingPlansSection({
         )}
 
         <div className="pricing-plans__grid" ref={gridRef}>
-        {plans.map((plan) => (
-          <PricingPlanCard
-            key={plan.id}
-            plan={plan}
-            selected={plan.id === selectedPlanId}
-            onSelect={() => onSelectPlan(plan.id)}
-            isLoading={isLoading}
-          />
-        ))}
+          {plans.map((plan) => (
+            <PricingPlanCard
+              key={plan.id}
+              plan={plan}
+              selected={plan.id === selectedPlanId}
+              onSelect={() => onSelectPlan(plan.id)}
+              isLoading={isLoading}
+            />
+          ))}
         </div>
+
         <GalleryPaddlenav
           className="pricing-plans__paddlenav"
           previousLabel="이전 플랜"
