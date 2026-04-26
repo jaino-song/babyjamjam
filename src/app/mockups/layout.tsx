@@ -1,17 +1,5 @@
-import { DesktopAnnouncementRibbon } from "@/components/desktop/chrome/announcement-ribbon";
-import { DesktopPersistentNav } from "@/components/desktop/chrome/persistent-nav";
-import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
-import { PageTransition } from "@/components/shared/page-transition";
+import LegacyShell from "@/components/legacy-shell/legacy-shell";
 
 export default function MockupsLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <div className="flex flex-col items-center w-full px-[var(--bjj-page-padding)] max-w-[var(--bjj-page-max-width)] mx-auto">
-        <DesktopPersistentNav />
-        <DesktopAnnouncementRibbon />
-        <PageTransition>{children}</PageTransition>
-      </div>
-      <GlobalFloatingBubble />
-    </>
-  );
+  return <LegacyShell>{children}</LegacyShell>;
 }
