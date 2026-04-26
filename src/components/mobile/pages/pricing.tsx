@@ -1,5 +1,5 @@
 import { MobilePricingClient } from "@/components/mobile/pages/pricing-client";
-import { BannerImageSection } from "@/components/organisms/banner-image-section";
+import { MobileBannerImageSection as BannerImageSection } from "@/components/mobile/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
 import { MoreSection } from "@/components/organisms/more-section";
 

@@ -3,7 +3,7 @@ import {
   type CareCardData,
   type CareSectionData,
 } from "@/components/desktop/sections/care-section-carousel";
-import { BannerImageSection } from "@/components/organisms/banner-image-section";
+import { DesktopBannerImageSection as BannerImageSection } from "@/components/desktop/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
 import { MoreSection } from "@/components/organisms/more-section";
 import { ProcessSection } from "@/components/organisms/process-section";

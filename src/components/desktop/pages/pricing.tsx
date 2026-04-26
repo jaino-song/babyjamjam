@@ -1,5 +1,5 @@
 import { DesktopPricingClient } from "@/components/desktop/pages/pricing-client";
-import { BannerImageSection } from "@/components/organisms/banner-image-section";
+import { DesktopBannerImageSection as BannerImageSection } from "@/components/desktop/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
 import { MoreSection } from "@/components/organisms/more-section";
 
