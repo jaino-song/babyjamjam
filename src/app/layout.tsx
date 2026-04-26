@@ -2,10 +2,6 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { DM_Sans, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import { PersistentNav } from "@/components/persistent-nav";
-import { PageTransition } from "@/components/page-transition";
-import { AnnouncementRibbon } from "@/components/announcement-ribbon";
-import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
 
 const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
@@ -58,12 +54,7 @@ export default function RootLayout({
       <body
         className={`${pretendard.variable} ${paperlogy.variable} ${dmSans.variable} ${robotoMono.variable}`}
       >
-        <div className="flex flex-col items-center w-full px-[var(--bjj-page-padding)] max-w-[var(--bjj-page-max-width)] mx-auto">
-          <PersistentNav />
-          <AnnouncementRibbon />
-          <PageTransition>{children}</PageTransition>
-        </div>
-        <GlobalFloatingBubble />
+        {children}
       </body>
     </html>
   );
