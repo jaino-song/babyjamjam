@@ -648,26 +648,24 @@
 }
 
 /* Expand touch hit area on mobile without changing visual size */
-@media (max-width: 780px) {
-  .carousel__controls {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .carousel__dot {
-    padding: 18px 8px;
-    margin: -18px -8px;
-    background-clip: content-box;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .carousel__playpause {
-    width: 44px;
-    height: 44px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .carousel__playpause svg { width: 14px; height: 14px; }
+[data-bjj-shell="mobile"] .carousel__controls {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
+[data-bjj-shell="mobile"] .carousel__dot {
+  padding: 18px 8px;
+  margin: -18px -8px;
+  background-clip: content-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-bjj-shell="mobile"] .carousel__playpause {
+  width: 44px;
+  height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-bjj-shell="mobile"] .carousel__playpause svg { width: 14px; height: 14px; }
 
 /* ===== KOREA REGION MAP — SVG styling (D3-applied classes) ===== */
 .krm { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -2185,57 +2183,57 @@
   .carousel__card { padding: 96px 56px 56px; min-height: 540px; }
 }
 
-@media (max-width: 780px) {
-  .service-tabs {
-    width: 100%;
-    --service-tab-width: 117px;
-  }
-  .tabnav-platter {
-    border-radius: 24px;
-  }
-  .tabnav-mask {
-    overflow: hidden;
-  }
-  .tabnav-items {
-    gap: 0;
-  }
-  .tabnav-item {
-    width: var(--service-tab-width);
-    flex-basis: var(--service-tab-width);
-  }
-  .service-tabs__button {
-    min-height: 88px;
-    padding: 12px 14px 11px;
-  }
-  .service-tabs__icon {
-    width: 24px;
-    height: 24px;
-  }
-  .service-tabs__label {
-    font-size: 12px;
-  }
-  .tabnav-paddle {
-    width: 40px;
-    height: calc(100% - 8px);
-  }
-  .tabnav-paddle-left {
-    left: 4px;
-  }
-  .tabnav-paddle-right {
-    right: 4px;
-  }
-  .tabnav-platter::before,
-  .tabnav-platter::after {
-    width: 58px;
-  }
-  .service-tabs__caption {
-    height: 112px;
-    margin-top: 22px;
-  }
-  .service-tabs__caption-text {
-    letter-spacing: 0;
-  }
+[data-bjj-shell="mobile"] .service-tabs {
+  width: 100%;
+  --service-tab-width: 117px;
+}
+[data-bjj-shell="mobile"] .tabnav-platter {
+  border-radius: 24px;
+}
+[data-bjj-shell="mobile"] .tabnav-mask {
+  overflow: hidden;
+}
+[data-bjj-shell="mobile"] .tabnav-items {
+  gap: 0;
+}
+[data-bjj-shell="mobile"] .tabnav-item {
+  width: var(--service-tab-width);
+  flex-basis: var(--service-tab-width);
+}
+[data-bjj-shell="mobile"] .service-tabs__button {
+  min-height: 88px;
+  padding: 12px 14px 11px;
+}
+[data-bjj-shell="mobile"] .service-tabs__icon {
+  width: 24px;
+  height: 24px;
+}
+[data-bjj-shell="mobile"] .service-tabs__label {
+  font-size: 12px;
+}
+[data-bjj-shell="mobile"] .tabnav-paddle {
+  width: 40px;
+  height: calc(100% - 8px);
+}
+[data-bjj-shell="mobile"] .tabnav-paddle-left {
+  left: 4px;
+}
+[data-bjj-shell="mobile"] .tabnav-paddle-right {
+  right: 4px;
+}
+[data-bjj-shell="mobile"] .tabnav-platter::before,
+[data-bjj-shell="mobile"] .tabnav-platter::after {
+  width: 58px;
+}
+[data-bjj-shell="mobile"] .service-tabs__caption {
+  height: 112px;
+  margin-top: 22px;
+}
+[data-bjj-shell="mobile"] .service-tabs__caption-text {
+  letter-spacing: 0;
+}
 
+@media (max-width: 780px) {
   .process-gallery__frame {
     position: relative;
     width: calc(100% + (var(--bjj-page-padding) * 2));

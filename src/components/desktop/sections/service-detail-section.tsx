@@ -10,10 +10,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-
 import { KakaoChatPhone } from "@/components/kakao-chat-prototype";
 import { DualColorHeading } from "@/components/molecules/dual-color-heading";
+import { cn } from "@/lib/utils";
 
 const SERVICE_DETAIL_ITEMS = [
   {
@@ -50,34 +49,33 @@ interface ServiceDetailSectionProps {
   className?: string;
 }
 
-export function ServiceDetailSection({ className }: ServiceDetailSectionProps) {
+export function DesktopServiceDetailSection({ className }: ServiceDetailSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = SERVICE_DETAIL_ITEMS[activeIndex];
   const canGoPrevious = activeIndex > 0;
   const canGoNext = activeIndex < SERVICE_DETAIL_ITEMS.length - 1;
 
   const selectPrevious = () => {
-    setActiveIndex((current) => Math.max(0, current - 1));
+    setActiveIndex((currentIndex) => Math.max(0, currentIndex - 1));
   };
 
   const selectNext = () => {
-    setActiveIndex((current) => Math.min(SERVICE_DETAIL_ITEMS.length - 1, current + 1));
+    setActiveIndex((currentIndex) =>
+      Math.min(SERVICE_DETAIL_ITEMS.length - 1, currentIndex + 1),
+    );
   };
 
   return (
     <section
-      className={cn(
-        "w-full rounded-[36px] py-12 max-mobile:rounded-[28px] max-mobile:py-8",
-        className,
-      )}
+      className={cn("w-full rounded-[36px] py-12", className)}
       data-component="organism-service-detail-section"
     >
       <div
-        className="grid grid-cols-[minmax(0,1fr)_360px] items-center gap-12 max-mobile:grid-cols-1 max-mobile:gap-8"
+        className="grid grid-cols-[minmax(0,1fr)_360px] items-center gap-12"
         data-component="organism-service-detail-grid"
       >
         <div className="flex flex-col items-start gap-8" data-component="organism-service-detail-content">
-          <div className="flex flex-col items-start gap-5 max-w-[760px]">
+          <div className="flex max-w-[760px] flex-col items-start gap-5">
             <DualColorHeading
               mutedText="방치되는 공장형?"
               primaryText="아가잼잼은 맞춤형 운영 시스템"
@@ -108,9 +106,9 @@ export function ServiceDetailSection({ className }: ServiceDetailSectionProps) {
                 <div className="tabnav-platter">
                   <div className="tabnav-mask">
                     <ul className="tabnav-items" role="tablist" aria-label="아가잼잼 운영 강점">
-                      {SERVICE_DETAIL_ITEMS.map((item, index) => {
+                      {SERVICE_DETAIL_ITEMS.map((item, itemIndex) => {
                         const Icon = item.icon;
-                        const isActive = index === activeIndex;
+                        const isActive = itemIndex === activeIndex;
 
                         return (
                           <li
@@ -118,21 +116,21 @@ export function ServiceDetailSection({ className }: ServiceDetailSectionProps) {
                             className={cn(
                               "tabnav-item",
                               isActive && "tabnav-item-active",
-                              index === 0 && "tabnav-item-first",
-                              index === SERVICE_DETAIL_ITEMS.length - 1 && "tabnav-item-last",
+                              itemIndex === 0 && "tabnav-item-first",
+                              itemIndex === SERVICE_DETAIL_ITEMS.length - 1 && "tabnav-item-last",
                             )}
                             role="presentation"
-                            data-gallery-index={index}
+                            data-gallery-index={itemIndex}
                           >
                             <button
                               type="button"
                               role="tab"
                               tabIndex={isActive ? 0 : -1}
                               aria-selected={isActive}
-                              aria-controls={`service-detail-panel-${index}`}
-                              id={`service-detail-tab-${index}`}
+                              aria-controls={`service-detail-panel-${itemIndex}`}
+                              id={`service-detail-tab-${itemIndex}`}
                               className="tabnav-link service-tabs__button"
-                              onClick={() => setActiveIndex(index)}
+                              onClick={() => setActiveIndex(itemIndex)}
                             >
                               <span className="tabnav-icon service-tabs__icon" aria-hidden="true">
                                 <Icon size={25} strokeWidth={1.65} />
@@ -200,7 +198,7 @@ export function ServiceDetailSection({ className }: ServiceDetailSectionProps) {
         </div>
 
         <div
-          className="flex justify-center items-center max-mobile:w-full"
+          className="flex items-center justify-center"
           data-component="organism-service-detail-preview"
         >
           <KakaoChatPhone />

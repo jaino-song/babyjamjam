@@ -1,4 +1,5 @@
 "use client";
+
 import {
   type PointerEvent as ReactPointerEvent,
   type TouchEvent as ReactTouchEvent,
@@ -7,13 +8,11 @@ import {
   useState,
 } from "react";
 
-
 const SLIDES = [
   { src: "/images/hero-bg-22ebe1.png", alt: "Hero background 1" },
   { src: "/images/hero-bg-2.png", alt: "Hero background 2" },
 ];
 
-// Infinite loop track: [last, ...slides, first]
 const TRACK = [SLIDES[SLIDES.length - 1], ...SLIDES, SLIDES[0]];
 
 const AUTOPLAY_MS = 5000;
@@ -22,8 +21,8 @@ interface HeroCarouselProps {
   headlineLines?: [string, string];
 }
 
-export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
-  const [index, setIndex] = useState(1); // start at first real slide
+export default function MobileHeroCarousel({ headlineLines }: HeroCarouselProps) {
+  const [index, setIndex] = useState(1);
   const [animating, setAnimating] = useState(false);
   const [playing, setPlaying] = useState(true);
   const [progressKey, setProgressKey] = useState(0);
@@ -40,8 +39,8 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
     if (animatingRef.current) return;
     animatingRef.current = true;
     setAnimating(true);
-    setIndex((i) => i + dir);
-    setProgressKey((k) => k + 1);
+    setIndex((currentIndex) => currentIndex + dir);
+    setProgressKey((currentKey) => currentKey + 1);
     if (settleTimerRef.current !== null) {
       window.clearTimeout(settleTimerRef.current);
     }
@@ -58,7 +57,7 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
     animatingRef.current = true;
     setAnimating(true);
     setIndex(realTarget + 1);
-    setProgressKey((k) => k + 1);
+    setProgressKey((currentKey) => currentKey + 1);
     if (settleTimerRef.current !== null) {
       window.clearTimeout(settleTimerRef.current);
     }
@@ -68,22 +67,21 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
     }, 1100);
   };
 
-  // Autoplay timer — keyed on progressKey so the snap-back transitionEnd
-  // (which only changes index, not progressKey) does not reset the timer.
   useEffect(() => {
     if (!playing) return;
-    const id = setTimeout(() => go(1), AUTOPLAY_MS);
-    return () => clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const timeoutId = setTimeout(() => go(1), AUTOPLAY_MS);
+    return () => clearTimeout(timeoutId);
   }, [progressKey, playing]);
 
-  // Pause when tab hidden
   useEffect(() => {
-    const onVis = () => {
-      if (document.hidden) setPlaying(false);
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        setPlaying(false);
+      }
     };
-    document.addEventListener("visibilitychange", onVis);
-    return () => document.removeEventListener("visibilitychange", onVis);
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
   }, []);
 
   const handleTransitionEnd = () => {
@@ -91,12 +89,13 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
       window.clearTimeout(settleTimerRef.current);
       settleTimerRef.current = null;
     }
-    // Snap without animation when we land on a clone
+
     if (index <= 0) {
       setIndex(SLIDES.length);
     } else if (index >= TRACK.length - 1) {
       setIndex(1);
     }
+
     animatingRef.current = false;
     setAnimating(false);
   };
@@ -117,32 +116,33 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = swipeStateRef.current;
-    if (!state || state.pointerId !== event.pointerId) return;
-    const dx = event.clientX - state.startX;
-    const dy = event.clientY - state.startY;
+    const swipeState = swipeStateRef.current;
+    if (!swipeState || swipeState.pointerId !== event.pointerId) return;
+    const dx = event.clientX - swipeState.startX;
+    const dy = event.clientY - swipeState.startY;
     if (Math.abs(dx) > 12 || Math.abs(dy) > 12) {
-      state.hasMoved = true;
+      swipeState.hasMoved = true;
     }
   };
 
   const finishSwipe = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = swipeStateRef.current;
-    if (!state || state.pointerId !== event.pointerId) return;
+    const swipeState = swipeStateRef.current;
+    if (!swipeState || swipeState.pointerId !== event.pointerId) return;
 
-    const dx = event.clientX - state.startX;
-    const dy = event.clientY - state.startY;
+    const dx = event.clientX - swipeState.startX;
+    const dy = event.clientY - swipeState.startY;
     swipeStateRef.current = null;
 
-    if (!state.hasMoved || Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) {
+    if (!swipeState.hasMoved || Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) {
       return;
     }
 
     if (dx < 0) {
       go(1);
-    } else {
-      go(-1);
+      return;
     }
+
+    go(-1);
   };
 
   const handleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
@@ -158,48 +158,49 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
   };
 
   const handleTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
-    const state = swipeStateRef.current;
-    if (!state) return;
+    const swipeState = swipeStateRef.current;
+    if (!swipeState) return;
     const point = touchPointFromEvent(event);
     if (!point) return;
-    const dx = point.clientX - state.startX;
-    const dy = point.clientY - state.startY;
+    const dx = point.clientX - swipeState.startX;
+    const dy = point.clientY - swipeState.startY;
     if (Math.abs(dx) > 12 || Math.abs(dy) > 12) {
-      state.hasMoved = true;
+      swipeState.hasMoved = true;
     }
   };
 
   const handleTouchEnd = (event: ReactTouchEvent<HTMLDivElement>) => {
-    const state = swipeStateRef.current;
-    if (!state) return;
+    const swipeState = swipeStateRef.current;
+    if (!swipeState) return;
     const point = touchPointFromEvent(event);
     swipeStateRef.current = null;
     if (!point) return;
 
-    const dx = point.clientX - state.startX;
-    const dy = point.clientY - state.startY;
-    if (!state.hasMoved || Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) {
+    const dx = point.clientX - swipeState.startX;
+    const dy = point.clientY - swipeState.startY;
+    if (!swipeState.hasMoved || Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) {
       return;
     }
 
     if (dx < 0) {
       go(1);
-    } else {
-      go(-1);
+      return;
     }
+
+    go(-1);
   };
 
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
 
   return (
     <section
-      className="relative w-full overflow-hidden max-mobile:ml-[calc(50%-50vw)] max-mobile:mr-[calc(50%-50vw)] max-mobile:w-screen max-mobile:max-w-none max-mobile:bg-[#f7f4ef]"
+      className="relative ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] w-screen max-w-none overflow-hidden bg-[#f7f4ef]"
       data-component="home-hero"
     >
-      <div className="flex min-h-[460px] flex-col bg-[#f7f4ef] max-mobile:h-auto mobile:h-[560px] mobile:block mobile:rounded-[20px] mobile:overflow-hidden">
+      <div className="flex min-h-[460px] h-auto flex-col bg-[#f7f4ef]">
         {headlineLines ? (
           <div
-            className="pointer-events-none flex shrink-0 flex-col items-center bg-white pt-12 pb-6 mobile:hidden"
+            className="pointer-events-none flex shrink-0 flex-col items-center bg-white pt-12 pb-6"
             data-component="home-hero-copy"
           >
             <h1
@@ -217,7 +218,7 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
           </div>
         ) : null}
 
-        <div className="relative min-h-0 flex-1 overflow-hidden max-mobile:h-[320px] max-mobile:flex-none">
+        <div className="relative min-h-0 h-[320px] flex-none overflow-hidden">
           <div
             className="flex h-full w-full"
             data-component="home-hero-track"
@@ -227,24 +228,24 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
               touchAction: "pan-y",
             }}
             onTransitionEnd={handleTransitionEnd}
+            onPointerCancel={finishSwipe}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={finishSwipe}
-            onPointerCancel={finishSwipe}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
             onTouchCancel={handleTouchEnd}
+            onTouchEnd={handleTouchEnd}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleTouchStart}
           >
-            {TRACK.map((slide, i) => (
+            {TRACK.map((slide, slideIndex) => (
               <div
-                key={i}
-                className="h-full w-full shrink-0 bg-[#f7f4ef] mobile:bg-transparent"
+                key={slideIndex}
+                className="h-full w-full shrink-0 bg-[#f7f4ef]"
               >
                 <img
                   src={slide.src}
                   alt={slide.alt}
-                  className="h-full w-full shrink-0 object-cover object-[center_8%] mobile:object-[center_top]"
+                  className="h-full w-full shrink-0 object-cover object-[center_8%]"
                 />
               </div>
             ))}
@@ -252,20 +253,20 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[30%] bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.992)_14%,rgba(255,255,255,0.9)_30%,rgba(255,255,255,0.68)_48%,rgba(255,255,255,0.3)_70%,rgba(255,255,255,0)_100%)] mobile:hidden"
+            className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[30%] bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.992)_14%,rgba(255,255,255,0.9)_30%,rgba(255,255,255,0.68)_48%,rgba(255,255,255,0.3)_70%,rgba(255,255,255,0)_100%)]"
             data-component="home-hero-image-gradient"
           />
 
           {SLIDES.length > 1 && (
             <div
-              className="carousel__controls !top-auto bottom-6 z-10 backdrop-blur-[40px] saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.18)] mobile:bottom-8"
+              className="carousel__controls !top-auto bottom-6 z-10 backdrop-blur-[40px] saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
               data-theme="light"
               style={{ ["--carousel-duration" as string]: `${AUTOPLAY_MS}ms` }}
             >
               <button
                 type="button"
                 className="carousel__playpause"
-                onClick={() => setPlaying((p) => !p)}
+                onClick={() => setPlaying((current) => !current)}
                 aria-label={playing ? "슬라이드 일시 정지" : "슬라이드 재생"}
               >
                 {playing ? (
@@ -280,19 +281,19 @@ export default function HeroCarousel({ headlineLines }: HeroCarouselProps) {
                 )}
               </button>
               <div className="carousel__dotnav" role="tablist">
-                {SLIDES.map((_, i) => {
-                  const isActive = i === realIndex;
+                {SLIDES.map((_, slideIndex) => {
+                  const isActive = slideIndex === realIndex;
                   return (
                     <button
-                      key={i}
+                      key={slideIndex}
                       type="button"
                       role="tab"
                       aria-selected={isActive}
-                      aria-label={`슬라이드 ${i + 1}`}
+                      aria-label={`슬라이드 ${slideIndex + 1}`}
                       className={`carousel__dot${isActive ? " carousel__dot--active" : ""}${
                         isActive && !playing ? " is-paused" : ""
                       }`}
-                      onClick={() => goToReal(i)}
+                      onClick={() => goToReal(slideIndex)}
                     >
                       {isActive && (
                         <span key={progressKey} className="carousel__dot-fill" aria-hidden="true" />
