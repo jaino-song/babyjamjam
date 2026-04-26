@@ -1,6 +1,6 @@
 import { AnnouncementRibbon } from "@/components/announcement-ribbon";
 import { PersistentNav } from "@/components/persistent-nav";
-import { PageTransition } from "@/components/page-transition";
+import { PageTransition } from "@/components/shared/page-transition";
 import { GlobalFloatingBubble } from "@/components/organisms/global-floating-bubble";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
