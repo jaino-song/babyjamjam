@@ -5,7 +5,7 @@ import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import LogoCarousel from "@/components/LogoCarousel";
 import { Footer } from "@/components/organisms/footer";
 import { MoreSection } from "@/components/organisms/more-section";
-import { ProcessSection } from "@/components/organisms/process-section";
+import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 
 export default function DesktopHomePage() {
   const appDetailSteps = [

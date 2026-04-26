@@ -5,7 +5,7 @@ import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import LogoCarousel from "@/components/LogoCarousel";
 import { Footer } from "@/components/organisms/footer";
 import { MoreSection } from "@/components/organisms/more-section";
-import { ProcessSection } from "@/components/organisms/process-section";
+import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 
 export default function MobileHomePage() {
   const appDetailSteps = [
