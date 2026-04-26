@@ -1,6 +1,6 @@
 import { DesktopFaqPageClient } from "@/components/desktop/sections/faq-page-client";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 
 export default function DesktopFaqPage() {
   return (

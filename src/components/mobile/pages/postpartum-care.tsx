@@ -5,7 +5,7 @@ import {
 } from "@/components/mobile/sections/care-section-carousel";
 import { MobileBannerImageSection as BannerImageSection } from "@/components/mobile/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 
 const MATERNAL_CARE_CARDS: CareCardData[] = [

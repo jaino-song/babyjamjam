@@ -5,7 +5,7 @@ import {
 } from "@/components/desktop/sections/care-section-carousel";
 import { DesktopBannerImageSection as BannerImageSection } from "@/components/desktop/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 
 const MATERNAL_CARE_CARDS: CareCardData[] = [

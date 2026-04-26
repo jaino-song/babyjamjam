@@ -1,7 +1,7 @@
 import { DesktopPricingClient } from "@/components/desktop/pages/pricing-client";
 import { DesktopBannerImageSection as BannerImageSection } from "@/components/desktop/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 
 export default function DesktopPricingPage() {
   return (

@@ -1,7 +1,7 @@
 import { MobilePricingClient } from "@/components/mobile/pages/pricing-client";
 import { MobileBannerImageSection as BannerImageSection } from "@/components/mobile/sections/banner-image-section";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 
 export default function MobilePricingPage() {
   return (

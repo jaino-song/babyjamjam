@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-import { LinkCard } from "@/components/molecules/link-card";
+import { DesktopLinkCard } from "@/components/desktop/sections/link-card";
 
 const LINK_CARDS = [
   {
@@ -56,7 +56,7 @@ interface MoreSectionProps {
   currentPage?: "faq" | "postpartum-care";
 }
 
-export function MoreSection({ className, currentPage }: MoreSectionProps) {
+export function DesktopMoreSection({ className, currentPage }: MoreSectionProps) {
   const cards =
     currentPage === "faq"
       ? FAQ_PAGE_LINK_CARDS
@@ -79,11 +79,11 @@ export function MoreSection({ className, currentPage }: MoreSectionProps) {
         아가잼잼이면 해결되니까.
       </h2>
       <div
-        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap max-mobile:items-stretch max-mobile:gap-4"
+        className="flex justify-center items-start gap-10 w-full max-tablet:flex-wrap"
         data-component="organism-more-section-cards"
       >
         {cards.map((card) => (
-          <LinkCard
+          <DesktopLinkCard
             key={card.title}
             title={card.title}
             buttonText={card.buttonText}

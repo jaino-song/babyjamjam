@@ -4,7 +4,7 @@ import { MobileServiceDetailSection } from "@/components/mobile/sections/service
 import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import LogoCarousel from "@/components/LogoCarousel";
 import { Footer } from "@/components/organisms/footer";
-import { MoreSection } from "@/components/organisms/more-section";
+import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 
 export default function MobileHomePage() {
