@@ -1,38 +1,9 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import {
-  ChevronDown,
-  MessageCircle,
-  CalendarDays,
-  Heart,
-  HelpCircle,
-  BookOpen,
-  FileCheck,
-  CreditCard,
-  Handshake,
-  Building2,
-  Shield,
-  Scale,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { FAQ_SECTIONS, type FaqCategory, type FaqItem } from "@/data/faq-data";
-
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
-  MessageCircle,
-  CalendarDays,
-  Heart,
-  HelpCircle,
-  BookOpen,
-  FileCheck,
-  CreditCard,
-  Handshake,
-  Building2,
-  Shield,
-  Scale,
-};
-
-/* ---------- Accordion Item ---------- */
 
 function AccordionItem({
   item,
@@ -77,9 +48,7 @@ function AccordionItem({
   );
 }
 
-/* ---------- Main Component ---------- */
-
-export function FaqPageClient() {
+export function MobileFaqPageClient() {
   const allCategories = FAQ_SECTIONS.flatMap((s) => s.categories);
   const [activeCategoryId, setActiveCategoryId] = useState(allCategories[0].id);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
@@ -106,14 +75,15 @@ export function FaqPageClient() {
     <section className="faq-section">
       <h1 className="h1 faq-mobile-title">자주하는 질문</h1>
 
-      {/* Mobile select */}
       <div className="faq-mobile-menu">
         <div className="faq-mobile-select-wrap">
           <select
             className="faq-mobile-select"
             value={activeCategoryId}
             onChange={(event) => {
-              const cat = allCategories.find((item) => item.id === event.target.value);
+              const cat = allCategories.find(
+                (item) => item.id === event.target.value,
+              );
               if (cat) handleCategoryChange(cat);
             }}
             aria-label="FAQ 카테고리 선택"
@@ -132,56 +102,27 @@ export function FaqPageClient() {
       </div>
 
       <div className="faq-page">
-      {/* Sidebar */}
-      <aside className="faq-sidebar">
-        <h2 className="faq-sidebar__title">도움말</h2>
-        <p className="faq-sidebar__subtitle">FAQ &amp; 이용약관</p>
+        <div className="faq-content" key={activeCategoryId}>
+          <header className="faq-content__header">
+            <div className="faq-content__meta">
+              <h3>{activeCategory.label}</h3>
+              <span className="faq-content__count">
+                {activeCategory.items.length}개 항목
+              </span>
+            </div>
+          </header>
 
-        {FAQ_SECTIONS.map((section) => (
-          <div key={section.id}>
-            <span className="faq-sidebar__cat-label">{section.title}</span>
-            {section.categories.map((cat) => {
-              const IconComp = ICON_MAP[cat.icon];
-              return (
-                <button
-                  key={cat.id}
-                  className={`faq-sidebar__nav-item${cat.id === activeCategoryId ? " faq-sidebar__nav-item--active" : ""}`}
-                  onClick={() => handleCategoryChange(cat)}
-                >
-                  <span className="faq-sidebar__nav-icon">
-                    {IconComp && <IconComp size={16} />}
-                  </span>
-                  {cat.label}
-                </button>
-              );
-            })}
+          <div className="faq-accordion">
+            {activeCategory.items.map((item) => (
+              <AccordionItem
+                key={item.id}
+                item={item}
+                isTerms={isTermsCategory}
+                isOpen={openItems.has(item.id)}
+                onToggle={() => toggleItem(item.id)}
+              />
+            ))}
           </div>
-        ))}
-      </aside>
-
-      {/* Content */}
-      <div className="faq-content" key={activeCategoryId}>
-        <header className="faq-content__header">
-          <h1 className="h1 faq-content__title">자주하는 질문</h1>
-          <div className="faq-content__meta">
-            <h3>{activeCategory.label}</h3>
-            <span className="faq-content__count">
-              {activeCategory.items.length}개 항목
-            </span>
-          </div>
-        </header>
-
-        <div className="faq-accordion">
-          {activeCategory.items.map((item) => (
-            <AccordionItem
-              key={item.id}
-              item={item}
-              isTerms={isTermsCategory}
-              isOpen={openItems.has(item.id)}
-              onToggle={() => toggleItem(item.id)}
-            />
-          ))}
-        </div>
         </div>
       </div>
     </section>
