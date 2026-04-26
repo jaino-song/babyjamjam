@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface RibbonConfig {
   enabled: boolean;
@@ -13,7 +13,7 @@ interface RibbonConfig {
   linkColor: string;
 }
 
-export function AnnouncementRibbon() {
+export function DesktopAnnouncementRibbon() {
   const [config, setConfig] = useState<RibbonConfig | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export function AnnouncementRibbon() {
 
   return (
     <div
-      className="flex items-center justify-center gap-2 w-screen px-[var(--bjj-page-padding)] py-2.5 text-xs mobile:text-nav font-medium font-body tracking-[-0.01em] text-center"
+      className="flex items-center justify-center gap-2 w-screen px-[var(--bjj-page-padding)] py-2.5 text-nav font-medium font-body tracking-[-0.01em] text-center"
       style={{ background: config.backgroundColor, color: config.textColor }}
     >
       <span

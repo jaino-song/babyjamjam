@@ -2016,23 +2016,27 @@
 .nav-overlay { display: none; }
 .nav-drawer { display: none; }
 
-@media (max-width: 780px) {
-  .nav-hamburger { display: inline-flex; }
-  .nav-overlay {
-    display: block; position: fixed; inset: 0; z-index: 199;
-    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
-  }
-  .nav-drawer {
-    display: flex; flex-direction: column;
-    position: fixed; top: 0; right: 0; bottom: 0;
-    width: min(320px, 82vw);
-    padding: 20px 24px max(24px, env(safe-area-inset-bottom));
-    padding-top: max(20px, env(safe-area-inset-top));
-    z-index: 200;
-    background: var(--bjj-color-primary);
-    color: var(--bjj-color-primary-light);
-    animation: nav-drawer-slide-in 0.25s ease-out;
-  }
+/* Desktop shell: hamburger/drawer not rendered in JSX, these rules have no effect (kept for safety) */
+[data-bjj-shell="desktop"] .nav-hamburger { display: none; }
+[data-bjj-shell="desktop"] .nav-overlay { display: none; }
+[data-bjj-shell="desktop"] .nav-drawer { display: none; }
+
+/* Mobile shell: hamburger/drawer rendered unconditionally */
+[data-bjj-shell="mobile"] .nav-hamburger { display: inline-flex; }
+[data-bjj-shell="mobile"] .nav-overlay {
+  display: block; position: fixed; inset: 0; z-index: 199;
+  background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+}
+[data-bjj-shell="mobile"] .nav-drawer {
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(320px, 82vw);
+  padding: 20px 24px max(24px, env(safe-area-inset-bottom));
+  padding-top: max(20px, env(safe-area-inset-top));
+  z-index: 200;
+  background: var(--bjj-color-primary);
+  color: var(--bjj-color-primary-light);
+  animation: nav-drawer-slide-in 0.25s ease-out;
 }
 
 .nav-drawer__close {
