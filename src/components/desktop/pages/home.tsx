@@ -3,7 +3,7 @@ import { DesktopScrollExpandImage } from "@/components/desktop/sections/scroll-e
 import { DesktopServiceDetailSection } from "@/components/desktop/sections/service-detail-section";
 import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import LogoCarousel from "@/components/LogoCarousel";
-import { Footer } from "@/components/organisms/footer";
+import { DesktopFooter as Footer } from "@/components/desktop/sections/footer";
 import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 

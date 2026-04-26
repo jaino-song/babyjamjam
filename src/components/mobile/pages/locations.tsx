@@ -3,7 +3,7 @@
 import { useMemo, useState, useCallback } from "react";
 
 import { MobileBookingModal as BookingModal } from "@/components/mobile/chrome/booking-modal";
-import { Footer } from "@/components/organisms/footer";
+import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { KoreaRegionMap } from "@/components/korea-region-map";
 import { Badge } from "@/components/ui/badge";
 import { PillCta } from "@/components/ui/circle-cta";

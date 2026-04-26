@@ -3,7 +3,7 @@ import { MobileScrollExpandImage } from "@/components/mobile/sections/scroll-exp
 import { MobileServiceDetailSection } from "@/components/mobile/sections/service-detail-section";
 import { calendarMockups } from "@/components/app-detail-calendar-mockups";
 import LogoCarousel from "@/components/LogoCarousel";
-import { Footer } from "@/components/organisms/footer";
+import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 

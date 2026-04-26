@@ -4,7 +4,7 @@ import {
   type CareSectionData,
 } from "@/components/desktop/sections/care-section-carousel";
 import { DesktopBannerImageSection as BannerImageSection } from "@/components/desktop/sections/banner-image-section";
-import { Footer } from "@/components/organisms/footer";
+import { DesktopFooter as Footer } from "@/components/desktop/sections/footer";
 import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 

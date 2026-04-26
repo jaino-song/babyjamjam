@@ -4,7 +4,7 @@ import {
   type CareSectionData,
 } from "@/components/mobile/sections/care-section-carousel";
 import { MobileBannerImageSection as BannerImageSection } from "@/components/mobile/sections/banner-image-section";
-import { Footer } from "@/components/organisms/footer";
+import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 

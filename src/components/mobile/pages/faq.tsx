@@ -1,5 +1,5 @@
 import { MobileFaqPageClient } from "@/components/mobile/sections/faq-page-client";
-import { Footer } from "@/components/organisms/footer";
+import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 
 export default function MobileFaqPage() {

@@ -16,22 +16,21 @@ interface FooterProps {
   className?: string;
 }
 
-export function Footer({ className }: FooterProps) {
+export function MobileFooter({ className }: FooterProps) {
   return (
     <footer
       className={cn(
         "flex flex-col items-center w-full gap-6 pt-6 pb-3 mt-[100px] border-t border-bjj-divider",
-        "mobile:gap-[52px]",
         className
       )}
       data-component="organism-footer"
     >
       <div
-        className="flex flex-col items-start gap-4 w-full mobile:flex-row mobile:items-center mobile:justify-between mobile:gap-0"
+        className="flex flex-col items-start gap-4 w-full"
         data-component="organism-footer-links"
       >
         <nav
-          className="flex flex-wrap items-center gap-x-4 gap-y-2 mobile:flex-nowrap"
+          className="flex flex-wrap items-center gap-x-4 gap-y-2"
           data-component="organism-footer-nav"
         >
           {FOOTER_LINKS.map((link) => (
@@ -42,7 +41,7 @@ export function Footer({ className }: FooterProps) {
         </nav>
       </div>
       <div
-        className="flex flex-col items-start gap-4 w-full mobile:flex-row mobile:items-end mobile:justify-between mobile:gap-0"
+        className="flex flex-col items-start gap-4 w-full"
         data-component="organism-footer-bottom"
       >
         <Link href="/">
