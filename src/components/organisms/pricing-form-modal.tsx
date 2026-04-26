@@ -1,56 +1,36 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, type ReactNode } from "react";
+
+import { SelectDropdown } from "@/components/ui/select-dropdown";
+import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import {
-  SelectDropdown,
-  type SelectOption,
-} from "@/components/ui/select-dropdown";
-import {
-  type GradeLetter,
-  resolveGrade,
-} from "@/lib/voucher-type";
+  buildAllSteps,
+  SUBSIDY_ELIGIBILITY_HELPER_KEY,
+} from "@/lib/pricing/wizard";
 import { cn } from "@/lib/utils";
 
-const YES_NO_OPTIONS: SelectOption[] = [
-  { label: "네", value: "yes" },
-  { label: "아니오", value: "no" },
-];
-
-const CHILD_TYPE_OPTIONS: SelectOption[] = [
-  { label: "단태아", value: "단태아" },
-  { label: "쌍태아", value: "쌍태아" },
-  { label: "삼태아", value: "삼태아" },
-  { label: "사태아 이상", value: "사태아이상" },
-];
-
-const SERVICE_PERIOD_OPTIONS: SelectOption[] = [
-  { label: "5일", value: "5" },
-  { label: "10일", value: "10" },
-  { label: "15일", value: "15" },
-  { label: "20일", value: "20" },
-];
-
-const LIVE_IN_OPTIONS: SelectOption[] = [
-  { label: "네, 입주 서비스 희망", value: "yes" },
-  { label: "아니오, 출퇴근 서비스 희망", value: "no" },
-];
-
-export type FormAnswers = Record<string, string>;
-
-type QuestionDef = {
-  id: string;
-  label: string;
-  helperText?: React.ReactNode;
-  options: SelectOption[];
-  placeholder?: string;
-  /** "buttons" for 2-option yes/no, "dropdown" for multi-option */
-  inputType: "buttons" | "dropdown";
+const helperContent: Record<string, ReactNode> = {
+  [SUBSIDY_ELIGIBILITY_HELPER_KEY]: (
+    <>
+      지원 대상 여부는{" "}
+      <a
+        href="https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclInsertPwnbPage.do"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="pricing-modal__link"
+      >
+        여기
+      </a>
+      에서 확인하실 수 있어요.
+    </>
+  ),
 };
 
 interface PricingFormModalProps {
-  answers: FormAnswers;
+  answers: PricingFormAnswers;
   onAnswer: (questionId: string, value: string) => void;
-  onSubmit: (finalAnswers: FormAnswers) => void;
+  onSubmit: (finalAnswers: PricingFormAnswers) => void;
   isLoading?: boolean;
 }
 
@@ -65,6 +45,10 @@ export function PricingFormModal({
   const allSteps = buildAllSteps(answers);
   const totalSteps = allSteps.length;
   const currentQuestion = allSteps[step];
+  const currentHelper =
+    helperContent[currentQuestion?.helperKey ?? ""] ??
+    currentQuestion?.helperKey ??
+    null;
   const isLastStep = step === totalSteps - 1;
   const isMultiple = answers.childType && answers.childType !== "단태아";
   const displayStepCount = answers.subsidy === "yes" ? (isMultiple ? 5 : 4) : 4;
@@ -127,8 +111,8 @@ export function PricingFormModal({
           <div className="form-question form-question--visible" data-component="molecule-form-question">
             <div className="form-question__header">
               <span className="form-question__label">{currentQuestion.label}</span>
-              {currentQuestion.helperText && (
-                <span className="form-question__helper">{currentQuestion.helperText}</span>
+              {currentHelper && (
+                <span className="form-question__helper">{currentHelper}</span>
               )}
             </div>
 
@@ -162,64 +146,4 @@ export function PricingFormModal({
       </div>
     </div>
   );
-}
-
-// --- Build all steps ---
-
-function buildAllSteps(answers: FormAnswers): QuestionDef[] {
-  const steps: QuestionDef[] = [
-    {
-      id: "subsidy",
-      label: "정부지원 바우처 지원 대상이신가요?",
-      helperText: (
-        <>
-          지원 대상 여부는{" "}
-          <a
-            href="https://www.bokjiro.go.kr/ssis-tbu/twatbz/mkclAsis/mkclInsertPwnbPage.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pricing-modal__link"
-          >
-            여기
-          </a>
-          에서 확인하실 수 있어요.
-        </>
-      ),
-      options: YES_NO_OPTIONS,
-      inputType: "buttons",
-    },
-  ];
-
-  if (answers.subsidy === "yes") {
-    steps.push(
-      { id: "childType", label: "다태아인가요?", helperText: "다태아는 더 많은 지원을 받을 수 있어요.", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
-      {
-        id: "premature",
-        label: "미숙아인가요?",
-        helperText: "37주 또는 체중 2.5kg 미만 출생아 가정은 더 많은 지원을 받을 수 있어요.",
-        options: YES_NO_OPTIONS,
-        inputType: "buttons",
-      },
-      {
-        id: "disability",
-        label: "중증 장애 등급이 있으신가요?",
-        helperText: "몸이 불편하신 분들께선 더 많은 지원을 받으실 수 있어요.",
-        options: YES_NO_OPTIONS,
-        inputType: "buttons",
-      },
-    );
-
-    const childType = answers.childType as "단태아" | "쌍태아" | "삼태아" | "사태아이상" | undefined;
-    if (childType && childType !== "단태아") {
-      steps.push({ id: "staffCount", label: "추가 인력이 필요하신가요?", helperText: "다태아 출산 가정은 2명 이상의 관리사 고용이 가능해요.", options: YES_NO_OPTIONS, inputType: "buttons" });
-    }
-  } else if (answers.subsidy === "no") {
-    steps.push(
-      { id: "servicePeriod", label: "서비스 기간", options: SERVICE_PERIOD_OPTIONS, placeholder: "기간을 선택해 주세요", inputType: "dropdown" },
-      { id: "liveIn", label: "입주 서비스를 찾고 계시나요?", options: LIVE_IN_OPTIONS, inputType: "buttons" },
-      { id: "childType", label: "다태아인가요?", options: CHILD_TYPE_OPTIONS, inputType: "dropdown" },
-    );
-  }
-
-  return steps;
 }

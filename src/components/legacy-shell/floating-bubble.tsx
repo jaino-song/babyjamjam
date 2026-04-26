@@ -4,10 +4,9 @@ import { X } from "lucide-react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import {
-  LegacyBookingModal,
-  type ConsultationSelectedServices,
-} from "./booking-modal";
+import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
+
+import { LegacyBookingModal } from "./booking-modal";
 import { PillCta } from "@/components/ui/circle-cta";
 import { QuantityStepper } from "@/components/ui/quantity-stepper";
 
@@ -62,7 +61,7 @@ interface FloatingBubbleProps {
   showCart?: boolean;
   selectedPlan?: LegacyPlanData | null;
   selectedAddons?: SelectedAddonCartItem[];
-  selectedServices?: ConsultationSelectedServices;
+  selectedServices?: SelectedServicesPayload;
   onRemovePlan?: () => void;
   onRemoveAddon?: (addonId: string) => void;
   onQuantityChange?: (addonId: string, quantity: number) => void;

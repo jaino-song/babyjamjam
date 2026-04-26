@@ -2,16 +2,32 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { RadioPill } from "./ui/radio-pill";
+
+import {
+  findBranchByRegionDistrict,
+  findBranchBySlug,
+} from "@/data/branches";
+import {
+  buildConsultationInquiryPayload,
+  EMPTY_CONSULTATION_FORM,
+  formatPhoneInput,
+  getConsultationSubmitErrorMessage,
+  getFieldErrors,
+  getServerFieldError,
+  sanitizeNameInput,
+} from "@/lib/consultation/booking-helpers";
+import type {
+  ConsultationFormState,
+  ConsultationSelectedServices as SelectedServicesPayload,
+  ConsultationTouchedState,
+} from "@/lib/consultation/contracts";
+
 import {
   KoreaRegionMap,
   type KoreaRegionMapHandle,
   type BreadcrumbPart,
 } from "./korea-region-map";
-import {
-  findBranchByRegionDistrict,
-  findBranchBySlug,
-} from "@/data/branches";
+import { RadioPill } from "./ui/radio-pill";
 
 const AVAILABLE_REGIONS = new Set(["인천", "경기도", "경북"]);
 
@@ -26,131 +42,7 @@ interface BookingModalProps {
   initialDistrict?: string | null;
   /** Public branch slug used by the staff backend for inquiry routing */
   initialBranchSlug?: string | null;
-  selectedServices?: ConsultationSelectedServices;
-}
-
-export type ConsultationSelectedServices = {
-  plan: {
-    id: string;
-    name: string;
-    priceLabel: string;
-    durationDays: number | null;
-  } | null;
-  addons: Array<{
-    id: string;
-    name: string;
-    priceLabel: string;
-    quantity: number;
-    group: string | null;
-  }>;
-};
-
-type ConsultationFormState = {
-  motherName: string;
-  phone: string;
-  address: string;
-  dueDate: string;
-  birthExperience: string;
-  voucherType: string;
-  preferredCaregiverName: string;
-  referralSource: string;
-  privacyAccepted: boolean;
-};
-
-type ConsultationTouchedState = Partial<Record<keyof ConsultationFormState | "branchSlug", boolean>>;
-
-const EMPTY_FORM: ConsultationFormState = {
-  motherName: "",
-  phone: "",
-  address: "",
-  dueDate: "",
-  birthExperience: "",
-  voucherType: "",
-  preferredCaregiverName: "",
-  referralSource: "",
-  privacyAccepted: false,
-};
-
-const PHONE_REGEX = /^01[016789]-?\d{3,4}-?\d{4}$/;
-const NAME_PATTERN = /^[\p{L} ]+$/u;
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-
-function sanitizeNameInput(value: string): string {
-  return value.replace(/[^\p{L} ]+/gu, "");
-}
-
-function formatPhoneInput(value: string): string {
-  const digits = value.replace(/\D/g, "").slice(0, 11);
-
-  if (!digits) return "";
-  if (digits[0] !== "0") return "";
-  if (digits.length === 1) return "0";
-  if (digits[1] !== "1") return "0";
-  if (digits.length <= 3) return digits;
-  if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-
-  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
-}
-
-function isValidDateValue(value: string): boolean {
-  if (!DATE_PATTERN.test(value)) return false;
-  const [yearText, monthText, dayText] = value.split("-");
-  const year = Number(yearText);
-  const month = Number(monthText);
-  const day = Number(dayText);
-  const date = new Date(year, month - 1, day);
-
-  return (
-    date.getFullYear() === year &&
-    date.getMonth() === month - 1 &&
-    date.getDate() === day
-  );
-}
-
-function getServerFieldError(message: string): keyof ConsultationFormState | "branchSlug" | null {
-  if (message.includes("전화번호")) return "phone";
-  if (message.includes("성함") || message.includes("이름")) return "motherName";
-  if (message.includes("주소")) return "address";
-  if (message.includes("출산") || message.includes("날짜")) return "dueDate";
-  if (message.includes("지점") || message.includes("지역")) return "branchSlug";
-  if (message.includes("동의")) return "privacyAccepted";
-  return null;
-}
-
-function getFieldErrors(
-  form: ConsultationFormState,
-  branchSlug: string | null
-): Partial<Record<keyof ConsultationFormState | "branchSlug", string>> {
-  const motherName = form.motherName.trim();
-  const phone = form.phone.trim();
-  const address = form.address.trim();
-
-  return {
-    branchSlug: branchSlug ? undefined : "지역을 다시 선택해 주세요.",
-    motherName: !motherName
-      ? "필수"
-      : NAME_PATTERN.test(motherName)
-        ? undefined
-        : "숫자나 특수문자는 입력할 수 없습니다.",
-    phone: !phone
-      ? "필수"
-      : PHONE_REGEX.test(phone)
-        ? undefined
-        : "유효한 전화번호를 입력해주세요.",
-    address: !address
-      ? "필수"
-      : address.length >= 2
-        ? undefined
-        : "주소를 조금 더 입력해 주세요.",
-    dueDate: !form.dueDate.trim()
-      ? "필수"
-      : isValidDateValue(form.dueDate)
-        ? undefined
-        : "유효한 날짜를 입력해 주세요.",
-    birthExperience: form.birthExperience.trim() ? undefined : "필수",
-    referralSource: form.referralSource.trim() ? undefined : "필수",
-    privacyAccepted: form.privacyAccepted ? undefined : "동의가 필요합니다.",
-  };
+  selectedServices?: SelectedServicesPayload;
 }
 
 function InlineFieldError({ message }: { message?: string }) {
@@ -201,7 +93,9 @@ export function BookingModal({
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
   const [selectedMuni, setSelectedMuni] = useState<string | null>(null);
   const [selectedBranchSlug, setSelectedBranchSlug] = useState<string | null>(null);
-  const [form, setForm] = useState<ConsultationFormState>(EMPTY_FORM);
+  const [form, setForm] = useState<ConsultationFormState>(
+    EMPTY_CONSULTATION_FORM
+  );
   const [touched, setTouched] = useState<ConsultationTouchedState>({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -244,7 +138,7 @@ export function BookingModal({
         setSelectedBranchSlug(null);
         mapRef.current?.reset();
       }
-      setForm(EMPTY_FORM);
+      setForm(EMPTY_CONSULTATION_FORM);
       setTouched({});
       setSubmitAttempted(false);
       setSubmitError(null);
@@ -380,38 +274,30 @@ export function BookingModal({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          branchSlug,
-          motherName: form.motherName.trim(),
-          phone: form.phone.trim(),
-          address: form.address.trim(),
-          dueDate: form.dueDate,
-          birthExperience: form.birthExperience,
-          voucherType: form.voucherType.trim(),
-          preferredCaregiverName: form.preferredCaregiverName.trim(),
-          referralSource: form.referralSource,
-          privacyAccepted: form.privacyAccepted,
-          selectedServices,
+          ...buildConsultationInquiryPayload(
+            branchSlug,
+            form,
+            selectedServices
+          ),
         }),
       });
 
       if (!res.ok) {
         const payload = await res.json().catch(() => null);
-        const message = Array.isArray(payload?.message)
-          ? payload.message[0]
-          : payload?.message || payload?.error || "상담 신청에 실패했습니다.";
-        const field = getServerFieldError(String(message));
+        const message = getConsultationSubmitErrorMessage(payload);
+        const field = getServerFieldError(message);
 
         if (field) {
           setTouched((prev) => ({ ...prev, [field]: true }));
         }
 
-        throw new Error(String(message));
+        throw new Error(message);
       }
 
       setSubmitted(true);
       setShowBack(false);
       setBreadcrumb([]);
-      setForm(EMPTY_FORM);
+      setForm(EMPTY_CONSULTATION_FORM);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "상담 신청에 실패했습니다.");
     } finally {

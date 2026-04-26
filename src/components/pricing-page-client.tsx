@@ -3,20 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import {
-  PricingFormModal,
-  type FormAnswers,
-} from "@/components/organisms/pricing-form-modal";
-import {
-  PricingPlansSection,
-} from "@/components/organisms/pricing-plans-section";
-import {
-  AddonServicesSection,
-} from "@/components/organisms/addon-services-section";
+import { AddonServicesSection } from "@/components/organisms/addon-services-section";
 import { FloatingBubble } from "@/components/organisms/floating-bubble";
+import { PricingFormModal } from "@/components/organisms/pricing-form-modal";
+import { PricingPlansSection } from "@/components/organisms/pricing-plans-section";
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
-import type { ConsultationSelectedServices } from "@/components/booking-modal";
+import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
+import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import { usePricingStore } from "@/lib/pricing-store";
 
 // --- Placeholder data shown behind blur ---
@@ -61,7 +55,7 @@ export function PricingPageClient() {
     store.fetchPricing(store.formAnswers, store.selectedGradeName);
   }, [store.selectedGradeName]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleSubmit = useCallback(async (finalAnswers: FormAnswers) => {
+  const handleSubmit = useCallback(async (finalAnswers: PricingFormAnswers) => {
     await store.fetchPricing(finalAnswers, store.selectedGradeName);
     setShowFormModal(false);
     setTimeout(() => {
@@ -84,7 +78,7 @@ export function PricingPageClient() {
     .filter(
       (item): item is { addon: AddonData; quantity: number } => item !== null
     );
-  const selectedServices: ConsultationSelectedServices = {
+  const selectedServices: SelectedServicesPayload = {
     plan: selectedPlan
       ? {
           id: selectedPlan.id,

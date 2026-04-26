@@ -4,12 +4,10 @@ import { X } from "lucide-react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import {
-  BookingModal,
-  type ConsultationSelectedServices,
-} from "@/components/booking-modal";
+import { BookingModal } from "@/components/booking-modal";
 import type { AddonData } from "@/components/molecules/addon-service-card";
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
+import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
 import { PillCta } from "@/components/ui/circle-cta";
 import { QuantityStepper } from "@/components/ui/quantity-stepper";
 
@@ -45,7 +43,7 @@ interface FloatingBubbleProps {
   showCart?: boolean;
   selectedPlan?: PlanData | null;
   selectedAddons?: SelectedAddonCartItem[];
-  selectedServices?: ConsultationSelectedServices;
+  selectedServices?: SelectedServicesPayload;
   onRemovePlan?: () => void;
   onRemoveAddon?: (addonId: string) => void;
   onQuantityChange?: (addonId: string, quantity: number) => void;
