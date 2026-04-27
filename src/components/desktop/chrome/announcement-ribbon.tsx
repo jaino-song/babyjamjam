@@ -13,8 +13,19 @@ interface RibbonConfig {
   linkColor: string;
 }
 
-export function DesktopAnnouncementRibbon() {
+interface DesktopAnnouncementRibbonProps {
+  'data-component'?: string;
+}
+
+export function DesktopAnnouncementRibbon({
+  'data-component': dataComponent,
+}: DesktopAnnouncementRibbonProps) {
   const [config, setConfig] = useState<RibbonConfig | null>(null);
+  const messageDataComponent = dataComponent
+    ? `${dataComponent}-message`
+    : undefined;
+  const linkDataComponent = dataComponent ? `${dataComponent}-link` : undefined;
+  const iconDataComponent = dataComponent ? `${dataComponent}-icon` : undefined;
 
   useEffect(() => {
     fetch("/api/ribbon")
@@ -27,16 +38,19 @@ export function DesktopAnnouncementRibbon() {
 
   return (
     <div
+      data-component={dataComponent}
       className="flex items-center justify-center gap-2 w-screen px-[var(--bjj-page-padding)] py-2.5 text-nav font-medium font-body tracking-[-0.01em] text-center"
       style={{ background: config.backgroundColor, color: config.textColor }}
     >
       <span
+        data-component={iconDataComponent}
         className="w-1.5 h-1.5 rounded-full shrink-0"
         style={{ background: config.linkColor }}
       />
-      <span>{config.message}</span>
+      <span data-component={messageDataComponent}>{config.message}</span>
       {config.linkText && config.linkHref && (
         <Link
+          data-component={linkDataComponent}
           href={config.linkHref}
           className="no-underline font-semibold whitespace-nowrap hover:underline"
           style={{ color: config.linkColor }}
