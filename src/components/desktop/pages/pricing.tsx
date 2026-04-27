@@ -35,12 +35,15 @@ export default function DesktopPricingPage() {
 
         <DesktopPricingClient data-component="desktop-pricing-client" />
 
-        <BannerImageSection className="h-[576px]" />
+        <BannerImageSection
+          className="h-[576px]"
+          data-component="desktop-pricing-banner-image-section"
+        />
 
-        <MoreSection />
+        <MoreSection data-component="desktop-pricing-more-section" />
       </main>
 
-      <Footer />
+      <Footer data-component="desktop-pricing-footer" />
     </>
   );
 }

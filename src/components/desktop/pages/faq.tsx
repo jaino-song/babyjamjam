@@ -10,10 +10,13 @@ export default function DesktopFaqPage() {
         data-component="desktop-faq-page-main"
       >
         <DesktopFaqPageClient data-component="desktop-faq-page-client" />
-        <MoreSection currentPage="faq" />
+        <MoreSection
+          currentPage="faq"
+          data-component="desktop-faq-more-section"
+        />
       </main>
 
-      <Footer />
+      <Footer data-component="desktop-faq-footer" />
     </>
   );
 }

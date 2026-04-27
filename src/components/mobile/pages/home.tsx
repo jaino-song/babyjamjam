@@ -148,11 +148,11 @@ export default function MobileHomePage() {
           </div>
         </section>
 
-        <ProcessSection />
-        <MoreSection />
+        <ProcessSection data-component="mobile-home-process-section" />
+        <MoreSection data-component="mobile-home-more-section" />
       </main>
 
-      <Footer />
+      <Footer data-component="mobile-home-footer" />
     </>
   );
 }

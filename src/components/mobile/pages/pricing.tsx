@@ -35,12 +35,15 @@ export default function MobilePricingPage() {
 
         <MobilePricingClient data-component="mobile-pricing-client" />
 
-        <BannerImageSection className="h-[360px]" />
+        <BannerImageSection
+          className="h-[360px]"
+          data-component="mobile-pricing-banner-image-section"
+        />
 
-        <MoreSection />
+        <MoreSection data-component="mobile-pricing-more-section" />
       </main>
 
-      <Footer />
+      <Footer data-component="mobile-pricing-footer" />
     </>
   );
 }

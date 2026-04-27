@@ -10,10 +10,13 @@ export default function MobileFaqPage() {
         data-component="mobile-faq-page-main"
       >
         <MobileFaqPageClient data-component="mobile-faq-page-client" />
-        <MoreSection currentPage="faq" />
+        <MoreSection
+          currentPage="faq"
+          data-component="mobile-faq-more-section"
+        />
       </main>
 
-      <Footer />
+      <Footer data-component="mobile-faq-footer" />
     </>
   );
 }

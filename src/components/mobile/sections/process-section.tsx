@@ -34,12 +34,18 @@ const PROCESS_STEPS = [
 
 interface ProcessSectionProps {
   className?: string;
+  "data-component"?: string;
 }
 
-export function MobileProcessSection({ className }: ProcessSectionProps) {
+export function MobileProcessSection({
+  className,
+  "data-component": dataComponent,
+}: ProcessSectionProps) {
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const mobileCardRefs = useRef<Array<HTMLElement | null>>([]);
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   useEffect(() => {
     const track = mobileTrackRef.current;
@@ -106,25 +112,23 @@ export function MobileProcessSection({ className }: ProcessSectionProps) {
         "ml-[calc(-50vw+50%)]",
         className
       )}
-      data-component="organism-process-section"
+      data-component={dataComponent}
     >
-      <div
-        className="flex justify-between w-full gap-6"
-        data-component="organism-process-header"
-      >
-        <h2 className="h2 text-bjj-primary" data-component="organism-process-title">
+      <div className="flex justify-between w-full gap-6" data-component={getComponent("header")}>
+        <h2 className="h2 text-bjj-primary" data-component={getComponent("title")}>
           산후도우미 서비스 진행 절차
         </h2>
       </div>
-      <div
-        className="flex w-full flex-col gap-4"
-        data-component="organism-process-gallery"
-      >
-        <div className="process-gallery__frame">
+      <div className="flex w-full flex-col gap-4" data-component={getComponent("gallery")}>
+        <div
+          className="process-gallery__frame"
+          data-component={getComponent("gallery-frame")}
+        >
           <div
             ref={mobileTrackRef}
             className="process-gallery__track"
             aria-label="산후도우미 서비스 진행 절차"
+            data-component={getComponent("steps")}
           >
             {PROCESS_STEPS.map((step, index) => (
               <article
@@ -137,13 +141,30 @@ export function MobileProcessSection({ className }: ProcessSectionProps) {
                   index === mobileActiveIndex && "process-gallery__card--active",
                 )}
                 aria-current={index === mobileActiveIndex ? "true" : undefined}
+                data-component={getComponent(`step-${index + 1}`)}
               >
-                <span className="process-gallery__number" data-component="molecule-process-step-number">
+                <span
+                  className="process-gallery__number"
+                  data-component={getComponent(`step-${index + 1}-number`)}
+                >
                   {step.number}
                 </span>
-                <div className="process-gallery__content">
-                  <h3 className="h6 process-gallery__title">{step.title}</h3>
-                  <p className="medium-p process-gallery__description">{step.description}</p>
+                <div
+                  className="process-gallery__content"
+                  data-component={getComponent(`step-${index + 1}-content`)}
+                >
+                  <h3
+                    className="h6 process-gallery__title"
+                    data-component={getComponent(`step-${index + 1}-title`)}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="medium-p process-gallery__description"
+                    data-component={getComponent(`step-${index + 1}-description`)}
+                  >
+                    {step.description}
+                  </p>
                 </div>
               </article>
             ))}
@@ -156,6 +177,7 @@ export function MobileProcessSection({ className }: ProcessSectionProps) {
             nextDisabled={mobileActiveIndex === PROCESS_STEPS.length - 1}
             onPrevious={() => scrollMobileStep(-1)}
             onNext={() => scrollMobileStep(1)}
+            data-component={getComponent("gallery-paddlenav")}
           />
         </div>
       </div>

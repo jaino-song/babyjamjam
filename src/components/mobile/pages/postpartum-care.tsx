@@ -109,13 +109,16 @@ export default function MobilePostpartumCarePage() {
           data-component="mobile-postpartum-care-care-section-carousel"
         />
 
-        <BannerImageSection />
+        <BannerImageSection data-component="mobile-postpartum-care-banner-image-section" />
 
-        <ProcessSection />
-        <MoreSection currentPage="postpartum-care" />
+        <ProcessSection data-component="mobile-postpartum-care-process-section" />
+        <MoreSection
+          currentPage="postpartum-care"
+          data-component="mobile-postpartum-care-more-section"
+        />
       </main>
 
-      <Footer />
+      <Footer data-component="mobile-postpartum-care-footer" />
     </>
   );
 }

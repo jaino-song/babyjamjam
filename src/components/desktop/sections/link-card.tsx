@@ -9,39 +9,55 @@ interface LinkCardProps {
   buttonHref: string;
   disabled?: boolean;
   className?: string;
+  "data-component"?: string;
 }
 
-export function DesktopLinkCard({ title, description, buttonText, buttonHref, disabled, className }: LinkCardProps) {
+export function DesktopLinkCard({
+  title,
+  description,
+  buttonText,
+  buttonHref,
+  disabled,
+  className,
+  "data-component": dataComponent,
+}: LinkCardProps) {
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+
   return (
     <div
       className={cn("flex-1 flex flex-col items-center w-full gap-6", className)}
-      data-component="molecule-link-card"
+      data-component={dataComponent}
     >
       <div
         className="flex flex-col items-center w-full gap-6"
-        data-component="molecule-link-card-content"
+        data-component={getComponent("content")}
       >
         <h3
           className="h6 text-bjj-primary text-center"
-          data-component="molecule-link-card-title"
+          data-component={getComponent("title")}
         >
           {title}
         </h3>
         {description && (
           <p
             className="medium-p max-w-[224px] text-center"
-            data-component="molecule-link-card-description"
+            data-component={getComponent("description")}
           >
             {description}
           </p>
         )}
       </div>
       {disabled ? (
-        <Button variant="primary" disabled data-component="molecule-link-card-button">
+        <Button variant="primary" disabled data-component={getComponent("button")}>
           {buttonText}
         </Button>
       ) : (
-        <Button href={buttonHref} variant="primary" data-component="molecule-link-card-button">
+        <Button
+          href={buttonHref}
+          variant="primary"
+          data-component={getComponent("button")}
+        >
           {buttonText}
         </Button>
       )}

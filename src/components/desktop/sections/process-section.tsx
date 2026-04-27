@@ -33,9 +33,16 @@ const PROCESS_STEPS = [
 
 interface ProcessSectionProps {
   className?: string;
+  "data-component"?: string;
 }
 
-export function DesktopProcessSection({ className }: ProcessSectionProps) {
+export function DesktopProcessSection({
+  className,
+  "data-component": dataComponent,
+}: ProcessSectionProps) {
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+
   return (
     <section
       className={cn(
@@ -45,26 +52,21 @@ export function DesktopProcessSection({ className }: ProcessSectionProps) {
         "ml-[calc(-50vw+50%)]",
         className
       )}
-      data-component="organism-process-section"
+      data-component={dataComponent}
     >
-      <div
-        className="flex justify-between w-full gap-6"
-        data-component="organism-process-header"
-      >
-        <h2 className="h2 text-bjj-primary-light" data-component="organism-process-title">
+      <div className="flex justify-between w-full gap-6" data-component={getComponent("header")}>
+        <h2 className="h2 text-bjj-primary-light" data-component={getComponent("title")}>
           산후도우미 서비스 진행 절차
         </h2>
       </div>
-      <div
-        className="flex w-full gap-3 max-tablet:flex-wrap"
-        data-component="organism-process-steps"
-      >
+      <div className="flex w-full gap-3 max-tablet:flex-wrap" data-component={getComponent("steps")}>
         {PROCESS_STEPS.map((step) => (
           <ProcessStep
             key={step.number}
             number={step.number}
             title={step.title}
             description={step.description}
+            data-component={getComponent(`step-${step.number}`)}
           />
         ))}
       </div>

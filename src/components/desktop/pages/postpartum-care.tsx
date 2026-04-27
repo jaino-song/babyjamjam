@@ -109,13 +109,16 @@ export default function DesktopPostpartumCarePage() {
           data-component="desktop-postpartum-care-care-section-carousel"
         />
 
-        <BannerImageSection />
+        <BannerImageSection data-component="desktop-postpartum-care-banner-image-section" />
 
-        <ProcessSection />
-        <MoreSection currentPage="postpartum-care" />
+        <ProcessSection data-component="desktop-postpartum-care-process-section" />
+        <MoreSection
+          currentPage="postpartum-care"
+          data-component="desktop-postpartum-care-more-section"
+        />
       </main>
 
-      <Footer />
+      <Footer data-component="desktop-postpartum-care-footer" />
     </>
   );
 }

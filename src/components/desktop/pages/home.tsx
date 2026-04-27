@@ -153,11 +153,11 @@ export default function DesktopHomePage() {
           </div>
         </section>
 
-        <ProcessSection />
-        <MoreSection />
+        <ProcessSection data-component="desktop-home-process-section" />
+        <MoreSection data-component="desktop-home-more-section" />
       </main>
 
-      <Footer />
+      <Footer data-component="desktop-home-footer" />
     </>
   );
 }
