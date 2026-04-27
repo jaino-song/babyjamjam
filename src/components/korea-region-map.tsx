@@ -190,6 +190,7 @@ export type MunicipalityPin = {
 };
 
 type Props = {
+  "data-component"?: string;
   availableRegions: Set<string>;
   /** Specific municipalities to highlight on the province map (instead of whole province) */
   municipalityPins?: MunicipalityPin[];
@@ -203,7 +204,7 @@ type Props = {
 };
 
 export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
-  function KoreaRegionMap({ availableRegions, municipalityPins, selectedRegion, onRegionSelect, onBreadcrumbChange, onShowBack, onMunicipalitySelect }, ref) {
+  function KoreaRegionMap({ "data-component": dataComponent, availableRegions, municipalityPins, selectedRegion, onRegionSelect, onBreadcrumbChange, onShowBack, onMunicipalitySelect }, ref) {
     const isSimpleMode = !!onRegionSelect;
     const svgRef = useRef<SVGSVGElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
@@ -275,6 +276,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("aria-label", (d: any) => SHORT_LABELS[d.properties.name] || d.properties.name)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("data-component", (d: any) =>
+          dataComponent
+            ? `${dataComponent}-province-${(d.properties.code ?? PROVINCE_CODE_MAP[d.properties.name]).toLowerCase()}`
+            : null
+        )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .on("mouseenter", function (_event: any, d: any) {
           const short = SHORT_LABELS[d.properties.name] || d.properties.name;
           if (!availableRegions.has(short)) return;
@@ -312,6 +319,10 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           .append("path")
           .attr("d", path)
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .attr("data-component", (d: any) =>
+            dataComponent ? `${dataComponent}-municipality-${d.properties.code}` : null
+          )
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .attr("class", (d: any) => {
             const pin = pinMap.get(d.properties.code);
             const selected = isSimpleMode && pin && selectedRegion === pin.region;
@@ -336,7 +347,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           });
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [availableRegions, municipalityPins, selectedRegion, isSimpleMode, onRegionSelect, showTooltip,hideTooltip]);
+    }, [availableRegions, dataComponent, municipalityPins, selectedRegion, isSimpleMode, onRegionSelect, showTooltip,hideTooltip]);
 
     const drillToMunicipalities = useCallback((provinceName: string) => {
       const muniGeo = municipalitiesRef.current;
@@ -374,6 +385,10 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         .append("path")
         .attr("d", path)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("data-component", (d: any) =>
+          dataComponent ? `${dataComponent}-municipality-${d.properties.code}` : null
+        )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("class", (d: any) => {
           const avail = isMuniAvailable(d.properties.code, availSet);
           return `krm-muni ${avail ? "krm-muni--available" : "krm-muni--unavailable"}`;
@@ -394,7 +409,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           onMunicipalitySelect?.(shortProv, displayName);
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
+    }, [dataComponent, showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
 
     const drillToCities = useCallback((provinceName: string) => {
       const muniGeo = municipalitiesRef.current;
@@ -473,6 +488,12 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         .append("path")
         .attr("d", pathGen)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .attr("data-component", (d: any) =>
+          dataComponent && Array.isArray(d.properties.codes) && d.properties.codes.length > 0
+            ? `${dataComponent}-city-${d.properties.codes[0]}`
+            : null
+        )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("class", (d: any) =>
           `krm-city ${d.properties.available ? "krm-city--available" : "krm-city--unavailable"}`
         )
@@ -492,7 +513,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           onMunicipalitySelect?.(shortProv, d.properties.name);
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
+    }, [dataComponent, showTooltip,hideTooltip, onBreadcrumbChange, onShowBack, onMunicipalitySelect]);
 
     const goToProvinces = useCallback(() => {
       currentProvinceRef.current = null;
@@ -529,9 +550,19 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
     }, [renderProvinces]);
 
     return (
-      <div className="krm">
-        <div className="krm__tooltip" ref={tooltipRef} />
-        <svg ref={svgRef} className="krm__svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" />
+      <div className="krm" data-component={dataComponent}>
+        <div
+          className="krm__tooltip"
+          ref={tooltipRef}
+          data-component={dataComponent ? `${dataComponent}-tooltip` : undefined}
+        />
+        <svg
+          ref={svgRef}
+          className="krm__svg"
+          viewBox={`0 0 ${W} ${H}`}
+          preserveAspectRatio="xMidYMid meet"
+          data-component={dataComponent ? `${dataComponent}-svg` : undefined}
+        />
       </div>
     );
   }

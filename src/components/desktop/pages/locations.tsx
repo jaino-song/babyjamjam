@@ -47,6 +47,7 @@ export default function DesktopLocationsPage() {
               availableRegions={availableRegions}
               selectedRegion={selectedRegion}
               onRegionSelect={handleRegionSelect}
+              data-component="desktop-locations-page-korea-region-map"
             />
           </div>
 
@@ -94,6 +95,7 @@ export default function DesktopLocationsPage() {
                     </div>
                   </div>
                   <PillCta
+                    data-component="desktop-locations-page-booking-cta"
                     onClick={(event) => {
                       event.stopPropagation();
                       setBookingRegion(branch.region);
@@ -119,6 +121,7 @@ export default function DesktopLocationsPage() {
         initialRegion={bookingRegion}
         initialDistrict={bookingDistrict}
         initialBranchSlug={bookingBranchSlug}
+        data-component="desktop-locations-booking-modal"
       />
     </>
   );

@@ -34,6 +34,7 @@ const AVAILABLE_REGIONS = new Set(["인천", "경기도", "경북"]);
 type ModalView = "map" | "form" | "success";
 
 interface MobileBookingModalProps {
+  "data-component"?: string;
   open: boolean;
   onClose: () => void;
   initialRegion?: string | null;
@@ -42,11 +43,18 @@ interface MobileBookingModalProps {
   selectedServices?: SelectedServicesPayload;
 }
 
-function InlineFieldError({ message }: { message?: string }) {
+function InlineFieldError({
+  message,
+  "data-component": dataComponent,
+}: {
+  message?: string;
+  "data-component"?: string;
+}) {
   return (
     <span
       aria-hidden={!message}
       className={`bm__field-error ${message ? "" : "bm__field-error--empty"}`}
+      data-component={dataComponent}
     >
       {message ?? "\u00A0"}
     </span>
@@ -57,22 +65,42 @@ function FieldLabel({
   children,
   required = false,
   error,
+  "data-component": dataComponent,
 }: {
   children: React.ReactNode;
   required?: boolean;
   error?: string;
+  "data-component"?: string;
 }) {
   return (
-    <div className="bm__form-label-row">
-      <label className="bm__form-label">
-        {children} {required && <span className="bm__required">*</span>}
+    <div
+      className="bm__form-label-row"
+      data-component={dataComponent ? `${dataComponent}-label-row` : undefined}
+    >
+      <label
+        className="bm__form-label"
+        data-component={dataComponent ? `${dataComponent}-label` : undefined}
+      >
+        {children}{" "}
+        {required && (
+          <span
+            className="bm__required"
+            data-component={dataComponent ? `${dataComponent}-required` : undefined}
+          >
+            *
+          </span>
+        )}
       </label>
-      <InlineFieldError message={error} />
+      <InlineFieldError
+        message={error}
+        data-component={dataComponent ? `${dataComponent}-error` : undefined}
+      />
     </div>
   );
 }
 
 export function MobileBookingModal({
+  "data-component": dataComponent,
   open,
   onClose,
   initialRegion,
@@ -321,40 +349,69 @@ export function MobileBookingModal({
   const visibleError = (key: keyof typeof fieldErrors) =>
     submitAttempted || touched[key] ? fieldErrors[key] : undefined;
   const showChrome = !submitted;
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+  const getFieldComponent = (name: string, suffix?: string) => {
+    const base = getComponent(`field-${name}`);
+    return base && suffix ? `${base}-${suffix}` : base;
+  };
 
   return createPortal(
     <div
       className="bm-overlay bm-overlay-mobile"
+      data-component={dataComponent}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="bm bm-mobile">
+      <div
+        className="bm bm-mobile"
+        data-component={getComponent("dialog")}
+      >
         {showChrome && (
-          <div className="bm__header">
-            <h2 className="bm__title">{headerTitle}</h2>
-            <button className="bm__close" onClick={onClose} aria-label="닫기">
+          <div className="bm__header" data-component={getComponent("header")}>
+            <h2 className="bm__title" data-component={getComponent("header-title")}>
+              {headerTitle}
+            </h2>
+            <button
+              className="bm__close"
+              onClick={onClose}
+              aria-label="닫기"
+              data-component={getComponent("close-button")}
+            >
               ✕
             </button>
           </div>
         )}
 
         {showChrome && (
-          <div className="bm__nav-wrap">
-            <div className="bm__breadcrumb">
+          <div className="bm__nav-wrap" data-component={getComponent("nav-wrap")}>
+            <div className="bm__breadcrumb" data-component={getComponent("breadcrumb")}>
               {breadcrumb.map((part, index) => (
-                <span key={index}>
+                <span
+                  key={index}
+                  data-component={getComponent(`breadcrumb-item-${index + 1}`)}
+                >
                   {index > 0 && (
-                    <span className="bm__breadcrumb-sep">›</span>
+                    <span
+                      className="bm__breadcrumb-sep"
+                      data-component={getComponent(`breadcrumb-separator-${index + 1}`)}
+                    >
+                      ›
+                    </span>
                   )}
                   {index === breadcrumb.length - 1 ? (
-                    <span className="bm__breadcrumb-current">
+                    <span
+                      className="bm__breadcrumb-current"
+                      data-component={getComponent(`breadcrumb-current-${index + 1}`)}
+                    >
                       {part.label}
                     </span>
                   ) : (
                     <span
                       className="bm__breadcrumb-link"
                       onClick={part.action}
+                      data-component={getComponent(`breadcrumb-link-${index + 1}`)}
                     >
                       {part.label}
                     </span>
@@ -363,7 +420,11 @@ export function MobileBookingModal({
               ))}
             </div>
             {showBack && (
-              <button className="bm__back" onClick={handleBack}>
+              <button
+                className="bm__back"
+                onClick={handleBack}
+                data-component={getComponent("back-button")}
+              >
                 ← 이전
               </button>
             )}
@@ -374,6 +435,7 @@ export function MobileBookingModal({
           <div
             className="bm__map-container bm__map-container-mobile"
             style={{ display: view === "map" ? "flex" : "none" }}
+            data-component={getComponent("map-view")}
           >
             <KoreaRegionMap
               ref={mapRef}
@@ -381,13 +443,19 @@ export function MobileBookingModal({
               onBreadcrumbChange={handleBreadcrumbChange}
               onShowBack={handleShowBack}
               onMunicipalitySelect={handleMunicipalitySelect}
+              data-component={getComponent("map")}
             />
           </div>
         )}
         {showChrome && view === "map" && (
-          <div className="bm__footer">
-            <div className="bm__footer-icon">!</div>
-            <p>
+          <div className="bm__footer" data-component={getComponent("map-footer")}>
+            <div
+              className="bm__footer-icon"
+              data-component={getComponent("map-footer-icon")}
+            >
+              !
+            </div>
+            <p data-component={getComponent("map-footer-copy")}>
               서비스 가능 지역만 선택할 수 있습니다. 추가 지역은 순차적으로
               오픈 예정이에요.
             </p>
@@ -399,19 +467,36 @@ export function MobileBookingModal({
             className="bm__success-panel bm__success-panel-mobile"
             role="status"
             aria-live="polite"
+            data-component={getComponent("success-view")}
           >
-            <div className="bm__success-mark" aria-hidden="true">
+            <div
+              className="bm__success-mark"
+              aria-hidden="true"
+              data-component={getComponent("success-mark")}
+            >
               ✓
             </div>
-            <div className="bm__success-copy">
-              <h3 className="bm__success-title">상담 신청이 완료되었습니다</h3>
-              <p className="bm__success-description">
+            <div
+              className="bm__success-copy"
+              data-component={getComponent("success-copy")}
+            >
+              <h3
+                className="bm__success-title"
+                data-component={getComponent("success-title")}
+              >
+                상담 신청이 완료되었습니다
+              </h3>
+              <p
+                className="bm__success-description"
+                data-component={getComponent("success-description")}
+              >
                 빠른 시일 내에 담당 지점에서 연락드리겠습니다.
               </p>
             </div>
             <button
               className="bm__success-button bm__success-button-mobile"
               onClick={handleSuccessBack}
+              data-component={getComponent("success-button")}
             >
               확인
             </button>
@@ -419,18 +504,24 @@ export function MobileBookingModal({
         )}
 
         {view === "form" && !submitted && (
-          <div className="bm__form-panel">
-            <div className="bm__form-intro">
-              <p className="big-p">
+          <div className="bm__form-panel" data-component={getComponent("form-view")}>
+            <div className="bm__form-intro" data-component={getComponent("form-intro")}>
+              <p className="big-p" data-component={getComponent("form-intro-copy")}>
                 산후도우미 서비스에 대해서 궁금한 점이 있으시다면,
                 <br />
                 부담없이 상담 받으세요. 바로 예약하지 않으셔도 괜찮아요!
               </p>
             </div>
 
-            <div className="bm__form-fields">
-              <div className="bm__form-group">
-                <FieldLabel error={visibleError("branchSlug")}>
+            <div className="bm__form-fields" data-component={getComponent("form-fields")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("branch")}
+              >
+                <FieldLabel
+                  error={visibleError("branchSlug")}
+                  data-component={getFieldComponent("branch")}
+                >
                   담당 지점
                 </FieldLabel>
                 <input
@@ -443,11 +534,19 @@ export function MobileBookingModal({
                       : selectedProvince ?? "")
                   }
                   readOnly
+                  data-component={getFieldComponent("branch", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel required error={visibleError("motherName")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("mother-name")}
+              >
+                <FieldLabel
+                  required
+                  error={visibleError("motherName")}
+                  data-component={getFieldComponent("mother-name")}
+                >
                   산모님 성함
                 </FieldLabel>
                 <input
@@ -459,10 +558,14 @@ export function MobileBookingModal({
                     updateField("motherName", event.target.value)
                   }
                   onBlur={() => markTouched("motherName")}
+                  data-component={getFieldComponent("mother-name", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("phone")}
+              >
                 <FieldLabel
                   required
                   error={
@@ -470,6 +573,7 @@ export function MobileBookingModal({
                       ? fieldErrors.phone
                       : visibleError("phone")
                   }
+                  data-component={getFieldComponent("phone")}
                 >
                   산모님 연락처
                 </FieldLabel>
@@ -480,11 +584,19 @@ export function MobileBookingModal({
                   value={form.phone}
                   onChange={(event) => updateField("phone", event.target.value)}
                   onBlur={() => markTouched("phone")}
+                  data-component={getFieldComponent("phone", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel required error={visibleError("address")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("address")}
+              >
+                <FieldLabel
+                  required
+                  error={visibleError("address")}
+                  data-component={getFieldComponent("address")}
+                >
                   주소
                 </FieldLabel>
                 <input
@@ -496,11 +608,19 @@ export function MobileBookingModal({
                     updateField("address", event.target.value)
                   }
                   onBlur={() => markTouched("address")}
+                  data-component={getFieldComponent("address", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel required error={visibleError("dueDate")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("due-date")}
+              >
+                <FieldLabel
+                  required
+                  error={visibleError("dueDate")}
+                  data-component={getFieldComponent("due-date")}
+                >
                   출산 예정일
                 </FieldLabel>
                 <input
@@ -511,14 +631,25 @@ export function MobileBookingModal({
                     updateField("dueDate", event.target.value)
                   }
                   onBlur={() => markTouched("dueDate")}
+                  data-component={getFieldComponent("due-date", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel required error={visibleError("birthExperience")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("birth-experience")}
+              >
+                <FieldLabel
+                  required
+                  error={visibleError("birthExperience")}
+                  data-component={getFieldComponent("birth-experience")}
+                >
                   출산 경험
                 </FieldLabel>
-                <div className="bm__radio-group">
+                <div
+                  className="bm__radio-group"
+                  data-component={getFieldComponent("birth-experience", "options")}
+                >
                   <RadioPill
                     name="birthExp"
                     value="초산"
@@ -527,6 +658,7 @@ export function MobileBookingModal({
                       updateField("birthExperience", event.target.value);
                       markTouched("birthExperience");
                     }}
+                    data-component={getFieldComponent("birth-experience", "option-first")}
                   >
                     초산
                   </RadioPill>
@@ -538,14 +670,20 @@ export function MobileBookingModal({
                       updateField("birthExperience", event.target.value);
                       markTouched("birthExperience");
                     }}
+                    data-component={getFieldComponent("birth-experience", "option-repeat")}
                   >
                     경산
                   </RadioPill>
                 </div>
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel>정부지원 바우처 유형</FieldLabel>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("voucher-type")}
+              >
+                <FieldLabel data-component={getFieldComponent("voucher-type")}>
+                  정부지원 바우처 유형
+                </FieldLabel>
                 <input
                   className="bm__form-input"
                   type="text"
@@ -554,11 +692,19 @@ export function MobileBookingModal({
                   onChange={(event) =>
                     updateField("voucherType", event.target.value)
                   }
+                  data-component={getFieldComponent("voucher-type", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel>원하시는 관리사님 성함</FieldLabel>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("preferred-caregiver-name")}
+              >
+                <FieldLabel
+                  data-component={getFieldComponent("preferred-caregiver-name")}
+                >
+                  원하시는 관리사님 성함
+                </FieldLabel>
                 <input
                   className="bm__form-input"
                   type="text"
@@ -570,11 +716,19 @@ export function MobileBookingModal({
                       event.target.value
                     )
                   }
+                  data-component={getFieldComponent("preferred-caregiver-name", "input")}
                 />
               </div>
 
-              <div className="bm__form-group">
-                <FieldLabel required error={visibleError("referralSource")}>
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("referral-source")}
+              >
+                <FieldLabel
+                  required
+                  error={visibleError("referralSource")}
+                  data-component={getFieldComponent("referral-source")}
+                >
                   아가잼잼을 어떻게 알게 되셨나요?
                 </FieldLabel>
                 <select
@@ -584,6 +738,7 @@ export function MobileBookingModal({
                     updateField("referralSource", event.target.value)
                   }
                   onBlur={() => markTouched("referralSource")}
+                  data-component={getFieldComponent("referral-source", "select")}
                 >
                   <option value="" disabled>
                     항목을 선택해 주세요
@@ -597,32 +752,44 @@ export function MobileBookingModal({
                 </select>
               </div>
 
-              <label className="bm__privacy">
+              <label
+                className="bm__privacy"
+                data-component={getComponent("privacy")}
+              >
                 <input
                   type="checkbox"
                   checked={form.privacyAccepted}
                   onChange={(event) =>
                     updateField("privacyAccepted", event.target.checked)
                   }
+                  data-component={getComponent("privacy-checkbox")}
                 />
-                <span>
+                <span data-component={getComponent("privacy-copy")}>
                   상담 안내를 위한 개인정보 수집 및 이용에 동의합니다.
                   <InlineFieldError
                     message={visibleError("privacyAccepted")}
+                    data-component={getComponent("privacy-error")}
                   />
                 </span>
               </label>
 
               {submitError && (
-                <p className="bm__form-message bm__form-message--error">
+                <p
+                  className="bm__form-message bm__form-message--error"
+                  data-component={getComponent("submit-error")}
+                >
                   {submitError}
                 </p>
               )}
-              <div className="bm__form-submit-row bm__form-submit-row-mobile">
+              <div
+                className="bm__form-submit-row bm__form-submit-row-mobile"
+                data-component={getComponent("submit-row")}
+              >
                 <button
                   className="bm__form-submit bm__form-submit-mobile"
                   disabled={isSubmitting}
                   onClick={handleSubmit}
+                  data-component={getComponent("submit-button")}
                 >
                   {isSubmitting ? "전송 중..." : "상담 신청하기"}
                 </button>

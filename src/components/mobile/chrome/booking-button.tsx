@@ -21,8 +21,17 @@ export function MobileBookingButton({
 
   return (
     <>
-      <PillCta onClick={() => setOpen(true)}>상담신청</PillCta>
-      <MobileBookingModal open={open} onClose={handleClose} />
+      <PillCta
+        data-component="mobile-chrome-booking-button-trigger"
+        onClick={() => setOpen(true)}
+      >
+        상담신청
+      </PillCta>
+      <MobileBookingModal
+        open={open}
+        onClose={handleClose}
+        data-component="mobile-chrome-booking-modal"
+      />
     </>
   );
 }

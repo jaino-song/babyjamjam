@@ -21,8 +21,17 @@ export function DesktopBookingButton({
 
   return (
     <>
-      <PillCta onClick={() => setOpen(true)}>상담신청</PillCta>
-      <DesktopBookingModal open={open} onClose={handleClose} />
+      <PillCta
+        data-component="desktop-chrome-booking-button-trigger"
+        onClick={() => setOpen(true)}
+      >
+        상담신청
+      </PillCta>
+      <DesktopBookingModal
+        open={open}
+        onClose={handleClose}
+        data-component="desktop-chrome-booking-modal"
+      />
     </>
   );
 }
