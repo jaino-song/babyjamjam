@@ -2092,7 +2092,7 @@
 .nav-drawer__link:hover,
 .nav-drawer__link:focus-visible { background: rgba(255, 255, 255, 0.08); }
 .nav-drawer__link[aria-current="page"] { background: rgba(255, 255, 255, 0.12); }
-.nav-drawer__items [data-component="ui-pill-cta"] {
+.nav-drawer__items button {
   display: block !important;
   width: 100% !important;
   height: auto !important;
@@ -2107,8 +2107,8 @@
   color: inherit !important;
   text-align: left !important;
 }
-.nav-drawer__items [data-component="ui-pill-cta"]:hover,
-.nav-drawer__items [data-component="ui-pill-cta"]:focus-visible { background: rgba(255, 255, 255, 0.08); }
+.nav-drawer__items button:hover,
+.nav-drawer__items button:focus-visible { background: rgba(255, 255, 255, 0.08); }
 @keyframes nav-drawer-slide-in {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
