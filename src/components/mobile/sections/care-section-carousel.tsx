@@ -32,9 +32,11 @@ const DEFAULT_CARE_CARD_IMAGE_BY_TONE = {
 export function MobileCareSectionCarousel({
   sections,
   initialActiveIndex = 0,
+  "data-component": dataComponent,
 }: {
   sections: CareSectionData[];
   initialActiveIndex?: number;
+  ["data-component"]?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
   const [fanState, setFanState] = useState<"entered" | "entering">("entered");
@@ -102,8 +104,11 @@ export function MobileCareSectionCarousel({
     setActiveDot(nextIndex);
   };
 
+  const sub = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+
   return (
-    <section className="care-carousel">
+    <section className="care-carousel" data-component={dataComponent}>
       <div
         className="care-carousel__toggle"
         role="tablist"
@@ -114,6 +119,7 @@ export function MobileCareSectionCarousel({
             "--care-tab-count": sections.length,
           } as React.CSSProperties
         }
+        data-component={sub("toggle")}
       >
         {sections.map((s, index) => (
           <button
@@ -123,13 +129,17 @@ export function MobileCareSectionCarousel({
             aria-selected={index === activeIndex}
             className={`care-carousel__toggle-btn${index === activeIndex ? " care-carousel__toggle-btn--active" : ""}`}
             onClick={() => handleTabSwitch(index)}
+            data-component={sub(`toggle-btn-${s.id}`)}
           >
             {s.tabLabel}
           </button>
         ))}
       </div>
 
-      <div className="care-carousel__track-section">
+      <div
+        className="care-carousel__track-section"
+        data-component={sub("track-section")}
+      >
         <div
           className="care-carousel__heading"
           style={{
@@ -137,20 +147,34 @@ export function MobileCareSectionCarousel({
             transform:
               fanState === "entering" ? "translateY(8px)" : "translateY(0)",
           }}
+          data-component={sub("heading")}
         >
-          <h2 className="h2-left">
-            <span className="care-carousel__heading-muted">
+          <h2 className="h2-left" data-component={sub("heading-h2")}>
+            <span
+              className="care-carousel__heading-muted"
+              data-component={sub("heading-muted")}
+            >
               {section.mutedText}
             </span>
             <br />
-            <span className="care-carousel__heading-primary">
+            <span
+              className="care-carousel__heading-primary"
+              data-component={sub("heading-primary")}
+            >
               {section.primaryText}
             </span>
           </h2>
         </div>
 
-        <div className="care-carousel__track-wrap">
-          <div className="care-carousel__track" ref={trackRef}>
+        <div
+          className="care-carousel__track-wrap"
+          data-component={sub("track-wrap")}
+        >
+          <div
+            className="care-carousel__track"
+            ref={trackRef}
+            data-component={sub("track")}
+          >
             {section.cards.map((card, i) => {
               const imageSrc =
                 card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[section.tone];
@@ -161,20 +185,34 @@ export function MobileCareSectionCarousel({
                   key={`${section.id}-${card.title}`}
                   className={`care-carousel__card care-carousel__card--fan-${fanState} care-carousel__card--${section.tone}`}
                   style={{ transitionDelay: `${i * 0.1}s` }}
+                  data-component={sub(`card-${section.id}-${i}`)}
                 >
-                  <div className="care-carousel__card-inner">
+                  <div
+                    className="care-carousel__card-inner"
+                    data-component={sub(`card-${section.id}-${i}-inner`)}
+                  >
                     <ImageBlock
                       variant="careCard"
                       src={imageSrc}
                       alt={imageAlt}
                       className="care-carousel__card-img"
+                      data-component={sub(`card-${section.id}-${i}-image`)}
                     />
                   </div>
-                  <div className="care-carousel__caption">
-                    <h3 className="h6 care-carousel__caption-title">
+                  <div
+                    className="care-carousel__caption"
+                    data-component={sub(`card-${section.id}-${i}-caption`)}
+                  >
+                    <h3
+                      className="h6 care-carousel__caption-title"
+                      data-component={sub(`card-${section.id}-${i}-title`)}
+                    >
                       {card.title}
                     </h3>
-                    <p className="medium-p care-carousel__caption-desc">
+                    <p
+                      className="medium-p care-carousel__caption-desc"
+                      data-component={sub(`card-${section.id}-${i}-description`)}
+                    >
                       {card.description}
                     </p>
                   </div>
@@ -191,15 +229,20 @@ export function MobileCareSectionCarousel({
             nextDisabled={activeDot === section.cards.length - 1}
             onPrevious={() => scrollCard(-1)}
             onNext={() => scrollCard(1)}
+            data-component={sub("paddlenav")}
           />
         </div>
       </div>
 
-      <div className="care-carousel__dots">
+      <div
+        className="care-carousel__dots"
+        data-component={sub("dots")}
+      >
         {section.cards.map((_, i) => (
           <div
             key={i}
             className={`care-carousel__dot${i === activeDot ? " care-carousel__dot--active" : ""}`}
+            data-component={sub(`dot-${i}`)}
           />
         ))}
       </div>

@@ -77,22 +77,36 @@ const CARE_SECTIONS: CareSectionData[] = [
 export default function DesktopPostpartumCarePage() {
   return (
     <>
-      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
-        <section className="flex flex-col items-center w-full gap-16">
-          <div className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef]">
+      <main
+        className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
+        data-component="desktop-postpartum-care-page-main"
+      >
+        <section
+          className="flex flex-col items-center w-full gap-16"
+          data-component="desktop-postpartum-care-hero-section"
+        >
+          <div
+            className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef]"
+            data-component="desktop-postpartum-care-hero-banner"
+          >
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"
               className="w-full h-full object-cover object-[center_top] shrink-0"
+              data-component="desktop-postpartum-care-hero-banner-image"
             />
           </div>
-          <h1 className="h1 text-bjj-primary whitespace-pre-line w-full">
+          <h1
+            className="h1 text-bjj-primary whitespace-pre-line w-full"
+            data-component="desktop-postpartum-care-hero-headline"
+          >
             {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
           </h1>
         </section>
         <DesktopCareSectionCarousel
           sections={CARE_SECTIONS}
           initialActiveIndex={0}
+          data-component="desktop-postpartum-care-care-section-carousel"
         />
 
         <BannerImageSection />
