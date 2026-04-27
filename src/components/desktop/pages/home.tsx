@@ -35,7 +35,7 @@ export default function DesktopHomePage() {
           overlayText="검증 됐으니까. 믿을 수 있으니까."
         />
 
-        <LogoCarousel />
+        <LogoCarousel data-component="desktop-home-logo-carousel" />
 
         <section className="flex min-h-[588px] w-full items-center justify-between gap-12">
           <div className="flex flex-[7_1_0] flex-col items-start gap-6 pb-[52px]">

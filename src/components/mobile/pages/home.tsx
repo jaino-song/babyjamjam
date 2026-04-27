@@ -31,7 +31,7 @@ export default function MobileHomePage() {
           overlayText="검증 됐으니까. 믿을 수 있으니까."
         />
 
-        <LogoCarousel />
+        <LogoCarousel data-component="mobile-home-logo-carousel" />
 
         <section className="flex h-auto min-h-[588px] w-full flex-col items-center justify-between gap-8">
           <div className="flex w-full flex-[7_1_0] flex-col items-start gap-6 pb-[52px]">
