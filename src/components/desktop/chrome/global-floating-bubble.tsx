@@ -6,7 +6,13 @@ import { usePricingStore } from "@/lib/pricing-store";
 
 import { DesktopFloatingBubble } from "./floating-bubble";
 
-export function DesktopGlobalFloatingBubble() {
+interface DesktopGlobalFloatingBubbleProps {
+  "data-component"?: string;
+}
+
+export function DesktopGlobalFloatingBubble({
+  "data-component": dataComponent,
+}: DesktopGlobalFloatingBubbleProps) {
   const pathname = usePathname();
   const selectedPlanId = usePricingStore((state) => state.selectedPlanId);
   const addonSelections = usePricingStore((state) => state.addonSelections);
@@ -15,5 +21,13 @@ export function DesktopGlobalFloatingBubble() {
 
   if (isPricingPage) return null;
 
-  return <DesktopFloatingBubble distinctCount={distinctCount} showCart={false} />;
+  return (
+    <DesktopFloatingBubble
+      distinctCount={distinctCount}
+      showCart={false}
+      data-component={
+        dataComponent ? `${dataComponent}-floating-bubble` : undefined
+      }
+    />
+  );
 }
