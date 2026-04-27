@@ -17,13 +17,13 @@ export default function MobileShell({ children }: { children: React.ReactNode })
           data-component={`${dataComponentBase}-header-region`}
           className="w-full"
         >
-          <MobilePersistentNav />
+          <MobilePersistentNav data-component="mobile-chrome-persistent-nav" />
         </div>
         <div
           data-component={`${dataComponentBase}-announcement-region`}
           className="w-full"
         >
-          <MobileAnnouncementRibbon />
+          <MobileAnnouncementRibbon data-component="mobile-chrome-announcement-ribbon" />
         </div>
         <div
           data-component={`${dataComponentBase}-page-transition-wrap`}
@@ -35,7 +35,7 @@ export default function MobileShell({ children }: { children: React.ReactNode })
         </div>
       </div>
       <div data-component={`${dataComponentBase}-bubble-region`}>
-        <MobileGlobalFloatingBubble />
+        <MobileGlobalFloatingBubble data-component="mobile-chrome-global-floating-bubble" />
       </div>
     </>
   );

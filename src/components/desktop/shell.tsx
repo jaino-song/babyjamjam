@@ -17,13 +17,13 @@ export default function DesktopShell({ children }: { children: React.ReactNode }
           data-component={`${dataComponentBase}-header-region`}
           className="w-full"
         >
-          <DesktopPersistentNav />
+          <DesktopPersistentNav data-component="desktop-chrome-persistent-nav" />
         </div>
         <div
           data-component={`${dataComponentBase}-announcement-region`}
           className="w-full"
         >
-          <DesktopAnnouncementRibbon />
+          <DesktopAnnouncementRibbon data-component="desktop-chrome-announcement-ribbon" />
         </div>
         <div
           data-component={`${dataComponentBase}-page-transition-wrap`}
@@ -35,7 +35,7 @@ export default function DesktopShell({ children }: { children: React.ReactNode }
         </div>
       </div>
       <div data-component={`${dataComponentBase}-bubble-region`}>
-        <DesktopGlobalFloatingBubble />
+        <DesktopGlobalFloatingBubble data-component="desktop-chrome-global-floating-bubble" />
       </div>
     </>
   );
