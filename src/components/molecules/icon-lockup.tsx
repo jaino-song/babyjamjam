@@ -7,9 +7,16 @@ interface IconLockupProps {
   title: string;
   description: string;
   className?: string;
+  "data-component"?: string;
 }
 
-export function IconLockup({ icon, title, description, className }: IconLockupProps) {
+export function IconLockup({
+  icon,
+  title,
+  description,
+  className,
+  "data-component": dataComponent,
+}: IconLockupProps) {
   const Icon = icon;
 
   return (
@@ -18,22 +25,28 @@ export function IconLockup({ icon, title, description, className }: IconLockupPr
         "flex-1 flex flex-col items-start gap-6 border-t border-bjj-divider p-10 pt-10 pr-5 pb-10",
         className
       )}
-      data-component="molecule-icon-lockup"
+      data-component={dataComponent}
     >
-      <Icon className="w-4 h-4" aria-hidden="true" data-component="molecule-icon-lockup-icon" />
+      <Icon
+        className="w-4 h-4"
+        aria-hidden="true"
+        data-component={dataComponent ? `${dataComponent}_icon` : undefined}
+      />
       <div
         className="flex flex-col"
-        data-component="molecule-icon-lockup-content"
+        data-component={dataComponent ? `${dataComponent}_content` : undefined}
       >
         <h5
           className="text-h5 font-bold font-heading text-bjj-text-headline"
-          data-component="molecule-icon-lockup-title"
+          data-component={dataComponent ? `${dataComponent}_title` : undefined}
         >
           {title}
         </h5>
         <p
           className="text-medium-p font-medium font-body text-bjj-text-paragraph tracking-wide leading-relaxed"
-          data-component="molecule-icon-lockup-description"
+          data-component={
+            dataComponent ? `${dataComponent}_description` : undefined
+          }
         >
           {description}
         </p>

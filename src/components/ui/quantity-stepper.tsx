@@ -9,6 +9,7 @@ interface QuantityStepperProps {
   onChange?: (value: number) => void;
   className?: string;
   disabled?: boolean;
+  "data-component"?: string;
 }
 
 export function QuantityStepper({
@@ -18,6 +19,7 @@ export function QuantityStepper({
   onChange,
   className,
   disabled = false,
+  "data-component": dataComponent,
 }: QuantityStepperProps) {
   const canDecrement = value > min && !disabled;
   const canIncrement = value < max && !disabled;
@@ -25,7 +27,7 @@ export function QuantityStepper({
   return (
     <div
       className={cn("qty-stepper", className)}
-      data-component="ui-quantity-stepper"
+      data-component={dataComponent}
     >
       <button
         type="button"
@@ -33,6 +35,7 @@ export function QuantityStepper({
         onClick={() => canDecrement && onChange?.(value - 1)}
         disabled={!canDecrement}
         aria-label="수량 줄이기"
+        data-component={dataComponent ? `${dataComponent}_decrement` : undefined}
       >
         <svg width="12" height="2" viewBox="0 0 12 2" fill="none" aria-hidden="true">
           <path
@@ -44,7 +47,12 @@ export function QuantityStepper({
         </svg>
       </button>
 
-      <span className="qty-stepper__value">{value}</span>
+      <span
+        className="qty-stepper__value"
+        data-component={dataComponent ? `${dataComponent}_value` : undefined}
+      >
+        {value}
+      </span>
 
       <button
         type="button"
@@ -52,6 +60,7 @@ export function QuantityStepper({
         onClick={() => canIncrement && onChange?.(value + 1)}
         disabled={!canIncrement}
         aria-label="수량 늘리기"
+        data-component={dataComponent ? `${dataComponent}_increment` : undefined}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path

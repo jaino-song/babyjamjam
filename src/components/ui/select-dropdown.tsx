@@ -16,6 +16,7 @@ interface SelectDropdownProps {
   onChange?: (value: string) => void;
   className?: string;
   disabled?: boolean;
+  "data-component"?: string;
 }
 
 export function SelectDropdown({
@@ -25,6 +26,7 @@ export function SelectDropdown({
   onChange,
   className,
   disabled = false,
+  "data-component": dataComponent,
 }: SelectDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ export function SelectDropdown({
     <div
       ref={containerRef}
       className={cn("select-dropdown", isOpen && "select-dropdown--open", className)}
-      data-component="ui-select-dropdown"
+      data-component={dataComponent}
     >
       <button
         type="button"
@@ -57,6 +59,7 @@ export function SelectDropdown({
         disabled={disabled}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        data-component={dataComponent ? `${dataComponent}_trigger` : undefined}
       >
         <span
           className={cn(
@@ -85,7 +88,11 @@ export function SelectDropdown({
       </button>
 
       {isOpen && (
-        <ul className="select-dropdown__menu" role="listbox">
+        <ul
+          className="select-dropdown__menu"
+          role="listbox"
+          data-component={dataComponent ? `${dataComponent}_menu` : undefined}
+        >
           {options.map((option) => (
             <li
               key={option.value}
@@ -99,6 +106,7 @@ export function SelectDropdown({
                 onChange?.(option.value);
                 setIsOpen(false);
               }}
+              data-component={dataComponent ? `${dataComponent}_option` : undefined}
             >
               {option.label}
             </li>

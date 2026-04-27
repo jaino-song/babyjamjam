@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { FormAnswers } from "@/components/organisms/pricing-form-modal";
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
+import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import type { GradeName, ChildType } from "@/lib/voucher-type";
 import { resolveGrade, resolveTier, buildTypeCode, STAFF_OPTIONS } from "@/lib/voucher-type";
 
 export type PricingState = {
-  formAnswers: FormAnswers;
+  formAnswers: PricingFormAnswers;
   pricesRevealed: boolean;
   isLoading: boolean;
   plans: PlanData[];
@@ -25,7 +25,10 @@ type PricingActions = {
   removeAddon: (addonId: string) => void;
   setAddonQty: (addonId: string, qty: number) => void;
   setGradeName: (gradeName: GradeName) => void;
-  fetchPricing: (formAnswers: FormAnswers, gradeName: GradeName) => Promise<void>;
+  fetchPricing: (
+    formAnswers: PricingFormAnswers,
+    gradeName: GradeName
+  ) => Promise<void>;
 };
 
 export const usePricingStore = create<PricingState & PricingActions>()(

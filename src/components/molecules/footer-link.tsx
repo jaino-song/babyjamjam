@@ -5,9 +5,15 @@ interface FooterLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  "data-component"?: string;
 }
 
-export function FooterLink({ href, children, className }: FooterLinkProps) {
+export function FooterLink({
+  href,
+  children,
+  className,
+  "data-component": dataComponent,
+}: FooterLinkProps) {
   const classes = cn(
     "font-number text-[9px] leading-[1.52] tracking-[-0.015em] font-bold text-bjj-text-link no-underline hover:underline",
     className
@@ -15,14 +21,14 @@ export function FooterLink({ href, children, className }: FooterLinkProps) {
 
   if (href.startsWith("/")) {
     return (
-      <Link href={href} className={classes} data-component="molecule-footer-link">
+      <Link href={href} className={classes} data-component={dataComponent}>
         {children}
       </Link>
     );
   }
 
   return (
-    <a href={href} className={classes} data-component="molecule-footer-link">
+    <a href={href} className={classes} data-component={dataComponent}>
       {children}
     </a>
   );

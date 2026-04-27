@@ -8,6 +8,7 @@ type RadioPillProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   defaultChecked?: boolean;
   checked?: boolean;
+  "data-component"?: string;
 };
 
 export function RadioPill({
@@ -18,9 +19,10 @@ export function RadioPill({
   onChange,
   defaultChecked,
   checked,
+  "data-component": dataComponent,
 }: RadioPillProps) {
   return (
-    <label className={cn("radio-pill", className)} data-component="ui-radio-pill">
+    <label className={cn("radio-pill", className)} data-component={dataComponent}>
       <input
         type="radio"
         name={name}
@@ -28,8 +30,14 @@ export function RadioPill({
         onChange={onChange}
         defaultChecked={defaultChecked}
         checked={checked}
+        data-component={dataComponent ? `${dataComponent}_input` : undefined}
       />
-      <span className="radio-pill__label medium-p">{children}</span>
+      <span
+        className="radio-pill__label medium-p"
+        data-component={dataComponent ? `${dataComponent}_label` : undefined}
+      >
+        {children}
+      </span>
     </label>
   );
 }

@@ -17,6 +17,7 @@ interface PricingPlanCardProps {
   selected?: boolean;
   onSelect?: () => void;
   isLoading?: boolean;
+  "data-component"?: string;
 }
 
 export function PricingPlanCard({
@@ -24,20 +25,41 @@ export function PricingPlanCard({
   selected = false,
   onSelect,
   isLoading = false,
+  "data-component": dataComponent,
 }: PricingPlanCardProps) {
   return (
     <div
       className={cn("plan-card", selected && "plan-card--selected")}
-      data-component="molecule-pricing-plan-card"
+      data-component={dataComponent}
     >
       <div className="plan-card__top">
-        <div className="plan-card__header">
-          <h3 className="plan-card__name">{plan.name}</h3>
-          {plan.badge && <span className="plan-card__badge">{plan.badge}</span>}
+        <div
+          className="plan-card__header"
+          data-component={dataComponent ? `${dataComponent}_header` : undefined}
+        >
+          <h3
+            className="plan-card__name"
+            data-component={dataComponent ? `${dataComponent}_name` : undefined}
+          >
+            {plan.name}
+          </h3>
+          {plan.badge && (
+            <span
+              className="plan-card__badge"
+              data-component={dataComponent ? `${dataComponent}_badge` : undefined}
+            >
+              {plan.badge}
+            </span>
+          )}
         </div>
 
         {plan.description && (
-          <p className="plan-card__description">{plan.description}</p>
+          <p
+            className="plan-card__description"
+            data-component={dataComponent ? `${dataComponent}_description` : undefined}
+          >
+            {plan.description}
+          </p>
         )}
 
         <p
@@ -45,6 +67,7 @@ export function PricingPlanCard({
             "plan-card__price",
             isLoading && "plan-card__price--loading"
           )}
+          data-component={dataComponent ? `${dataComponent}_price` : undefined}
         >
           <span className="plan-card__price-value">{plan.price}</span>
           <span className="skeleton skeleton--price" aria-hidden="true" />
@@ -58,14 +81,24 @@ export function PricingPlanCard({
             selected ? "plan-card__btn--selected" : "plan-card__btn--default"
           )}
           onClick={onSelect}
+          data-component={dataComponent ? `${dataComponent}_button` : undefined}
         >
           {selected ? "선택 완료" : "플랜 선택하기"}
         </button>
       </div>
 
-      <div className="plan-card__features">
-        {plan.features.map((feature) => (
-          <div key={feature} className="plan-card__feature">
+      <div
+        className="plan-card__features"
+        data-component={dataComponent ? `${dataComponent}_features` : undefined}
+      >
+        {plan.features.map((feature, index) => (
+          <div
+            key={feature}
+            className="plan-card__feature"
+            data-component={
+              dataComponent ? `${dataComponent}_feature-${index}` : undefined
+            }
+          >
             <span className="plan-card__check" aria-hidden="true">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path

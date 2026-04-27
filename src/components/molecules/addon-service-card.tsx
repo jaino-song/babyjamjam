@@ -21,6 +21,7 @@ interface AddonServiceCardProps {
   onAdd?: () => void;
   onRemove?: () => void;
   onQuantityChange?: (qty: number) => void;
+  "data-component"?: string;
 }
 
 export function AddonServiceCard({
@@ -30,26 +31,51 @@ export function AddonServiceCard({
   onAdd,
   onRemove,
   onQuantityChange,
+  "data-component": dataComponent,
 }: AddonServiceCardProps) {
   return (
     <div
       className={cn("addon-card", added && "addon-card--added")}
-      data-component="molecule-addon-service-card"
+      data-component={dataComponent}
     >
-      <div className="addon-card__inner">
-        <h3 className="addon-card__name">{addon.name}</h3>
+      <div
+        className="addon-card__inner"
+        data-component={dataComponent ? `${dataComponent}_inner` : undefined}
+      >
+        <h3
+          className="addon-card__name"
+          data-component={dataComponent ? `${dataComponent}_name` : undefined}
+        >
+          {addon.name}
+        </h3>
 
         {addon.note ? (
-          <div className="addon-card__note">
+          <div
+            className="addon-card__note"
+            data-component={dataComponent ? `${dataComponent}_note` : undefined}
+          >
             <span className="addon-card__note-text">{addon.note}</span>
           </div>
         ) : (
-          <p className="addon-card__description">{addon.description}</p>
+          <p
+            className="addon-card__description"
+            data-component={dataComponent ? `${dataComponent}_description` : undefined}
+          >
+            {addon.description}
+          </p>
         )}
 
-        <p className="addon-card__price">{addon.price}</p>
+        <p
+          className="addon-card__price"
+          data-component={dataComponent ? `${dataComponent}_price` : undefined}
+        >
+          {addon.price}
+        </p>
 
-        <div className="addon-card__actions">
+        <div
+          className="addon-card__actions"
+          data-component={dataComponent ? `${dataComponent}_actions` : undefined}
+        >
           <QuantityStepper
             value={quantity}
             min={1}
@@ -62,6 +88,7 @@ export function AddonServiceCard({
               added ? "addon-card__btn--added" : "addon-card__btn--default"
             )}
             onClick={added ? onRemove : onAdd}
+            data-component={dataComponent ? `${dataComponent}_button` : undefined}
           >
             {added ? "추가 완료" : "서비스 추가하기"}
           </button>
