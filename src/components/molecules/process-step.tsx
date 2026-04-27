@@ -5,36 +5,45 @@ interface ProcessStepProps {
   title: string;
   description: string;
   className?: string;
+  "data-component"?: string;
 }
 
-export function ProcessStep({ number, title, description, className }: ProcessStepProps) {
+export function ProcessStep({
+  number,
+  title,
+  description,
+  className,
+  "data-component": dataComponent,
+}: ProcessStepProps) {
   return (
     <div
       className={cn(
         "flex-1 flex flex-col gap-10 pt-10 pr-5 pb-3 border-t border-bjj-divider",
         className
       )}
-      data-component="molecule-process-step"
+      data-component={dataComponent}
     >
       <span
         className="font-number text-process-num font-normal leading-none tracking-[-0.04em] text-bjj-accent"
-        data-component="molecule-process-step-number"
+        data-component={dataComponent ? `${dataComponent}-number` : undefined}
       >
         {number}
       </span>
       <div
         className="flex flex-col items-start w-full gap-3"
-        data-component="molecule-process-step-content"
+        data-component={dataComponent ? `${dataComponent}-content` : undefined}
       >
         <h3
           className="h6 text-bjj-primary-light"
-          data-component="molecule-process-step-title"
+          data-component={dataComponent ? `${dataComponent}-title` : undefined}
         >
           {title}
         </h3>
         <p
           className="medium-p !text-bjj-primary-light"
-          data-component="molecule-process-step-description"
+          data-component={
+            dataComponent ? `${dataComponent}-description` : undefined
+          }
         >
           {description}
         </p>
