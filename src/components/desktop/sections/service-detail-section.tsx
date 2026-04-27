@@ -68,13 +68,16 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
   return (
     <section
       className={cn("w-full rounded-[36px] py-12", className)}
-      data-component="organism-service-detail-section"
+      data-component={"organism-service-detail-section"}
     >
       <div
         className="grid grid-cols-[minmax(0,1fr)_360px] items-center gap-12"
-        data-component="organism-service-detail-grid"
+        data-component={"organism-service-detail-grid"}
       >
-        <div className="flex flex-col items-start gap-8" data-component="organism-service-detail-content">
+        <div
+          className="flex flex-col items-start gap-8"
+          data-component={"organism-service-detail-content"}
+        >
           <div className="flex max-w-[760px] flex-col items-start gap-5">
             <DualColorHeading
               mutedText="방치되는 공장형?"
@@ -83,7 +86,7 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
             />
             <p
               className="big-p max-w-[720px]"
-              data-component="organism-service-detail-description"
+              data-component={"organism-service-detail-description"}
             >
               아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
               지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
@@ -93,7 +96,7 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
 
           <div
             className="service-tabs"
-            data-component="organism-service-detail-tabs"
+            data-component={"organism-service-detail-tabs"}
             style={
               {
                 ["--service-tab-count" as string]: SERVICE_DETAIL_ITEMS.length,
@@ -189,7 +192,7 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
             role="tabpanel"
             id={`service-detail-panel-${activeIndex}`}
             aria-labelledby={`service-detail-tab-${activeIndex}`}
-            data-component="organism-service-detail-caption"
+            data-component={"organism-service-detail-caption"}
           >
             <div key={activeItem.title} className="service-tabs__caption-inner">
               <p className="h5 service-tabs__caption-text">{activeItem.description}</p>
@@ -199,9 +202,9 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
 
         <div
           className="flex items-center justify-center"
-          data-component="organism-service-detail-preview"
+          data-component={"organism-service-detail-preview"}
         >
-          <KakaoChatPhone />
+          <KakaoChatPhone data-component="desktop-home-service-detail-kakao-chat-phone" />
         </div>
       </div>
     </section>

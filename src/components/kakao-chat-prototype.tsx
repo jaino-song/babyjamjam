@@ -24,7 +24,11 @@ const MOCK_MESSAGES: Message[] = [
 const STEP_MS = 2000;
 const RESET_DELAY_MS = 2600;
 
-export function KakaoChatPhone() {
+type KakaoChatPhoneProps = {
+  "data-component"?: string;
+};
+
+export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPhoneProps) {
   const [cycle, setCycle] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
 
@@ -48,51 +52,145 @@ export function KakaoChatPhone() {
   }, [cycle]);
 
   return (
-    <div className={styles.phoneStage}>
-      <div className={styles.phoneShell}>
-        <div className={styles.screen}>
-          <div className={styles.screenTop}>
-            <div className={styles.topSpacer} aria-hidden="true" />
-            <div className={styles.navRow}>
-              <div className={styles.navLeft}>
-                <span className={styles.navBack} aria-hidden="true" />
-                <span className={styles.navCount}>42</span>
+    <div className={styles.phoneStage} data-component={dataComponent}>
+      <div
+        className={styles.phoneShell}
+        data-component={dataComponent ? `${dataComponent}-shell` : undefined}
+      >
+        <div
+          className={styles.screen}
+          data-component={dataComponent ? `${dataComponent}-screen` : undefined}
+        >
+          <div
+            className={styles.screenTop}
+            data-component={dataComponent ? `${dataComponent}-status-bar` : undefined}
+          >
+            <div
+              className={styles.topSpacer}
+              aria-hidden="true"
+              data-component={dataComponent ? `${dataComponent}-top-spacer` : undefined}
+            />
+            <div
+              className={styles.navRow}
+              data-component={dataComponent ? `${dataComponent}-nav-row` : undefined}
+            >
+              <div
+                className={styles.navLeft}
+                data-component={dataComponent ? `${dataComponent}-nav-left` : undefined}
+              >
+                <span
+                  className={styles.navBack}
+                  aria-hidden="true"
+                  data-component={dataComponent ? `${dataComponent}-nav-back` : undefined}
+                />
+                <span
+                  className={styles.navCount}
+                  data-component={dataComponent ? `${dataComponent}-nav-count` : undefined}
+                >
+                  42
+                </span>
               </div>
-              <div className={styles.navCenter}>
-                <strong className={styles.navTitle}>아가잼잼</strong>
+              <div
+                className={styles.navCenter}
+                data-component={dataComponent ? `${dataComponent}-nav-center` : undefined}
+              >
+                <strong
+                  className={styles.navTitle}
+                  data-component={dataComponent ? `${dataComponent}-nav-title` : undefined}
+                >
+                  아가잼잼
+                </strong>
               </div>
-              <div className={styles.navActions}>
-                <span className={styles.navSearch} aria-hidden="true" />
-                <span className={styles.navMenu} aria-hidden="true" />
+              <div
+                className={styles.navActions}
+                data-component={dataComponent ? `${dataComponent}-nav-actions` : undefined}
+              >
+                <span
+                  className={styles.navSearch}
+                  aria-hidden="true"
+                  data-component={dataComponent ? `${dataComponent}-nav-search` : undefined}
+                />
+                <span
+                  className={styles.navMenu}
+                  aria-hidden="true"
+                  data-component={dataComponent ? `${dataComponent}-nav-menu` : undefined}
+                />
               </div>
             </div>
           </div>
-          <div className={styles.messagesViewport}>
-            <div className={styles.messagesTrack}>
-              <div className={styles.dateChip}>2026년 4월 3일 금요일</div>
+          <div
+            className={styles.messagesViewport}
+            data-component={dataComponent ? `${dataComponent}-messages-viewport` : undefined}
+          >
+            <div
+              className={styles.messagesTrack}
+              data-component={dataComponent ? `${dataComponent}-messages-track` : undefined}
+            >
+              <div
+                className={styles.dateChip}
+                data-component={dataComponent ? `${dataComponent}-date-chip` : undefined}
+              >
+                2026년 4월 3일 금요일
+              </div>
               {MOCK_MESSAGES.map((message, index) => {
                 const isVisible = index < visibleCount;
                 const isOutgoing = message.sender === "outgoing";
+                const messageBase = dataComponent
+                  ? `${dataComponent}-message-${message.id}`
+                  : undefined;
+
                 return (
                   <div
                     key={message.id}
                     className={`${styles.messageRow} ${isOutgoing ? styles.right : styles.left}`}
+                    data-component={messageBase}
                   >
                     {!isOutgoing && (
                       <img
                         className={`${styles.avatar} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
                         src="/images/logo-agajamjam-icon.svg"
                         alt="아가잼잼"
+                        data-component={messageBase ? `${messageBase}-avatar` : undefined}
                       />
                     )}
-                    <div className={`${styles.bubbleWrap} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}>
-                      {!isOutgoing && <span className={styles.senderName}>아가잼잼</span>}
-                      <div className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}>
-                        {isOutgoing && <span className={styles.meta}>{message.time}</span>}
-                        <div className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming} ${message.large ? styles.bubbleLarge : ""}`}>
+                    <div
+                      className={`${styles.bubbleWrap} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
+                      data-component={messageBase ? `${messageBase}-bubble-wrap` : undefined}
+                    >
+                      {!isOutgoing && (
+                        <span
+                          className={styles.senderName}
+                          data-component={messageBase ? `${messageBase}-sender` : undefined}
+                        >
+                          아가잼잼
+                        </span>
+                      )}
+                      <div
+                        className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}
+                        data-component={messageBase ? `${messageBase}-bubble-and-time` : undefined}
+                      >
+                        {isOutgoing && (
+                          <span
+                            className={styles.meta}
+                            data-component={messageBase ? `${messageBase}-time` : undefined}
+                          >
+                            {message.time}
+                          </span>
+                        )}
+                        <div
+                          className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming} ${message.large ? styles.bubbleLarge : ""}`}
+                          data-component={messageBase ? `${messageBase}-bubble` : undefined}
+                        >
                           {message.text}
                         </div>
-                        {!isOutgoing && <span className={styles.meta}>{message.time}</span>}
+                        {!isOutgoing && (
+                          <span
+                            className={styles.meta}
+                            data-component={messageBase ? `${messageBase}-time` : undefined}
+                          >
+                            {message.time}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -100,15 +198,37 @@ export function KakaoChatPhone() {
               })}
             </div>
           </div>
-          <div className={styles.composer}>
-            <div className={styles.composerBar}>
-              <span className={styles.plusButton} />
-              <span className={styles.composerPlaceholder}>메시지 입력</span>
-              <span className={styles.sendButton} />
+          <div
+            className={styles.composer}
+            data-component={dataComponent ? `${dataComponent}-keyboard` : undefined}
+          >
+            <div
+              className={styles.composerBar}
+              data-component={dataComponent ? `${dataComponent}-keyboard-bar` : undefined}
+            >
+              <span
+                className={styles.plusButton}
+                data-component={dataComponent ? `${dataComponent}-plus-button` : undefined}
+              />
+              <span
+                className={styles.composerPlaceholder}
+                data-component={dataComponent ? `${dataComponent}-input` : undefined}
+              >
+                메시지 입력
+              </span>
+              <span
+                className={styles.sendButton}
+                data-component={dataComponent ? `${dataComponent}-send-button` : undefined}
+              />
             </div>
           </div>
         </div>
-        <img className={styles.phoneFrame} src="/images/phone-mockup-294c7f.png" alt="아가잼잼 앱 목업" />
+        <img
+          className={styles.phoneFrame}
+          src="/images/phone-mockup-294c7f.png"
+          alt="아가잼잼 앱 목업"
+          data-component={dataComponent ? `${dataComponent}-frame` : undefined}
+        />
       </div>
     </div>
   );
