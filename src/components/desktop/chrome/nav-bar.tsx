@@ -5,13 +5,17 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type NavItem = { label: string; href: string };
 
+interface DesktopNavBarProps {
+  items: NavItem[];
+  activeLabel?: string;
+  'data-component'?: string;
+}
+
 export function DesktopNavBar({
   items,
   activeLabel,
-}: {
-  items: NavItem[];
-  activeLabel?: string;
-}) {
+  'data-component': dataComponent,
+}: DesktopNavBarProps) {
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(() =>
     items.findIndex((i) => i.label === activeLabel)
@@ -50,7 +54,10 @@ export function DesktopNavBar({
   }, [activeIndex]);
 
   return (
-    <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-stretch h-10 gap-0 bg-bjj-primary backdrop-blur-[32px] rounded-nav p-0">
+    <nav
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-stretch h-10 gap-0 bg-bjj-primary backdrop-blur-[32px] rounded-nav p-0"
+      data-component={dataComponent}
+    >
       <span
         className="nav-indicator"
         style={{
@@ -58,9 +65,11 @@ export function DesktopNavBar({
           width: indicator.width,
           opacity: ready ? 1 : 0,
         }}
+        data-component={dataComponent ? `${dataComponent}-active-indicator` : undefined}
       />
       {items.map((item, index) => {
         const isActive = index === activeIndex;
+        const itemBase = dataComponent ? `${dataComponent}-item-${index}` : undefined;
         const itemClasses =
           "relative z-[1] flex items-center font-heading font-[800] text-nav leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline whitespace-nowrap px-4 rounded-nav";
         const ref = (el: HTMLElement | null) => {
@@ -76,6 +85,7 @@ export function DesktopNavBar({
               aria-current={isActive ? "page" : undefined}
               ref={ref}
               onClick={() => setActiveIndex(index)}
+              data-component={itemBase ? `${itemBase}-link` : undefined}
             >
               {item.label}
             </Link>
@@ -92,6 +102,7 @@ export function DesktopNavBar({
               e.preventDefault();
               setActiveIndex(index);
             }}
+            data-component={itemBase ? `${itemBase}-link` : undefined}
           >
             {item.label}
           </a>

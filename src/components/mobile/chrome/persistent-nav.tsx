@@ -8,12 +8,21 @@ import { NAV_ITEMS } from "@/data/nav-items";
 
 import { MobileBookingButton } from "./booking-button";
 
-export function MobilePersistentNav() {
+interface MobilePersistentNavProps {
+  'data-component'?: string;
+}
+
+export function MobilePersistentNav({
+  'data-component': dataComponent,
+}: MobilePersistentNavProps = {}) {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const activeLabel = NAV_ITEMS.find(
     (item) => item.href !== "#" && pathname.startsWith(item.href)
   )?.label;
+  const bookingButtonProps = dataComponent
+    ? { "data-component": `${dataComponent}-drawer-booking-button` }
+    : {};
 
   useEffect(() => {
     if (!drawerOpen) return;
@@ -35,12 +44,20 @@ export function MobilePersistentNav() {
 
   return (
     <>
-      <header className="flex justify-between items-center w-full h-16 relative">
-        <Link href="/" className="flex-shrink-0">
+      <header
+        className="flex justify-between items-center w-full h-16 relative"
+        data-component={dataComponent}
+      >
+        <Link
+          href="/"
+          className="flex-shrink-0"
+          data-component={dataComponent ? `${dataComponent}-logo-link` : undefined}
+        >
           <img
             src="/images/logo.svg"
             alt="아가잼잼 로고"
             className="h-[58px] w-[58px] object-contain"
+            data-component={dataComponent ? `${dataComponent}-logo-image` : undefined}
           />
         </Link>
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -51,8 +68,16 @@ export function MobilePersistentNav() {
             aria-label="메뉴 열기"
             aria-expanded={drawerOpen}
             aria-controls="nav-drawer"
+            data-component={dataComponent ? `${dataComponent}-hamburger-button` : undefined}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              data-component={dataComponent ? `${dataComponent}-hamburger-icon` : undefined}
+            >
               <path
                 d="M4 6h16M4 12h16M4 18h16"
                 stroke="currentColor"
@@ -69,6 +94,7 @@ export function MobilePersistentNav() {
             className="nav-overlay"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
+            data-component={dataComponent ? `${dataComponent}-overlay` : undefined}
           />
           <aside
             id="nav-drawer"
@@ -76,30 +102,48 @@ export function MobilePersistentNav() {
             role="dialog"
             aria-modal="true"
             aria-label="메뉴"
+            data-component={dataComponent ? `${dataComponent}-drawer` : undefined}
           >
             <button
               type="button"
               className="nav-drawer__close"
               onClick={() => setDrawerOpen(false)}
               aria-label="메뉴 닫기"
+              data-component={dataComponent ? `${dataComponent}-drawer-close` : undefined}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                data-component={dataComponent ? `${dataComponent}-drawer-close-icon` : undefined}
+              >
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
-            <nav className="nav-drawer__items">
-              {NAV_ITEMS.map((item) => (
+            <nav
+              className="nav-drawer__items"
+              data-component={dataComponent ? `${dataComponent}-drawer-items` : undefined}
+            >
+              {NAV_ITEMS.map((item, index) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   className="nav-drawer__link"
                   aria-current={item.label === activeLabel ? "page" : undefined}
                   onClick={() => setDrawerOpen(false)}
+                  data-component={
+                    dataComponent ? `${dataComponent}-drawer-link-${index}` : undefined
+                  }
                 >
                   {item.label}
                 </Link>
               ))}
-              <MobileBookingButton onModalClose={() => setDrawerOpen(false)} />
+              <MobileBookingButton
+                onModalClose={() => setDrawerOpen(false)}
+                {...bookingButtonProps}
+              />
             </nav>
           </aside>
         </>
