@@ -10,6 +10,12 @@ import {
 } from "@/lib/pricing/wizard";
 import { cn } from "@/lib/utils";
 
+function buildMobileSteps(answers: PricingFormAnswers) {
+  return buildAllSteps(answers).filter(
+    (question) => !(answers.subsidy === "no" && question.id === "servicePeriod")
+  );
+}
+
 interface MobilePricingFormModalProps {
   answers: PricingFormAnswers;
   onAnswer: (questionId: string, value: string) => void;
@@ -28,7 +34,7 @@ export function MobilePricingFormModal({
   const getComponent = (suffix: string) =>
     dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
-  const allSteps = buildAllSteps(answers);
+  const allSteps = buildMobileSteps(answers);
   const currentQuestion = allSteps[step];
   const currentHelper =
     currentQuestion?.helperKey === SUBSIDY_ELIGIBILITY_HELPER_KEY ? (
@@ -49,14 +55,14 @@ export function MobilePricingFormModal({
       currentQuestion?.helperKey ?? null
     );
   const isMultiple = answers.childType && answers.childType !== "단태아";
-  const displayStepCount = answers.subsidy === "yes" ? (isMultiple ? 5 : 4) : 4;
+  const displayStepCount = answers.subsidy ? allSteps.length : 4;
 
   const handleSelect = useCallback(
     (questionId: string, value: string) => {
       onAnswer(questionId, value);
 
       const nextAnswers = { ...answers, [questionId]: value };
-      const nextSteps = buildAllSteps(nextAnswers);
+      const nextSteps = buildMobileSteps(nextAnswers);
       const shouldSubmit = step >= nextSteps.length - 1;
 
       setTimeout(() => {
@@ -74,9 +80,9 @@ export function MobilePricingFormModal({
   return (
     <div className="pricing-modal" data-component={dataComponent}>
       <div className="pricing-modal__header" data-component={getComponent("header")}>
-        <h2 className="pricing-modal__title" data-component={getComponent("title")}>
+        <h3 className="h3 pricing-modal__title" data-component={getComponent("title")}>
           서비스 가격 조회
-        </h2>
+        </h3>
       </div>
 
       <div className="wizard-stepper" data-component={getComponent("stepper")}>
@@ -121,7 +127,7 @@ export function MobilePricingFormModal({
               data-component={getComponent("question-header")}
             >
               <span
-                className="form-question__label"
+                className="h6 form-question__label"
                 data-component={getComponent("question-label")}
               >
                 {currentQuestion.label}

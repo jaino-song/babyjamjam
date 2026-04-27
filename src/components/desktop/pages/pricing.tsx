@@ -19,8 +19,8 @@ export default function DesktopPricingPage() {
             data-component="desktop_pricing_page_hero_image_wrap"
           >
             <img
-              src="/images/hero-bg-22ebe1.png"
-              alt="Hero background"
+              src="/images/pricing-hero-mother-baby.jpg"
+              alt="산모와 아기 휴식 이미지"
               className="h-full w-full object-cover"
               data-component="desktop_pricing_page_hero_image"
             />
@@ -37,6 +37,8 @@ export default function DesktopPricingPage() {
 
         <BannerImageSection
           className="h-[576px]"
+          imageAlt="식사 준비 식탁"
+          imageSrc="/images/pricing-banner-meal-prep.png"
           data-component="desktop_pricing_banner-image-section"
         />
 

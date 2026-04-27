@@ -10,6 +10,7 @@ const FOOTER_LINKS = [
   { id: "service-items", label: "서비스 제공 항목", href: "#" },
   { id: "locations", label: "전국 지점", href: "/locations" },
   { id: "faq-terms", label: "FAQ & 이용약관", href: "/faq" },
+  { id: "admin-page", label: "관리자 페이지", href: "https://staff.babyjamjam.com" },
 ];
 
 interface FooterProps {

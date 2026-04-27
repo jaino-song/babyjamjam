@@ -26,6 +26,10 @@ export default function DesktopShell({ children }: { children: React.ReactNode }
           <DesktopAnnouncementRibbon data-component="desktop_chrome_announcement-ribbon" />
         </div>
         <div
+          data-component={`${dataComponentBase}_pre-transition_slot`}
+          className="w-full"
+        />
+        <div
           data-component={`${dataComponentBase}_page-transition_wrap`}
           className="w-full"
         >

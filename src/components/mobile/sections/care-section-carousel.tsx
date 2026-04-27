@@ -225,7 +225,7 @@ export function MobileCareSectionCarousel({
                       {card.title}
                     </h3>
                     <p
-                      className="medium-p care-carousel__caption-desc"
+                      className="big-p care-carousel__caption-desc"
                       data-component={
                         cardBase ? `${cardBase}_description` : undefined
                       }

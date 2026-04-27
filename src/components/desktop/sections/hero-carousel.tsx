@@ -203,7 +203,7 @@ export default function DesktopHeroCarousel({
         data-component={getComponent("viewport")}
       >
         <div
-          className="relative min-h-0 flex-1 overflow-hidden"
+          className="relative h-full min-h-0 flex-1 overflow-hidden"
           data-component={getComponent("image-stage")}
         >
           <div

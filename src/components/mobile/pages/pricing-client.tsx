@@ -198,22 +198,26 @@ export function MobilePricingClient({
   return (
     <>
       <div
-        className="pricing-plans-wrapper"
+        className={`pricing-plans-wrapper${
+          store.pricesRevealed ? "" : " pricing-plans-wrapper--cta-only"
+        }`}
         ref={plansRef}
         data-component={getComponent("plans-wrapper")}
       >
-        <MobilePricingPlansSection
-          plans={displayPlans}
-          selectedPlanId={store.selectedPlanId}
-          onSelectPlan={store.selectPlan}
-          showGradeToggle={store.pricesRevealed && isSubsidized}
-          selectedGradeName={store.selectedGradeName}
-          onGradeNameChange={store.setGradeName}
-          onRequery={() => setShowFormModal(true)}
-          blurred={!store.pricesRevealed}
-          isLoading={store.isLoading}
-          data-component="mobile_pricing_plans-section"
-        />
+        {store.pricesRevealed && (
+          <MobilePricingPlansSection
+            plans={displayPlans}
+            selectedPlanId={store.selectedPlanId}
+            onSelectPlan={store.selectPlan}
+            showGradeToggle={store.pricesRevealed && isSubsidized}
+            selectedGradeName={store.selectedGradeName}
+            onGradeNameChange={store.setGradeName}
+            onRequery={() => setShowFormModal(true)}
+            blurred={!store.pricesRevealed}
+            isLoading={store.isLoading}
+            data-component="mobile_pricing_plans-section"
+          />
+        )}
 
         {!store.pricesRevealed && (
           <div

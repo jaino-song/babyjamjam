@@ -138,6 +138,7 @@ export const usePricingStore = create<PricingState & PricingActions>()(
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               typeCode,
+              childType: formAnswers.childType,
               isSubsidized,
               year: new Date().getFullYear(),
             }),

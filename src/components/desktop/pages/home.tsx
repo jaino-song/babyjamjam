@@ -71,7 +71,7 @@ export default function DesktopHomePage() {
                 data-component="desktop_home_app_detail_description_wrap"
               >
                 <p
-                  className="big-p"
+                  className="h7"
                   data-component="desktop_home_app_detail_description"
                 >
                   아가잼잼의 서비스는 출산 전부터 시작돼요. 필요한 정보를 미리 안내해드리고,
@@ -96,7 +96,7 @@ export default function DesktopHomePage() {
                     {number}
                   </span>
                   <span
-                    className="font-heading text-[16px] font-bold leading-[1.45] tracking-[-0.015em] text-bjj-text-paragraph"
+                    className="big-p"
                     data-component={`desktop_home_app_detail_step_${index + 1}_text`}
                   >
                     {appDetailSteps[index]}

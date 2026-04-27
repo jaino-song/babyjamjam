@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import type { ChildType } from "@/lib/voucher-type";
+
 const BACKEND_URL =
   process.env.BJJ_API_URL ?? "https://api.babyjamjam.com";
 
@@ -105,8 +107,32 @@ const ADDON_SERVICES = [
   },
 ];
 
+const UNSUBSIDIZED_TYPE_BY_CHILD_TYPE: Record<ChildType, string> = {
+  단태아: "A통합1형",
+  쌍태아: "B통합1형",
+  삼태아: "C통합1형",
+  사태아이상: "D통합1형",
+};
+
+const UNSUBSIDIZED_FEATURES = [
+  "프리미엄 출퇴근 산후도우미 서비스",
+  "산모 식사 서비스 제공",
+  "신생아 케어 서비스 제공",
+];
+
+type PricingPlan = {
+  id: string;
+  name: string;
+  duration: number;
+  description: string;
+  price: string;
+  badge?: string;
+  features: string[];
+};
+
 type PricingRequest = {
   typeCode?: string;
+  childType?: ChildType;
   year?: number;
   isSubsidized: boolean;
 };
@@ -163,8 +189,52 @@ export async function POST(request: Request) {
       return NextResponse.json({ plans, addons: ADDON_SERVICES });
     }
 
-    // Unsubsidized: hardcoded fallback until backend endpoint exists
-    // See: https://github.com/jaino-song/babyjamjam-staff/issues/112
+    const childType = body.childType;
+    const unsubsidizedTypeCode =
+      childType ? UNSUBSIDIZED_TYPE_BY_CHILD_TYPE[childType] : undefined;
+
+    if (unsubsidizedTypeCode) {
+      const url = `${BACKEND_URL}/voucher-price-infos/type?type=${encodeURIComponent(unsubsidizedTypeCode)}&year=${year}`;
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.ok) {
+        const data: {
+          id: number;
+          type: string;
+          duration: string;
+          fullPrice: string;
+          grant: string;
+          actualPrice: string;
+          year: number;
+        }[] = await res.json();
+
+        const sorted = [...data].sort(
+          (a, b) => Number(a.duration) - Number(b.duration)
+        );
+
+        if (sorted.length > 0) {
+          const plans = sorted.map((entry, i) => {
+            const duration = Number(entry.duration);
+            return {
+              id: `unsub-${entry.id}`,
+              name: `${duration}일`,
+              duration,
+              description: getPlanDescription(i),
+              price: formatWon(entry.fullPrice),
+              features: UNSUBSIDIZED_FEATURES,
+            };
+          });
+
+          return NextResponse.json({
+            plans: withUnsubsidizedTwentyDayPlan(plans),
+            addons: ADDON_SERVICES,
+          });
+        }
+      }
+    }
+
     const unsubsidizedPlans = [
       {
         id: "unsub-5",
@@ -190,6 +260,14 @@ export async function POST(request: Request) {
         price: "조회 후 안내",
         features: ["프리미엄 출퇴근 산후도우미 서비스", "산모 식사 서비스 제공", "신생아 케어 서비스 제공"],
       },
+      {
+        id: "unsub-20",
+        name: "20일",
+        duration: 20,
+        description: "조금 더 긴 회복 기간 동안 안정적으로 도움을 받을 수 있도록.",
+        price: "조회 후 안내",
+        features: ["프리미엄 출퇴근 산후도우미 서비스", "산모 식사 서비스 제공", "신생아 케어 서비스 제공"],
+      },
     ];
 
     return NextResponse.json({ plans: unsubsidizedPlans, addons: ADDON_SERVICES });
@@ -206,6 +284,49 @@ function getPlanDescription(index: number): string {
     "소중한 아기와 함께하는 새로운 시작이 힘들지 않도록 필요한 만큼만.",
     "임신 기간 동안 지친 몸과 마음을 돌보고 회복할 수 있도록.",
     "전문가에게 육아 노하우를 배우고, 지친 몸과 마음의 완벽한 회복을 위해.",
+    "조금 더 긴 회복 기간 동안 안정적으로 도움을 받을 수 있도록.",
   ];
   return descriptions[index] ?? descriptions[0];
+}
+
+function withUnsubsidizedTwentyDayPlan(plans: PricingPlan[]): PricingPlan[] {
+  if (plans.some((plan) => plan.duration === 20)) {
+    return plans;
+  }
+
+  const estimatedPrice = estimateTwentyDayPrice(plans);
+  return [
+    ...plans,
+    {
+      id: "unsub-20",
+      name: "20일",
+      duration: 20,
+      description: getPlanDescription(3),
+      price: estimatedPrice,
+      features: UNSUBSIDIZED_FEATURES,
+    },
+  ].sort((a, b) => a.duration - b.duration);
+}
+
+function estimateTwentyDayPrice(plans: PricingPlan[]): string {
+  for (const plan of plans) {
+    const price = parseWon(plan.price);
+    if (price !== null && plan.duration > 0) {
+      return `${Math.round((price / plan.duration) * 20).toLocaleString()}원`;
+    }
+  }
+  return "조회 후 안내";
+}
+
+function formatWon(value: string | null | undefined): string {
+  const numericValue = Number(String(value ?? "").replace(/[^\d]/g, ""));
+  if (!Number.isFinite(numericValue) || numericValue <= 0) {
+    return "조회 후 안내";
+  }
+  return `${numericValue.toLocaleString()}원`;
+}
+
+function parseWon(value: string): number | null {
+  const numericValue = Number(value.replace(/[^\d]/g, ""));
+  return Number.isFinite(numericValue) && numericValue > 0 ? numericValue : null;
 }

@@ -24,12 +24,12 @@
 
   /* Custom font sizes — fluid between 380px and 1440px viewport via linear interpolation */
   --text-h1: clamp(36px, calc(36px + (64 - 36) * ((100vw - 380px) / 1060)), 64px);
-  --text-h2: clamp(32px, calc(32px + (56 - 32) * ((100vw - 380px) / 1060)), 56px);
-  --text-h3: clamp(28px, calc(28px + (48 - 28) * ((100vw - 380px) / 1060)), 48px);
-  --text-h4: clamp(24px, calc(24px + (40 - 24) * ((100vw - 380px) / 1060)), 40px);
-  --text-h5: clamp(20px, calc(20px + (32 - 20) * ((100vw - 380px) / 1060)), 32px);
-  --text-h6: clamp(18px, calc(18px + (24 - 18) * ((100vw - 380px) / 1060)), 24px);
-  --text-h7: 20px; /* too small to benefit from fluid */
+  --text-h2: clamp(28px, calc(28px + (52 - 28) * ((100vw - 380px) / 1060)), 52px);
+  --text-h3: clamp(24px, calc(24px + (44 - 24) * ((100vw - 380px) / 1060)), 44px);
+  --text-h4: clamp(20px, calc(20px + (36 - 20) * ((100vw - 380px) / 1060)), 36px);
+  --text-h5: clamp(14px, calc(14px + (24 - 14) * ((100vw - 380px) / 1060)), 24px);
+  --text-h6: clamp(14px, calc(14px + (20 - 14) * ((100vw - 380px) / 1060)), 20px);
+  --text-h7: 16px; /* too small to benefit from fluid */
   --text-big-p: clamp(16px, calc(16px + (18 - 16) * ((100vw - 380px) / 1060)), 18px);
   --text-medium-p: 16px;
   --text-caption: 8px;
@@ -92,15 +92,15 @@
   img { max-width: 100%; display: block; }
 
   /* Typography — Heading Scale (font-size pulls from fluid @theme tokens) */
-  .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h1); line-height: 1.2; letter-spacing: 0.1em; }
-  .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-  .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: center; }
-  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: -0.015em; text-align: left; }
-  .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h4); line-height: 1.15; letter-spacing: -0.015em; }
-  .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h5); line-height: 1.15; letter-spacing: -0.015em; }
-  .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h6); line-height: 1.15; letter-spacing: -0.015em; }
-  .h7 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h7); line-height: 1.15; letter-spacing: -0.015em; }
+  .h1 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h1); line-height: 1.2; letter-spacing: 0.03em; }
+  .h2 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.15; letter-spacing: 0.03em; text-align: center; }
+  .h2-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h2); line-height: 1.25; letter-spacing: 0.03em; text-align: left; }
+  .h3 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: 0.03em; text-align: center; }
+  .h3-left { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h3); line-height: 1.15; letter-spacing: 0.03em; text-align: left; }
+  .h4 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h4); line-height: 1.15; letter-spacing: 0.03em; }
+  .h5 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h5); line-height: 1.5; letter-spacing: 0.03em; }
+  .h6 { font-family: var(--bjj-font-heading); font-weight: 800; font-size: var(--text-h6); line-height: 1.15; letter-spacing: 0.03em; }
+  .h7 { font-family: var(--bjj-font-heading); font-weight: 600; font-size: var(--text-h7); line-height: 1.25; letter-spacing: 0.03em; }
   .big-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: var(--text-big-p); line-height: 1.5; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
   .medium-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px; line-height: 27px; letter-spacing: 0.231px; color: var(--bjj-color-text-paragraph); }
   .small-p { font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px; line-height: 27px; letter-spacing: 0.231px; }
@@ -111,12 +111,13 @@
      Apple's tracking curve: large display slightly negative, headlines/sub-heads slightly
      positive (+0.004 to +0.012em), body tight negative (-0.022em), caption light negative. */
   @media (max-width: 780px) {
-    .h1           { font-size: 32px; line-height: 1.25; letter-spacing: -0.003em; }
-    .h2, .h2-left { font-size: 28px; line-height: 1.25; letter-spacing: 0.004em; }
-    .h3, .h3-left { font-size: 21px; line-height: 1.25;  letter-spacing: 0.007em; }
-    .h4           { font-size: 19px; line-height: 1.21;  letter-spacing: 0.009em; }
-    .h5           { font-size: 17px; line-height: 1.47;  letter-spacing: 0.011em; }
-    .h6, .h7      { font-size: 15px; line-height: 1.33;  letter-spacing: 0.012em; }
+    .h1           { font-size: 40px; line-height: 1.25; letter-spacing: -0.003em; }
+    .h2, .h2-left { font-size: 36px; line-height: 1.25; letter-spacing: 0.004em; }
+    .h3, .h3-left { font-size: 32px; line-height: 1.25;  letter-spacing: 0.007em; }
+    .h4           { font-size: 28px; line-height: 1.21;  letter-spacing: 0.009em; }
+    .h5           { font-size: 24px; line-height: 1.47;  letter-spacing: 0.011em; }
+    .h6           { font-size: 20px; line-height: 1.33;  letter-spacing: 0.012em; }
+    .h7           { font-size: 16px; line-height: 1.33;  letter-spacing: 0.012em; }
     .big-p            { font-size: 17px; line-height: 1.5; letter-spacing: -0.022em; }
     .medium-p         { font-size: 15px; line-height: 1.47; letter-spacing: -0.022em; }
     .small-p          { font-size: 13px; line-height: 1.38; letter-spacing: -0.016em; }
@@ -191,6 +192,7 @@
   scrollbar-width: none; width: 100%;
 }
 .care-carousel__track::-webkit-scrollbar { display: none; }
+[data-bjj-shell="desktop"] .care-carousel__track { padding-block: 20px; }
 
 .care-carousel__card {
   flex: 0 0 min(82vw, 420px);
@@ -236,10 +238,8 @@
 .care-carousel__caption-desc {
   display: inline;
   color: var(--bjj-color-text-paragraph);
-  font-size: 20px;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-size: 16px;
+  line-height: 1.5;
 }
 @keyframes care-caption-enter {
   from { opacity: 0; transform: translateY(4px); }
@@ -785,7 +785,7 @@
 .form-question--hidden { opacity: 0; max-height: 0; overflow: hidden; pointer-events: none; }
 .form-question__header { display: flex; flex-direction: column; gap: 4px; }
 .form-question__label {
-  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px;
+  font-family: var(--bjj-font-heading); font-weight: 800;
   line-height: 1.2; color: var(--bjj-color-text-dark);
 }
 .form-question__helper {
@@ -805,7 +805,7 @@
   display: flex; justify-content: space-between; align-items: flex-start;
 }
 .pricing-modal__title {
-  font-family: var(--bjj-font-heading); font-weight: 800; font-size: 40px;
+  font-family: var(--bjj-font-heading); font-weight: 800;
   line-height: 1.2; color: var(--bjj-color-primary);
 }
 .pricing-modal__body {
@@ -845,6 +845,24 @@
 }
 .wizard-stepper__connector--done { background: var(--bjj-color-primary); opacity: 0.4; }
 
+[data-component="mobile_pricing_form-modal_stepper"] {
+  min-height: 32px;
+  padding: 3px 0;
+}
+[data-component="mobile_pricing_form-modal_stepper"] .wizard-stepper__circle {
+  width: 22.4px;
+  height: 22.4px;
+  font-size: 9.6px;
+}
+[data-component="mobile_pricing_form-modal_stepper"] .wizard-stepper__circle--pending {
+  border-width: 1.6px;
+}
+[data-component="mobile_pricing_form-modal_stepper"] .wizard-stepper__connector {
+  width: 32px;
+  height: 1.6px;
+  margin: 0 4.8px;
+}
+
 /* ===== WIZARD BUTTON GROUP ===== */
 .wizard-btn-group {
   display: flex; gap: 12px; width: 100%;
@@ -855,6 +873,12 @@
   transition: all 0.2s;
   background: white; color: var(--bjj-color-text-dark);
   border: 2px solid var(--bjj-color-divider);
+}
+[data-component="mobile_pricing_form-modal_question-button-1"],
+[data-component="mobile_pricing_form-modal_question-button-2"] {
+  font-size: 13px;
+  line-height: 1.38;
+  letter-spacing: -0.016em;
 }
 .wizard-btn-group__btn:hover {
   border-color: var(--bjj-color-primary); color: var(--bjj-color-primary);
@@ -1149,6 +1173,26 @@
   line-height: 1.4; transition: opacity 0.2s;
 }
 .pricing-cta-card__btn:hover { opacity: 0.9; }
+
+@media (max-width: 780px) {
+  [data-bjj-shell="mobile"] .pricing-plans-wrapper--cta-only {
+    min-height: 0;
+  }
+
+  [data-bjj-shell="mobile"] [data-component="mobile_pricing-client_root_cta-overlay"] {
+    position: relative;
+    inset: auto;
+    height: auto;
+    min-height: 0;
+    padding: 24px 16px;
+  }
+
+  [data-bjj-shell="mobile"] [data-component="mobile_pricing-client_root_cta-card"] {
+    background: #f5f5f7;
+    box-shadow: none;
+  }
+
+}
 
 .bm-success-card {
   display: flex; flex-direction: column; align-items: center; gap: 24px;
@@ -1941,6 +1985,10 @@
   padding: 36px 0 28px; border-bottom: 1px solid var(--bjj-color-divider);
   display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
 }
+[data-bjj-shell="desktop"] [data-component="desktop_shell_pre-transition_slot"] .faq-content__header {
+  animation: page-enter 0.35s ease both;
+  border-bottom: 0;
+}
 .faq-content__title { color: var(--bjj-color-primary); }
 .faq-content__meta {
   display: flex;
@@ -1949,8 +1997,12 @@
   width: 100%;
   gap: 16px;
 }
-.faq-content__header h3 {
+.faq-content__meta h3 {
   font-family: var(--bjj-font-heading); font-weight: 800; font-size: 24px; letter-spacing: -0.015em;
+}
+[data-bjj-shell="desktop"] .faq-content__meta {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--bjj-color-divider);
 }
 .faq-content__count {
   font-family: var(--bjj-font-number); font-weight: 700; font-size: 13px;

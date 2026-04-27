@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ChevronDown,
   MessageCircle,
@@ -118,6 +119,15 @@ export function DesktopFaqPageClient({
   const activeCategory =
     allCategories.find((c) => c.id === activeCategoryId) ?? allCategories[0];
   const isTermsCategory = activeCategoryId.startsWith("terms-");
+  const [headerSlot, setHeaderSlot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setHeaderSlot(
+      document.querySelector<HTMLElement>(
+        '[data-component="desktop_shell_pre-transition_slot"]',
+      ),
+    );
+  }, []);
 
   const handleCategoryChange = useCallback((cat: FaqCategory) => {
     setActiveCategoryId(cat.id);
@@ -133,8 +143,40 @@ export function DesktopFaqPageClient({
     });
   }, []);
 
+  const contentHeader = (
+    <header
+      className="faq-content__header"
+      data-component={getComponent("content-header")}
+    >
+      <h1
+        className="h1 faq-content__title"
+        data-component={getComponent("content-title")}
+      >
+        자주하는 질문
+      </h1>
+    </header>
+  );
+
+  const contentMeta = (
+    <div
+      className="faq-content__meta"
+      data-component={getComponent("content-meta")}
+    >
+      <h3 data-component={getComponent("content-category-label")}>
+        {activeCategory.label}
+      </h3>
+      <span
+        className="faq-content__count"
+        data-component={getComponent("content-count")}
+      >
+        {activeCategory.items.length}개 항목
+      </span>
+    </div>
+  );
+
   return (
     <section className="faq-section" data-component={dataComponent}>
+      {headerSlot ? createPortal(contentHeader, headerSlot) : contentHeader}
       <div className="faq-page" data-component={getComponent("page")}>
         <aside className="faq-sidebar" data-component={getComponent("sidebar")}>
           <h2
@@ -198,32 +240,7 @@ export function DesktopFaqPageClient({
           key={activeCategoryId}
           data-component={getComponent("content")}
         >
-          <header
-            className="faq-content__header"
-            data-component={getComponent("content-header")}
-          >
-            <h1
-              className="h1 faq-content__title"
-              data-component={getComponent("content-title")}
-            >
-              자주하는 질문
-            </h1>
-            <div
-              className="faq-content__meta"
-              data-component={getComponent("content-meta")}
-            >
-              <h3 data-component={getComponent("content-category-label")}>
-                {activeCategory.label}
-              </h3>
-              <span
-                className="faq-content__count"
-                data-component={getComponent("content-count")}
-              >
-                {activeCategory.items.length}개 항목
-              </span>
-            </div>
-          </header>
-
+          {contentMeta}
           <div
             className="faq-accordion"
             data-component={getComponent("accordion")}

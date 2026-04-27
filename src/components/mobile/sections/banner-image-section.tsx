@@ -4,11 +4,15 @@ import { cn } from "@/lib/utils";
 
 interface BannerImageSectionProps {
   className?: string;
+  imageAlt?: string;
+  imageSrc?: string;
   "data-component"?: string;
 }
 
 export function MobileBannerImageSection({
   className,
+  imageAlt = "아가잼잼 배너",
+  imageSrc = "/images/hero-image-1a35f6.png",
   "data-component": dataComponent,
 }: BannerImageSectionProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -52,8 +56,8 @@ export function MobileBannerImageSection({
       data-component={dataComponent}
     >
       <img
-        src="/images/hero-image-1a35f6.png"
-        alt="아가잼잼 배너"
+        src={imageSrc}
+        alt={imageAlt}
         className="absolute! inset-0 w-full h-full object-cover"
         data-component={getComponent("image")}
       />

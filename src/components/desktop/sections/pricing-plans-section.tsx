@@ -48,7 +48,7 @@ export function DesktopPricingPlansSection({
         data-component={getComponent("heading")}
       >
         <h2
-          className={cn("h3-left", "pricing-plans__title")}
+          className={cn("h2-left", "pricing-plans__title")}
           data-component={getComponent("title")}
         >
           <span

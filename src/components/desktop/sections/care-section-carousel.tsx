@@ -218,14 +218,14 @@ export function DesktopCareSectionCarousel({
                     className="care-carousel__caption"
                     data-component={cardBase ? `${cardBase}_caption` : undefined}
                   >
-                    <h3
+                    <h6
                       className="h6 care-carousel__caption-title"
                       data-component={cardBase ? `${cardBase}_title` : undefined}
                     >
                       {card.title}
-                    </h3>
+                    </h6>
                     <p
-                      className="medium-p care-carousel__caption-desc"
+                      className="big-p care-carousel__caption-desc"
                       data-component={
                         cardBase ? `${cardBase}_description` : undefined
                       }

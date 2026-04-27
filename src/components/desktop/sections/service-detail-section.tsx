@@ -292,12 +292,12 @@ export function DesktopServiceDetailSection({
               className="service-tabs__caption-inner"
               data-component={getComponent("caption-inner")}
             >
-              <p
+              <h5
                 className="h5 service-tabs__caption-text"
                 data-component={getComponent("caption-text")}
               >
                 {activeItem.description}
-              </p>
+              </h5>
             </div>
           </div>
         </div>

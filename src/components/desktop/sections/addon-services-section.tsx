@@ -50,7 +50,7 @@ export function DesktopAddonServicesSection({
         data-component={getComponent("heading")}
       >
         <h2
-          className={cn("h3-left", "addon-services__title")}
+          className={cn("h2-left", "addon-services__title")}
           data-component={getComponent("title")}
         >
           <span
