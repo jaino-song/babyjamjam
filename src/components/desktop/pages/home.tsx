@@ -7,6 +7,14 @@ import { DesktopFooter as Footer } from "@/components/desktop/sections/footer";
 import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 
+type AnnotatedDesktopScrollExpandImageProps = Parameters<typeof DesktopScrollExpandImage>[0] & {
+  "data-component"?: string;
+};
+
+const AnnotatedDesktopScrollExpandImage = DesktopScrollExpandImage as (
+  props: AnnotatedDesktopScrollExpandImageProps,
+) => ReturnType<typeof DesktopScrollExpandImage>;
+
 export default function DesktopHomePage() {
   const appDetailSteps = [
     "임신 주차마다 도움이 되는 정보를 확인하고, 서비스 신청에 필요한 절차도 미리 안내받으실 수 있어요.",
@@ -37,7 +45,8 @@ export default function DesktopHomePage() {
         </section>
         <DesktopServiceDetailSection data-component="desktop_home_service-detail" />
 
-        <DesktopScrollExpandImage
+        <AnnotatedDesktopScrollExpandImage
+          data-component="desktop_home_scroll-expand-image"
           src="/images/hero-image-1a35f6.png"
           alt="아가잼잼 배너"
           overlayText="검증 됐으니까. 믿을 수 있으니까."
