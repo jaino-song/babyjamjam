@@ -123,10 +123,18 @@ const PLACEHOLDER_ADDONS: AddonData[] = [
   },
 ];
 
-export function DesktopPricingClient() {
+interface DesktopPricingClientProps {
+  "data-component"?: string;
+}
+
+export function DesktopPricingClient({
+  "data-component": dataComponent,
+}: DesktopPricingClientProps) {
   const store = usePricingStore();
   const [showFormModal, setShowFormModal] = useState(false);
   const plansRef = useRef<HTMLDivElement>(null);
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   const isSubsidized = store.formAnswers.subsidy === "yes";
 
@@ -189,7 +197,11 @@ export function DesktopPricingClient() {
 
   return (
     <>
-      <div className="pricing-plans-wrapper" ref={plansRef}>
+      <div
+        className="pricing-plans-wrapper"
+        ref={plansRef}
+        data-component={getComponent("plans-wrapper")}
+      >
         <DesktopPricingPlansSection
           plans={displayPlans}
           selectedPlanId={store.selectedPlanId}
@@ -200,17 +212,35 @@ export function DesktopPricingClient() {
           onRequery={() => setShowFormModal(true)}
           blurred={!store.pricesRevealed}
           isLoading={store.isLoading}
+          data-component="desktop-pricing-plans-section"
         />
 
         {!store.pricesRevealed && (
-          <div className="pricing-modal-overlay">
-            <div className="pricing-cta-card">
-              <h2 className="pricing-cta-card__title">서비스 가격 조회</h2>
-              <p className="pricing-cta-card__label">정확한 가격을 알아볼까요?</p>
+          <div
+            className="pricing-modal-overlay"
+            data-component={getComponent("cta-overlay")}
+          >
+            <div
+              className="pricing-cta-card"
+              data-component={getComponent("cta-card")}
+            >
+              <h2
+                className="pricing-cta-card__title"
+                data-component={getComponent("cta-title")}
+              >
+                서비스 가격 조회
+              </h2>
+              <p
+                className="pricing-cta-card__label"
+                data-component={getComponent("cta-label")}
+              >
+                정확한 가격을 알아볼까요?
+              </p>
               <button
                 type="button"
                 className="pricing-cta-card__btn"
                 onClick={() => setShowFormModal(true)}
+                data-component={getComponent("cta-button")}
               >
                 시작하기
               </button>
@@ -229,6 +259,7 @@ export function DesktopPricingClient() {
         planDuration={
           store.plans.find((plan) => plan.id === store.selectedPlanId)?.duration
         }
+        data-component="desktop-pricing-addon-services-section"
       />
 
       {showFormModal &&
@@ -237,13 +268,18 @@ export function DesktopPricingClient() {
           <div
             className="pricing-form-overlay"
             onClick={() => setShowFormModal(false)}
+            data-component={getComponent("form-modal-overlay")}
           >
-            <div onClick={(event) => event.stopPropagation()}>
+            <div
+              onClick={(event) => event.stopPropagation()}
+              data-component={getComponent("form-modal-shell")}
+            >
               <DesktopPricingFormModal
                 answers={store.formAnswers}
                 onAnswer={store.answer}
                 onSubmit={handleSubmit}
                 isLoading={store.isLoading}
+                data-component="desktop-pricing-form-modal"
               />
             </div>
           </div>,

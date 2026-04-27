@@ -19,6 +19,7 @@ interface DesktopPricingPlansSectionProps {
   onRequery?: () => void;
   blurred?: boolean;
   isLoading?: boolean;
+  "data-component"?: string;
 }
 
 export function DesktopPricingPlansSection({
@@ -31,34 +32,53 @@ export function DesktopPricingPlansSection({
   onRequery,
   blurred = false,
   isLoading = false,
+  "data-component": dataComponent,
 }: DesktopPricingPlansSectionProps) {
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   return (
     <section
       className={cn("pricing-plans", blurred && "pricing-section--blurred")}
-      data-component="organism-pricing-plans-section"
+      data-component={dataComponent}
     >
-      <div className="pricing-plans__heading">
-        <h2 className={cn("h3-left", "pricing-plans__title")}>
-          <span className="pricing-plans__title-muted">
+      <div
+        className="pricing-plans__heading"
+        data-component={getComponent("heading")}
+      >
+        <h2
+          className={cn("h3-left", "pricing-plans__title")}
+          data-component={getComponent("title")}
+        >
+          <span
+            className="pricing-plans__title-muted"
+            data-component={getComponent("title-muted")}
+          >
             뭘 좋아하실지 몰라서
-            <br />
+            <br data-component={getComponent("title-muted-break")} />
             다 준비해 봤어요.
           </span>
-          <br />
-          <span className="pricing-plans__title-primary">
+          <br data-component={getComponent("title-break")} />
+          <span
+            className="pricing-plans__title-primary"
+            data-component={getComponent("title-primary")}
+          >
             산후도우미서비스 플랜
           </span>
         </h2>
       </div>
 
       {showGradeToggle && (
-        <div className="pricing-plans__toggle-row">
+        <div
+          className="pricing-plans__toggle-row"
+          data-component={getComponent("toggle-row")}
+        >
           <div
             className="pricing-plans__grade-toggle"
             role="tablist"
             aria-label="등급 선택"
+            data-component={getComponent("grade-toggle")}
             style={
               {
                 "--grade-tab-index": activeIndex,
@@ -66,7 +86,7 @@ export function DesktopPricingPlansSection({
               } as React.CSSProperties
             }
           >
-            {GRADE_NAMES.map((name) => (
+            {GRADE_NAMES.map((name, index) => (
               <button
                 key={name}
                 type="button"
@@ -77,6 +97,7 @@ export function DesktopPricingPlansSection({
                   name === selectedGradeName && "pricing-plans__grade-tab--active"
                 )}
                 onClick={() => onGradeNameChange?.(name)}
+                data-component={getComponent(`grade-tab-${index + 1}`)}
               >
                 {name} 등급
               </button>
@@ -85,27 +106,35 @@ export function DesktopPricingPlansSection({
         </div>
       )}
 
-      <div className="pricing-plans__grid-wrapper">
+      <div
+        className="pricing-plans__grid-wrapper"
+        data-component={getComponent("grid-wrapper")}
+      >
         {onRequery && (
-          <div className="pricing-plans__requery-row">
+          <div
+            className="pricing-plans__requery-row"
+            data-component={getComponent("requery-row")}
+          >
             <button
               type="button"
               className="pricing-plans__requery-btn"
               onClick={onRequery}
+              data-component={getComponent("requery-button")}
             >
               다시 조회
             </button>
           </div>
         )}
 
-        <div className="pricing-plans__grid">
-          {plans.map((plan) => (
+        <div className="pricing-plans__grid" data-component={getComponent("grid")}>
+          {plans.map((plan, index) => (
             <PricingPlanCard
               key={plan.id}
               plan={plan}
               selected={plan.id === selectedPlanId}
               onSelect={() => onSelectPlan(plan.id)}
               isLoading={isLoading}
+              data-component={getComponent(`card-${index + 1}`)}
             />
           ))}
         </div>

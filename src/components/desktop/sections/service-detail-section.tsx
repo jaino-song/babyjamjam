@@ -47,13 +47,19 @@ const SERVICE_DETAIL_ITEMS = [
 
 interface ServiceDetailSectionProps {
   className?: string;
+  "data-component"?: string;
 }
 
-export function DesktopServiceDetailSection({ className }: ServiceDetailSectionProps) {
+export function DesktopServiceDetailSection({
+  className,
+  "data-component": dataComponent,
+}: ServiceDetailSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeItem = SERVICE_DETAIL_ITEMS[activeIndex];
   const canGoPrevious = activeIndex > 0;
   const canGoNext = activeIndex < SERVICE_DETAIL_ITEMS.length - 1;
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   const selectPrevious = () => {
     setActiveIndex((currentIndex) => Math.max(0, currentIndex - 1));
@@ -68,25 +74,29 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
   return (
     <section
       className={cn("w-full rounded-[36px] py-12", className)}
-      data-component={"organism-service-detail-section"}
+      data-component={dataComponent}
     >
       <div
         className="grid grid-cols-[minmax(0,1fr)_360px] items-center gap-12"
-        data-component={"organism-service-detail-grid"}
+        data-component={getComponent("grid")}
       >
         <div
           className="flex flex-col items-start gap-8"
-          data-component={"organism-service-detail-content"}
+          data-component={getComponent("content")}
         >
-          <div className="flex max-w-[760px] flex-col items-start gap-5">
+          <div
+            className="flex max-w-[760px] flex-col items-start gap-5"
+            data-component={getComponent("intro")}
+          >
             <DualColorHeading
               mutedText="방치되는 공장형?"
               primaryText="아가잼잼은 맞춤형 운영 시스템"
               align="left"
+              data-component={getComponent("heading")}
             />
             <p
               className="big-p max-w-[720px]"
-              data-component={"organism-service-detail-description"}
+              data-component={getComponent("description")}
             >
               아가잼잼은 서비스 시작 전 준비부터 진행 중 실시간 고객 응대, 서비스 종료 후 환급
               지원까지 각 산모님의 상황에 맞춰 관리합니다. 방치되는 공장형이 아닌, 필요한
@@ -96,7 +106,7 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
 
           <div
             className="service-tabs"
-            data-component={"organism-service-detail-tabs"}
+            data-component={getComponent("tabs")}
             style={
               {
                 ["--service-tab-count" as string]: SERVICE_DETAIL_ITEMS.length,
@@ -104,14 +114,31 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
               } as CSSProperties
             }
           >
-            <div className="tabnav-wrapper" data-gallery-id="service-detail-gallery">
-              <div className="tabnav tabnav-pill" data-nav-type="pill">
-                <div className="tabnav-platter">
-                  <div className="tabnav-mask">
-                    <ul className="tabnav-items" role="tablist" aria-label="아가잼잼 운영 강점">
+            <div
+              className="tabnav-wrapper"
+              data-gallery-id="service-detail-gallery"
+              data-component={getComponent("tabs-wrapper")}
+            >
+              <div
+                className="tabnav tabnav-pill"
+                data-nav-type="pill"
+                data-component={getComponent("tabs-nav")}
+              >
+                <div
+                  className="tabnav-platter"
+                  data-component={getComponent("tabs-platter")}
+                >
+                  <div className="tabnav-mask" data-component={getComponent("tabs-mask")}>
+                    <ul
+                      className="tabnav-items"
+                      role="tablist"
+                      aria-label="아가잼잼 운영 강점"
+                      data-component={getComponent("tabs-list")}
+                    >
                       {SERVICE_DETAIL_ITEMS.map((item, itemIndex) => {
                         const Icon = item.icon;
                         const isActive = itemIndex === activeIndex;
+                        const tabBase = getComponent(`tab-${itemIndex + 1}`);
 
                         return (
                           <li
@@ -124,6 +151,7 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
                             )}
                             role="presentation"
                             data-gallery-index={itemIndex}
+                            data-component={tabBase}
                           >
                             <button
                               type="button"
@@ -134,13 +162,34 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
                               id={`service-detail-tab-${itemIndex}`}
                               className="tabnav-link service-tabs__button"
                               onClick={() => setActiveIndex(itemIndex)}
+                              data-component={tabBase ? `${tabBase}-button` : undefined}
                             >
-                              <span className="tabnav-icon service-tabs__icon" aria-hidden="true">
-                                <Icon size={25} strokeWidth={1.65} />
+                              <span
+                                className="tabnav-icon service-tabs__icon"
+                                aria-hidden="true"
+                                data-component={tabBase ? `${tabBase}-icon` : undefined}
+                              >
+                                <Icon
+                                  size={25}
+                                  strokeWidth={1.65}
+                                  data-component={tabBase ? `${tabBase}-icon-svg` : undefined}
+                                />
                               </span>
-                              <span className="tabnav-label service-tabs__label">
-                                {item.labelLines.map((line) => (
-                                  <span key={line}>{line}</span>
+                              <span
+                                className="tabnav-label service-tabs__label"
+                                data-component={tabBase ? `${tabBase}-label` : undefined}
+                              >
+                                {item.labelLines.map((line, lineIndex) => (
+                                  <span
+                                    key={line}
+                                    data-component={
+                                      tabBase
+                                        ? `${tabBase}-label-line-${lineIndex + 1}`
+                                        : undefined
+                                    }
+                                  >
+                                    {line}
+                                  </span>
                                 ))}
                               </span>
                             </button>
@@ -149,19 +198,45 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
                       })}
                     </ul>
                   </div>
-                  <div className="tabnav-indicator" aria-hidden="true" />
-                  <div className="tabnav-paddles" aria-hidden="false">
+                  <div
+                    className="tabnav-indicator"
+                    aria-hidden="true"
+                    data-component={getComponent("tabs-indicator")}
+                  />
+                  <div
+                    className="tabnav-paddles"
+                    aria-hidden="false"
+                    data-component={getComponent("tabs-paddles")}
+                  >
                     <button
                       type="button"
                       className="tabnav-paddle tabnav-paddle-left"
                       aria-label="이전 운영 강점"
                       disabled={!canGoPrevious}
                       onClick={selectPrevious}
+                      data-component={getComponent("tabs-paddle-prev")}
                     >
-                      <svg width="7px" height="12px" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <g transform="translate(-23.5, -32)">
-                          <g transform="translate(6, 16)">
-                            <path fill="currentColor" d="M22.6745939,27.6865883 L17.8045148,22.7298827 C17.3970998,22.314824 17.3984999,21.6470593 17.808715,21.234824 L22.7088952,16.3091774 C23.1184103,15.8962362 23.7848348,15.8969421 24.1936498,16.311295 C24.6031649,16.7256479 24.6017648,17.3962361 24.1915498,17.8084714 L20.0326968,21.9887063 L24.1656488,26.1957648 C24.5737638,26.6115295 24.5716637,27.2814118 24.1593486,27.6929412 C23.954941,27.8976471 23.6875312,28 23.4201214,28 C23.1499114,28 22.8797015,27.8955294 22.6745939,27.6865883 Z" />
+                      <svg
+                        width="7px"
+                        height="12px"
+                        viewBox="0 0 7 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        data-component={getComponent("tabs-paddle-prev-icon")}
+                      >
+                        <g
+                          transform="translate(-23.5, -32)"
+                          data-component={getComponent("tabs-paddle-prev-icon-outer-group")}
+                        >
+                          <g
+                            transform="translate(6, 16)"
+                            data-component={getComponent("tabs-paddle-prev-icon-inner-group")}
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M22.6745939,27.6865883 L17.8045148,22.7298827 C17.3970998,22.314824 17.3984999,21.6470593 17.808715,21.234824 L22.7088952,16.3091774 C23.1184103,15.8962362 23.7848348,15.8969421 24.1936498,16.311295 C24.6031649,16.7256479 24.6017648,17.3962361 24.1915498,17.8084714 L20.0326968,21.9887063 L24.1656488,26.1957648 C24.5737638,26.6115295 24.5716637,27.2814118 24.1593486,27.6929412 C23.954941,27.8976471 23.6875312,28 23.4201214,28 C23.1499114,28 22.8797015,27.8955294 22.6745939,27.6865883 Z"
+                              data-component={getComponent("tabs-paddle-prev-icon-path")}
+                            />
                           </g>
                         </g>
                       </svg>
@@ -172,11 +247,29 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
                       aria-label="다음 운영 강점"
                       disabled={!canGoNext}
                       onClick={selectNext}
+                      data-component={getComponent("tabs-paddle-next")}
                     >
-                      <svg width="7px" height="12px" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <g transform="translate(-41.5, -32)">
-                          <g transform="translate(22, 16)">
-                            <path fill="currentColor" d="M20.5798786,28 C20.3124688,28 20.045059,27.8976471 19.8406514,27.6929412 C19.4283363,27.2814118 19.4262362,26.6115295 19.8343512,26.1957648 L23.9673032,21.9887063 L19.8084502,17.8084714 C19.3982352,17.3962361 19.3968351,16.7256479 19.8063502,16.311295 C20.2151652,15.8969421 20.8815897,15.8962362 21.2911048,16.3091774 L26.191285,21.234824 C26.6015001,21.6470593 26.6029002,22.314824 26.1954852,22.7298827 L21.3254061,27.6865883 C21.1202985,27.8955294 20.8500886,28 20.5798786,28" />
+                      <svg
+                        width="7px"
+                        height="12px"
+                        viewBox="0 0 7 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        data-component={getComponent("tabs-paddle-next-icon")}
+                      >
+                        <g
+                          transform="translate(-41.5, -32)"
+                          data-component={getComponent("tabs-paddle-next-icon-outer-group")}
+                        >
+                          <g
+                            transform="translate(22, 16)"
+                            data-component={getComponent("tabs-paddle-next-icon-inner-group")}
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M20.5798786,28 C20.3124688,28 20.045059,27.8976471 19.8406514,27.6929412 C19.4283363,27.2814118 19.4262362,26.6115295 19.8343512,26.1957648 L23.9673032,21.9887063 L19.8084502,17.8084714 C19.3982352,17.3962361 19.3968351,16.7256479 19.8063502,16.311295 C20.2151652,15.8969421 20.8815897,15.8962362 21.2911048,16.3091774 L26.191285,21.234824 C26.6015001,21.6470593 26.6029002,22.314824 26.1954852,22.7298827 L21.3254061,27.6865883 C21.1202985,27.8955294 20.8500886,28 20.5798786,28"
+                              data-component={getComponent("tabs-paddle-next-icon-path")}
+                            />
                           </g>
                         </g>
                       </svg>
@@ -192,19 +285,28 @@ export function DesktopServiceDetailSection({ className }: ServiceDetailSectionP
             role="tabpanel"
             id={`service-detail-panel-${activeIndex}`}
             aria-labelledby={`service-detail-tab-${activeIndex}`}
-            data-component={"organism-service-detail-caption"}
+            data-component={getComponent("caption")}
           >
-            <div key={activeItem.title} className="service-tabs__caption-inner">
-              <p className="h5 service-tabs__caption-text">{activeItem.description}</p>
+            <div
+              key={activeItem.title}
+              className="service-tabs__caption-inner"
+              data-component={getComponent("caption-inner")}
+            >
+              <p
+                className="h5 service-tabs__caption-text"
+                data-component={getComponent("caption-text")}
+              >
+                {activeItem.description}
+              </p>
             </div>
           </div>
         </div>
 
         <div
           className="flex items-center justify-center"
-          data-component={"organism-service-detail-preview"}
+          data-component={getComponent("preview")}
         >
-          <KakaoChatPhone data-component="desktop-home-service-detail-kakao-chat-phone" />
+          <KakaoChatPhone data-component={getComponent("kakao-chat-phone")} />
         </div>
       </div>
     </section>

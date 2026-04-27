@@ -6,21 +6,34 @@ import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections
 export default function DesktopPricingPage() {
   return (
     <>
-      <main className="flex w-full flex-col items-center gap-[var(--bjj-section-gap)]">
-        <section className="flex w-full flex-col items-center overflow-hidden">
-          <div className="relative mb-16 h-[488px] w-full overflow-hidden rounded-card">
+      <main
+        className="flex w-full flex-col items-center gap-[var(--bjj-section-gap)]"
+        data-component="desktop-pricing-page-main"
+      >
+        <section
+          className="flex w-full flex-col items-center overflow-hidden"
+          data-component="desktop-pricing-page-hero-section"
+        >
+          <div
+            className="relative mb-16 h-[488px] w-full overflow-hidden rounded-card"
+            data-component="desktop-pricing-page-hero-image-wrap"
+          >
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"
               className="h-full w-full object-cover"
+              data-component="desktop-pricing-page-hero-image"
             />
           </div>
-          <h1 className="h1 w-full whitespace-pre-line text-bjj-primary">
+          <h1
+            className="h1 w-full whitespace-pre-line text-bjj-primary"
+            data-component="desktop-pricing-page-headline"
+          >
             {"처음부터 숨김없이\n안내하는 서비스 가격"}
           </h1>
         </section>
 
-        <DesktopPricingClient />
+        <DesktopPricingClient data-component="desktop-pricing-client" />
 
         <BannerImageSection className="h-[576px]" />
 

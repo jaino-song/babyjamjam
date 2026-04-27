@@ -17,7 +17,13 @@ const TRACK = [SLIDES[SLIDES.length - 1], ...SLIDES, SLIDES[0]];
 
 const AUTOPLAY_MS = 5000;
 
-export default function DesktopHeroCarousel() {
+interface HeroCarouselProps {
+  "data-component"?: string;
+}
+
+export default function DesktopHeroCarousel({
+  "data-component": dataComponent,
+}: HeroCarouselProps) {
   const [index, setIndex] = useState(1);
   const [animating, setAnimating] = useState(false);
   const [playing, setPlaying] = useState(true);
@@ -187,14 +193,22 @@ export default function DesktopHeroCarousel() {
   };
 
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   return (
-    <section className="relative w-full overflow-hidden" data-component="home-hero">
-      <div className="h-[560px] w-full overflow-hidden rounded-[20px] bg-[#f7f4ef]">
-        <div className="relative min-h-0 flex-1 overflow-hidden">
+    <section className="relative w-full overflow-hidden" data-component={dataComponent}>
+      <div
+        className="h-[560px] w-full overflow-hidden rounded-[20px] bg-[#f7f4ef]"
+        data-component={getComponent("viewport")}
+      >
+        <div
+          className="relative min-h-0 flex-1 overflow-hidden"
+          data-component={getComponent("image-stage")}
+        >
           <div
             className="flex h-full w-full"
-            data-component="home-hero-track"
+            data-component={getComponent("track")}
             style={{
               transform: `translateX(-${index * 100}%)`,
               transition: animating ? "transform 1s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
@@ -210,24 +224,31 @@ export default function DesktopHeroCarousel() {
             onTouchMove={handleTouchMove}
             onTouchStart={handleTouchStart}
           >
-            {TRACK.map((slide, slideIndex) => (
-              <div
-                key={slideIndex}
-                className="h-full w-full shrink-0 bg-transparent"
-              >
-                <img
-                  src={slide.src}
-                  alt={slide.alt}
-                  className="h-full w-full shrink-0 object-cover object-[center_top]"
-                />
-              </div>
-            ))}
+            {TRACK.map((slide, slideIndex) => {
+              const slideBase = getComponent(`slide-${slideIndex + 1}`);
+
+              return (
+                <div
+                  key={slideIndex}
+                  className="h-full w-full shrink-0 bg-transparent"
+                  data-component={slideBase}
+                >
+                  <img
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="h-full w-full shrink-0 object-cover object-[center_top]"
+                    data-component={slideBase ? `${slideBase}-image` : undefined}
+                  />
+                </div>
+              );
+            })}
           </div>
 
           {SLIDES.length > 1 && (
             <div
               className="carousel__controls !top-auto bottom-8 z-10 backdrop-blur-[40px] saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.18)]"
               data-theme="light"
+              data-component={getComponent("controls")}
               style={{ ["--carousel-duration" as string]: `${AUTOPLAY_MS}ms` }}
             >
               <button
@@ -235,21 +256,59 @@ export default function DesktopHeroCarousel() {
                 className="carousel__playpause"
                 onClick={() => setPlaying((current) => !current)}
                 aria-label={playing ? "슬라이드 일시 정지" : "슬라이드 재생"}
+                data-component={getComponent("playpause-button")}
               >
                 {playing ? (
-                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                    <rect x="2" y="1.5" width="3" height="11" rx="0.8" fill="currentColor" />
-                    <rect x="9" y="1.5" width="3" height="11" rx="0.8" fill="currentColor" />
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    aria-hidden="true"
+                    data-component={getComponent("playpause-icon-pause")}
+                  >
+                    <rect
+                      x="2"
+                      y="1.5"
+                      width="3"
+                      height="11"
+                      rx="0.8"
+                      fill="currentColor"
+                      data-component={getComponent("playpause-icon-pause-bar-1")}
+                    />
+                    <rect
+                      x="9"
+                      y="1.5"
+                      width="3"
+                      height="11"
+                      rx="0.8"
+                      fill="currentColor"
+                      data-component={getComponent("playpause-icon-pause-bar-2")}
+                    />
                   </svg>
                 ) : (
-                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                    <path d="M3 1.8 L12 7 L3 12.2 Z" fill="currentColor" />
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    aria-hidden="true"
+                    data-component={getComponent("playpause-icon-play")}
+                  >
+                    <path
+                      d="M3 1.8 L12 7 L3 12.2 Z"
+                      fill="currentColor"
+                      data-component={getComponent("playpause-icon-play-path")}
+                    />
                   </svg>
                 )}
               </button>
-              <div className="carousel__dotnav" role="tablist">
+              <div
+                className="carousel__dotnav"
+                role="tablist"
+                data-component={getComponent("dotnav")}
+              >
                 {SLIDES.map((_, slideIndex) => {
                   const isActive = slideIndex === realIndex;
+                  const dotBase = getComponent(`dot-${slideIndex + 1}`);
                   return (
                     <button
                       key={slideIndex}
@@ -261,9 +320,15 @@ export default function DesktopHeroCarousel() {
                         isActive && !playing ? " is-paused" : ""
                       }`}
                       onClick={() => goToReal(slideIndex)}
+                      data-component={dotBase}
                     >
                       {isActive && (
-                        <span key={progressKey} className="carousel__dot-fill" aria-hidden="true" />
+                        <span
+                          key={progressKey}
+                          className="carousel__dot-fill"
+                          aria-hidden="true"
+                          data-component={dotBase ? `${dotBase}-fill` : undefined}
+                        />
                       )}
                     </button>
                   );

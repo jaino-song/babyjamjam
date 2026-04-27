@@ -37,35 +37,62 @@ function AccordionItem({
   isTerms,
   isOpen,
   onToggle,
+  "data-component": dataComponent,
 }: {
   item: FaqItem;
   isTerms: boolean;
   isOpen: boolean;
   onToggle: () => void;
+  "data-component"?: string;
 }) {
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+
   return (
-    <div className="faq-accordion__item">
-      <button className="faq-accordion__head" onClick={onToggle}>
-        <div className="faq-accordion__left">
+    <div className="faq-accordion__item" data-component={dataComponent}>
+      <button
+        className="faq-accordion__head"
+        onClick={onToggle}
+        data-component={getComponent("head")}
+      >
+        <div
+          className="faq-accordion__left"
+          data-component={getComponent("left")}
+        >
           <span
             className={`faq-accordion__badge${isTerms ? " faq-accordion__badge--terms" : ""}`}
+            data-component={getComponent("badge")}
           >
             {isTerms ? "§" : "Q"}
           </span>
-          <span className="faq-accordion__question">{item.question}</span>
+          <span
+            className="faq-accordion__question"
+            data-component={getComponent("question")}
+          >
+            {item.question}
+          </span>
         </div>
         <ChevronDown
           size={16}
           className={`faq-accordion__chevron${isOpen ? " faq-accordion__chevron--open" : ""}`}
+          data-component={getComponent("chevron")}
         />
       </button>
       {isOpen && (
-        <div className="faq-accordion__body">
-          <p>{item.answer}</p>
+        <div
+          className="faq-accordion__body"
+          data-component={getComponent("body")}
+        >
+          <p data-component={getComponent("answer")}>{item.answer}</p>
           {item.subItems && item.subItems.length > 0 && (
-            <ul>
-              {item.subItems.map((sub) => (
-                <li key={sub}>{sub}</li>
+            <ul data-component={getComponent("sub-items")}>
+              {item.subItems.map((sub, index) => (
+                <li
+                  key={sub}
+                  data-component={getComponent(`sub-item-${index + 1}`)}
+                >
+                  {sub}
+                </li>
               ))}
             </ul>
           )}
@@ -75,10 +102,18 @@ function AccordionItem({
   );
 }
 
-export function DesktopFaqPageClient() {
+interface DesktopFaqPageClientProps {
+  "data-component"?: string;
+}
+
+export function DesktopFaqPageClient({
+  "data-component": dataComponent,
+}: DesktopFaqPageClientProps) {
   const allCategories = FAQ_SECTIONS.flatMap((s) => s.categories);
   const [activeCategoryId, setActiveCategoryId] = useState(allCategories[0].id);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const getComponent = (suffix: string) =>
+    dataComponent ? `${dataComponent}-${suffix}` : undefined;
 
   const activeCategory =
     allCategories.find((c) => c.id === activeCategoryId) ?? allCategories[0];
@@ -99,15 +134,35 @@ export function DesktopFaqPageClient() {
   }, []);
 
   return (
-    <section className="faq-section">
-      <div className="faq-page">
-        <aside className="faq-sidebar">
-          <h2 className="faq-sidebar__title">도움말</h2>
-          <p className="faq-sidebar__subtitle">FAQ &amp; 이용약관</p>
+    <section className="faq-section" data-component={dataComponent}>
+      <div className="faq-page" data-component={getComponent("page")}>
+        <aside className="faq-sidebar" data-component={getComponent("sidebar")}>
+          <h2
+            className="faq-sidebar__title"
+            data-component={getComponent("sidebar-title")}
+          >
+            도움말
+          </h2>
+          <p
+            className="faq-sidebar__subtitle"
+            data-component={getComponent("sidebar-subtitle")}
+          >
+            FAQ &amp; 이용약관
+          </p>
 
           {FAQ_SECTIONS.map((section) => (
-            <div key={section.id}>
-              <span className="faq-sidebar__cat-label">{section.title}</span>
+            <div
+              key={section.id}
+              data-component={getComponent(`sidebar-section-${section.id}`)}
+            >
+              <span
+                className="faq-sidebar__cat-label"
+                data-component={getComponent(
+                  `sidebar-section-${section.id}-label`,
+                )}
+              >
+                {section.title}
+              </span>
               {section.categories.map((cat) => {
                 const IconComp = ICON_MAP[cat.icon];
                 return (
@@ -115,9 +170,20 @@ export function DesktopFaqPageClient() {
                     key={cat.id}
                     className={`faq-sidebar__nav-item${cat.id === activeCategoryId ? " faq-sidebar__nav-item--active" : ""}`}
                     onClick={() => handleCategoryChange(cat)}
+                    data-component={getComponent(`sidebar-category-${cat.id}`)}
                   >
-                    <span className="faq-sidebar__nav-icon">
-                      {IconComp && <IconComp size={16} />}
+                    <span
+                      className="faq-sidebar__nav-icon"
+                      data-component={getComponent(`sidebar-category-${cat.id}-icon`)}
+                    >
+                      {IconComp && (
+                        <IconComp
+                          size={16}
+                          data-component={getComponent(
+                            `sidebar-category-${cat.id}-icon-svg`,
+                          )}
+                        />
+                      )}
                     </span>
                     {cat.label}
                   </button>
@@ -127,25 +193,49 @@ export function DesktopFaqPageClient() {
           ))}
         </aside>
 
-        <div className="faq-content" key={activeCategoryId}>
-          <header className="faq-content__header">
-            <h1 className="h1 faq-content__title">자주하는 질문</h1>
-            <div className="faq-content__meta">
-              <h3>{activeCategory.label}</h3>
-              <span className="faq-content__count">
+        <div
+          className="faq-content"
+          key={activeCategoryId}
+          data-component={getComponent("content")}
+        >
+          <header
+            className="faq-content__header"
+            data-component={getComponent("content-header")}
+          >
+            <h1
+              className="h1 faq-content__title"
+              data-component={getComponent("content-title")}
+            >
+              자주하는 질문
+            </h1>
+            <div
+              className="faq-content__meta"
+              data-component={getComponent("content-meta")}
+            >
+              <h3 data-component={getComponent("content-category-label")}>
+                {activeCategory.label}
+              </h3>
+              <span
+                className="faq-content__count"
+                data-component={getComponent("content-count")}
+              >
                 {activeCategory.items.length}개 항목
               </span>
             </div>
           </header>
 
-          <div className="faq-accordion">
-            {activeCategory.items.map((item) => (
+          <div
+            className="faq-accordion"
+            data-component={getComponent("accordion")}
+          >
+            {activeCategory.items.map((item, index) => (
               <AccordionItem
                 key={item.id}
                 item={item}
                 isTerms={isTermsCategory}
                 isOpen={openItems.has(item.id)}
                 onToggle={() => toggleItem(item.id)}
+                data-component={getComponent(`item-${index + 1}-${item.id}`)}
               />
             ))}
           </div>

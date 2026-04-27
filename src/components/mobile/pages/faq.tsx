@@ -5,8 +5,11 @@ import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/m
 export default function MobileFaqPage() {
   return (
     <>
-      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
-        <MobileFaqPageClient />
+      <main
+        className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
+        data-component="mobile-faq-page-main"
+      >
+        <MobileFaqPageClient data-component="mobile-faq-page-client" />
         <MoreSection currentPage="faq" />
       </main>
 

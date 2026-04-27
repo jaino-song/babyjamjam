@@ -508,7 +508,7 @@ export function MobileBookingModal({
             <div className="bm__form-intro" data-component={getComponent("form-intro")}>
               <p className="big-p" data-component={getComponent("form-intro-copy")}>
                 산후도우미 서비스에 대해서 궁금한 점이 있으시다면,
-                <br />
+                <br data-component={getComponent("form-intro-break")} />
                 부담없이 상담 받으세요. 바로 예약하지 않으셔도 괜찮아요!
               </p>
             </div>
@@ -740,15 +740,49 @@ export function MobileBookingModal({
                   onBlur={() => markTouched("referralSource")}
                   data-component={getFieldComponent("referral-source", "select")}
                 >
-                  <option value="" disabled>
+                  <option
+                    value=""
+                    disabled
+                    data-component={getFieldComponent("referral-source", "option-placeholder")}
+                  >
                     항목을 선택해 주세요
                   </option>
-                  <option value="시군구청">시·군·구청 또는 보건소</option>
-                  <option value="지인소개">친척 또는 지인 소개</option>
-                  <option value="블로그">블로그</option>
-                  <option value="카페">네이버 카페</option>
-                  <option value="검색">네이버 검색</option>
-                  <option value="타기관">타기관 소개</option>
+                  <option
+                    value="시군구청"
+                    data-component={getFieldComponent("referral-source", "option-government-office")}
+                  >
+                    시·군·구청 또는 보건소
+                  </option>
+                  <option
+                    value="지인소개"
+                    data-component={getFieldComponent("referral-source", "option-referral")}
+                  >
+                    친척 또는 지인 소개
+                  </option>
+                  <option
+                    value="블로그"
+                    data-component={getFieldComponent("referral-source", "option-blog")}
+                  >
+                    블로그
+                  </option>
+                  <option
+                    value="카페"
+                    data-component={getFieldComponent("referral-source", "option-cafe")}
+                  >
+                    네이버 카페
+                  </option>
+                  <option
+                    value="검색"
+                    data-component={getFieldComponent("referral-source", "option-search")}
+                  >
+                    네이버 검색
+                  </option>
+                  <option
+                    value="타기관"
+                    data-component={getFieldComponent("referral-source", "option-other-agency")}
+                  >
+                    타기관 소개
+                  </option>
                 </select>
               </div>
 

@@ -5,8 +5,11 @@ import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections
 export default function DesktopFaqPage() {
   return (
     <>
-      <main className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]">
-        <DesktopFaqPageClient />
+      <main
+        className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
+        data-component="desktop-faq-page-main"
+      >
+        <DesktopFaqPageClient data-component="desktop-faq-page-client" />
         <MoreSection currentPage="faq" />
       </main>
 
