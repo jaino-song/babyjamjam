@@ -10,16 +10,17 @@ type LogoVariant = keyof typeof LOGO_VARIANTS;
 interface LogoProps {
   variant: LogoVariant;
   className?: string;
+  ["data-component"]?: string;
 }
 
-export function Logo({ variant, className }: LogoProps) {
+export function Logo({ variant, className, "data-component": dataComponent }: LogoProps) {
   const config = LOGO_VARIANTS[variant];
   return (
     <img
       src={config.src}
       alt={config.alt}
       className={cn(config.className, className)}
-      data-component="ui-logo"
+      data-component={dataComponent}
     />
   );
 }

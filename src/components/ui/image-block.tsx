@@ -15,15 +15,22 @@ interface ImageBlockProps {
   src: string;
   alt: string;
   className?: string;
+  ["data-component"]?: string;
 }
 
-export function ImageBlock({ variant, src, alt, className }: ImageBlockProps) {
+export function ImageBlock({
+  variant,
+  src,
+  alt,
+  className,
+  "data-component": dataComponent,
+}: ImageBlockProps) {
   return (
     <img
       src={src}
       alt={alt}
       className={cn(IMAGE_BLOCK_VARIANT_CLASSES[variant], className)}
-      data-component="ui-image-block"
+      data-component={dataComponent}
     />
   );
 }

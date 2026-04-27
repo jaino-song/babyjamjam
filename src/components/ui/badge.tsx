@@ -4,6 +4,7 @@ type BadgeProps = {
   tone?: "primary" | "green";
   children: React.ReactNode;
   className?: string;
+  ["data-component"]?: string;
 };
 
 const TONE_CLASSES = {
@@ -11,7 +12,12 @@ const TONE_CLASSES = {
   green: "text-bjj-text-caption bg-[rgba(72,92,17,0.08)]",
 } as const;
 
-export function Badge({ tone = "primary", className, children }: BadgeProps) {
+export function Badge({
+  tone = "primary",
+  className,
+  children,
+  "data-component": dataComponent,
+}: BadgeProps) {
   return (
     <span
       className={cn(
@@ -19,7 +25,7 @@ export function Badge({ tone = "primary", className, children }: BadgeProps) {
         TONE_CLASSES[tone],
         className,
       )}
-      data-component="ui-badge"
+      data-component={dataComponent}
     >
       {children}
     </span>

@@ -21,6 +21,7 @@ const buttonVariants = cva(
 type ButtonBaseProps = VariantProps<typeof buttonVariants> & {
   children: React.ReactNode;
   className?: string;
+  ["data-component"]?: string;
 };
 
 type ButtonAsButton = ButtonBaseProps & {
@@ -33,7 +34,14 @@ type ButtonAsAnchor = ButtonBaseProps & {
 
 type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
-export function Button({ variant, className, children, href, ...rest }: ButtonProps) {
+export function Button({
+  variant,
+  className,
+  children,
+  href,
+  "data-component": dataComponent,
+  ...rest
+}: ButtonProps) {
   const classes = cn(buttonVariants({ variant }), className);
 
   if (href !== undefined) {
@@ -41,7 +49,7 @@ export function Button({ variant, className, children, href, ...rest }: ButtonPr
       <a
         href={href}
         className={classes}
-        data-component="ui-button"
+        data-component={dataComponent}
         {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
@@ -52,7 +60,7 @@ export function Button({ variant, className, children, href, ...rest }: ButtonPr
   return (
     <button
       className={classes}
-      data-component="ui-button"
+      data-component={dataComponent}
       {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {children}
