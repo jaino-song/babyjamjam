@@ -293,6 +293,7 @@ export function DesktopPricingClient({
         onRemovePlan={store.clearSelectedPlan}
         onRemoveAddon={store.removeAddon}
         onQuantityChange={store.setAddonQty}
+        data-component="desktop_chrome_floating-bubble"
       />
     </>
   );

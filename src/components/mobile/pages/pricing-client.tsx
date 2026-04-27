@@ -293,6 +293,7 @@ export function MobilePricingClient({
         onRemovePlan={store.clearSelectedPlan}
         onRemoveAddon={store.removeAddon}
         onQuantityChange={store.setAddonQty}
+        data-component="mobile_chrome_floating-bubble"
       />
     </>
   );
