@@ -157,7 +157,7 @@ export default function DesktopHomePage() {
         <MoreSection data-component="desktop-home-more-section" />
       </main>
 
-      <Footer data-component="desktop-home-footer" />
+      <Footer data-component="desktop-home-footer-section" />
     </>
   );
 }

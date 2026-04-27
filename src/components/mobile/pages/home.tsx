@@ -152,7 +152,7 @@ export default function MobileHomePage() {
         <MoreSection data-component="mobile-home-more-section" />
       </main>
 
-      <Footer data-component="mobile-home-footer" />
+      <Footer data-component="mobile-home-footer-section" />
     </>
   );
 }

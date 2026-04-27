@@ -172,7 +172,7 @@ export default function DesktopLocationsPage() {
         </div>
       </main>
 
-      <Footer data-component="desktop-locations-footer" />
+      <Footer data-component="desktop-locations-footer-section" />
 
       <BookingModal
         open={bookingOpen}

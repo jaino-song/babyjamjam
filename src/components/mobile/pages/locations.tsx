@@ -172,7 +172,7 @@ export default function MobileLocationsPage() {
         </div>
       </main>
 
-      <Footer data-component="mobile-locations-footer" />
+      <Footer data-component="mobile-locations-footer-section" />
 
       <BookingModal
         open={bookingOpen}

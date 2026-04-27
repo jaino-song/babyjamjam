@@ -33,7 +33,7 @@ export default function MobilePricingPage() {
           </h1>
         </section>
 
-        <MobilePricingClient data-component="mobile-pricing-client" />
+        <MobilePricingClient data-component="mobile-pricing-client-root" />
 
         <BannerImageSection
           className="h-[360px]"
@@ -43,7 +43,7 @@ export default function MobilePricingPage() {
         <MoreSection data-component="mobile-pricing-more-section" />
       </main>
 
-      <Footer data-component="mobile-pricing-footer" />
+      <Footer data-component="mobile-pricing-footer-section" />
     </>
   );
 }

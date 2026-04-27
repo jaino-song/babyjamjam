@@ -16,7 +16,7 @@ export default function DesktopFaqPage() {
         />
       </main>
 
-      <Footer data-component="desktop-faq-footer" />
+      <Footer data-component="desktop-faq-footer-section" />
     </>
   );
 }

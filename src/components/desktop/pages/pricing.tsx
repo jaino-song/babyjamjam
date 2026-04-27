@@ -33,7 +33,7 @@ export default function DesktopPricingPage() {
           </h1>
         </section>
 
-        <DesktopPricingClient data-component="desktop-pricing-client" />
+        <DesktopPricingClient data-component="desktop-pricing-client-root" />
 
         <BannerImageSection
           className="h-[576px]"
@@ -43,7 +43,7 @@ export default function DesktopPricingPage() {
         <MoreSection data-component="desktop-pricing-more-section" />
       </main>
 
-      <Footer data-component="desktop-pricing-footer" />
+      <Footer data-component="desktop-pricing-footer-section" />
     </>
   );
 }

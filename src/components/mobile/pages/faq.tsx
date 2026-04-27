@@ -16,7 +16,7 @@ export default function MobileFaqPage() {
         />
       </main>
 
-      <Footer data-component="mobile-faq-footer" />
+      <Footer data-component="mobile-faq-footer-section" />
     </>
   );
 }
