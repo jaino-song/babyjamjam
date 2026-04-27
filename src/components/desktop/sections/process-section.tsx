@@ -55,7 +55,7 @@ export function DesktopProcessSection({
       data-component={dataComponent}
     >
       <div className="flex justify-between w-full gap-6" data-component={getComponent("header")}>
-        <h2 className="h2 text-bjj-primary-light" data-component={getComponent("title")}>
+        <h2 className="h2 text-bjj-primary-light" data-component={getComponent("header_title")}>
           산후도우미 서비스 진행 절차
         </h2>
       </div>
@@ -66,7 +66,7 @@ export function DesktopProcessSection({
             number={step.number}
             title={step.title}
             description={step.description}
-            data-component={getComponent(`step-${step.number}`)}
+            data-component={getComponent(`step-${Number(step.number)}`)}
           />
         ))}
       </div>

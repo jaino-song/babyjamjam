@@ -115,7 +115,7 @@ export function MobileProcessSection({
       data-component={dataComponent}
     >
       <div className="flex justify-between w-full gap-6" data-component={getComponent("header")}>
-        <h2 className="h2 text-bjj-primary" data-component={getComponent("title")}>
+        <h2 className="h2 text-bjj-primary" data-component={getComponent("header_title")}>
           산후도우미 서비스 진행 절차
         </h2>
       </div>
@@ -128,7 +128,7 @@ export function MobileProcessSection({
             ref={mobileTrackRef}
             className="process-gallery__track"
             aria-label="산후도우미 서비스 진행 절차"
-            data-component={getComponent("steps")}
+            data-component={getComponent("gallery_track")}
           >
             {PROCESS_STEPS.map((step, index) => (
               <article
@@ -141,27 +141,27 @@ export function MobileProcessSection({
                   index === mobileActiveIndex && "process-gallery__card--active",
                 )}
                 aria-current={index === mobileActiveIndex ? "true" : undefined}
-                data-component={getComponent(`step-${index + 1}`)}
+                data-component={getComponent(`gallery_card-${index + 1}`)}
               >
                 <span
                   className="process-gallery__number"
-                  data-component={getComponent(`step-${index + 1}-number`)}
+                  data-component={getComponent(`gallery_card-${index + 1}_number`)}
                 >
                   {step.number}
                 </span>
                 <div
                   className="process-gallery__content"
-                  data-component={getComponent(`step-${index + 1}-content`)}
+                  data-component={getComponent(`gallery_card-${index + 1}_content`)}
                 >
                   <h3
                     className="h6 process-gallery__title"
-                    data-component={getComponent(`step-${index + 1}-title`)}
+                    data-component={getComponent(`gallery_card-${index + 1}_title`)}
                   >
                     {step.title}
                   </h3>
                   <p
                     className="medium-p process-gallery__description"
-                    data-component={getComponent(`step-${index + 1}-description`)}
+                    data-component={getComponent(`gallery_card-${index + 1}_description`)}
                   >
                     {step.description}
                   </p>
@@ -177,7 +177,7 @@ export function MobileProcessSection({
             nextDisabled={mobileActiveIndex === PROCESS_STEPS.length - 1}
             onPrevious={() => scrollMobileStep(-1)}
             onNext={() => scrollMobileStep(1)}
-            data-component={getComponent("gallery-paddlenav")}
+            data-component={getComponent("gallery_paddle")}
           />
         </div>
       </div>
