@@ -9,14 +9,18 @@ interface ScrollExpandImageProps {
   src: string;
   alt: string;
   overlayText?: string;
+  ["data-component"]?: string;
 }
 
 export function DesktopScrollExpandImage({
   src,
   alt,
   overlayText,
+  "data-component": dataComponent,
 }: ScrollExpandImageProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const sub = (s: string) =>
+    dataComponent ? `${dataComponent}_${s}` : undefined;
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -78,10 +82,19 @@ export function DesktopScrollExpandImage({
         clipPath: "inset(0% 23.3213% round 24px)",
         transition: "clip-path 160ms ease-out",
       }}
+      data-component={dataComponent}
     >
-      <img src={src} alt={alt} className="block h-full w-full object-cover" />
+      <img
+        src={src}
+        alt={alt}
+        className="block h-full w-full object-cover"
+        data-component={sub("image")}
+      />
       {overlayText ? (
-        <span className="h2 absolute left-1/2 top-1/2 w-auto -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-center text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)]">
+        <span
+          className="h2 absolute left-1/2 top-1/2 w-auto -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-center text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)]"
+          data-component={sub("overlay-text")}
+        >
           {overlayText}
         </span>
       ) : null}

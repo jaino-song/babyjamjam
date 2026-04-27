@@ -7,14 +7,6 @@ import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
 
-type AnnotatedMobileScrollExpandImageProps = Parameters<typeof MobileScrollExpandImage>[0] & {
-  "data-component"?: string;
-};
-
-const AnnotatedMobileScrollExpandImage = MobileScrollExpandImage as (
-  props: AnnotatedMobileScrollExpandImageProps,
-) => ReturnType<typeof MobileScrollExpandImage>;
-
 export default function MobileHomePage() {
   const appDetailSteps = [
     "임신 주차마다 도움이 되는 정보를 확인하고, 서비스 신청에 필요한 절차도 미리 안내받으실 수 있어요.",
@@ -40,7 +32,7 @@ export default function MobileHomePage() {
         </section>
         <MobileServiceDetailSection data-component="mobile_home_service-detail" />
 
-        <AnnotatedMobileScrollExpandImage
+        <MobileScrollExpandImage
           data-component="mobile_home_scroll-expand-image"
           src="/images/hero-image-1a35f6.png"
           alt="아가잼잼 배너"
