@@ -40,7 +40,10 @@ export function DesktopPersistentNav({
           data-component={dataComponent ? `${dataComponent}_logo-image` : undefined}
         />
       </Link>
-      <div className="flex-1 flex justify-center">
+      <div
+        className="flex-1 flex justify-center"
+        data-component={dataComponent ? `${dataComponent}_nav-wrapper` : undefined}
+      >
         <DesktopNavBar
           items={NAV_ITEMS}
           activeLabel={activeLabel}

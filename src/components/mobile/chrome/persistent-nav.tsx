@@ -60,7 +60,10 @@ export function MobilePersistentNav({
             data-component={dataComponent ? `${dataComponent}_logo-image` : undefined}
           />
         </Link>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div
+          className="flex items-center gap-2 flex-shrink-0"
+          data-component={dataComponent ? `${dataComponent}_menu-controls` : undefined}
+        >
           <button
             type="button"
             className="nav-hamburger"
@@ -83,6 +86,9 @@ export function MobilePersistentNav({
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
+                data-component={
+                  dataComponent ? `${dataComponent}_hamburger-icon-path` : undefined
+                }
               />
             </svg>
           </button>
@@ -119,7 +125,15 @@ export function MobilePersistentNav({
                 aria-hidden="true"
                 data-component={dataComponent ? `${dataComponent}_drawer-close-icon` : undefined}
               >
-                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  data-component={
+                    dataComponent ? `${dataComponent}_drawer-close-icon-path` : undefined
+                  }
+                />
               </svg>
             </button>
             <nav
