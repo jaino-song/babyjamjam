@@ -40,6 +40,7 @@ const removeButtonStyle = {
 } as const;
 
 interface MobileFloatingBubbleProps {
+  "data-component"?: string;
   distinctCount: number;
   showCart?: boolean;
   selectedPlan?: PlanData | null;
@@ -51,6 +52,7 @@ interface MobileFloatingBubbleProps {
 }
 
 export function MobileFloatingBubble({
+  "data-component": dataComponent,
   distinctCount,
   showCart = true,
   selectedPlan = null,
@@ -66,6 +68,8 @@ export function MobileFloatingBubble({
   const cartPanelId = useId();
   const cartTitleId = useId();
   const cartButtonRef = useRef<HTMLButtonElement>(null);
+  const getDataComponent = (suffix?: string) =>
+    dataComponent ? (suffix ? `${dataComponent}-${suffix}` : dataComponent) : undefined;
 
   useEffect(() => {
     setMounted(true);
@@ -102,7 +106,7 @@ export function MobileFloatingBubble({
   return createPortal(
     <div
       className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3"
-      data-component="organism-floating-bubble"
+      data-component={getDataComponent()}
     >
       {showCart && isCartOpen && (
         <aside
@@ -111,26 +115,26 @@ export function MobileFloatingBubble({
           role="dialog"
           aria-modal={false}
           aria-labelledby={cartTitleId}
-          data-component="organism-floating-cart-panel"
+          data-component={getDataComponent("cart-panel")}
         >
           <header
             className="floating-cart-panel__header floating-cart-panel__header-mobile"
-            data-component="organism-floating-cart-panel-header"
+            data-component={getDataComponent("cart-panel-header")}
           >
             <div
               className="floating-cart-panel__title-group"
-              data-component="organism-floating-cart-panel-title-group"
+              data-component={getDataComponent("cart-panel-title-group")}
             >
               <h2
                 id={cartTitleId}
                 className="floating-cart-panel__title"
-                data-component="organism-floating-cart-panel-title"
+                data-component={getDataComponent("cart-panel-title")}
               >
                 장바구니
               </h2>
               <p
                 className="floating-cart-panel__count"
-                data-component="organism-floating-cart-panel-count"
+                data-component={getDataComponent("cart-panel-count")}
               >
                 선택한 서비스 {distinctCount}개
               </p>
@@ -138,6 +142,7 @@ export function MobileFloatingBubble({
             <PillCta
               className="floating-cart-panel__cta"
               onClick={() => setIsBookingOpen(true)}
+              data-component={getDataComponent("cart-panel-cta")}
             >
               상담신청
             </PillCta>
@@ -145,17 +150,23 @@ export function MobileFloatingBubble({
 
           <div
             className="floating-cart-panel__body floating-cart-panel__body-mobile"
-            data-component="organism-floating-cart-panel-body"
+            data-component={getDataComponent("cart-panel-body")}
           >
             {!hasSelectedItems && (
               <div
                 className="floating-cart-panel__empty"
-                data-component="organism-floating-cart-panel-empty"
+                data-component={getDataComponent("cart-panel-empty")}
               >
-                <p className="floating-cart-panel__empty-title">
+                <p
+                  className="floating-cart-panel__empty-title"
+                  data-component={getDataComponent("cart-panel-empty-title")}
+                >
                   선택한 서비스가 없습니다.
                 </p>
-                <p className="floating-cart-panel__empty-copy">
+                <p
+                  className="floating-cart-panel__empty-copy"
+                  data-component={getDataComponent("cart-panel-empty-copy")}
+                >
                   플랜과 추가 서비스를 선택하면 여기에 표시됩니다.
                 </p>
               </div>
@@ -165,19 +176,28 @@ export function MobileFloatingBubble({
               <article
                 className="floating-cart-panel__item floating-cart-panel__item-mobile"
                 style={cartItemStyle}
-                data-component="organism-floating-cart-panel-plan-item"
+                data-component={getDataComponent("cart-panel-plan-item")}
               >
                 <div
                   className="floating-cart-panel__item-main"
-                  data-component="organism-floating-cart-panel-plan-main"
+                  data-component={getDataComponent("cart-panel-plan-main")}
                 >
-                  <span className="floating-cart-panel__eyebrow">
+                  <span
+                    className="floating-cart-panel__eyebrow"
+                    data-component={getDataComponent("cart-panel-plan-eyebrow")}
+                  >
                     산후도우미서비스 플랜
                   </span>
-                  <h3 className="floating-cart-panel__item-name">
+                  <h3
+                    className="floating-cart-panel__item-name"
+                    data-component={getDataComponent("cart-panel-plan-name")}
+                  >
                     {selectedPlan.name}
                   </h3>
-                  <p className="floating-cart-panel__item-price">
+                  <p
+                    className="floating-cart-panel__item-price"
+                    data-component={getDataComponent("cart-panel-plan-price")}
+                  >
                     {selectedPlan.price}
                   </p>
                 </div>
@@ -187,7 +207,7 @@ export function MobileFloatingBubble({
                   style={removeButtonStyle}
                   onClick={onRemovePlan}
                   aria-label={`${selectedPlan.name} 플랜 삭제`}
-                  data-component="organism-floating-cart-panel-plan-remove"
+                  data-component={getDataComponent("cart-panel-plan-remove")}
                 >
                   <X size={16} aria-hidden="true" />
                 </button>
@@ -199,19 +219,28 @@ export function MobileFloatingBubble({
                 key={addon.id}
                 className="floating-cart-panel__item floating-cart-panel__item--addon floating-cart-panel__item-mobile"
                 style={cartItemStyle}
-                data-component="organism-floating-cart-panel-addon-item"
+                data-component={getDataComponent("cart-panel-addon-item")}
               >
                 <div
                   className="floating-cart-panel__item-main"
-                  data-component="organism-floating-cart-panel-addon-main"
+                  data-component={getDataComponent("cart-panel-addon-main")}
                 >
-                  <span className="floating-cart-panel__eyebrow">
+                  <span
+                    className="floating-cart-panel__eyebrow"
+                    data-component={getDataComponent("cart-panel-addon-eyebrow")}
+                  >
                     추가 서비스
                   </span>
-                  <h3 className="floating-cart-panel__item-name">
+                  <h3
+                    className="floating-cart-panel__item-name"
+                    data-component={getDataComponent("cart-panel-addon-name")}
+                  >
                     {addon.name}
                   </h3>
-                  <p className="floating-cart-panel__item-price">
+                  <p
+                    className="floating-cart-panel__item-price"
+                    data-component={getDataComponent("cart-panel-addon-price")}
+                  >
                     {addon.price}
                   </p>
                 </div>
@@ -222,6 +251,7 @@ export function MobileFloatingBubble({
                     onQuantityChange(addon.id, nextQuantity)
                   }
                   className="floating-cart-panel__qty floating-cart-panel__qty-mobile"
+                  data-component={getDataComponent("cart-panel-addon-quantity")}
                 />
                 <button
                   type="button"
@@ -229,7 +259,7 @@ export function MobileFloatingBubble({
                   style={removeButtonStyle}
                   onClick={() => onRemoveAddon(addon.id)}
                   aria-label={`${addon.name} 삭제`}
-                  data-component="organism-floating-cart-panel-addon-remove"
+                  data-component={getDataComponent("cart-panel-addon-remove")}
                 >
                   <X size={16} aria-hidden="true" />
                 </button>
@@ -244,7 +274,7 @@ export function MobileFloatingBubble({
         className="w-14 h-14 rounded-full border-none bg-bjj-primary cursor-pointer flex items-center justify-center shadow-[0_4px_6px_-4px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]"
         onClick={handleScrollToTop}
         aria-label="위로 스크롤"
-        data-component="organism-floating-bubble-scroll-top-button"
+        data-component={getDataComponent("scroll-top-button")}
       >
         <svg
           width="24"
@@ -267,7 +297,7 @@ export function MobileFloatingBubble({
         <>
           <div
             className="relative"
-            data-component="organism-floating-bubble-cart"
+            data-component={getDataComponent("cart")}
           >
             <button
               ref={cartButtonRef}
@@ -277,7 +307,7 @@ export function MobileFloatingBubble({
               aria-label={`선택한 서비스 ${distinctCount}개`}
               aria-expanded={isCartOpen}
               aria-controls={cartPanelId}
-              data-component="organism-floating-bubble-cart-button"
+              data-component={getDataComponent("cart-button")}
             >
               <svg
                 width="24"
@@ -313,7 +343,7 @@ export function MobileFloatingBubble({
             {distinctCount > 0 && (
               <span
                 className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center font-heading font-bold text-xs leading-none text-white shadow-[0_2px_4px_-2px_rgba(0,0,0,0.1)]"
-                data-component="organism-floating-bubble-cart-badge"
+                data-component={getDataComponent("cart-badge")}
               >
                 {distinctCount}
               </span>
@@ -323,6 +353,7 @@ export function MobileFloatingBubble({
             open={isBookingOpen}
             onClose={closeBooking}
             selectedServices={selectedServices}
+            data-component={getDataComponent("booking-modal")}
           />
         </>
       )}
