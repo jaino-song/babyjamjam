@@ -33,7 +33,7 @@ export function MobileAddonServicesSection({
   const groups: AddonData[][] = [];
   let currentGroup: string | undefined;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   for (const addon of addons) {
     if (addon.group !== currentGroup) {
@@ -200,7 +200,7 @@ export function MobileAddonServicesSection({
             {groupIndex === 0 && (
               <p
                 className="addon-services__note"
-                data-component={groupBase ? `${groupBase}-note` : undefined}
+                data-component={groupBase ? `${groupBase}_note` : undefined}
               >
                 *모든 요금은 1인 1일 기준입니다.
               </p>
@@ -208,11 +208,11 @@ export function MobileAddonServicesSection({
             {groupIndex === 1 && (
               <p
                 className="addon-services__note"
-                data-component={groupBase ? `${groupBase}-note` : undefined}
+                data-component={groupBase ? `${groupBase}_note` : undefined}
               >
                 *토요일 및 공휴일 서비스는 1일 기준,
                 <br
-                  data-component={groupBase ? `${groupBase}-note-break` : undefined}
+                  data-component={groupBase ? `${groupBase}_note-break` : undefined}
                 />
                 추가 시간은 1시간 기준입니다.
               </p>
@@ -222,7 +222,7 @@ export function MobileAddonServicesSection({
               ref={(node) => {
                 groupRefs.current[groupIndex] = node;
               }}
-              data-component={groupBase ? `${groupBase}-list` : undefined}
+              data-component={groupBase ? `${groupBase}_list` : undefined}
             >
               {group.map((addon, addonIndex) => {
                 const quantity = selections.get(addon.id);
@@ -246,7 +246,7 @@ export function MobileAddonServicesSection({
                       onQuantityChange(addon.id, nextQuantity)
                     }
                     data-component={
-                      groupBase ? `${groupBase}-card-${addonIndex + 1}` : undefined
+                      groupBase ? `${groupBase}_card-${addonIndex + 1}` : undefined
                     }
                   />
                 );
@@ -260,7 +260,7 @@ export function MobileAddonServicesSection({
               nextDisabled={(mobileGroupIndices[groupIndex] ?? 0) === group.length - 1}
               onPrevious={() => scrollAddonGroup(groupIndex, -1)}
               onNext={() => scrollAddonGroup(groupIndex, 1)}
-              data-component={groupBase ? `${groupBase}-paddlenav` : undefined}
+              data-component={groupBase ? `${groupBase}_paddlenav` : undefined}
             />
           </div>
         );

@@ -37,7 +37,7 @@ export function GalleryPaddlenav({
         onClick={onPrevious}
         disabled={previousDisabled}
         aria-label={previousLabel}
-        data-component={dataComponent ? `${dataComponent}-prev` : undefined}
+        data-component={dataComponent ? `${dataComponent}_prev` : undefined}
       >
         <ChevronLeft size={18} strokeWidth={2.5} aria-hidden="true" />
       </button>
@@ -47,7 +47,7 @@ export function GalleryPaddlenav({
         onClick={onNext}
         disabled={nextDisabled}
         aria-label={nextLabel}
-        data-component={dataComponent ? `${dataComponent}-next` : undefined}
+        data-component={dataComponent ? `${dataComponent}_next` : undefined}
       >
         <ChevronRight size={18} strokeWidth={2.5} aria-hidden="true" />
       </button>

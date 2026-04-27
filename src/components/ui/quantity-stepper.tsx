@@ -35,7 +35,7 @@ export function QuantityStepper({
         onClick={() => canDecrement && onChange?.(value - 1)}
         disabled={!canDecrement}
         aria-label="수량 줄이기"
-        data-component={dataComponent ? `${dataComponent}-decrement` : undefined}
+        data-component={dataComponent ? `${dataComponent}_decrement` : undefined}
       >
         <svg width="12" height="2" viewBox="0 0 12 2" fill="none" aria-hidden="true">
           <path
@@ -49,7 +49,7 @@ export function QuantityStepper({
 
       <span
         className="qty-stepper__value"
-        data-component={dataComponent ? `${dataComponent}-value` : undefined}
+        data-component={dataComponent ? `${dataComponent}_value` : undefined}
       >
         {value}
       </span>
@@ -60,7 +60,7 @@ export function QuantityStepper({
         onClick={() => canIncrement && onChange?.(value + 1)}
         disabled={!canIncrement}
         aria-label="수량 늘리기"
-        data-component={dataComponent ? `${dataComponent}-increment` : undefined}
+        data-component={dataComponent ? `${dataComponent}_increment` : undefined}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path

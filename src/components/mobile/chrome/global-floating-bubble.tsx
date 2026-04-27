@@ -26,7 +26,7 @@ export function MobileGlobalFloatingBubble({
       distinctCount={distinctCount}
       showCart={false}
       data-component={
-        dataComponent ? `${dataComponent}-floating-bubble` : undefined
+        dataComponent ? `${dataComponent}_floating-bubble` : undefined
       }
     />
   );

@@ -194,7 +194,7 @@ export default function DesktopHeroCarousel({
 
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section className="relative w-full overflow-hidden" data-component={dataComponent}>
@@ -237,7 +237,7 @@ export default function DesktopHeroCarousel({
                     src={slide.src}
                     alt={slide.alt}
                     className="h-full w-full shrink-0 object-cover object-[center_top]"
-                    data-component={slideBase ? `${slideBase}-image` : undefined}
+                    data-component={slideBase ? `${slideBase}_image` : undefined}
                   />
                 </div>
               );
@@ -327,7 +327,7 @@ export default function DesktopHeroCarousel({
                           key={progressKey}
                           className="carousel__dot-fill"
                           aria-hidden="true"
-                          data-component={dotBase ? `${dotBase}-fill` : undefined}
+                          data-component={dotBase ? `${dotBase}_fill` : undefined}
                         />
                       )}
                     </button>

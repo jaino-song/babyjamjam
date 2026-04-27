@@ -74,7 +74,7 @@ export function DesktopMoreSection({
         ? POSTPARTUM_CARE_PAGE_LINK_CARDS
         : LINK_CARDS;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section

@@ -41,7 +41,7 @@ export function DesktopProcessSection({
   "data-component": dataComponent,
 }: ProcessSectionProps) {
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section

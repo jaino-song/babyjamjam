@@ -29,14 +29,14 @@ export function DualColorHeading({
     >
       <span
         style={{ color: "var(--bjj-color-text-muted)" }}
-        data-component={dataComponent ? `${dataComponent}-muted` : undefined}
+        data-component={dataComponent ? `${dataComponent}_muted` : undefined}
       >
         {mutedText}
       </span>
       <br />
       <span
         style={{ color: "var(--bjj-color-primary)" }}
-        data-component={dataComponent ? `${dataComponent}-primary` : undefined}
+        data-component={dataComponent ? `${dataComponent}_primary` : undefined}
       >
         {primaryText}
       </span>

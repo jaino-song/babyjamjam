@@ -59,7 +59,7 @@ export function SelectDropdown({
         disabled={disabled}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        data-component={dataComponent ? `${dataComponent}-trigger` : undefined}
+        data-component={dataComponent ? `${dataComponent}_trigger` : undefined}
       >
         <span
           className={cn(
@@ -91,7 +91,7 @@ export function SelectDropdown({
         <ul
           className="select-dropdown__menu"
           role="listbox"
-          data-component={dataComponent ? `${dataComponent}-menu` : undefined}
+          data-component={dataComponent ? `${dataComponent}_menu` : undefined}
         >
           {options.map((option) => (
             <li
@@ -106,7 +106,7 @@ export function SelectDropdown({
                 onChange?.(option.value);
                 setIsOpen(false);
               }}
-              data-component={dataComponent ? `${dataComponent}-option` : undefined}
+              data-component={dataComponent ? `${dataComponent}_option` : undefined}
             >
               {option.label}
             </li>

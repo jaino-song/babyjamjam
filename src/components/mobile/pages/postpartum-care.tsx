@@ -79,26 +79,26 @@ export default function MobilePostpartumCarePage() {
     <>
       <main
         className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
-        data-component="mobile-postpartum-care-page-main"
+        data-component="mobile_postpartum-care_page-main"
       >
         <section
           className="flex flex-col items-center w-full gap-10"
-          data-component="mobile-postpartum-care-hero-section"
+          data-component="mobile_postpartum-care_hero_section"
         >
           <div
             className="relative w-full h-[380px] rounded-[20px] overflow-hidden bg-[#f7f4ef]"
-            data-component="mobile-postpartum-care-hero-banner"
+            data-component="mobile_postpartum-care_hero_banner"
           >
             <img
               src="/images/hero-bg-22ebe1.png"
               alt="Hero background"
               className="w-full h-full object-cover object-[center_top] shrink-0"
-              data-component="mobile-postpartum-care-hero-banner-image"
+              data-component="mobile_postpartum-care_hero_banner-image"
             />
           </div>
           <h1
             className="h1 text-bjj-primary whitespace-pre-line w-full"
-            data-component="mobile-postpartum-care-hero-headline"
+            data-component="mobile_postpartum-care_hero_headline"
           >
             {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
           </h1>
@@ -106,19 +106,19 @@ export default function MobilePostpartumCarePage() {
         <MobileCareSectionCarousel
           sections={CARE_SECTIONS}
           initialActiveIndex={0}
-          data-component="mobile-postpartum-care-care-section-carousel"
+          data-component="mobile_postpartum-care_care-section-carousel"
         />
 
-        <BannerImageSection data-component="mobile-postpartum-care-banner-image-section" />
+        <BannerImageSection data-component="mobile_postpartum-care_banner-image-section" />
 
-        <ProcessSection data-component="mobile-postpartum-care-process-section" />
+        <ProcessSection data-component="mobile_postpartum-care_process-section" />
         <MoreSection
           currentPage="postpartum-care"
-          data-component="mobile-postpartum-care-more-section"
+          data-component="mobile_postpartum-care_more-section"
         />
       </main>
 
-      <Footer data-component="mobile-postpartum-care-footer" />
+      <Footer data-component="mobile_postpartum-care_footer" />
     </>
   );
 }

@@ -22,7 +22,7 @@ export function DesktopLinkCard({
   "data-component": dataComponent,
 }: LinkCardProps) {
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <div

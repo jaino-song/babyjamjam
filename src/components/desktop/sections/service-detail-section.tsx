@@ -59,7 +59,7 @@ export function DesktopServiceDetailSection({
   const canGoPrevious = activeIndex > 0;
   const canGoNext = activeIndex < SERVICE_DETAIL_ITEMS.length - 1;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   const selectPrevious = () => {
     setActiveIndex((currentIndex) => Math.max(0, currentIndex - 1));
@@ -162,29 +162,29 @@ export function DesktopServiceDetailSection({
                               id={`service-detail-tab-${itemIndex}`}
                               className="tabnav-link service-tabs__button"
                               onClick={() => setActiveIndex(itemIndex)}
-                              data-component={tabBase ? `${tabBase}-button` : undefined}
+                              data-component={tabBase ? `${tabBase}_button` : undefined}
                             >
                               <span
                                 className="tabnav-icon service-tabs__icon"
                                 aria-hidden="true"
-                                data-component={tabBase ? `${tabBase}-icon` : undefined}
+                                data-component={tabBase ? `${tabBase}_icon` : undefined}
                               >
                                 <Icon
                                   size={25}
                                   strokeWidth={1.65}
-                                  data-component={tabBase ? `${tabBase}-icon-svg` : undefined}
+                                  data-component={tabBase ? `${tabBase}_icon-svg` : undefined}
                                 />
                               </span>
                               <span
                                 className="tabnav-label service-tabs__label"
-                                data-component={tabBase ? `${tabBase}-label` : undefined}
+                                data-component={tabBase ? `${tabBase}_label` : undefined}
                               >
                                 {item.labelLines.map((line, lineIndex) => (
                                   <span
                                     key={line}
                                     data-component={
                                       tabBase
-                                        ? `${tabBase}-label-line-${lineIndex + 1}`
+                                        ? `${tabBase}_label-line-${lineIndex + 1}`
                                         : undefined
                                     }
                                   >

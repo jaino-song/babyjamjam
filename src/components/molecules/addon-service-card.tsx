@@ -40,11 +40,11 @@ export function AddonServiceCard({
     >
       <div
         className="addon-card__inner"
-        data-component={dataComponent ? `${dataComponent}-inner` : undefined}
+        data-component={dataComponent ? `${dataComponent}_inner` : undefined}
       >
         <h3
           className="addon-card__name"
-          data-component={dataComponent ? `${dataComponent}-name` : undefined}
+          data-component={dataComponent ? `${dataComponent}_name` : undefined}
         >
           {addon.name}
         </h3>
@@ -52,14 +52,14 @@ export function AddonServiceCard({
         {addon.note ? (
           <div
             className="addon-card__note"
-            data-component={dataComponent ? `${dataComponent}-note` : undefined}
+            data-component={dataComponent ? `${dataComponent}_note` : undefined}
           >
             <span className="addon-card__note-text">{addon.note}</span>
           </div>
         ) : (
           <p
             className="addon-card__description"
-            data-component={dataComponent ? `${dataComponent}-description` : undefined}
+            data-component={dataComponent ? `${dataComponent}_description` : undefined}
           >
             {addon.description}
           </p>
@@ -67,14 +67,14 @@ export function AddonServiceCard({
 
         <p
           className="addon-card__price"
-          data-component={dataComponent ? `${dataComponent}-price` : undefined}
+          data-component={dataComponent ? `${dataComponent}_price` : undefined}
         >
           {addon.price}
         </p>
 
         <div
           className="addon-card__actions"
-          data-component={dataComponent ? `${dataComponent}-actions` : undefined}
+          data-component={dataComponent ? `${dataComponent}_actions` : undefined}
         >
           <QuantityStepper
             value={quantity}
@@ -88,7 +88,7 @@ export function AddonServiceCard({
               added ? "addon-card__btn--added" : "addon-card__btn--default"
             )}
             onClick={added ? onRemove : onAdd}
-            data-component={dataComponent ? `${dataComponent}-button` : undefined}
+            data-component={dataComponent ? `${dataComponent}_button` : undefined}
           >
             {added ? "추가 완료" : "서비스 추가하기"}
           </button>

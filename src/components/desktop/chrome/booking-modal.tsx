@@ -75,17 +75,17 @@ function FieldLabel({
   return (
     <div
       className="bm__form-label-row"
-      data-component={dataComponent ? `${dataComponent}-label-row` : undefined}
+      data-component={dataComponent ? `${dataComponent}_label-row` : undefined}
     >
       <label
         className="bm__form-label"
-        data-component={dataComponent ? `${dataComponent}-label` : undefined}
+        data-component={dataComponent ? `${dataComponent}_label` : undefined}
       >
         {children}{" "}
         {required && (
           <span
             className="bm__required"
-            data-component={dataComponent ? `${dataComponent}-required` : undefined}
+            data-component={dataComponent ? `${dataComponent}_required` : undefined}
           >
             *
           </span>
@@ -93,7 +93,7 @@ function FieldLabel({
       </label>
       <InlineFieldError
         message={error}
-        data-component={dataComponent ? `${dataComponent}-error` : undefined}
+        data-component={dataComponent ? `${dataComponent}_error` : undefined}
       />
     </div>
   );
@@ -350,10 +350,10 @@ export function DesktopBookingModal({
     submitAttempted || touched[key] ? fieldErrors[key] : undefined;
   const showChrome = !submitted;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
   const getFieldComponent = (name: string, suffix?: string) => {
     const base = getComponent(`field-${name}`);
-    return base && suffix ? `${base}-${suffix}` : base;
+    return base && suffix ? `${base}_${suffix}` : base;
   };
 
   return createPortal(

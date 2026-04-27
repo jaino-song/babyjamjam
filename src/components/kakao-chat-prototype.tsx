@@ -55,80 +55,80 @@ export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPho
     <div className={styles.phoneStage} data-component={dataComponent}>
       <div
         className={styles.phoneShell}
-        data-component={dataComponent ? `${dataComponent}-shell` : undefined}
+        data-component={dataComponent ? `${dataComponent}_shell` : undefined}
       >
         <div
           className={styles.screen}
-          data-component={dataComponent ? `${dataComponent}-screen` : undefined}
+          data-component={dataComponent ? `${dataComponent}_screen` : undefined}
         >
           <div
             className={styles.screenTop}
-            data-component={dataComponent ? `${dataComponent}-status-bar` : undefined}
+            data-component={dataComponent ? `${dataComponent}_status-bar` : undefined}
           >
             <div
               className={styles.topSpacer}
               aria-hidden="true"
-              data-component={dataComponent ? `${dataComponent}-top-spacer` : undefined}
+              data-component={dataComponent ? `${dataComponent}_top-spacer` : undefined}
             />
             <div
               className={styles.navRow}
-              data-component={dataComponent ? `${dataComponent}-nav-row` : undefined}
+              data-component={dataComponent ? `${dataComponent}_nav-row` : undefined}
             >
               <div
                 className={styles.navLeft}
-                data-component={dataComponent ? `${dataComponent}-nav-left` : undefined}
+                data-component={dataComponent ? `${dataComponent}_nav-left` : undefined}
               >
                 <span
                   className={styles.navBack}
                   aria-hidden="true"
-                  data-component={dataComponent ? `${dataComponent}-nav-back` : undefined}
+                  data-component={dataComponent ? `${dataComponent}_nav-back` : undefined}
                 />
                 <span
                   className={styles.navCount}
-                  data-component={dataComponent ? `${dataComponent}-nav-count` : undefined}
+                  data-component={dataComponent ? `${dataComponent}_nav-count` : undefined}
                 >
                   42
                 </span>
               </div>
               <div
                 className={styles.navCenter}
-                data-component={dataComponent ? `${dataComponent}-nav-center` : undefined}
+                data-component={dataComponent ? `${dataComponent}_nav-center` : undefined}
               >
                 <strong
                   className={styles.navTitle}
-                  data-component={dataComponent ? `${dataComponent}-nav-title` : undefined}
+                  data-component={dataComponent ? `${dataComponent}_nav-title` : undefined}
                 >
                   아가잼잼
                 </strong>
               </div>
               <div
                 className={styles.navActions}
-                data-component={dataComponent ? `${dataComponent}-nav-actions` : undefined}
+                data-component={dataComponent ? `${dataComponent}_nav-actions` : undefined}
               >
                 <span
                   className={styles.navSearch}
                   aria-hidden="true"
-                  data-component={dataComponent ? `${dataComponent}-nav-search` : undefined}
+                  data-component={dataComponent ? `${dataComponent}_nav-search` : undefined}
                 />
                 <span
                   className={styles.navMenu}
                   aria-hidden="true"
-                  data-component={dataComponent ? `${dataComponent}-nav-menu` : undefined}
+                  data-component={dataComponent ? `${dataComponent}_nav-menu` : undefined}
                 />
               </div>
             </div>
           </div>
           <div
             className={styles.messagesViewport}
-            data-component={dataComponent ? `${dataComponent}-messages-viewport` : undefined}
+            data-component={dataComponent ? `${dataComponent}_messages-viewport` : undefined}
           >
             <div
               className={styles.messagesTrack}
-              data-component={dataComponent ? `${dataComponent}-messages-track` : undefined}
+              data-component={dataComponent ? `${dataComponent}_messages-track` : undefined}
             >
               <div
                 className={styles.dateChip}
-                data-component={dataComponent ? `${dataComponent}-date-chip` : undefined}
+                data-component={dataComponent ? `${dataComponent}_date-chip` : undefined}
               >
                 2026년 4월 3일 금요일
               </div>
@@ -136,7 +136,7 @@ export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPho
                 const isVisible = index < visibleCount;
                 const isOutgoing = message.sender === "outgoing";
                 const messageBase = dataComponent
-                  ? `${dataComponent}-message-${message.id}`
+                  ? `${dataComponent}_message-${message.id}`
                   : undefined;
 
                 return (
@@ -150,43 +150,43 @@ export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPho
                         className={`${styles.avatar} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
                         src="/images/logo-agajamjam-icon.svg"
                         alt="아가잼잼"
-                        data-component={messageBase ? `${messageBase}-avatar` : undefined}
+                        data-component={messageBase ? `${messageBase}_avatar` : undefined}
                       />
                     )}
                     <div
                       className={`${styles.bubbleWrap} ${styles.animateIn} ${isVisible ? styles.animateInVisible : ""}`}
-                      data-component={messageBase ? `${messageBase}-bubble-wrap` : undefined}
+                      data-component={messageBase ? `${messageBase}_bubble-wrap` : undefined}
                     >
                       {!isOutgoing && (
                         <span
                           className={styles.senderName}
-                          data-component={messageBase ? `${messageBase}-sender` : undefined}
+                          data-component={messageBase ? `${messageBase}_sender` : undefined}
                         >
                           아가잼잼
                         </span>
                       )}
                       <div
                         className={`${styles.bubbleAndTime} ${isOutgoing ? styles.bubbleAndTimeOutgoing : ""}`}
-                        data-component={messageBase ? `${messageBase}-bubble-and-time` : undefined}
+                        data-component={messageBase ? `${messageBase}_bubble-and-time` : undefined}
                       >
                         {isOutgoing && (
                           <span
                             className={styles.meta}
-                            data-component={messageBase ? `${messageBase}-time` : undefined}
+                            data-component={messageBase ? `${messageBase}_time` : undefined}
                           >
                             {message.time}
                           </span>
                         )}
                         <div
                           className={`${styles.bubble} ${isOutgoing ? styles.bubbleOutgoing : styles.bubbleIncoming} ${message.large ? styles.bubbleLarge : ""}`}
-                          data-component={messageBase ? `${messageBase}-bubble` : undefined}
+                          data-component={messageBase ? `${messageBase}_bubble` : undefined}
                         >
                           {message.text}
                         </div>
                         {!isOutgoing && (
                           <span
                             className={styles.meta}
-                            data-component={messageBase ? `${messageBase}-time` : undefined}
+                            data-component={messageBase ? `${messageBase}_time` : undefined}
                           >
                             {message.time}
                           </span>
@@ -200,25 +200,25 @@ export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPho
           </div>
           <div
             className={styles.composer}
-            data-component={dataComponent ? `${dataComponent}-keyboard` : undefined}
+            data-component={dataComponent ? `${dataComponent}_keyboard` : undefined}
           >
             <div
               className={styles.composerBar}
-              data-component={dataComponent ? `${dataComponent}-keyboard-bar` : undefined}
+              data-component={dataComponent ? `${dataComponent}_keyboard-bar` : undefined}
             >
               <span
                 className={styles.plusButton}
-                data-component={dataComponent ? `${dataComponent}-plus-button` : undefined}
+                data-component={dataComponent ? `${dataComponent}_plus-button` : undefined}
               />
               <span
                 className={styles.composerPlaceholder}
-                data-component={dataComponent ? `${dataComponent}-input` : undefined}
+                data-component={dataComponent ? `${dataComponent}_input` : undefined}
               >
                 메시지 입력
               </span>
               <span
                 className={styles.sendButton}
-                data-component={dataComponent ? `${dataComponent}-send-button` : undefined}
+                data-component={dataComponent ? `${dataComponent}_send-button` : undefined}
               />
             </div>
           </div>
@@ -227,7 +227,7 @@ export function KakaoChatPhone({ "data-component": dataComponent }: KakaoChatPho
           className={styles.phoneFrame}
           src="/images/phone-mockup-294c7f.png"
           alt="아가잼잼 앱 목업"
-          data-component={dataComponent ? `${dataComponent}-frame` : undefined}
+          data-component={dataComponent ? `${dataComponent}_frame` : undefined}
         />
       </div>
     </div>

@@ -36,7 +36,7 @@ export function DesktopPricingPlansSection({
 }: DesktopPricingPlansSectionProps) {
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section

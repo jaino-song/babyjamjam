@@ -22,7 +22,7 @@ export function MobileFooter({
   "data-component": dataComponent,
 }: FooterProps) {
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <footer

@@ -13,7 +13,7 @@ export function MobileBannerImageSection({
 }: BannerImageSectionProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

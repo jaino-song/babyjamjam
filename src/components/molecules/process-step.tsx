@@ -25,24 +25,24 @@ export function ProcessStep({
     >
       <span
         className="font-number text-process-num font-normal leading-none tracking-[-0.04em] text-bjj-accent"
-        data-component={dataComponent ? `${dataComponent}-number` : undefined}
+        data-component={dataComponent ? `${dataComponent}_number` : undefined}
       >
         {number}
       </span>
       <div
         className="flex flex-col items-start w-full gap-3"
-        data-component={dataComponent ? `${dataComponent}-content` : undefined}
+        data-component={dataComponent ? `${dataComponent}_content` : undefined}
       >
         <h3
           className="h6 text-bjj-primary-light"
-          data-component={dataComponent ? `${dataComponent}-title` : undefined}
+          data-component={dataComponent ? `${dataComponent}_title` : undefined}
         >
           {title}
         </h3>
         <p
           className="medium-p !text-bjj-primary-light"
           data-component={
-            dataComponent ? `${dataComponent}-description` : undefined
+            dataComponent ? `${dataComponent}_description` : undefined
           }
         >
           {description}

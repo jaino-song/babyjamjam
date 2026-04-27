@@ -7,16 +7,16 @@ export default function MobileFaqPage() {
     <>
       <main
         className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
-        data-component="mobile-faq-page-main"
+        data-component="mobile_faq_page-main"
       >
-        <MobileFaqPageClient data-component="mobile-faq-page-client" />
+        <MobileFaqPageClient data-component="mobile_faq_page-client" />
         <MoreSection
           currentPage="faq"
-          data-component="mobile-faq-more-section"
+          data-component="mobile_faq_more-section"
         />
       </main>
 
-      <Footer data-component="mobile-faq-footer-section" />
+      <Footer data-component="mobile_faq_footer-section" />
     </>
   );
 }

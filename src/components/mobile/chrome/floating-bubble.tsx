@@ -69,7 +69,7 @@ export function MobileFloatingBubble({
   const cartTitleId = useId();
   const cartButtonRef = useRef<HTMLButtonElement>(null);
   const getDataComponent = (suffix?: string) =>
-    dataComponent ? (suffix ? `${dataComponent}-${suffix}` : dataComponent) : undefined;
+    dataComponent ? (suffix ? `${dataComponent}_${suffix}` : dataComponent) : undefined;
 
   useEffect(() => {
     setMounted(true);

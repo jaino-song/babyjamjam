@@ -21,7 +21,7 @@ export function MobilePersistentNav({
     (item) => item.href !== "#" && pathname.startsWith(item.href)
   )?.label;
   const bookingButtonProps = dataComponent
-    ? { "data-component": `${dataComponent}-drawer-booking-button` }
+    ? { "data-component": `${dataComponent}_drawer-booking-button` }
     : {};
 
   useEffect(() => {
@@ -51,13 +51,13 @@ export function MobilePersistentNav({
         <Link
           href="/"
           className="flex-shrink-0"
-          data-component={dataComponent ? `${dataComponent}-logo-link` : undefined}
+          data-component={dataComponent ? `${dataComponent}_logo-link` : undefined}
         >
           <img
             src="/images/logo.svg"
             alt="아가잼잼 로고"
             className="h-[58px] w-[58px] object-contain"
-            data-component={dataComponent ? `${dataComponent}-logo-image` : undefined}
+            data-component={dataComponent ? `${dataComponent}_logo-image` : undefined}
           />
         </Link>
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -68,7 +68,7 @@ export function MobilePersistentNav({
             aria-label="메뉴 열기"
             aria-expanded={drawerOpen}
             aria-controls="nav-drawer"
-            data-component={dataComponent ? `${dataComponent}-hamburger-button` : undefined}
+            data-component={dataComponent ? `${dataComponent}_hamburger-button` : undefined}
           >
             <svg
               width="24"
@@ -76,7 +76,7 @@ export function MobilePersistentNav({
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"
-              data-component={dataComponent ? `${dataComponent}-hamburger-icon` : undefined}
+              data-component={dataComponent ? `${dataComponent}_hamburger-icon` : undefined}
             >
               <path
                 d="M4 6h16M4 12h16M4 18h16"
@@ -94,7 +94,7 @@ export function MobilePersistentNav({
             className="nav-overlay"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
-            data-component={dataComponent ? `${dataComponent}-overlay` : undefined}
+            data-component={dataComponent ? `${dataComponent}_overlay` : undefined}
           />
           <aside
             id="nav-drawer"
@@ -102,14 +102,14 @@ export function MobilePersistentNav({
             role="dialog"
             aria-modal="true"
             aria-label="메뉴"
-            data-component={dataComponent ? `${dataComponent}-drawer` : undefined}
+            data-component={dataComponent ? `${dataComponent}_drawer` : undefined}
           >
             <button
               type="button"
               className="nav-drawer__close"
               onClick={() => setDrawerOpen(false)}
               aria-label="메뉴 닫기"
-              data-component={dataComponent ? `${dataComponent}-drawer-close` : undefined}
+              data-component={dataComponent ? `${dataComponent}_drawer-close` : undefined}
             >
               <svg
                 width="24"
@@ -117,14 +117,14 @@ export function MobilePersistentNav({
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden="true"
-                data-component={dataComponent ? `${dataComponent}-drawer-close-icon` : undefined}
+                data-component={dataComponent ? `${dataComponent}_drawer-close-icon` : undefined}
               >
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
             <nav
               className="nav-drawer__items"
-              data-component={dataComponent ? `${dataComponent}-drawer-items` : undefined}
+              data-component={dataComponent ? `${dataComponent}_drawer-items` : undefined}
             >
               {NAV_ITEMS.map((item, index) => (
                 <Link
@@ -134,7 +134,7 @@ export function MobilePersistentNav({
                   aria-current={item.label === activeLabel ? "page" : undefined}
                   onClick={() => setDrawerOpen(false)}
                   data-component={
-                    dataComponent ? `${dataComponent}-drawer-link-${index}` : undefined
+                    dataComponent ? `${dataComponent}_drawer-link-${index}` : undefined
                   }
                 >
                   {item.label}

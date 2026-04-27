@@ -65,11 +65,11 @@ export function DesktopNavBar({
           width: indicator.width,
           opacity: ready ? 1 : 0,
         }}
-        data-component={dataComponent ? `${dataComponent}-active-indicator` : undefined}
+        data-component={dataComponent ? `${dataComponent}_active-indicator` : undefined}
       />
       {items.map((item, index) => {
         const isActive = index === activeIndex;
-        const itemBase = dataComponent ? `${dataComponent}-item-${index}` : undefined;
+        const itemBase = dataComponent ? `${dataComponent}_item-${index}` : undefined;
         const itemClasses =
           "relative z-[1] flex items-center font-heading font-[800] text-nav leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline whitespace-nowrap px-4 rounded-nav";
         const ref = (el: HTMLElement | null) => {
@@ -85,7 +85,7 @@ export function DesktopNavBar({
               aria-current={isActive ? "page" : undefined}
               ref={ref}
               onClick={() => setActiveIndex(index)}
-              data-component={itemBase ? `${itemBase}-link` : undefined}
+              data-component={itemBase ? `${itemBase}_link` : undefined}
             >
               {item.label}
             </Link>
@@ -102,7 +102,7 @@ export function DesktopNavBar({
               e.preventDefault();
               setActiveIndex(index);
             }}
-            data-component={itemBase ? `${itemBase}-link` : undefined}
+            data-component={itemBase ? `${itemBase}_link` : undefined}
           >
             {item.label}
           </a>

@@ -45,7 +45,7 @@ export function MobileProcessSection({
   const mobileCardRefs = useRef<Array<HTMLElement | null>>([]);
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   useEffect(() => {
     const track = mobileTrackRef.current;

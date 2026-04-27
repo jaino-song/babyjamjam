@@ -31,18 +31,18 @@ export function FormQuestion({
     >
       <div
         className="form-question__header"
-        data-component={dataComponent ? `${dataComponent}-header` : undefined}
+        data-component={dataComponent ? `${dataComponent}_header` : undefined}
       >
         <span
           className="form-question__label"
-          data-component={dataComponent ? `${dataComponent}-label` : undefined}
+          data-component={dataComponent ? `${dataComponent}_label` : undefined}
         >
           {label}
         </span>
         {helperText && (
           <span
             className="form-question__helper"
-            data-component={dataComponent ? `${dataComponent}-helper` : undefined}
+            data-component={dataComponent ? `${dataComponent}_helper` : undefined}
           >
             {helperText}
           </span>
@@ -53,7 +53,7 @@ export function FormQuestion({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        data-component={dataComponent ? `${dataComponent}-select` : undefined}
+        data-component={dataComponent ? `${dataComponent}_select` : undefined}
       />
     </div>
   );

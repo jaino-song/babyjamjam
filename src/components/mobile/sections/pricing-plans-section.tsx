@@ -41,7 +41,7 @@ export function MobilePricingPlansSection({
   const activeIndex = GRADE_NAMES.indexOf(selectedGradeName);
   const [mobileGalleryIndex, setMobileGalleryIndex] = useState(0);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   useEffect(() => {
     const grid = gridRef.current;

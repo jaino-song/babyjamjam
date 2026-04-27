@@ -278,7 +278,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("data-component", (d: any) =>
           dataComponent
-            ? `${dataComponent}-province-${(d.properties.code ?? PROVINCE_CODE_MAP[d.properties.name]).toLowerCase()}`
+            ? `${dataComponent}_province-${(d.properties.code ?? PROVINCE_CODE_MAP[d.properties.name]).toLowerCase()}`
             : null
         )
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -320,7 +320,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
           .attr("d", path)
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .attr("data-component", (d: any) =>
-            dataComponent ? `${dataComponent}-municipality-${d.properties.code}` : null
+            dataComponent ? `${dataComponent}_municipality-${d.properties.code}` : null
           )
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .attr("class", (d: any) => {
@@ -386,7 +386,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         .attr("d", path)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("data-component", (d: any) =>
-          dataComponent ? `${dataComponent}-municipality-${d.properties.code}` : null
+          dataComponent ? `${dataComponent}_municipality-${d.properties.code}` : null
         )
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("class", (d: any) => {
@@ -490,7 +490,7 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .attr("data-component", (d: any) =>
           dataComponent && Array.isArray(d.properties.codes) && d.properties.codes.length > 0
-            ? `${dataComponent}-city-${d.properties.codes[0]}`
+            ? `${dataComponent}_city-${d.properties.codes[0]}`
             : null
         )
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -554,14 +554,14 @@ export const KoreaRegionMap = forwardRef<KoreaRegionMapHandle, Props>(
         <div
           className="krm__tooltip"
           ref={tooltipRef}
-          data-component={dataComponent ? `${dataComponent}-tooltip` : undefined}
+          data-component={dataComponent ? `${dataComponent}_tooltip` : undefined}
         />
         <svg
           ref={svgRef}
           className="krm__svg"
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="xMidYMid meet"
-          data-component={dataComponent ? `${dataComponent}-svg` : undefined}
+          data-component={dataComponent ? `${dataComponent}_svg` : undefined}
         />
       </div>
     );

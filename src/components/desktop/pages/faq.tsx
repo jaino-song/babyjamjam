@@ -7,16 +7,16 @@ export default function DesktopFaqPage() {
     <>
       <main
         className="flex flex-col items-center w-full gap-[var(--bjj-section-gap)]"
-        data-component="desktop-faq-page-main"
+        data-component="desktop_faq_page-main"
       >
-        <DesktopFaqPageClient data-component="desktop-faq-page-client" />
+        <DesktopFaqPageClient data-component="desktop_faq_page-client" />
         <MoreSection
           currentPage="faq"
-          data-component="desktop-faq-more-section"
+          data-component="desktop_faq_more-section"
         />
       </main>
 
-      <Footer data-component="desktop-faq-footer-section" />
+      <Footer data-component="desktop_faq_footer-section" />
     </>
   );
 }

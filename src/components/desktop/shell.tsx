@@ -4,38 +4,38 @@ import { DesktopPersistentNav } from "@/components/desktop/chrome/persistent-nav
 import { PageTransition } from "@/components/shared/page-transition";
 
 export default function DesktopShell({ children }: { children: React.ReactNode }) {
-  const dataComponentBase = "desktop-shell";
+  const dataComponentBase = "desktop_shell";
 
   return (
     <>
       <div
         data-bjj-shell="desktop"
-        data-component={`${dataComponentBase}-outer`}
+        data-component={`${dataComponentBase}_outer`}
         className="flex flex-col items-center w-full px-[var(--bjj-page-padding)] max-w-[var(--bjj-page-max-width)] mx-auto"
       >
         <div
-          data-component={`${dataComponentBase}-header-region`}
+          data-component={`${dataComponentBase}_header-region`}
           className="w-full"
         >
-          <DesktopPersistentNav data-component="desktop-chrome-persistent-nav" />
+          <DesktopPersistentNav data-component="desktop_chrome_persistent-nav" />
         </div>
         <div
-          data-component={`${dataComponentBase}-announcement-region`}
+          data-component={`${dataComponentBase}_announcement-region`}
           className="w-full"
         >
-          <DesktopAnnouncementRibbon data-component="desktop-chrome-announcement-ribbon" />
+          <DesktopAnnouncementRibbon data-component="desktop_chrome_announcement-ribbon" />
         </div>
         <div
-          data-component={`${dataComponentBase}-page-transition-wrap`}
+          data-component={`${dataComponentBase}_page-transition-wrap`}
           className="w-full"
         >
-          <PageTransition data-component={`${dataComponentBase}-content`}>
+          <PageTransition data-component={`${dataComponentBase}_content`}>
             {children}
           </PageTransition>
         </div>
       </div>
-      <div data-component={`${dataComponentBase}-bubble-region`}>
-        <DesktopGlobalFloatingBubble data-component="desktop-chrome-global-floating-bubble" />
+      <div data-component={`${dataComponentBase}_bubble-region`}>
+        <DesktopGlobalFloatingBubble data-component="desktop_chrome_global-floating-bubble" />
       </div>
     </>
   );

@@ -19,7 +19,7 @@ function AccordionItem({
   "data-component"?: string;
 }) {
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <div className="faq-accordion__item" data-component={dataComponent}>
@@ -86,7 +86,7 @@ export function MobileFaqPageClient({
   const [activeCategoryId, setActiveCategoryId] = useState(allCategories[0].id);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   const activeCategory =
     allCategories.find((c) => c.id === activeCategoryId) ?? allCategories[0];

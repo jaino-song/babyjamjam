@@ -35,18 +35,18 @@ export function PricingPlanCard({
       <div className="plan-card__top">
         <div
           className="plan-card__header"
-          data-component={dataComponent ? `${dataComponent}-header` : undefined}
+          data-component={dataComponent ? `${dataComponent}_header` : undefined}
         >
           <h3
             className="plan-card__name"
-            data-component={dataComponent ? `${dataComponent}-name` : undefined}
+            data-component={dataComponent ? `${dataComponent}_name` : undefined}
           >
             {plan.name}
           </h3>
           {plan.badge && (
             <span
               className="plan-card__badge"
-              data-component={dataComponent ? `${dataComponent}-badge` : undefined}
+              data-component={dataComponent ? `${dataComponent}_badge` : undefined}
             >
               {plan.badge}
             </span>
@@ -56,7 +56,7 @@ export function PricingPlanCard({
         {plan.description && (
           <p
             className="plan-card__description"
-            data-component={dataComponent ? `${dataComponent}-description` : undefined}
+            data-component={dataComponent ? `${dataComponent}_description` : undefined}
           >
             {plan.description}
           </p>
@@ -67,7 +67,7 @@ export function PricingPlanCard({
             "plan-card__price",
             isLoading && "plan-card__price--loading"
           )}
-          data-component={dataComponent ? `${dataComponent}-price` : undefined}
+          data-component={dataComponent ? `${dataComponent}_price` : undefined}
         >
           <span className="plan-card__price-value">{plan.price}</span>
           <span className="skeleton skeleton--price" aria-hidden="true" />
@@ -81,7 +81,7 @@ export function PricingPlanCard({
             selected ? "plan-card__btn--selected" : "plan-card__btn--default"
           )}
           onClick={onSelect}
-          data-component={dataComponent ? `${dataComponent}-button` : undefined}
+          data-component={dataComponent ? `${dataComponent}_button` : undefined}
         >
           {selected ? "선택 완료" : "플랜 선택하기"}
         </button>
@@ -89,14 +89,14 @@ export function PricingPlanCard({
 
       <div
         className="plan-card__features"
-        data-component={dataComponent ? `${dataComponent}-features` : undefined}
+        data-component={dataComponent ? `${dataComponent}_features` : undefined}
       >
         {plan.features.map((feature, index) => (
           <div
             key={feature}
             className="plan-card__feature"
             data-component={
-              dataComponent ? `${dataComponent}-feature-${index}` : undefined
+              dataComponent ? `${dataComponent}_feature-${index}` : undefined
             }
           >
             <span className="plan-card__check" aria-hidden="true">

@@ -30,22 +30,22 @@ export function IconLockup({
       <Icon
         className="w-4 h-4"
         aria-hidden="true"
-        data-component={dataComponent ? `${dataComponent}-icon` : undefined}
+        data-component={dataComponent ? `${dataComponent}_icon` : undefined}
       />
       <div
         className="flex flex-col"
-        data-component={dataComponent ? `${dataComponent}-content` : undefined}
+        data-component={dataComponent ? `${dataComponent}_content` : undefined}
       >
         <h5
           className="text-h5 font-bold font-heading text-bjj-text-headline"
-          data-component={dataComponent ? `${dataComponent}-title` : undefined}
+          data-component={dataComponent ? `${dataComponent}_title` : undefined}
         >
           {title}
         </h5>
         <p
           className="text-medium-p font-medium font-body text-bjj-text-paragraph tracking-wide leading-relaxed"
           data-component={
-            dataComponent ? `${dataComponent}-description` : undefined
+            dataComponent ? `${dataComponent}_description` : undefined
           }
         >
           {description}

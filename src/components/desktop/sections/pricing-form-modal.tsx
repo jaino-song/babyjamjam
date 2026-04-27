@@ -26,7 +26,7 @@ export function DesktopPricingFormModal({
 }: DesktopPricingFormModalProps) {
   const [step, setStep] = useState(0);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   const allSteps = buildAllSteps(answers);
   const currentQuestion = allSteps[step];

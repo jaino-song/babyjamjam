@@ -30,11 +30,11 @@ export function RadioPill({
         onChange={onChange}
         defaultChecked={defaultChecked}
         checked={checked}
-        data-component={dataComponent ? `${dataComponent}-input` : undefined}
+        data-component={dataComponent ? `${dataComponent}_input` : undefined}
       />
       <span
         className="radio-pill__label medium-p"
-        data-component={dataComponent ? `${dataComponent}-label` : undefined}
+        data-component={dataComponent ? `${dataComponent}_label` : undefined}
       >
         {children}
       </span>

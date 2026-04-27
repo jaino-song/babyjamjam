@@ -35,21 +35,21 @@ export default function MobileLocationsPage() {
     <>
       <main
         className="location-main"
-        data-component="mobile-locations-page-main"
+        data-component="mobile_locations_page-main"
       >
         <section
           className="location-hero"
-          data-component="mobile-locations-page-hero-section"
+          data-component="mobile_locations_page_hero_section"
         >
           <h1
             className="h1 location-hero__title"
-            data-component="mobile-locations-page-hero-title"
+            data-component="mobile_locations_page_hero_title"
           >
             지점 찾기
           </h1>
           <p
             className="big-p location-hero__subtitle"
-            data-component="mobile-locations-page-hero-subtitle"
+            data-component="mobile_locations_page_hero_subtitle"
           >
             지도에서 지역을 클릭하면 해당 지점을 바로 확인할 수 있어요.
           </p>
@@ -57,37 +57,37 @@ export default function MobileLocationsPage() {
 
         <div
           className="location-split"
-          data-component="mobile-locations-page-split"
+          data-component="mobile_locations_page_split"
         >
           <div
             className="location-map"
-            data-component="mobile-locations-page-map"
+            data-component="mobile_locations_page_map"
           >
             <KoreaRegionMap
               availableRegions={availableRegions}
               selectedRegion={selectedRegion}
               onRegionSelect={handleRegionSelect}
-              data-component="mobile-locations-page-korea-region-map"
+              data-component="mobile_locations_page_korea-region-map"
             />
           </div>
 
           <aside
             className="location-sidebar"
-            data-component="mobile-locations-page-sidebar"
+            data-component="mobile_locations_page_sidebar"
           >
             <div
               className="location-sidebar__header"
-              data-component="mobile-locations-page-sidebar-header"
+              data-component="mobile_locations_page_sidebar_header"
             >
               <h2
                 className="h6 location-sidebar__title"
-                data-component="mobile-locations-page-sidebar-title"
+                data-component="mobile_locations_page_sidebar_title"
               >
                 {selectedRegion ? `${selectedRegion} 지점` : "전체 지점"}
               </h2>
               <span
                 className="small-p location-sidebar__count"
-                data-component="mobile-locations-page-sidebar-count"
+                data-component="mobile_locations_page_sidebar_count"
               >
                 {filtered.length}개
               </span>
@@ -97,7 +97,7 @@ export default function MobileLocationsPage() {
               <button
                 className="medium-p location-sidebar__reset"
                 onClick={() => setSelectedRegion(null)}
-                data-component="mobile-locations-page-sidebar-reset"
+                data-component="mobile_locations_page_sidebar_reset"
               >
                 ← 전체 지점 보기
               </button>
@@ -105,7 +105,7 @@ export default function MobileLocationsPage() {
 
             <ul
               className="location-list"
-              data-component="mobile-locations-page-branch-list"
+              data-component="mobile_locations_page_branch_list"
             >
               {filtered.map((branch) => (
                 <li
@@ -154,7 +154,7 @@ export default function MobileLocationsPage() {
                     </div>
                   </div>
                   <PillCta
-                    data-component="mobile-locations-page-booking-cta"
+                    data-component="mobile_locations_page_booking_cta"
                     onClick={(event) => {
                       event.stopPropagation();
                       setBookingRegion(branch.region);
@@ -172,7 +172,7 @@ export default function MobileLocationsPage() {
         </div>
       </main>
 
-      <Footer data-component="mobile-locations-footer-section" />
+      <Footer data-component="mobile_locations_footer-section" />
 
       <BookingModal
         open={bookingOpen}
@@ -180,7 +180,7 @@ export default function MobileLocationsPage() {
         initialRegion={bookingRegion}
         initialDistrict={bookingDistrict}
         initialBranchSlug={bookingBranchSlug}
-        data-component="mobile-locations-booking-modal"
+        data-component="mobile_locations_booking-modal"
       />
     </>
   );

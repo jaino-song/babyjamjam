@@ -22,10 +22,10 @@ export function DesktopAnnouncementRibbon({
 }: DesktopAnnouncementRibbonProps) {
   const [config, setConfig] = useState<RibbonConfig | null>(null);
   const messageDataComponent = dataComponent
-    ? `${dataComponent}-message`
+    ? `${dataComponent}_message`
     : undefined;
-  const linkDataComponent = dataComponent ? `${dataComponent}-link` : undefined;
-  const iconDataComponent = dataComponent ? `${dataComponent}-icon` : undefined;
+  const linkDataComponent = dataComponent ? `${dataComponent}_link` : undefined;
+  const iconDataComponent = dataComponent ? `${dataComponent}_icon` : undefined;
 
   useEffect(() => {
     fetch("/api/ribbon")

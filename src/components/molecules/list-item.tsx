@@ -23,14 +23,14 @@ export function ListItem({
     >
       <span
         className="medium-p shrink-0"
-        data-component={dataComponent ? `${dataComponent}-number` : undefined}
+        data-component={dataComponent ? `${dataComponent}_number` : undefined}
       >
         {number}
       </span>
       <span
         className="medium-p"
         data-component={
-          dataComponent ? `${dataComponent}-description` : undefined
+          dataComponent ? `${dataComponent}_description` : undefined
         }
       >
         {description}

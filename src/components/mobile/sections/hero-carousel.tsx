@@ -196,7 +196,7 @@ export default function MobileHeroCarousel({
 
   const realIndex = ((index - 1) % SLIDES.length + SLIDES.length) % SLIDES.length;
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section
@@ -262,7 +262,7 @@ export default function MobileHeroCarousel({
                     src={slide.src}
                     alt={slide.alt}
                     className="h-full w-full shrink-0 object-cover object-[center_8%]"
-                    data-component={slideBase ? `${slideBase}-image` : undefined}
+                    data-component={slideBase ? `${slideBase}_image` : undefined}
                   />
                 </div>
               );
@@ -358,7 +358,7 @@ export default function MobileHeroCarousel({
                           key={progressKey}
                           className="carousel__dot-fill"
                           aria-hidden="true"
-                          data-component={dotBase ? `${dotBase}-fill` : undefined}
+                          data-component={dotBase ? `${dotBase}_fill` : undefined}
                         />
                       )}
                     </button>

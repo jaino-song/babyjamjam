@@ -134,7 +134,7 @@ export function MobilePricingClient({
   const [showFormModal, setShowFormModal] = useState(false);
   const plansRef = useRef<HTMLDivElement>(null);
   const getComponent = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   const isSubsidized = store.formAnswers.subsidy === "yes";
 
@@ -212,7 +212,7 @@ export function MobilePricingClient({
           onRequery={() => setShowFormModal(true)}
           blurred={!store.pricesRevealed}
           isLoading={store.isLoading}
-          data-component="mobile-pricing-plans-section"
+          data-component="mobile_pricing_plans-section"
         />
 
         {!store.pricesRevealed && (
@@ -259,7 +259,7 @@ export function MobilePricingClient({
         planDuration={
           store.plans.find((plan) => plan.id === store.selectedPlanId)?.duration
         }
-        data-component="mobile-pricing-addon-services-section"
+        data-component="mobile_pricing_addon-services-section"
       />
 
       {showFormModal &&
@@ -279,7 +279,7 @@ export function MobilePricingClient({
                 onAnswer={store.answer}
                 onSubmit={handleSubmit}
                 isLoading={store.isLoading}
-                data-component="mobile-pricing-form-modal"
+                data-component="mobile_pricing_form-modal"
               />
             </div>
           </div>,

@@ -46,7 +46,7 @@ export function DesktopCareSectionCarousel({
 
   const section = sections[displayIndex];
   const sectionBase = dataComponent
-    ? `${dataComponent}-section-${section.id}`
+    ? `${dataComponent}_section-${section.id}`
     : undefined;
 
   const handleTabSwitch = useCallback(
@@ -108,7 +108,7 @@ export function DesktopCareSectionCarousel({
   };
 
   const sub = (suffix: string) =>
-    dataComponent ? `${dataComponent}-${suffix}` : undefined;
+    dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
   return (
     <section className="care-carousel" data-component={dataComponent}>
@@ -141,7 +141,7 @@ export function DesktopCareSectionCarousel({
 
       <div
         className="care-carousel__track-section"
-        data-component={sectionBase ? `${sectionBase}-track-section` : undefined}
+        data-component={sectionBase ? `${sectionBase}_track-section` : undefined}
       >
         <div
           className="care-carousel__heading"
@@ -150,27 +150,27 @@ export function DesktopCareSectionCarousel({
             transform:
               fanState === "entering" ? "translateY(8px)" : "translateY(0)",
           }}
-          data-component={sectionBase ? `${sectionBase}-heading` : undefined}
+          data-component={sectionBase ? `${sectionBase}_heading` : undefined}
         >
           <h2
             className="h2-left"
-            data-component={sectionBase ? `${sectionBase}-title` : undefined}
+            data-component={sectionBase ? `${sectionBase}_title` : undefined}
           >
             <span
               className="care-carousel__heading-muted"
               data-component={
-                sectionBase ? `${sectionBase}-title-muted` : undefined
+                sectionBase ? `${sectionBase}_title-muted` : undefined
               }
             >
               {section.mutedText}
             </span>
             <br
-              data-component={sectionBase ? `${sectionBase}-title-break` : undefined}
+              data-component={sectionBase ? `${sectionBase}_title-break` : undefined}
             />
             <span
               className="care-carousel__heading-primary"
               data-component={
-                sectionBase ? `${sectionBase}-title-primary` : undefined
+                sectionBase ? `${sectionBase}_title-primary` : undefined
               }
             >
               {section.primaryText}
@@ -180,19 +180,19 @@ export function DesktopCareSectionCarousel({
 
         <div
           className="care-carousel__track-wrap"
-          data-component={sectionBase ? `${sectionBase}-track-wrap` : undefined}
+          data-component={sectionBase ? `${sectionBase}_track-wrap` : undefined}
         >
           <div
             className="care-carousel__track"
             ref={trackRef}
-            data-component={sectionBase ? `${sectionBase}-track` : undefined}
+            data-component={sectionBase ? `${sectionBase}_track` : undefined}
           >
             {section.cards.map((card, i) => {
               const imageSrc =
                 card.imageSrc ?? DEFAULT_CARE_CARD_IMAGE_BY_TONE[section.tone];
               const imageAlt = card.imageAlt ?? `${card.title} 서비스 이미지`;
               const cardBase = sectionBase
-                ? `${sectionBase}-card-${i + 1}`
+                ? `${sectionBase}_card-${i + 1}`
                 : undefined;
 
               return (
@@ -204,30 +204,30 @@ export function DesktopCareSectionCarousel({
                 >
                   <div
                     className="care-carousel__card-inner"
-                    data-component={cardBase ? `${cardBase}-inner` : undefined}
+                    data-component={cardBase ? `${cardBase}_inner` : undefined}
                   >
                     <ImageBlock
                       variant="careCard"
                       src={imageSrc}
                       alt={imageAlt}
                       className="care-carousel__card-img"
-                      data-component={cardBase ? `${cardBase}-image` : undefined}
+                      data-component={cardBase ? `${cardBase}_image` : undefined}
                     />
                   </div>
                   <div
                     className="care-carousel__caption"
-                    data-component={cardBase ? `${cardBase}-caption` : undefined}
+                    data-component={cardBase ? `${cardBase}_caption` : undefined}
                   >
                     <h3
                       className="h6 care-carousel__caption-title"
-                      data-component={cardBase ? `${cardBase}-title` : undefined}
+                      data-component={cardBase ? `${cardBase}_title` : undefined}
                     >
                       {card.title}
                     </h3>
                     <p
                       className="medium-p care-carousel__caption-desc"
                       data-component={
-                        cardBase ? `${cardBase}-description` : undefined
+                        cardBase ? `${cardBase}_description` : undefined
                       }
                     >
                       {card.description}
@@ -246,7 +246,7 @@ export function DesktopCareSectionCarousel({
             nextDisabled={activeDot === section.cards.length - 1}
             onPrevious={() => scrollCard(-1)}
             onNext={() => scrollCard(1)}
-            data-component={sectionBase ? `${sectionBase}-paddlenav` : undefined}
+            data-component={sectionBase ? `${sectionBase}_paddlenav` : undefined}
           />
         </div>
       </div>
@@ -259,7 +259,7 @@ export function DesktopCareSectionCarousel({
           <div
             key={i}
             className={`care-carousel__dot${i === activeDot ? " care-carousel__dot--active" : ""}`}
-            data-component={sectionBase ? `${sectionBase}-dot-${i + 1}` : undefined}
+            data-component={sectionBase ? `${sectionBase}_dot-${i + 1}` : undefined}
           />
         ))}
       </div>
