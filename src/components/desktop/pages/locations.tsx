@@ -111,43 +111,43 @@ export default function DesktopLocationsPage() {
                 <li
                   key={branch.id}
                   className="location-list__item"
-                  data-component={`desktop-locations-page-branch-${branch.id}`}
+                  data-component={`desktop_locations_page_branch_${branch.id}`}
                 >
                   <div
                     className="location-list__item-content"
-                    data-component={`desktop-locations-page-branch-${branch.id}-content`}
+                    data-component={`desktop_locations_page_branch_${branch.id}_content`}
                   >
                     <div
                       className="location-list__top"
-                      data-component={`desktop-locations-page-branch-${branch.id}-top`}
+                      data-component={`desktop_locations_page_branch_${branch.id}_top`}
                     >
                       <Badge
                         tone={branch.type === "direct" ? "primary" : "green"}
-                        data-component={`desktop-locations-page-branch-${branch.id}-badge`}
+                        data-component={`desktop_locations_page_branch_${branch.id}_badge`}
                       >
                         {branch.type === "direct" ? "직영점" : "가맹점"}
                       </Badge>
                       <h3
                         className="h7 location-list__name"
-                        data-component={`desktop-locations-page-branch-${branch.id}-name`}
+                        data-component={`desktop_locations_page_branch_${branch.id}_name`}
                       >
                         {branch.name}
                       </h3>
                     </div>
                     <p
                       className="medium-p location-list__address"
-                      data-component={`desktop-locations-page-branch-${branch.id}-address`}
+                      data-component={`desktop_locations_page_branch_${branch.id}_address`}
                     >
                       {branch.address}
                     </p>
                     <div
                       className="location-list__meta"
-                      data-component={`desktop-locations-page-branch-${branch.id}-meta`}
+                      data-component={`desktop_locations_page_branch_${branch.id}_meta`}
                     >
                       <a
                         href={`tel:${branch.phone}`}
                         className="medium-p location-list__phone"
-                        data-component={`desktop-locations-page-branch-${branch.id}-phone`}
+                        data-component={`desktop_locations_page_branch_${branch.id}_phone`}
                       >
                         {branch.phone}
                       </a>

@@ -86,17 +86,17 @@ export default function DesktopHomePage() {
                 <div
                   key={number}
                   className="flex w-full items-center gap-5 border-t border-bjj-divider py-3 pr-[52px]"
-                  data-component={`desktop-home-app-detail-step-${index + 1}`}
+                  data-component={`desktop_home_app_detail_step_${index + 1}`}
                 >
                   <span
                     className="shrink-0 font-body text-[16px] font-medium leading-[1.5] text-bjj-text-paragraph"
-                    data-component={`desktop-home-app-detail-step-${index + 1}-number`}
+                    data-component={`desktop_home_app_detail_step_${index + 1}_number`}
                   >
                     {number}
                   </span>
                   <span
                     className="font-heading text-[16px] font-bold leading-[1.45] tracking-[-0.015em] text-bjj-text-paragraph"
-                    data-component={`desktop-home-app-detail-step-${index + 1}-text`}
+                    data-component={`desktop_home_app_detail_step_${index + 1}_text`}
                   >
                     {appDetailSteps[index]}
                   </span>

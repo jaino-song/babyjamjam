@@ -14,19 +14,19 @@ export default function MobileShell({ children }: { children: React.ReactNode })
         className="flex flex-col items-center w-full px-[var(--bjj-page-padding)] max-w-[var(--bjj-page-max-width)] mx-auto"
       >
         <div
-          data-component={`${dataComponentBase}_header-region`}
+          data-component={`${dataComponentBase}_header_region`}
           className="w-full"
         >
           <MobilePersistentNav data-component="mobile_chrome_persistent-nav" />
         </div>
         <div
-          data-component={`${dataComponentBase}_announcement-region`}
+          data-component={`${dataComponentBase}_announcement_region`}
           className="w-full"
         >
           <MobileAnnouncementRibbon data-component="mobile_chrome_announcement-ribbon" />
         </div>
         <div
-          data-component={`${dataComponentBase}_page-transition-wrap`}
+          data-component={`${dataComponentBase}_page-transition_wrap`}
           className="w-full"
         >
           <PageTransition data-component={`${dataComponentBase}_content`}>
@@ -34,7 +34,7 @@ export default function MobileShell({ children }: { children: React.ReactNode })
           </PageTransition>
         </div>
       </div>
-      <div data-component={`${dataComponentBase}_bubble-region`}>
+      <div data-component={`${dataComponentBase}_bubble_region`}>
         <MobileGlobalFloatingBubble data-component="mobile_chrome_global-floating-bubble" />
       </div>
     </>
