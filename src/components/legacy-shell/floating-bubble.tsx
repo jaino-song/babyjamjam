@@ -156,7 +156,7 @@ export function LegacyFloatingBubble({
               className="floating-cart-panel__cta"
               onClick={() => setIsBookingOpen(true)}
             >
-              상담신청
+              상담 신청
             </PillCta>
           </header>
 

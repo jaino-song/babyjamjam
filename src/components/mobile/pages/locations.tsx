@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback } from "react";
 
 import { MobileBookingModal as BookingModal } from "@/components/mobile/chrome/booking-modal";
 import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
+import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { KoreaRegionMap } from "@/components/korea-region-map";
 import { Badge } from "@/components/ui/badge";
 import { PillCta } from "@/components/ui/circle-cta";
@@ -34,9 +35,13 @@ export default function MobileLocationsPage() {
   return (
     <>
       <main
-        className="location-main"
+        className="location-main flex w-full flex-col items-center gap-[var(--bjj-section-gap)]"
         data-component="mobile_locations_page-main"
       >
+        <div
+          className="flex w-full flex-col items-center"
+          data-component="mobile_locations_page_hero-split-group"
+        >
         <section
           className="location-hero"
           data-component="mobile_locations_page_hero_section"
@@ -79,12 +84,12 @@ export default function MobileLocationsPage() {
               className="location-sidebar__header"
               data-component="mobile_locations_page_sidebar_header"
             >
-              <h2
-                className="h6 location-sidebar__title"
+              <h5
+                className="h5 location-sidebar__title"
                 data-component="mobile_locations_page_sidebar_title"
               >
                 {selectedRegion ? `${selectedRegion} 지점` : "전체 지점"}
-              </h2>
+              </h5>
               <span
                 className="small-p location-sidebar__count"
                 data-component="mobile_locations_page_sidebar_count"
@@ -170,9 +175,12 @@ export default function MobileLocationsPage() {
             </ul>
           </aside>
         </div>
+        </div>
+
+        <MoreSection data-component="mobile_locations_more-section" />
       </main>
 
-      <Footer data-component="mobile_locations_footer-section" />
+      <Footer className="mt-0" data-component="mobile_locations_footer-section" />
 
       <BookingModal
         open={bookingOpen}

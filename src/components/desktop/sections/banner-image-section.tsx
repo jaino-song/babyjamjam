@@ -4,15 +4,19 @@ import { cn } from "@/lib/utils";
 
 interface BannerImageSectionProps {
   className?: string;
+  imageClassName?: string;
   imageAlt?: string;
   imageSrc?: string;
+  text?: string;
   "data-component"?: string;
 }
 
 export function DesktopBannerImageSection({
   className,
+  imageClassName,
   imageAlt = "아가잼잼 배너",
   imageSrc = "/images/hero-image-1a35f6.png",
+  text = "검증 됐으니까. 믿을 수 있으니까.",
   "data-component": dataComponent,
 }: BannerImageSectionProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -58,7 +62,7 @@ export function DesktopBannerImageSection({
       <img
         src={imageSrc}
         alt={imageAlt}
-        className="absolute! inset-0 w-full h-full object-cover"
+        className={cn("absolute! inset-0 w-full h-full object-cover", imageClassName)}
         data-component={getComponent("image")}
       />
       <span
@@ -66,7 +70,7 @@ export function DesktopBannerImageSection({
         style={{ transform: "none" }}
         data-component={getComponent("text")}
       >
-        검증 됐으니까. 믿을 수 있으니까.
+        {text}
       </span>
     </div>
   );

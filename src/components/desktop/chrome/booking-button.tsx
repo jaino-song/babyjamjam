@@ -25,7 +25,7 @@ export function DesktopBookingButton({
         data-component="desktop_chrome_booking-button_trigger"
         onClick={() => setOpen(true)}
       >
-        상담신청
+        상담 신청
       </PillCta>
       <DesktopBookingModal
         open={open}

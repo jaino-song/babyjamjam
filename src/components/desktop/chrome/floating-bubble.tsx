@@ -144,7 +144,7 @@ export function DesktopFloatingBubble({
               onClick={() => setIsBookingOpen(true)}
               data-component={getDataComponent("cart-panel-cta")}
             >
-              상담신청
+              상담 신청
             </PillCta>
           </header>
 

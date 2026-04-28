@@ -25,7 +25,7 @@ export function MobileBookingButton({
         data-component="mobile_chrome_booking-button_trigger"
         onClick={() => setOpen(true)}
       >
-        상담신청
+        상담 신청
       </PillCta>
       <MobileBookingModal
         open={open}
