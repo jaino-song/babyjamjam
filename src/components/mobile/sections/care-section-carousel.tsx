@@ -218,12 +218,12 @@ export function MobileCareSectionCarousel({
                     className="care-carousel__caption"
                     data-component={cardBase ? `${cardBase}_caption` : undefined}
                   >
-                    <h3
-                      className="h6 care-carousel__caption-title"
+                    <h4
+                      className="h4 care-carousel__caption-title"
                       data-component={cardBase ? `${cardBase}_title` : undefined}
                     >
                       {card.title}
-                    </h3>
+                    </h4>
                     <p
                       className="big-p care-carousel__caption-desc"
                       data-component={

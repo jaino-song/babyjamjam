@@ -128,7 +128,7 @@ export default function MobileLocationsPage() {
                         {branch.type === "direct" ? "직영점" : "가맹점"}
                       </Badge>
                       <h3
-                        className="h7 location-list__name"
+                        className="h5 location-list__name"
                         data-component={`mobile_locations_page_branch_${branch.id}_name`}
                       >
                         {branch.name}

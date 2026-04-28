@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 
 import { KakaoChatPhone } from "@/components/kakao-chat-prototype";
-import { DualColorHeading } from "@/components/molecules/dual-color-heading";
 import { cn } from "@/lib/utils";
 
 const SERVICE_DETAIL_ITEMS = [
@@ -88,12 +87,22 @@ export function MobileServiceDetailSection({
             className="flex max-w-[760px] flex-col items-start gap-5"
             data-component={getComponent("intro")}
           >
-            <DualColorHeading
-              mutedText="방치되는 공장형?"
-              primaryText="아가잼잼은 맞춤형 운영 시스템"
-              align="left"
-              data-component={getComponent("heading")}
-            />
+            <div data-component={getComponent("heading")}>
+              <p
+                className="h3-left"
+                style={{ color: "var(--bjj-color-text-muted)" }}
+                data-component={getComponent("heading_muted")}
+              >
+                방치되는 공장형?
+              </p>
+              <p
+                className="h2-left"
+                style={{ color: "var(--bjj-color-primary)" }}
+                data-component={getComponent("heading_primary")}
+              >
+                아가잼잼은 <span style={{ whiteSpace: "nowrap" }}>맞춤형 운영 시스템</span>
+              </p>
+            </div>
             <p
               className="big-p max-w-[720px]"
               data-component={getComponent("description")}

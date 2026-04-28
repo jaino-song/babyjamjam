@@ -56,7 +56,7 @@ export function MobilePersistentNav({
           <img
             src="/images/logo.svg"
             alt="아가잼잼 로고"
-            className="h-[58px] w-[58px] object-contain"
+            className="h-[44px] w-[44px] object-contain"
             data-component={dataComponent ? `${dataComponent}_logo-image` : undefined}
           />
         </Link>

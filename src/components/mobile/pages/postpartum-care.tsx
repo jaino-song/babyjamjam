@@ -7,6 +7,15 @@ import { MobileBannerImageSection as BannerImageSection } from "@/components/mob
 import { MobileFooter as Footer } from "@/components/mobile/sections/footer";
 import { MobileMoreSection as MoreSection } from "@/components/mobile/sections/more-section";
 import { MobileProcessSection as ProcessSection } from "@/components/mobile/sections/process-section";
+import { PROCESS_STEPS } from "@/components/mobile/sections/process-section.data";
+
+const POSTPARTUM_CARE_PROCESS_STEPS = PROCESS_STEPS.map((step, i) => {
+  if (i === 0) return { ...step, title: "자격증 보유 전문가만", description: "국가공인자격증을 보유하시고, 아가잼잼의 자체 산후관리 교육을 받으신 믿을 수 있는 산후도우미 전문가만 파견합니다." };
+  if (i === 1) return { ...step, title: "남들과는 다른 아동학대방지교육", description: "외부 전문기관을 통해 전문적인 아동학대방지교육을 정기적으로 진행하고 있어요." };
+  if (i === 2) return { ...step, title: "배상책임보험 가입으로 맘 편히", description: "배상책임보험으로 관리사의 실수로 인한 피해 발생 시에도 피해 배상 걱정 없이 서비스 이용이 가능합니다." };
+  if (i === 3) return { ...step, title: "본인부담금 환급 신청 지원", description: "복잡하고 까다로운 본인부담금 환급 신청. 아가잼잼에서 상세히 도와드려요." };
+  return step;
+});
 
 const MATERNAL_CARE_CARDS: CareCardData[] = [
   {
@@ -111,7 +120,7 @@ export default function MobilePostpartumCarePage() {
 
         <BannerImageSection data-component="mobile_postpartum-care_banner-image-section" />
 
-        <ProcessSection data-component="mobile_postpartum-care_process-section" />
+        <ProcessSection data-component="mobile_postpartum-care_process-section" title="아가잼잼이면 걱정없죠." steps={POSTPARTUM_CARE_PROCESS_STEPS} />
         <MoreSection
           currentPage="postpartum-care"
           data-component="mobile_postpartum-care_more-section"

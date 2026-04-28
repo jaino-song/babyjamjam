@@ -1,44 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
-const PROCESS_STEPS = [
-  {
-    number: "01",
-    title: "예약금 입금",
-    description:
-      "예약금 입금으로 서비스 예약이 확정되면, 아가잼잼은 관리사 배정, 계약서 준비, 산모 등록 등 서비스 진행을 위한 절차를 준비합니다.",
-  },
-  {
-    number: "02",
-    title: "계약서 작성",
-    description:
-      "서비스 진행에 필요한 계약서 작성을 모바일에서 전자문서로 완료합니다. 번거로운 종이 작성없이, 휴대폰으로 계약서 작성이 가능합니다.",
-  },
-  {
-    number: "03",
-    title: "서비스 시작",
-    description:
-      "서비스 기간 동안 실시간 고객 응대를 진행하며, 서비스 중 발생하는 문의 사항에 대해 즉각적으로 대응합니다.",
-  },
-  {
-    number: "04",
-    title: "마무리",
-    description:
-      "서비스 종료 전에 종료 안내 연락을 드리고, 모니터링 설문과 환급 절차 설명 등 서비스 종료에 필요한 절차를 진행하고 종료하게 됩니다.",
-  },
-];
+import { PROCESS_STEPS } from "./process-section.data";
+
+type ProcessStep = { number: string; title: string; description: string };
 
 interface ProcessSectionProps {
   className?: string;
+  title?: ReactNode;
+  steps?: ProcessStep[];
   "data-component"?: string;
 }
 
 export function MobileProcessSection({
   className,
+  title = <>산후도우미 서비스<br />진행 절차</>,
+  steps = PROCESS_STEPS,
   "data-component": dataComponent,
 }: ProcessSectionProps) {
   const mobileTrackRef = useRef<HTMLDivElement>(null);
@@ -97,7 +78,7 @@ export function MobileProcessSection({
   const scrollMobileStep = (direction: -1 | 1) => {
     const nextIndex = Math.max(
       0,
-      Math.min(PROCESS_STEPS.length - 1, mobileActiveIndex + direction),
+      Math.min(steps.length - 1, mobileActiveIndex + direction),
     );
     const nextCard = mobileCardRefs.current[nextIndex];
     nextCard?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
@@ -115,8 +96,8 @@ export function MobileProcessSection({
       data-component={dataComponent}
     >
       <div className="flex justify-between w-full gap-6" data-component={getComponent("header")}>
-        <h2 className="h2 text-bjj-primary" data-component={getComponent("header_title")}>
-          산후도우미 서비스 진행 절차
+        <h2 className="h2-left text-bjj-primary" data-component={getComponent("header_title")}>
+          {title}
         </h2>
       </div>
       <div className="flex w-full flex-col gap-4" data-component={getComponent("gallery")}>
@@ -130,7 +111,7 @@ export function MobileProcessSection({
             aria-label="산후도우미 서비스 진행 절차"
             data-component={getComponent("gallery_track")}
           >
-            {PROCESS_STEPS.map((step, index) => (
+            {steps.map((step, index) => (
               <article
                 key={step.number}
                 ref={(node) => {
@@ -153,12 +134,12 @@ export function MobileProcessSection({
                   className="process-gallery__content"
                   data-component={getComponent(`gallery_card-${index + 1}_content`)}
                 >
-                  <h3
-                    className="h6 process-gallery__title"
+                  <h5
+                    className="h5 process-gallery__title"
                     data-component={getComponent(`gallery_card-${index + 1}_title`)}
                   >
                     {step.title}
-                  </h3>
+                  </h5>
                   <p
                     className="medium-p process-gallery__description"
                     data-component={getComponent(`gallery_card-${index + 1}_description`)}
@@ -174,7 +155,7 @@ export function MobileProcessSection({
             previousLabel="이전 단계"
             nextLabel="다음 단계"
             previousDisabled={mobileActiveIndex === 0}
-            nextDisabled={mobileActiveIndex === PROCESS_STEPS.length - 1}
+            nextDisabled={mobileActiveIndex === steps.length - 1}
             onPrevious={() => scrollMobileStep(-1)}
             onNext={() => scrollMobileStep(1)}
             data-component={getComponent("gallery_paddle")}

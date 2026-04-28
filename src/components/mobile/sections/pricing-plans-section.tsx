@@ -138,7 +138,7 @@ export function MobilePricingPlansSection({
           data-component={getComponent("title")}
         >
           <span
-            className="pricing-plans__title-muted"
+            className={cn("h3", "pricing-plans__title-muted")}
             data-component={getComponent("title-muted")}
           >
             뭘 좋아하실지 몰라서

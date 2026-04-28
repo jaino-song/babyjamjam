@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const MOBILE_UA = /Mobile|iPhone|Android.*Mobile|webOS|IEMobile|Opera Mini/i;
 const DEV = process.env.NODE_ENV !== "production";
 
-export function proxy(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? "";
 
   // Dev-only: ?device= override + bjj-device cookie. Production ignores both.

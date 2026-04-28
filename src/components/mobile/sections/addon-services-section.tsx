@@ -245,6 +245,7 @@ export function MobileAddonServicesSection({
                     onQuantityChange={(nextQuantity) =>
                       onQuantityChange(addon.id, nextQuantity)
                     }
+                    showQuantityStepper={groupIndex !== 0}
                     data-component={
                       groupBase ? `${groupBase}_card-${addonIndex + 1}` : undefined
                     }

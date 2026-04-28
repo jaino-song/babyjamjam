@@ -507,9 +507,7 @@ export function MobileBookingModal({
           <div className="bm__form-panel" data-component={getComponent("form-view")}>
             <div className="bm__form-intro" data-component={getComponent("form-intro")}>
               <p className="big-p" data-component={getComponent("form-intro-copy")}>
-                산후도우미 서비스에 대해서 궁금한 점이 있으시다면,
-                <br data-component={getComponent("form-intro-break")} />
-                부담없이 상담 받으세요. 바로 예약하지 않으셔도 괜찮아요!
+                산후도우미 서비스에 대해서 궁금한 점이 있으시다면, 부담없이 상담 받으세요. 바로 예약하지 않으셔도 괜찮아요!
               </p>
             </div>
 

@@ -21,6 +21,7 @@ interface AddonServiceCardProps {
   onAdd?: () => void;
   onRemove?: () => void;
   onQuantityChange?: (qty: number) => void;
+  showQuantityStepper?: boolean;
   "data-component"?: string;
 }
 
@@ -31,6 +32,7 @@ export function AddonServiceCard({
   onAdd,
   onRemove,
   onQuantityChange,
+  showQuantityStepper = true,
   "data-component": dataComponent,
 }: AddonServiceCardProps) {
   return (
@@ -76,11 +78,13 @@ export function AddonServiceCard({
           className="addon-card__actions"
           data-component={dataComponent ? `${dataComponent}_actions` : undefined}
         >
-          <QuantityStepper
-            value={quantity}
-            min={1}
-            onChange={onQuantityChange}
-          />
+          {showQuantityStepper && (
+            <QuantityStepper
+              value={quantity}
+              min={1}
+              onChange={onQuantityChange}
+            />
+          )}
           <button
             type="button"
             className={cn(

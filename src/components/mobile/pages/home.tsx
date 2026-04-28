@@ -36,7 +36,7 @@ export default function MobileHomePage() {
           data-component="mobile_home_scroll-expand-image"
           src="/images/hero-image-1a35f6.png"
           alt="아가잼잼 배너"
-          overlayText="검증 됐으니까. 믿을 수 있으니까."
+          overlayText={<><span style={{ whiteSpace: "nowrap" }}>검증 됐으니까.</span>{" "}<span style={{ whiteSpace: "nowrap" }}>믿을 수 있으니까.</span></>}
         />
 
         <LogoCarousel data-component="mobile_home_logo-carousel" />
@@ -46,7 +46,7 @@ export default function MobileHomePage() {
           data-component="mobile_home_app_detail_section"
         >
           <div
-            className="flex w-full flex-[7_1_0] flex-col items-start gap-6 pb-[52px]"
+            className="flex w-full flex-[7_1_0] flex-col items-start gap-6"
             data-component="mobile_home_app_detail_content"
           >
             <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
 const START_INSET_MULTIPLIER = 2.2;
 const START_RADIUS_PX = 24;
@@ -8,7 +8,7 @@ const START_RADIUS_PX = 24;
 interface ScrollExpandImageProps {
   src: string;
   alt: string;
-  overlayText?: string;
+  overlayText?: ReactNode;
   ["data-component"]?: string;
 }
 

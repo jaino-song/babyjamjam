@@ -111,13 +111,13 @@
      Apple's tracking curve: large display slightly negative, headlines/sub-heads slightly
      positive (+0.004 to +0.012em), body tight negative (-0.022em), caption light negative. */
   @media (max-width: 780px) {
-    .h1           { font-size: 40px; line-height: 1.25; letter-spacing: -0.003em; }
-    .h2, .h2-left { font-size: 36px; line-height: 1.25; letter-spacing: 0.004em; }
-    .h3, .h3-left { font-size: 32px; line-height: 1.25;  letter-spacing: 0.007em; }
-    .h4           { font-size: 28px; line-height: 1.21;  letter-spacing: 0.009em; }
-    .h5           { font-size: 24px; line-height: 1.47;  letter-spacing: 0.011em; }
-    .h6           { font-size: 20px; line-height: 1.33;  letter-spacing: 0.012em; }
-    .h7           { font-size: 16px; line-height: 1.33;  letter-spacing: 0.012em; }
+    .h1           { font-size: 32px; line-height: 1.25; letter-spacing: -0.003em; }
+    .h2, .h2-left { font-size: 28px; line-height: 1.25; letter-spacing: 0.004em; }
+    .h3, .h3-left { font-size: 24px; line-height: 1.25;  letter-spacing: 0.007em; }
+    .h4           { font-size: 20px; line-height: 1.21;  letter-spacing: 0.009em; }
+    .h5           { font-size: 16px; line-height: 1.47;  letter-spacing: 0.011em; }
+    .h6           { font-size: 12px; line-height: 1.33;  letter-spacing: 0.012em; }
+    .h7           { font-size: 8px; line-height: 1.33;  letter-spacing: 0.012em; }
     .big-p            { font-size: 17px; line-height: 1.5; letter-spacing: -0.022em; }
     .medium-p         { font-size: 15px; line-height: 1.47; letter-spacing: -0.022em; }
     .small-p          { font-size: 13px; line-height: 1.38; letter-spacing: -0.016em; }
@@ -279,11 +279,6 @@
 }
 [data-bjj-shell="mobile"] .care-carousel__caption {
   padding: 18px 0 0;
-}
-[data-bjj-shell="mobile"] .care-carousel__caption-title,
-[data-bjj-shell="mobile"] .care-carousel__caption-desc {
-  font-size: 18px;
-  line-height: 1.38;
 }
 
 /* ===== PRICING — Grade toggle (sliding pill, CSS custom properties) ===== */
@@ -2319,7 +2314,7 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scroll-padding-inline: var(--bjj-page-padding);
-  padding: 0 var(--bjj-page-padding);
+  padding: 4px var(--bjj-page-padding);
   scrollbar-width: none;
 }
 .process-gallery__track::-webkit-scrollbar { display: none; }
@@ -2334,11 +2329,8 @@
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.25s ease;
-}
-[data-bjj-shell="mobile"] .process-gallery__card--active {
-  transform: translateY(-2px);
+  justify-content: flex-start;
+  gap: 100px;
 }
 [data-bjj-shell="mobile"] .process-gallery__number {
   font-family: var(--bjj-font-number);

@@ -62,11 +62,12 @@ export function MobileBannerImageSection({
         data-component={getComponent("image")}
       />
       <span
-        className="h3 relative! z-[1] text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)] text-center whitespace-normal w-[calc(100%-48px)]"
+        className="h2 relative! z-[1] text-bjj-bg [text-shadow:1px_4px_8px_rgba(0,0,0,0.25)] text-center whitespace-normal w-[calc(100%-48px)]"
         style={{ transform: "none" }}
         data-component={getComponent("text")}
       >
-        검증 됐으니까. 믿을 수 있으니까.
+        <span style={{ whiteSpace: "nowrap" }}>검증 됐으니까.</span>{" "}
+        <span style={{ whiteSpace: "nowrap" }}>믿을 수 있으니까.</span>
       </span>
     </div>
   );

@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface DualColorHeadingProps {
   mutedText: string;
-  primaryText: string;
+  primaryText: ReactNode;
   align?: "left" | "center";
   level?: "h1" | "h2";
   className?: string;

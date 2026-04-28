@@ -1,10 +1,13 @@
+import { type ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 interface ProcessStepProps {
   number: string;
-  title: string;
+  title: ReactNode;
   description: string;
   className?: string;
+  titleClassName?: string;
   "data-component"?: string;
 }
 
@@ -13,6 +16,7 @@ export function ProcessStep({
   title,
   description,
   className,
+  titleClassName,
   "data-component": dataComponent,
 }: ProcessStepProps) {
   return (
@@ -34,7 +38,7 @@ export function ProcessStep({
         data-component={dataComponent ? `${dataComponent}_content` : undefined}
       >
         <h3
-          className="h6 text-bjj-primary-light"
+          className={cn("h6 text-bjj-primary-light", titleClassName)}
           data-component={dataComponent ? `${dataComponent}_title` : undefined}
         >
           {title}

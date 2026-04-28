@@ -33,12 +33,12 @@ export function MobileLinkCard({
         className="flex flex-col items-center w-full gap-6 flex-1"
         data-component={getComponent("content")}
       >
-        <h3
-          className="h6 text-bjj-primary text-center whitespace-pre-line"
+        <h5
+          className="h5 text-bjj-primary text-center whitespace-pre-line"
           data-component={getComponent("title")}
         >
           {title}
-        </h3>
+        </h5>
         {description && (
           <p
             className="medium-p max-w-[224px] text-center"
