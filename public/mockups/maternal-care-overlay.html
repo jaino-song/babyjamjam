@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>산모케어서비스 — Full-Width Overlay</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+  :root {
+    --primary: #004AAD;
+    --accent: #FFB27B;
+    --text-muted: #858585;
+    --radius: 20px;
+    --font: 'Pretendard Variable', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: #ffffff; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 80px 20px; }
+
+  .section-header { margin-bottom: 40px; }
+  .section-header .muted { color: var(--text-muted); font-size: 32px; font-weight: 800; line-height: 1.3; }
+  .section-header .primary { color: var(--primary); font-size: 32px; font-weight: 800; line-height: 1.3; }
+
+  .m5-container { display: flex; flex-direction: column; gap: 20px; }
+
+  .m5-card {
+    position: relative; width: 100%; aspect-ratio: 1.5 / 1;
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .m5-card img { width: 100%; height: 100%; object-fit: cover; }
+
+  .m5-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 32px;
+    background: linear-gradient(transparent 0%, rgba(0,36,87,0.75) 100%);
+    color: white;
+  }
+  .m5-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 13px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .m5-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .m5-desc { font-size: 15px; opacity: 0.9; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="section-header">
+    <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+    <span class="primary">산모케어서비스</span>
+  </div>
+
+  <div class="m5-container">
+    <div class="m5-card">
+      <img src="/images/care-maternal-meal.jpg" alt="">
+      <div class="m5-overlay">
+        <div class="m5-badge">1</div>
+        <h3 class="m5-title">산모 식사</h3>
+        <p class="m5-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+      </div>
+    </div>
+    <div class="m5-card">
+      <img src="/images/care-maternal-rest.png" alt="">
+      <div class="m5-overlay">
+        <div class="m5-badge">2</div>
+        <h3 class="m5-title">산모 휴식 제공</h3>
+        <p class="m5-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+      </div>
+    </div>
+    <div class="m5-card">
+      <img src="/images/care-maternal-cleaning.png" alt="">
+      <div class="m5-overlay">
+        <div class="m5-badge">3</div>
+        <h3 class="m5-title">집안 정리</h3>
+        <p class="m5-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

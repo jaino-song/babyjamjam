@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>산모케어서비스 디자인 목업</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+  :root {
+    --primary: #004AAD;
+    --primary-light: #FBFDFF;
+    --accent: #FFB27B;
+    --text-headline: #000000;
+    --text-paragraph: #6F6F6F;
+    --text-muted: #858585;
+    --divider: #E9E9E9;
+    --bg: #FFFFFF;
+    --radius: 20px;
+    --font: 'Pretendard Variable', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: #f5f5f5; color: var(--text-headline); }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 40px 20px; display: flex; flex-direction: column; gap: 120px; }
+
+  .mockup-label {
+    font-size: 14px; font-weight: 700; color: var(--primary);
+    background: rgba(0,74,173,0.06); padding: 6px 16px; border-radius: 999px;
+    display: inline-flex; align-self: flex-start; margin-bottom: 12px;
+  }
+  .mockup-title { font-size: 32px; font-weight: 800; color: var(--text-headline); margin-bottom: 40px; }
+
+  .section-header { margin-bottom: 40px; }
+  .section-header .muted { color: var(--text-muted); font-size: 32px; font-weight: 800; line-height: 1.3; }
+  .section-header .primary { color: var(--primary); font-size: 32px; font-weight: 800; line-height: 1.3; }
+
+  img { display: block; }
+
+  /* ===== MOCKUP 1: Numbered Horizontal Rows ===== */
+  .m1-container {
+    background: var(--primary); border-radius: var(--radius); padding: 48px 40px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .m1-row {
+    display: flex; align-items: center; gap: 32px; padding: 32px 0;
+  }
+  .m1-row + .m1-row { border-top: 1px solid rgba(255,255,255,0.2); }
+  .m1-image {
+    width: 200px; height: 150px; flex-shrink: 0; border-radius: 12px;
+    overflow: hidden; background: #f0f0f0;
+  }
+  .m1-image img { width: 100%; height: 100%; object-fit: cover; }
+  .m1-content { flex: 1; }
+  .m1-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 14px; font-weight: 800;
+    margin-right: 12px; vertical-align: middle;
+  }
+  .m1-title { font-size: 24px; font-weight: 800; color: white; display: inline; vertical-align: middle; }
+  .m1-desc { font-size: 16px; color: rgba(255,255,255,0.8); margin-top: 12px; line-height: 1.6; }
+
+  /* ===== MOCKUP 2: Zigzag ===== */
+  .m2-container { display: flex; flex-direction: column; gap: 40px; }
+  .m2-row { display: flex; gap: 32px; align-items: stretch; }
+  .m2-row--reverse { flex-direction: row-reverse; }
+  .m2-image {
+    flex: 1; min-height: 280px; border-radius: var(--radius);
+    overflow: hidden; background: #f0f0f0;
+  }
+  .m2-image img { width: 100%; height: 100%; object-fit: cover; }
+  .m2-content {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    padding: 32px; background: var(--bg); border-radius: var(--radius);
+    border: 1px solid var(--divider);
+  }
+  .m2-number {
+    font-size: 48px; font-weight: 800; color: var(--primary); opacity: 0.15;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .m2-title { font-size: 24px; font-weight: 800; color: var(--text-headline); margin-bottom: 12px; }
+  .m2-desc { font-size: 16px; color: var(--text-paragraph); line-height: 1.6; }
+
+  /* ===== MOCKUP 3: Hero Feature + Supporting ===== */
+  .m3-container { display: flex; flex-direction: column; gap: 20px; }
+  .m3-hero {
+    position: relative; width: 100%; height: 400px; border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .m3-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .m3-hero-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 40px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    color: white;
+  }
+  .m3-hero-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .m3-hero-desc { font-size: 16px; opacity: 0.9; line-height: 1.5; }
+  .m3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .m3-card {
+    border-radius: var(--radius); overflow: hidden;
+    background: var(--bg); border: 1px solid var(--divider);
+  }
+  .m3-card-image { width: 100%; height: 200px; overflow: hidden; }
+  .m3-card-image img { width: 100%; height: 100%; object-fit: cover; }
+  .m3-card-body { padding: 24px; }
+  .m3-card-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .m3-card-desc { font-size: 14px; color: var(--text-paragraph); line-height: 1.5; }
+
+  /* ===== MOCKUP 4: Vertical Timeline ===== */
+  .m4-container { position: relative; padding-left: 60px; }
+  .m4-line {
+    position: absolute; left: 19px; top: 0; bottom: 0; width: 2px;
+    background: var(--divider);
+  }
+  .m4-item { position: relative; margin-bottom: 48px; }
+  .m4-item:last-child { margin-bottom: 0; }
+  .m4-dot {
+    position: absolute; left: -60px; top: 24px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--primary); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; z-index: 1;
+  }
+  .m4-card {
+    display: flex; gap: 24px; align-items: center;
+    background: var(--bg); border: 1px solid var(--divider);
+    border-radius: var(--radius); padding: 24px; overflow: hidden;
+  }
+  .m4-card--reverse { flex-direction: row-reverse; }
+  .m4-card-image {
+    width: 180px; height: 140px; flex-shrink: 0;
+    border-radius: 12px; overflow: hidden;
+  }
+  .m4-card-image img { width: 100%; height: 100%; object-fit: cover; }
+  .m4-card-content { flex: 1; }
+  .m4-card-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .m4-card-desc { font-size: 15px; color: var(--text-paragraph); line-height: 1.6; }
+
+  /* ===== MOCKUP 5: Overlay Cards ===== */
+  .m5-container { display: flex; flex-direction: column; gap: 20px; }
+  .m5-card {
+    position: relative; width: 100%; height: 260px;
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .m5-card img { width: 100%; height: 100%; object-fit: cover; }
+  .m5-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 32px;
+    background: linear-gradient(transparent 0%, rgba(0,36,87,0.75) 100%);
+    color: white;
+  }
+  .m5-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: white; font-size: 13px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .m5-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .m5-desc { font-size: 15px; opacity: 0.9; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== MOCKUP 1 ===== -->
+  <div>
+    <span class="mockup-label">Mockup 1</span>
+    <h2 class="mockup-title">Numbered Horizontal Rows</h2>
+    <div class="section-header">
+      <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+      <span class="primary">산모케어서비스</span>
+    </div>
+    <div class="m1-container">
+      <div class="m1-row">
+        <div class="m1-image"><img src="/images/care-maternal-meal.jpg" alt=""></div>
+        <div class="m1-content">
+          <div><span class="m1-number">1</span><span class="m1-title">산모 식사</span></div>
+          <p class="m1-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+        </div>
+      </div>
+      <div class="m1-row">
+        <div class="m1-image"><img src="/images/care-maternal-rest.png" alt=""></div>
+        <div class="m1-content">
+          <div><span class="m1-number">2</span><span class="m1-title">산모 휴식 제공</span></div>
+          <p class="m1-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+        </div>
+      </div>
+      <div class="m1-row">
+        <div class="m1-image"><img src="/images/care-maternal-cleaning.png" alt=""></div>
+        <div class="m1-content">
+          <div><span class="m1-number">3</span><span class="m1-title">집안 정리</span></div>
+          <p class="m1-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOCKUP 2 ===== -->
+  <div>
+    <span class="mockup-label">Mockup 2</span>
+    <h2 class="mockup-title">Zigzag (Alternating)</h2>
+    <div class="section-header">
+      <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+      <span class="primary">산모케어서비스</span>
+    </div>
+    <div class="m2-container">
+      <div class="m2-row">
+        <div class="m2-image"><img src="/images/care-maternal-meal.jpg" alt=""></div>
+        <div class="m2-content">
+          <div class="m2-number">01</div>
+          <h3 class="m2-title">산모 식사</h3>
+          <p class="m2-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+        </div>
+      </div>
+      <div class="m2-row m2-row--reverse">
+        <div class="m2-image"><img src="/images/care-maternal-rest.png" alt=""></div>
+        <div class="m2-content">
+          <div class="m2-number">02</div>
+          <h3 class="m2-title">산모 휴식 제공</h3>
+          <p class="m2-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+        </div>
+      </div>
+      <div class="m2-row">
+        <div class="m2-image"><img src="/images/care-maternal-cleaning.png" alt=""></div>
+        <div class="m2-content">
+          <div class="m2-number">03</div>
+          <h3 class="m2-title">집안 정리</h3>
+          <p class="m2-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOCKUP 3 ===== -->
+  <div>
+    <span class="mockup-label">Mockup 3</span>
+    <h2 class="mockup-title">Hero Feature + Supporting Cards</h2>
+    <div class="section-header">
+      <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+      <span class="primary">산모케어서비스</span>
+    </div>
+    <div class="m3-container">
+      <div class="m3-hero">
+        <img src="/images/care-maternal-meal.jpg" alt="">
+        <div class="m3-hero-overlay">
+          <h3 class="m3-hero-title">산모 식사</h3>
+          <p class="m3-hero-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+        </div>
+      </div>
+      <div class="m3-grid">
+        <div class="m3-card">
+          <div class="m3-card-image"><img src="/images/care-maternal-rest.png" alt=""></div>
+          <div class="m3-card-body">
+            <h3 class="m3-card-title">산모 휴식 제공</h3>
+            <p class="m3-card-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+          </div>
+        </div>
+        <div class="m3-card">
+          <div class="m3-card-image"><img src="/images/care-maternal-cleaning.png" alt=""></div>
+          <div class="m3-card-body">
+            <h3 class="m3-card-title">집안 정리</h3>
+            <p class="m3-card-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOCKUP 4 ===== -->
+  <div>
+    <span class="mockup-label">Mockup 4</span>
+    <h2 class="mockup-title">Vertical Timeline</h2>
+    <div class="section-header">
+      <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+      <span class="primary">산모케어서비스</span>
+    </div>
+    <div class="m4-container">
+      <div class="m4-line"></div>
+      <div class="m4-item">
+        <div class="m4-dot">1</div>
+        <div class="m4-card">
+          <div class="m4-card-image"><img src="/images/care-maternal-meal.jpg" alt=""></div>
+          <div class="m4-card-content">
+            <h3 class="m4-card-title">산모 식사</h3>
+            <p class="m4-card-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="m4-item">
+        <div class="m4-dot">2</div>
+        <div class="m4-card m4-card--reverse">
+          <div class="m4-card-image"><img src="/images/care-maternal-rest.png" alt=""></div>
+          <div class="m4-card-content">
+            <h3 class="m4-card-title">산모 휴식 제공</h3>
+            <p class="m4-card-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="m4-item">
+        <div class="m4-dot">3</div>
+        <div class="m4-card">
+          <div class="m4-card-image"><img src="/images/care-maternal-cleaning.png" alt=""></div>
+          <div class="m4-card-content">
+            <h3 class="m4-card-title">집안 정리</h3>
+            <p class="m4-card-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOCKUP 5 ===== -->
+  <div>
+    <span class="mockup-label">Mockup 5</span>
+    <h2 class="mockup-title">Full-Width Overlay Cards</h2>
+    <div class="section-header">
+      <span class="muted">이 세상 가장 강한 당신을 위해.</span><br>
+      <span class="primary">산모케어서비스</span>
+    </div>
+    <div class="m5-container">
+      <div class="m5-card">
+        <img src="/images/care-maternal-meal.jpg" alt="">
+        <div class="m5-overlay">
+          <div class="m5-badge">1</div>
+          <h3 class="m5-title">산모 식사</h3>
+          <p class="m5-desc">산모님의 빠른 회복을 위한 식사를 제공합니다. 필요 시 장보기 후에 식사 준비까지 제공됩니다.</p>
+        </div>
+      </div>
+      <div class="m5-card">
+        <img src="/images/care-maternal-rest.png" alt="">
+        <div class="m5-overlay">
+          <div class="m5-badge">2</div>
+          <h3 class="m5-title">산모 휴식 제공</h3>
+          <p class="m5-desc">신생아 돌봄으로 편히 쉬기 어려운 산모님께서 편히 숙면 및 휴식 하실 수 있도록 도와드립니다.</p>
+        </div>
+      </div>
+      <div class="m5-card">
+        <img src="/images/care-maternal-cleaning.png" alt="">
+        <div class="m5-overlay">
+          <div class="m5-badge">3</div>
+          <h3 class="m5-title">집안 정리</h3>
+          <p class="m5-desc">산모님 및 신생아의 일상복 빨래와 집안 청소를 진행합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -38,9 +38,8 @@ Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should
   --bjj-font-caption: var(--font-roboto-mono), 'Roboto Mono', monospace;
 
   /* Layout */
-  --bjj-page-max-width: 1232px;
-  --bjj-page-padding: 128px;
-  --bjj-section-gap: 128px;
+  /* Page uses padding: 0 20% instead of max-width + margin centering */
+  --bjj-section-gap: 200px;
 }
 ```
 
@@ -51,14 +50,17 @@ Related: `docs/FIGMA_CONVERSION_PATTERN.md` explains how raw Figma export should
 | Token | Size | Weight | LH | LS | Font | Align |
 |-------|------|--------|----|----|------|-------|
 | H1 | 64px | 800 | 1.2 | 0.05em | heading | left |
-| H2 | 48px | 800 | 1.2 | — | heading | center |
-| H2-left | 48px | 800 | 1.2 | — | heading | left |
-| H3 | 24px | 800 | 1.2 | — | heading | left |
-| H4 | 24px | 700 | 1.2 | — | heading | left |
-| H5 | 18px | 700 | 1.2 | — | heading | left |
+| H2 | 56px | 800 | 1.2 | — | heading | center |
+| H2-left | 56px | 800 | 1.2 | — | heading | left |
+| H3 | 48px | 800 | 1.2 | — | heading | center |
+| H3-left | 48px | 800 | 1.2 | — | heading | left |
+| H4 | 40px | 800 | 1.2 | — | heading | left |
+| H5 | 32px | 800 | 1.2 | — | heading | left |
+| H6 | 24px | 800 | 1.2 | — | heading | left |
+| H7 | 20px | 800 | 1.2 | — | heading | left |
 | Big P | 18px | 500 | 1.5 | 0.03em | body | left |
 | Medium P | 16px | 500 | 1.5 | 0.03em | body | left |
-| Small P | 10px | 500 | 1.5 | 0.03em | body | left |
+| Small P | 12px | 500 | 1.5 | 0.03em | body | left |
 | Nav / Button | 13px | 800 | 1.4 | -0.025em | heading | center |
 | Link | 9px | 700 | 1.4 | -0.025em | number | center |
 | Caption | 8px | 400 | 1.4 | -0.01em | caption | center |
@@ -258,30 +260,60 @@ font-number 9px/700 tracking-tight text-link hover:underline
 
 ## 6. Page Layout
 
-### Page Container
+### Page Container (`.page`)
 ```
-max-width: 1232px, margin: 0 auto, flex col center, px: 128px
+flex col center, padding: 0 20%
+```
+
+### Main Container (`<main>`)
+```
+flex col center, width: 100%, gap: var(--bjj-section-gap)  /* 200px */
+```
+
+**Convention:** `<main>` owns the unified `gap` (`--bjj-section-gap: 200px`) between all content sections. `.page` has no gap — it only provides horizontal padding. This keeps header and footer spacing independent from content section spacing.
+
+### Page Structure Convention
+```
+.page (no gap)
+  header.navigation
+  main (gap: var(--bjj-section-gap))
+    section.hero
+    section/div (content sections)
+    section.banner
+    section.more
+  footer
+```
+
+**Rules:**
+1. **Hero inside `<main>`:** Hero sections must always be inside `<main>`, not siblings of it.
+2. **No child spacing:** Children must not use padding-top/bottom or margin-top/bottom to create inter-section spacing. All section spacing is controlled by `<main>`'s gap.
+3. **One section per concern (molecule principle):** If a content block has its own heading/title/subtitle and children, it must be its own independent section — not nested inside another section's container. For example, pricing plans and addon services each have their own heading, so they are separate sibling sections spaced by `<main>`'s gap, not wrapped in a shared container.
+
+### Hero Pattern (all pages must match)
+```
+.hero__bg: height 488px, border-radius 0 0 20px 20px, gradient fade overlay
+hero → title gap: 64px
 ```
 
 ### Full-Bleed Sections
 Logo Section, Process Section:
 ```
-width: 100vw, max-width: 1232px, px: 128px
+width: 100vw, px: 20%
 ```
 
 ### Section Order (Home `/`)
 ```
 1. Navigation         ← h: 96px
-2. Hero               ← bg 488px + H1, gap: 64px
-3. Main               ← flex col, gap: 128px, py: 128px
-   3.1 Service Detail  ← headline + 4 icon lockups (nowrap)
-   3.2 Banner Image    ← 652px, radius 20px, centered text
-   3.3 App Detail      ← 588px, text left + phone right
-   3.4 Logo Section    ← full-bleed, govt logos
-   3.5 Edu Logo        ← full-bleed, edu logos
-   3.6 Process         ← full-bleed, bg primary, 4 steps
-   3.7 More            ← 3 link cards
-4. Footer              ← links + logo + copyright
+2. Main (display: contents)
+   2.1 Hero            ← bg 488px + H1, gap: 64px
+   2.2 Service Detail  ← headline + 4 icon lockups (nowrap)
+   2.3 Banner Image    ← 652px, radius 20px, centered text
+   2.4 App Detail      ← 588px, text left + phone right
+   2.5 Logo Section    ← full-bleed, govt logos
+   2.6 Edu Logo        ← full-bleed, edu logos
+   2.7 Process         ← full-bleed, bg primary, 4 steps
+   2.8 More            ← 3 link cards
+3. Footer              ← links + logo + copyright
 ```
 
 ---

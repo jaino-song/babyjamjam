@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { DM_Sans, Roboto_Mono } from "next/font/google";
 import "./globals.css";
@@ -36,6 +36,12 @@ export const metadata: Metadata = {
   title: "아가잼잼 - 산후도우미 서비스",
   description:
     "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

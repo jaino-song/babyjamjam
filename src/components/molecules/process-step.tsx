@@ -1,40 +1,53 @@
+import { type ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 interface ProcessStepProps {
   number: string;
-  title: string;
+  title: ReactNode;
   description: string;
   className?: string;
+  titleClassName?: string;
+  "data-component"?: string;
 }
 
-export function ProcessStep({ number, title, description, className }: ProcessStepProps) {
+export function ProcessStep({
+  number,
+  title,
+  description,
+  className,
+  titleClassName,
+  "data-component": dataComponent,
+}: ProcessStepProps) {
   return (
     <div
       className={cn(
-        "flex-1 flex flex-col items-start border-t border-bjj-divider gap-15 pt-15 pr-7 pb-5",
+        "flex-1 flex flex-col gap-10 pt-10 pr-5 pb-3 border-t border-bjj-divider",
         className
       )}
-      data-component="molecule-process-step"
+      data-component={dataComponent}
     >
       <span
-        className="font-number text-process-num font-normal leading-none tracking-tighter text-bjj-accent"
-        data-component="molecule-process-step-number"
+        className="font-number text-process-num font-normal leading-none tracking-[-0.04em] text-bjj-accent"
+        data-component={dataComponent ? `${dataComponent}_number` : undefined}
       >
         {number}
       </span>
       <div
-        className="flex flex-col gap-5"
-        data-component="molecule-process-step-content"
+        className="flex flex-col items-start w-full gap-3"
+        data-component={dataComponent ? `${dataComponent}_content` : undefined}
       >
-        <h4
-          className="text-h4 font-bold font-heading text-bjj-primary-light"
-          data-component="molecule-process-step-title"
+        <h3
+          className={cn("h6 text-bjj-primary-light", titleClassName)}
+          data-component={dataComponent ? `${dataComponent}_title` : undefined}
         >
           {title}
-        </h4>
+        </h3>
         <p
-          className="text-medium-p font-medium font-body text-bjj-primary-light tracking-wide leading-relaxed"
-          data-component="molecule-process-step-description"
+          className="medium-p !text-bjj-primary-light"
+          data-component={
+            dataComponent ? `${dataComponent}_description` : undefined
+          }
         >
           {description}
         </p>
