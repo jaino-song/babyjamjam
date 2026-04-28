@@ -229,13 +229,13 @@ export function MobilePricingClient({
               data-component={getComponent("cta-card")}
             >
               <h2
-                className="pricing-cta-card__title"
+                className="h2 text-bjj-primary"
                 data-component={getComponent("cta-title")}
               >
                 서비스 가격 조회
               </h2>
               <p
-                className="pricing-cta-card__label"
+                className="big-p"
                 data-component={getComponent("cta-label")}
               >
                 정확한 가격을 알아볼까요?

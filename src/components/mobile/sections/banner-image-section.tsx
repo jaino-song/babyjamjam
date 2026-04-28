@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface BannerImageSectionProps {
   className?: string;
   imageAlt?: string;
   imageSrc?: string;
+  textParts?: string[];
   "data-component"?: string;
 }
 
@@ -13,6 +14,7 @@ export function MobileBannerImageSection({
   className,
   imageAlt = "아가잼잼 배너",
   imageSrc = "/images/hero-image-1a35f6.png",
+  textParts = ["검증 됐으니까.", "믿을 수 있으니까."],
   "data-component": dataComponent,
 }: BannerImageSectionProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -66,8 +68,12 @@ export function MobileBannerImageSection({
         style={{ transform: "none" }}
         data-component={getComponent("text")}
       >
-        <span style={{ whiteSpace: "nowrap" }}>검증 됐으니까.</span>{" "}
-        <span style={{ whiteSpace: "nowrap" }}>믿을 수 있으니까.</span>
+        {textParts.map((part, i) => (
+          <Fragment key={i}>
+            {i > 0 ? " " : null}
+            <span style={{ whiteSpace: "nowrap" }}>{part}</span>
+          </Fragment>
+        ))}
       </span>
     </div>
   );

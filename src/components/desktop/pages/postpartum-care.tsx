@@ -118,7 +118,12 @@ export default function DesktopPostpartumCarePage() {
           data-component="desktop_postpartum-care_care-section-carousel"
         />
 
-        <BannerImageSection data-component="desktop_postpartum-care_banner-image-section" />
+        <BannerImageSection
+          data-component="desktop_postpartum-care_banner-image-section"
+          imageSrc="/images/postpartum-care-banner.png"
+          imageClassName="object-[center_70%]"
+          text="누구보다 전문적이게, 남들보다 믿을 수 있게."
+        />
 
         <ProcessSection data-component="desktop_postpartum-care_process-section" title="아가잼잼이면 걱정없죠." steps={POSTPARTUM_CARE_PROCESS_STEPS} titleClassName="min-h-[2.3em]" />
         <MoreSection

@@ -1183,8 +1183,9 @@
   }
 
   [data-bjj-shell="mobile"] [data-component="mobile_pricing-client_root_cta-card"] {
-    background: #f5f5f7;
-    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid var(--bjj-color-divider);
+    box-shadow: 0 8px 24px rgba(0, 36, 87, 0.10), 0 2px 6px rgba(0, 36, 87, 0.06);
   }
 
 }

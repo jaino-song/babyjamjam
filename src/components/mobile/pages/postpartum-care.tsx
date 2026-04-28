@@ -109,7 +109,7 @@ export default function MobilePostpartumCarePage() {
             className="h1 text-bjj-primary whitespace-pre-line w-full"
             data-component="mobile_postpartum-care_hero_headline"
           >
-            {"아가잼잼이 자신있게 소개하는\n산후도우미 서비스"}
+            {"아가잼잼이\n자신있게 소개하는\n산후도우미 서비스"}
           </h1>
         </section>
         <MobileCareSectionCarousel
@@ -118,7 +118,11 @@ export default function MobilePostpartumCarePage() {
           data-component="mobile_postpartum-care_care-section-carousel"
         />
 
-        <BannerImageSection data-component="mobile_postpartum-care_banner-image-section" />
+        <BannerImageSection
+          data-component="mobile_postpartum-care_banner-image-section"
+          imageSrc="/images/postpartum-care-banner.png"
+          textParts={["누구보다 전문적이게,", "남들보다 믿을 수 있게."]}
+        />
 
         <ProcessSection data-component="mobile_postpartum-care_process-section" title="아가잼잼이면 걱정없죠." steps={POSTPARTUM_CARE_PROCESS_STEPS} />
         <MoreSection

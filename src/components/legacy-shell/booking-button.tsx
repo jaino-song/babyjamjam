@@ -19,7 +19,7 @@ export function LegacyBookingButton({ onModalClose }: BookingButtonProps = {}) {
 
   return (
     <>
-      <PillCta onClick={() => setOpen(true)}>상담신청</PillCta>
+      <PillCta onClick={() => setOpen(true)}>상담 신청</PillCta>
       <LegacyBookingModal open={open} onClose={handleClose} />
     </>
   );
