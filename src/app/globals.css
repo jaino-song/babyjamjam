@@ -52,6 +52,27 @@
   --shadow-card: 0 24px 60px rgba(0, 36, 87, 0.06), 0 -8px 18px rgba(0, 36, 87, 0.035);
 }
 
+/* ===== Coming Soon ===== */
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--bjj-color-bg);
+  padding: 32px;
+  gap: 48px;
+}
+
+.coming-soon__logo {
+  width: min(360px, 60vw);
+  height: auto;
+}
+
+.coming-soon__text {
+  color: var(--bjj-color-primary);
+}
+
 /* ===== CSS Tokens ===== */
 :root {
   --bjj-color-primary: #004AAD;
