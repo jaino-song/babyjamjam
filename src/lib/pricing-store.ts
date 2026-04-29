@@ -117,8 +117,14 @@ export const usePricingStore = create<PricingState & PricingActions>()(
             const grade = resolveGrade(childType, isPremature, hasDisability);
             let tier: number | null;
 
-            if (childType === "단태아") {
-              tier = 1;
+            if (grade === "A") {
+              tier = resolveTier(grade, {
+                birthOrder: formAnswers.birthOrder as
+                  | "첫째아"
+                  | "둘째아"
+                  | "셋째아이상"
+                  | undefined,
+              });
             } else {
               let staffCount: number | undefined;
               if (formAnswers.staffCount) {

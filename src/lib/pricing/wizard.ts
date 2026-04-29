@@ -1,5 +1,5 @@
 import type { FormAnswers as PricingFormAnswers, QuestionDef, SelectOption } from "@/lib/pricing/contracts";
-import type { ChildType } from "@/lib/voucher-type";
+import { resolveGrade, type ChildType } from "@/lib/voucher-type";
 
 const YES_NO_OPTIONS: SelectOption[] = [
   { label: "네", value: "yes" },
@@ -11,6 +11,12 @@ const CHILD_TYPE_OPTIONS: SelectOption[] = [
   { label: "쌍태아", value: "쌍태아" },
   { label: "삼태아", value: "삼태아" },
   { label: "사태아 이상", value: "사태아이상" },
+];
+
+const BIRTH_ORDER_OPTIONS: SelectOption[] = [
+  { label: "첫째아", value: "첫째아" },
+  { label: "둘째아", value: "둘째아" },
+  { label: "셋째아 이상", value: "셋째아이상" },
 ];
 
 const SERVICE_PERIOD_OPTIONS: SelectOption[] = [
@@ -67,14 +73,30 @@ export function buildAllSteps(
     );
 
     const childType = answers.childType as ChildType | undefined;
-    if (childType && childType !== "단태아") {
-      steps.push({
-        id: "staffCount",
-        label: "추가 인력이 필요하신가요?",
-        helperKey: "다태아 출산 가정은 2명 이상의 관리사 고용이 가능해요.",
-        options: YES_NO_OPTIONS,
-        inputType: "buttons",
-      });
+    if (childType) {
+      const grade = resolveGrade(
+        childType,
+        answers.premature === "yes",
+        answers.disability === "yes"
+      );
+
+      if (grade === "A") {
+        steps.push({
+          id: "birthOrder",
+          label: "몇째 아이인가요?",
+          helperKey: "첫째, 둘째, 셋째 이상에 따라 지원 유형이 달라져요.",
+          options: BIRTH_ORDER_OPTIONS,
+          inputType: "dropdown",
+        });
+      } else {
+        steps.push({
+          id: "staffCount",
+          label: "추가 인력이 필요하신가요?",
+          helperKey: "지원 유형에 따라 관리사 인원 선택이 필요해요.",
+          options: YES_NO_OPTIONS,
+          inputType: "buttons",
+        });
+      }
     }
   } else if (answers.subsidy === "no") {
     steps.push(
