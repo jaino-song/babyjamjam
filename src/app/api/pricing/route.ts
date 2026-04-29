@@ -77,7 +77,7 @@ const ADDON_SERVICES = [
   {
     id: "breast-pump",
     name: "유축기 대여 서비스",
-    note: "정규 서비스 제공 시간 외 추가 시간",
+    note: "유축기 대여도 걱정없이 아가잼잼에서 해결",
     description: "",
     price: "5,000원",
     group: "care",

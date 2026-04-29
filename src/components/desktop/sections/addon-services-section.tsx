@@ -6,6 +6,9 @@ import {
   type AddonData,
 } from "@/components/molecules/addon-service-card";
 
+const BREAST_PUMP_ADDON_IDS = new Set(["breast-pump", "ph-pump"]);
+const BREAST_PUMP_NOTE = "유축기 대여도 걱정없이 아가잼잼에서 해결";
+
 interface DesktopAddonServicesSectionProps {
   addons: AddonData[];
   selections: Map<string, number>;
@@ -106,11 +109,17 @@ export function DesktopAddonServicesSection({
               {group.map((addon, addonIndex) => {
                 const quantity = selections.get(addon.id);
                 const added = quantity !== undefined && quantity > 0;
+                const displayedAddon = {
+                  ...addon,
+                  note: BREAST_PUMP_ADDON_IDS.has(addon.id)
+                    ? BREAST_PUMP_NOTE
+                    : addon.note,
+                };
 
                 return (
                   <AddonServiceCard
                     key={addon.id}
-                    addon={addon}
+                    addon={displayedAddon}
                     quantity={
                       added
                         ? quantity
