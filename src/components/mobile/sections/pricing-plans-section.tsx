@@ -11,6 +11,8 @@ import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 import type { GradeName } from "@/lib/voucher-type";
 
 const GRADE_NAMES: GradeName[] = ["가", "통합", "라"];
+const UNSUBSIDIZED_PLAN_ID_PREFIX = "unsub-";
+const CONSULTATION_REQUIRED_PRICE_LABEL = "상담 필요";
 
 interface MobilePricingPlansSectionProps {
   plans: PlanData[];
@@ -220,7 +222,11 @@ export function MobilePricingPlansSection({
           {plans.map((plan, index) => (
             <PricingPlanCard
               key={plan.id}
-              plan={plan}
+              plan={
+                plan.id.startsWith(UNSUBSIDIZED_PLAN_ID_PREFIX)
+                  ? { ...plan, price: CONSULTATION_REQUIRED_PRICE_LABEL }
+                  : plan
+              }
               selected={plan.id === selectedPlanId}
               onSelect={() => onSelectPlan(plan.id)}
               isLoading={isLoading}

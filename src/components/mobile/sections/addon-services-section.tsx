@@ -9,6 +9,10 @@ import {
 } from "@/components/molecules/addon-service-card";
 import { GalleryPaddlenav } from "@/components/ui/gallery-paddlenav";
 
+const DAILY_PRICE_PREFIX = "일";
+const BREAST_PUMP_ADDON_IDS = new Set(["breast-pump", "ph-pump"]);
+const BREAST_PUMP_NOTE = "유축기 대여도 걱정없이 아가잼잼에서 해결";
+
 interface MobileAddonServicesSectionProps {
   addons: AddonData[];
   selections: Map<string, number>;
@@ -227,11 +231,21 @@ export function MobileAddonServicesSection({
               {group.map((addon, addonIndex) => {
                 const quantity = selections.get(addon.id);
                 const added = quantity !== undefined && quantity > 0;
+                const displayedAddon = {
+                  ...addon,
+                  note: BREAST_PUMP_ADDON_IDS.has(addon.id)
+                    ? BREAST_PUMP_NOTE
+                    : addon.note,
+                  price:
+                    groupIndex === 0
+                      ? `${DAILY_PRICE_PREFIX} ${addon.price}`
+                      : addon.price,
+                };
 
                 return (
                   <AddonServiceCard
                     key={addon.id}
-                    addon={addon}
+                    addon={displayedAddon}
                     quantity={
                       added
                         ? quantity

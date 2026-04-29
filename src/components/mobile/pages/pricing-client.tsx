@@ -95,7 +95,7 @@ const PLACEHOLDER_ADDONS: AddonData[] = [
     id: "ph-pump",
     name: "유축기 대여 서비스",
     description: "",
-    note: "정규 서비스 제공 시간 외 추가 시간",
+    note: "유축기 대여도 걱정없이 아가잼잼에서 해결",
     price: "---,---원",
     group: "care",
   },
@@ -122,6 +122,10 @@ const PLACEHOLDER_ADDONS: AddonData[] = [
     group: "schedule",
   },
 ];
+
+const UNSUBSIDIZED_HIDDEN_ADDON_IDS = new Set(["twins"]);
+const UNSUBSIDIZED_PLAN_ID_PREFIX = "unsub-";
+const CONSULTATION_REQUIRED_PRICE_LABEL = "상담 필요";
 
 interface MobilePricingClientProps {
   "data-component"?: string;
@@ -163,27 +167,33 @@ export function MobilePricingClient({
     [store.fetchPricing, store.selectedGradeName],
   );
 
-  const distinctCount = (store.selectedPlanId ? 1 : 0) + store.addonSelections.size;
-
   const displayPlans = store.pricesRevealed ? store.plans : PLACEHOLDER_PLANS;
-  const displayAddons = store.pricesRevealed ? store.addons : PLACEHOLDER_ADDONS;
+  const visibleAddons =
+    store.pricesRevealed && !isSubsidized
+      ? store.addons.filter((addon) => !UNSUBSIDIZED_HIDDEN_ADDON_IDS.has(addon.id))
+      : store.addons;
+  const displayAddons = store.pricesRevealed ? visibleAddons : PLACEHOLDER_ADDONS;
   const selectedPlan =
     store.plans.find((plan) => plan.id === store.selectedPlanId) ?? null;
+  const visibleSelectedPlan =
+    selectedPlan?.id.startsWith(UNSUBSIDIZED_PLAN_ID_PREFIX)
+      ? { ...selectedPlan, price: CONSULTATION_REQUIRED_PRICE_LABEL }
+      : selectedPlan;
   const selectedAddons = Array.from(store.addonSelections.entries())
     .map(([addonId, quantity]) => {
-      const addon = store.addons.find((item) => item.id === addonId);
+      const addon = visibleAddons.find((item) => item.id === addonId);
       return addon && quantity > 0 ? { addon, quantity } : null;
     })
     .filter(
       (item): item is { addon: AddonData; quantity: number } => item !== null,
     );
   const selectedServices: SelectedServicesPayload = {
-    plan: selectedPlan
+    plan: visibleSelectedPlan
       ? {
-          id: selectedPlan.id,
-          name: selectedPlan.name,
-          priceLabel: selectedPlan.price,
-          durationDays: selectedPlan.duration ?? null,
+          id: visibleSelectedPlan.id,
+          name: visibleSelectedPlan.name,
+          priceLabel: visibleSelectedPlan.price,
+          durationDays: visibleSelectedPlan.duration ?? null,
         }
       : null,
     addons: selectedAddons.map(({ addon, quantity }) => ({
@@ -194,6 +204,8 @@ export function MobilePricingClient({
       group: addon.group ?? null,
     })),
   };
+  const distinctCount =
+    (store.selectedPlanId ? 1 : 0) + selectedAddons.length;
 
   return (
     <>
@@ -291,7 +303,7 @@ export function MobilePricingClient({
         )}
       <MobileFloatingBubble
         distinctCount={distinctCount}
-        selectedPlan={selectedPlan}
+        selectedPlan={visibleSelectedPlan}
         selectedAddons={selectedAddons}
         selectedServices={selectedServices}
         onRemovePlan={store.clearSelectedPlan}

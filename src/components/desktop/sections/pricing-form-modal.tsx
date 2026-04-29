@@ -10,6 +10,12 @@ import {
 } from "@/lib/pricing/wizard";
 import { cn } from "@/lib/utils";
 
+function buildDesktopSteps(answers: PricingFormAnswers) {
+  return buildAllSteps(answers).filter(
+    (question) => !(answers.subsidy === "no" && question.id === "servicePeriod")
+  );
+}
+
 interface DesktopPricingFormModalProps {
   answers: PricingFormAnswers;
   onAnswer: (questionId: string, value: string) => void;
@@ -28,7 +34,7 @@ export function DesktopPricingFormModal({
   const getComponent = (suffix: string) =>
     dataComponent ? `${dataComponent}_${suffix}` : undefined;
 
-  const allSteps = buildAllSteps(answers);
+  const allSteps = buildDesktopSteps(answers);
   const currentQuestion = allSteps[step];
   const currentHelper =
     currentQuestion?.helperKey === SUBSIDY_ELIGIBILITY_HELPER_KEY ? (
@@ -48,15 +54,14 @@ export function DesktopPricingFormModal({
     ) : (
       currentQuestion?.helperKey ?? null
     );
-  const isMultiple = answers.childType && answers.childType !== "단태아";
-  const displayStepCount = answers.subsidy === "yes" ? (isMultiple ? 5 : 4) : 4;
+  const displayStepCount = answers.subsidy ? allSteps.length : 4;
 
   const handleSelect = useCallback(
     (questionId: string, value: string) => {
       onAnswer(questionId, value);
 
       const nextAnswers = { ...answers, [questionId]: value };
-      const nextSteps = buildAllSteps(nextAnswers);
+      const nextSteps = buildDesktopSteps(nextAnswers);
       const shouldSubmit = step >= nextSteps.length - 1;
 
       setTimeout(() => {
