@@ -5,3 +5,15 @@ out/
 .env.local
 *.tsbuildinfo
 next-env.d.ts
+.vercel
+.clang-cache/
+.playwright-mcp/
+*.backup.png
+care-carousel-*.png
+carousel-3d-*.png
+carousel-equal-size.png
+postpartum-care-desktop-full.png
+postpartum-care-desktop.png
+postpartum-care.png
+.gstack/
+.claude/

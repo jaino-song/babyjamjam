@@ -4,9 +4,15 @@ interface NavItemProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  "data-component"?: string;
 }
 
-export function NavItem({ href, children, className }: NavItemProps) {
+export function NavItem({
+  href,
+  children,
+  className,
+  "data-component": dataComponent,
+}: NavItemProps) {
   return (
     <a
       href={href}
@@ -14,7 +20,7 @@ export function NavItem({ href, children, className }: NavItemProps) {
         "font-heading text-nav font-extrabold tracking-tight text-bjj-primary-light whitespace-nowrap no-underline",
         className
       )}
-      data-component="molecule-nav-item"
+      data-component={dataComponent}
     >
       {children}
     </a>

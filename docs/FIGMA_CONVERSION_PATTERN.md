@@ -105,12 +105,17 @@ Translate raw wrappers into these higher-level structures:
 
 | Raw Figma export pattern | Current React pattern |
 | --- | --- |
-| page root `w-[1920px] px-48 ...` | `.page` with `max-width: 1232px`, centered, `padding-inline: 128px` |
+| page root `w-[1920px] px-48 ...` | `.page` with `padding: 0 20%` (no max-width, no margin) |
 | large section gaps like `gap-24`, `py-48` | normalized section gap token `--bjj-section-gap: 128px` |
+| hero background area | `.hero__bg` / `.pricing-hero__bg` — height: `488px`, border-radius: `0 0 20px 20px`, gradient fade overlay |
+| hero → title gap | `64px` gap between bg and title |
+| hero → main content gap | `<main>` uses `padding: var(--bjj-section-gap) 0` — provides top/bottom spacing matching section gap |
 | repeated icon/info columns | shared `icon-lockup` pattern |
 | numbered list rows | shared `app-detail__list-item` pattern |
 | repeated process cards | mapped step data + shared process-step structure |
 | repeated CTA cards | mapped card data + shared link-card structure |
+
+All new pages must match the homepage section spacing pattern: hero bg `488px` → `64px` gap → title → main with `padding: var(--bjj-section-gap) 0` and `gap: var(--bjj-section-gap)` between sections.
 
 ## Atomic Structure To Reuse
 

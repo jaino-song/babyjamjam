@@ -1,126 +1,311 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
-const slides = [
+type Theme = 'dark' | 'light';
+
+type Slide = {
+  theme: Theme;
+  renderTitle: (dataComponent?: string) => ReactNode;
+  renderDescription: (dataComponent?: string) => ReactNode;
+  logos: { src: string; alt: string; scale?: number }[];
+};
+
+const slides: Slide[] = [
   {
-    title: (
-      <h2 className="h2" style={{ textAlign: 'left' }}>
-        <span style={{ color: '#848484' }}>국가인증업체라서</span>{' '}
-        <span style={{ color: 'var(--bjj-color-primary)' }}>믿을 수 있으니까.</span>
-      </h2>
+    theme: 'dark',
+    renderTitle: (dataComponent) => (
+      <h3
+        className="h3"
+        style={{ textAlign: 'left' }}
+        data-component={dataComponent ? `${dataComponent}_title` : undefined}
+      >
+        <span
+          style={{ display: 'block', color: 'rgba(251, 253, 255, 0.7)' }}
+          data-component={dataComponent ? `${dataComponent}_title-line-1` : undefined}
+        >
+          국가인증업체라서
+        </span>
+        <span
+          style={{ display: 'block', color: 'var(--bjj-color-primary-light)' }}
+          data-component={dataComponent ? `${dataComponent}_title-line-2` : undefined}
+        >
+          믿을 수 있으니까.
+        </span>
+      </h3>
     ),
-    description:
-      '아가잼잼은 대한민국 정부가 인증한 산모신생아건강관리사업 제공업체 입니다.',
+    renderDescription: (dataComponent) => (
+      <p
+        className="big-p"
+        style={{ color: 'rgba(251, 253, 255, 0.85)' }}
+        data-component={dataComponent ? `${dataComponent}_description` : undefined}
+      >
+        아가잼잼은 대한민국 정부 인증을 받은 산모·신생아 건강관리 지원사업 제공기관으로,
+        안심하고 함께하실 수 있어요.
+      </p>
+    ),
     logos: [
       { src: '/images/logo-bokjiro.png', alt: '복지로' },
-      { src: '/images/logo-ssis.png', alt: 'SSIS' },
+      { src: '/images/logo-ssis.png', alt: 'SSIS', scale: 1.3 },
       { src: '/images/logo-mohw.png', alt: '보건복지부' },
       { src: '/images/logo-cert.png', alt: '인증마크' },
     ],
   },
   {
-    title: (
-      <h2 className="h2" style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}>
-        자격증만 딴다고<br />다 <strong style={{ color: 'var(--bjj-color-primary)' }}>전문가</strong>는 아니죠.
-      </h2>
+    theme: 'light',
+    renderTitle: (dataComponent) => (
+      <h3
+        className="h3"
+        style={{ textAlign: 'left', color: 'var(--bjj-color-text-muted)' }}
+        data-component={dataComponent ? `${dataComponent}_title` : undefined}
+      >
+        자격증만 딴다고
+        <br data-component={dataComponent ? `${dataComponent}_title-break` : undefined} />다{' '}
+        <strong
+          style={{ color: 'var(--bjj-color-primary)' }}
+          data-component={dataComponent ? `${dataComponent}_title-emphasis` : undefined}
+        >
+          전문가
+        </strong>
+        는 아니죠.
+      </h3>
     ),
-    description:
-      '아가잼잼은 관리사들이 최고의 서비스를 제공할 수 있도록 지속적으로 교육하고 있어요. 자체 컨퍼런스를 통한 케이스 스터디와, 필수 교육에 더해서 공인 기관을 통해 신생아 케어에 최적화된 교육 또한 진행하고 있어요. 자격증만 있다고 산모님께 보내는 주먹구구식 운영은 지양해요.',
+    renderDescription: (dataComponent) => (
+      <p
+        className="big-p"
+        style={{ color: 'var(--bjj-color-text-dark)' }}
+        data-component={dataComponent ? `${dataComponent}_description` : undefined}
+      >
+        아가잼잼은 관리사님들이 더 좋은 서비스를 제공할 수 있도록 꾸준히 교육하고 있어요. 자체
+        컨퍼런스를 통해 다양한 사례를 함께 공부하고, 필수 교육은 물론 공인 기관과 함께 신생아
+        케어에 맞춘 전문 교육도 이어가고 있어요. 자격증만으로 충분하다고 생각하지 않고, 늘 더
+        세심하고 믿음직한 서비스를 고민해요.
+      </p>
+    ),
     logos: [
       { src: '/images/edu-logo-1.png', alt: '교육기관 1' },
-      { src: '/images/edu-logo-2.png', alt: '교육기관 2' },
+      { src: '/images/edu-logo-2.png', alt: '교육기관 2', scale: 0.9 },
       { src: '/images/edu-logo-3.png', alt: '교육기관 3' },
     ],
   },
 ];
 
-export default function LogoCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+const AUTOPLAY_MS = 7000;
 
-  const scrollTo = (index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const slide = track.children[index] as HTMLElement | undefined;
-    if (!slide) return;
-    track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
-  };
+type LogoCarouselProps = {
+  'data-component'?: string;
+};
 
-  const handlePrev = () => scrollTo(Math.max(0, activeIndex - 1));
-  const handleNext = () => scrollTo(Math.min(slides.length - 1, activeIndex + 1));
+export default function LogoCarousel({ 'data-component': dataComponent }: LogoCarouselProps) {
+  const [index, setIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [progressKey, setProgressKey] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
+  // Reduced motion preference
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const handleScroll = () => {
-      const { scrollLeft, clientWidth } = track;
-      const index = Math.round(scrollLeft / clientWidth);
-      setActiveIndex(index);
-    };
-
-    track.addEventListener('scroll', handleScroll, { passive: true });
-    return () => track.removeEventListener('scroll', handleScroll);
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
   }, []);
 
-  return (
-    <section className="carousel">
-      {slides.length > 2 && (
-        <button
-          className="carousel__btn carousel__btn--prev"
-          onClick={handlePrev}
-          aria-label="이전 슬라이드"
-        >
-          ‹
-        </button>
-      )}
-      {slides.length > 2 && (
-        <button
-          className="carousel__btn carousel__btn--next"
-          onClick={handleNext}
-          aria-label="다음 슬라이드"
-        >
-          ›
-        </button>
-      )}
+  // Pause when tab hidden
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden) setPlaying(false);
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
 
-      <div className="carousel__track" ref={trackRef}>
-        {slides.map((slide, i) => (
-          <div key={i} className="carousel__slide">
-            <div className="carousel__card">
-              <div className="carousel__card-header">
-                {slide.title}
-                <p className="big-p logo-section__description" style={{ color: 'var(--bjj-color-text-dark)' }}>
-                  {slide.description}
-                </p>
+  // Autoplay timer
+  useEffect(() => {
+    if (!playing || reducedMotion) return;
+    const id = setTimeout(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, AUTOPLAY_MS);
+    return () => clearTimeout(id);
+  }, [index, playing, progressKey, reducedMotion]);
+
+  const goTo = (i: number) => {
+    setIndex(i);
+    setProgressKey((k) => k + 1);
+  };
+
+  const togglePlay = () => setPlaying((p) => !p);
+
+  // Controls invert the card theme so they remain visible against the backdrop
+  // (light controls float over dark cards, dark controls float over light cards).
+  const controlsTheme = slides[index].theme === 'dark' ? 'light' : 'dark';
+
+  return (
+    <section
+      className="carousel"
+      aria-roledescription="carousel"
+      data-component={dataComponent}
+    >
+      <div
+        className="carousel__viewport"
+        data-component={dataComponent ? `${dataComponent}_viewport` : undefined}
+      >
+        <div
+          className="carousel__track"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+          data-component={dataComponent ? `${dataComponent}_track` : undefined}
+        >
+          {slides.map((slide, i) => {
+            const slideBase = dataComponent ? `${dataComponent}_slide-${i + 1}` : undefined;
+
+            return (
+              <div
+                key={i}
+                className="carousel__slide"
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} / ${slides.length}`}
+                aria-hidden={i !== index}
+                data-component={slideBase}
+              >
+                <article
+                  className="carousel__card"
+                  data-theme={slide.theme}
+                  data-component={slideBase ? `${slideBase}_card` : undefined}
+                >
+                  <div
+                    className="carousel__card-caption"
+                    data-component={slideBase ? `${slideBase}_caption` : undefined}
+                  >
+                    {slide.renderTitle(slideBase)}
+                    {slide.renderDescription(slideBase)}
+                  </div>
+                  <div
+                    className="carousel__logo-row"
+                    data-component={slideBase ? `${slideBase}_logo-row` : undefined}
+                  >
+                    {slide.logos.map((logo, logoIndex) => (
+                      <div
+                        key={logo.alt}
+                        className="carousel__logo-cell"
+                        data-component={
+                          slideBase ? `${slideBase}_logo-cell-${logoIndex + 1}` : undefined
+                        }
+                      >
+                        <img
+                          src={logo.src}
+                          alt={logo.alt}
+                          style={logo.scale ? { transform: `scale(${logo.scale})` } : undefined}
+                          data-component={
+                            slideBase ? `${slideBase}_logo-image-${logoIndex + 1}` : undefined
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </article>
               </div>
-              <div className="carousel__card-footer">
-                <div className="carousel__logo-grid">
-                  {slide.logos.map((logo) => (
-                    <div key={logo.alt} className="carousel__logo-cell">
-                      <img src={logo.src} alt={logo.alt} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
 
-      {slides.length > 2 && (
-        <div className="carousel__dots">
-          {Array.from({ length: Math.ceil(slides.length / 2) }, (_, i) => (
-            <button
-              key={i}
-              className={`carousel__dot ${i === Math.floor(activeIndex / 2) ? 'carousel__dot--active' : ''}`}
-              onClick={() => scrollTo(i * 2)}
-              aria-label={`페이지 ${i + 1}`}
-            />
-          ))}
+      <div
+        className="carousel__controls"
+        data-theme={controlsTheme}
+        data-component={dataComponent ? `${dataComponent}_controls` : undefined}
+      >
+        <button
+          type="button"
+          className="carousel__playpause"
+          onClick={togglePlay}
+          aria-label={playing ? '슬라이드 일시 정지' : '슬라이드 재생'}
+          data-component={dataComponent ? `${dataComponent}_playpause-button` : undefined}
+        >
+          {playing ? (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              aria-hidden="true"
+              data-component={dataComponent ? `${dataComponent}_playpause-icon-pause` : undefined}
+            >
+              <rect
+                x="2"
+                y="1.5"
+                width="3"
+                height="11"
+                rx="0.8"
+                fill="currentColor"
+                data-component={
+                  dataComponent ? `${dataComponent}_playpause-icon-pause-bar-1` : undefined
+                }
+              />
+              <rect
+                x="9"
+                y="1.5"
+                width="3"
+                height="11"
+                rx="0.8"
+                fill="currentColor"
+                data-component={
+                  dataComponent ? `${dataComponent}_playpause-icon-pause-bar-2` : undefined
+                }
+              />
+            </svg>
+          ) : (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              aria-hidden="true"
+              data-component={dataComponent ? `${dataComponent}_playpause-icon-play` : undefined}
+            >
+              <path
+                d="M3 1.8 L12 7 L3 12.2 Z"
+                fill="currentColor"
+                data-component={
+                  dataComponent ? `${dataComponent}_playpause-icon-play-shape` : undefined
+                }
+              />
+            </svg>
+          )}
+        </button>
+        <div
+          className="carousel__dotnav"
+          role="tablist"
+          data-component={dataComponent ? `${dataComponent}_dotnav` : undefined}
+        >
+          {slides.map((_, i) => {
+            const isActive = i === index;
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`슬라이드 ${i + 1}`}
+                className={`carousel__dot${isActive ? ' carousel__dot--active' : ''}${
+                  isActive && !playing ? ' is-paused' : ''
+                }`}
+                onClick={() => goTo(i)}
+                data-component={dataComponent ? `${dataComponent}_dot-${i + 1}` : undefined}
+              >
+                {isActive && !reducedMotion && (
+                  <span
+                    key={progressKey}
+                    className="carousel__dot-fill"
+                    aria-hidden="true"
+                    data-component={
+                      dataComponent ? `${dataComponent}_dot-${i + 1}-fill` : undefined
+                    }
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
-      )}
+      </div>
     </section>
   );
 }
