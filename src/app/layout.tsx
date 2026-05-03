@@ -7,12 +7,13 @@ const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
   variable: "--font-pretendard",
   display: "swap",
+  weight: "100 900",
 });
 
 const paperlogy = localFont({
   src: [
-    { path: "../../public/fonts/Paperlogy-5Medium.woff2", weight: "500" },
-    { path: "../../public/fonts/Paperlogy-4Regular.woff2", weight: "400" },
+    { path: "./fonts/Paperlogy-5Medium.woff2", weight: "500" },
+    { path: "./fonts/Paperlogy-4Regular.woff2", weight: "400" },
   ],
   variable: "--font-paperlogy",
   display: "swap",
