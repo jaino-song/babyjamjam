@@ -7,6 +7,7 @@ const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
   variable: "--font-pretendard",
   display: "swap",
+  weight: "100 900",
 });
 
 const paperlogy = localFont({
