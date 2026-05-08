@@ -94,7 +94,10 @@
   container-type: inline-size;
   --u: calc(100cqi / 312);
   position: relative;
-  width: min(100%, 312px);
+  /* Anchored to 312px at 1920vw, scales proportionally below.
+     Hard caps at 312px so it never grows beyond the 1920vw target,
+     and stays within its parent column. */
+  width: min(100%, 312px, calc(312 / 1920 * 100vw));
   aspect-ratio: 1350 / 2760;
   filter: drop-shadow(0 28px 56px rgba(2, 22, 56, 0.18));
 }

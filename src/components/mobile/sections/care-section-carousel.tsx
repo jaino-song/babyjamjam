@@ -157,7 +157,7 @@ export function MobileCareSectionCarousel({
             data-component={sectionBase ? `${sectionBase}_title` : undefined}
           >
             <span
-              className="care-carousel__heading-muted"
+              className="h3 care-carousel__heading-muted"
               data-component={
                 sectionBase ? `${sectionBase}_title-muted` : undefined
               }

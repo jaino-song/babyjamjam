@@ -126,19 +126,19 @@ export function MobilePricingFormModal({
               className="form-question__header"
               data-component={getComponent("question-header")}
             >
-              <span
-                className="h6 form-question__label"
+              <h5
+                className="h5 form-question__label"
                 data-component={getComponent("question-label")}
               >
                 {currentQuestion.label}
-              </span>
+              </h5>
               {currentHelper && (
-                <span
-                  className="form-question__helper"
+                <p
+                  className="medium-p form-question__helper"
                   data-component={getComponent("question-helper")}
                 >
                   {currentHelper}
-                </span>
+                </p>
               )}
             </div>
 
@@ -153,6 +153,7 @@ export function MobilePricingFormModal({
                     type="button"
                     className={cn(
                       "wizard-btn-group__btn",
+                      "h6",
                       answers[currentQuestion.id] === option.value &&
                         "wizard-btn-group__btn--selected"
                     )}
