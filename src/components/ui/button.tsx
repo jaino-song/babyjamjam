@@ -8,8 +8,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "w-[164px] h-10 px-5 rounded-[640px] bg-bjj-primary text-[13px]",
-        cta: "px-5 h-10 rounded-pill bg-bjj-primary text-[13px]",
+          "w-[164px] h-10 px-5 rounded-[640px] bg-bjj-primary text-[0.8125rem]",
+        cta: "px-5 h-10 rounded-pill bg-bjj-primary text-[0.8125rem]",
       },
     },
     defaultVariants: {
