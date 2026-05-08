@@ -15,7 +15,7 @@ export function FooterLink({
   "data-component": dataComponent,
 }: FooterLinkProps) {
   const classes = cn(
-    "font-number text-[9px] leading-[1.52] tracking-[-0.015em] font-bold text-bjj-text-link no-underline hover:underline",
+    "font-number text-[0.5625rem] leading-[1.52] tracking-[-0.015em] font-bold text-bjj-text-link no-underline hover:underline",
     className
   );
 
