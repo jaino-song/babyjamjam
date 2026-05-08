@@ -52,7 +52,7 @@ export function MobileLinkCard({
         <Button
           variant="primary"
           disabled
-          className="w-full px-2 text-[11px]"
+          className="w-full px-2 text-[0.6875rem]"
           data-component={getComponent("button")}
         >
           {buttonText}
@@ -61,7 +61,7 @@ export function MobileLinkCard({
         <Button
           href={buttonHref}
           variant="primary"
-          className="w-full px-2 text-[11px]"
+          className="w-full px-2 text-[0.6875rem]"
           data-component={getComponent("button")}
         >
           {buttonText}

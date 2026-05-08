@@ -24,7 +24,7 @@
 
 .eyebrow {
   font-family: var(--bjj-font-number);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -33,7 +33,7 @@
 
 .title {
   font-family: var(--bjj-font-heading);
-  font-size: clamp(34px, 4vw, 58px);
+  font-size: clamp(2.125rem, calc(2.125rem + 1.5rem * ((100vw - 380px) / 1540px)), 3.625rem);
   line-height: 1.1;
   font-weight: 800;
   color: #09152b;
@@ -46,7 +46,7 @@
 .description {
   max-width: 520px;
   font-family: var(--bjj-font-body);
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.65;
   color: #4d5d73;
 }
@@ -65,7 +65,7 @@
   gap: 12px;
   align-items: center;
   font-family: var(--bjj-font-body);
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #314158;
 }
 
@@ -79,7 +79,7 @@
   background: rgba(0, 74, 173, 0.1);
   color: var(--bjj-color-primary);
   font-family: var(--bjj-font-number);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -453,7 +453,7 @@
 .hint {
   margin-top: 14px;
   font-family: var(--bjj-font-body);
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #6b7b8f;
 }
 

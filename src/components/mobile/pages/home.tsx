@@ -85,13 +85,13 @@ export default function MobileHomePage() {
                   data-component={`mobile_home_app_detail_step_${index + 1}`}
                 >
                   <span
-                    className="shrink-0 font-body text-[16px] font-medium leading-[1.5] text-bjj-text-paragraph"
+                    className="shrink-0 font-body text-[1rem] font-medium leading-[1.5] text-bjj-text-paragraph"
                     data-component={`mobile_home_app_detail_step_${index + 1}_number`}
                   >
                     {number}
                   </span>
                   <span
-                    className="font-heading text-[16px] font-bold leading-[1.45] tracking-[-0.015em] text-bjj-text-paragraph"
+                    className="font-heading text-[1rem] font-bold leading-[1.45] tracking-[-0.015em] text-bjj-text-paragraph"
                     data-component={`mobile_home_app_detail_step_${index + 1}_text`}
                   >
                     {appDetailSteps[index]}
@@ -105,7 +105,7 @@ export default function MobileHomePage() {
             >
               <button
                 type="button"
-                className="inline-flex h-10 w-[164px] items-center justify-center rounded-[640px] border-none bg-bjj-primary px-5 font-heading text-[13px] font-extrabold leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline disabled:pointer-events-none disabled:cursor-default disabled:opacity-45"
+                className="inline-flex h-10 w-[164px] items-center justify-center rounded-[640px] border-none bg-bjj-primary px-5 font-heading text-[0.8125rem] font-extrabold leading-[1.4] tracking-[-0.025em] text-bjj-primary-light no-underline disabled:pointer-events-none disabled:cursor-default disabled:opacity-45"
                 disabled
                 data-component="mobile_home_app_detail_launch_button"
               >
