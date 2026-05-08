@@ -22,19 +22,23 @@
   --font-number: var(--bjj-font-number);
   --font-caption: var(--bjj-font-caption);
 
-  /* Custom font sizes — fluid between 380px and 1440px viewport via linear interpolation */
-  --text-h1: clamp(36px, calc(36px + (64 - 36) * ((100vw - 380px) / 1060)), 64px);
-  --text-h2: clamp(28px, calc(28px + (52 - 28) * ((100vw - 380px) / 1060)), 52px);
-  --text-h3: clamp(24px, calc(24px + (44 - 24) * ((100vw - 380px) / 1060)), 44px);
-  --text-h4: clamp(20px, calc(20px + (36 - 20) * ((100vw - 380px) / 1060)), 36px);
-  --text-h5: clamp(14px, calc(14px + (24 - 14) * ((100vw - 380px) / 1060)), 24px);
-  --text-h6: clamp(14px, calc(14px + (20 - 14) * ((100vw - 380px) / 1060)), 20px);
+  /* Custom font sizes — scale proportionally with viewport, anchored so the
+     max value renders at 1920px width. Below 1920px, sizes shrink linearly
+     so the 1920px proportions are preserved at every viewport. The clamp min
+     prevents under-shrinking on small desktop widths; mobile @media (≤780px)
+     takes over below the breakpoint. */
+  --text-h1: clamp(36px, calc(64 / 1920 * 100vw), 64px);
+  --text-h2: clamp(28px, calc(52 / 1920 * 100vw), 52px);
+  --text-h3: clamp(24px, calc(44 / 1920 * 100vw), 44px);
+  --text-h4: clamp(20px, calc(36 / 1920 * 100vw), 36px);
+  --text-h5: clamp(14px, calc(24 / 1920 * 100vw), 24px);
+  --text-h6: clamp(14px, calc(20 / 1920 * 100vw), 20px);
   --text-h7: 16px; /* too small to benefit from fluid */
-  --text-big-p: clamp(16px, calc(16px + (18 - 16) * ((100vw - 380px) / 1060)), 18px);
+  --text-big-p: clamp(16px, calc(18 / 1920 * 100vw), 18px);
   --text-medium-p: 16px;
   --text-caption: 8px;
-  --text-process-num: clamp(32px, calc(32px + (52 - 32) * ((100vw - 380px) / 1060)), 52px);
-  --text-process-title: clamp(28px, calc(28px + (56 - 28) * ((100vw - 380px) / 1060)), 56px);
+  --text-process-num: clamp(32px, calc(52 / 1920 * 100vw), 52px);
+  --text-process-title: clamp(28px, calc(56 / 1920 * 100vw), 56px);
   --text-nav: 13px;
   --text-link: 9px;
   --text-btn: 14px;
@@ -808,6 +812,14 @@
   font-family: var(--bjj-font-body); font-weight: 500; font-size: 16px;
   line-height: 1.5; color: var(--bjj-color-text-muted);
 }
+.form-question__helper.medium-p {
+  font-size: 16px; line-height: 27px; letter-spacing: 0.231px;
+}
+@media (max-width: 780px) {
+  .form-question__helper.medium-p {
+    font-size: 15px; line-height: 1.47; letter-spacing: -0.022em;
+  }
+}
 
 /* ===== PRICING MODAL ===== */
 .pricing-modal {
@@ -895,6 +907,22 @@
   font-size: 13px;
   line-height: 1.38;
   letter-spacing: -0.016em;
+}
+.wizard-btn-group__btn.h6 {
+  font-family: var(--bjj-font-heading); font-weight: 800;
+  font-size: var(--text-h6); line-height: 1.15; letter-spacing: 0.03em;
+}
+.wizard-btn-group__btn.small-p {
+  font-family: var(--bjj-font-body); font-weight: 500; font-size: 12px;
+  line-height: 27px; letter-spacing: 0.231px;
+}
+@media (max-width: 780px) {
+  .wizard-btn-group__btn.h6 {
+    font-size: 12px; line-height: 1.33; letter-spacing: 0.012em;
+  }
+  .wizard-btn-group__btn.small-p {
+    font-size: 13px; line-height: 1.38; letter-spacing: -0.016em;
+  }
 }
 .wizard-btn-group__btn:hover {
   border-color: var(--bjj-color-primary); color: var(--bjj-color-primary);
