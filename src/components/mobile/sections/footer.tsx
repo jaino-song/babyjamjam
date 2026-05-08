@@ -63,6 +63,15 @@ export function MobileFooter({
             data-component={getComponent("logo")}
           />
         </Link>
+        <div
+          className="caption-text flex flex-col gap-1"
+          data-component={getComponent("business-info")}
+        >
+          <span>상호명: 아가잼잼</span>
+          <span>대표자: 송진호</span>
+          <span>사업자등록번호: 126-34-01776</span>
+          <span>주소: 서울특별시 영등포구 국회대로36길 6-1 2층 19A호</span>
+        </div>
         <span className="caption-text" data-component={getComponent("caption")}>
           2026 All Rights Reserved By Covenant Labs
         </span>

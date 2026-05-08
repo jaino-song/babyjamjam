@@ -176,7 +176,7 @@ export function MobileAddonServicesSection({
           data-component={getComponent("title")}
         >
           <span
-            className="addon-services__title-muted"
+            className={cn("h3", "addon-services__title-muted")}
             data-component={getComponent("title-muted")}
           >
             내가 원하는 대로 선택 가능.

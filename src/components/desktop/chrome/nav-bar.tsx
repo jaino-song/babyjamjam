@@ -17,11 +17,17 @@ export function DesktopNavBar({
   'data-component': dataComponent,
 }: DesktopNavBarProps) {
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
+  const prevActiveIndexRef = useRef<number>(-1);
   const [activeIndex, setActiveIndex] = useState(() =>
     items.findIndex((i) => i.label === activeLabel)
   );
   const [indicator, setIndicator] = useState({ x: 0, width: 0 });
   const [ready, setReady] = useState(false);
+  // When transitioning from no-active → active, snap position without
+  // animating transform/width and fade in via opacity instead of sliding
+  // in from the side. Stays true after the appear so resize-driven
+  // position updates also snap rather than slide.
+  const [appearing, setAppearing] = useState(false);
 
   // Sync with activeLabel prop (shared layout navigation)
   useEffect(() => {
@@ -29,15 +35,30 @@ export function DesktopNavBar({
     setActiveIndex(idx);
   }, [activeLabel, items]);
 
-  // Position indicator synchronously before paint — prevents spurious slide-in animation
   useLayoutEffect(() => {
     if (activeIndex < 0) {
       setReady(false);
+      setAppearing(false);
+      prevActiveIndexRef.current = -1;
       return;
     }
     const el = itemRefs.current[activeIndex];
     if (!el) return;
+
+    const wasInactive = prevActiveIndexRef.current < 0;
+    prevActiveIndexRef.current = activeIndex;
+
     setIndicator({ x: el.offsetLeft, width: el.offsetWidth });
+
+    if (wasInactive) {
+      // Position snaps in this paint (transition is opacity-only via
+      // `appearing`), then opacity fades 0 → 1 on the next frame.
+      setAppearing(true);
+      const rafId = requestAnimationFrame(() => setReady(true));
+      return () => cancelAnimationFrame(rafId);
+    }
+
+    setAppearing(false);
     setReady(true);
   }, [activeIndex]);
 
@@ -64,6 +85,7 @@ export function DesktopNavBar({
           transform: `translateX(${indicator.x}px)`,
           width: indicator.width,
           opacity: ready ? 1 : 0,
+          ...(appearing && { transition: "opacity 0.25s ease-out" }),
         }}
         data-component={dataComponent ? `${dataComponent}_active-indicator` : undefined}
       />
