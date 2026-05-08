@@ -94,17 +94,19 @@
   container-type: inline-size;
   --u: calc(100cqi / 312);
   position: relative;
-  /* Desktop: anchored to 312px at 1920vw, scales proportionally below.
-     Hard caps at 312px so it never grows beyond the 1920vw target,
-     and stays within its parent column. Mobile reverts via @media below. */
-  width: min(100%, 312px, calc(312 / 1920 * 100vw));
+  /* Desktop: rem-based fluid clamp anchored at 380px (min) → 1920px (max=312px=19.5rem).
+     Floor at 14rem (224px) so the chat bubbles stay legible at narrow desktop and
+     zoom (Cmd-+) actually grows the phone. Pure-vw would compensate against zoom and
+     keep the phone at constant physical size at every zoom level. Mobile reverts via
+     @media below. */
+  width: min(100%, clamp(14rem, calc(14rem + 5.5rem * ((100vw - 380px) / 1540px)), 19.5rem));
   aspect-ratio: 1350 / 2760;
   filter: drop-shadow(0 28px 56px rgba(2, 22, 56, 0.18));
 }
 
 @media (max-width: 780px) {
   .phoneShell {
-    width: min(100%, 312px);
+    width: min(100%, 19.5rem);
   }
 }
 
