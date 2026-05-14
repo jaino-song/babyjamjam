@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 const BACKEND_URL =
@@ -11,6 +12,10 @@ export async function GET() {
     });
 
     if (!res.ok) {
+      Sentry.captureMessage("ribbon non-2xx response", {
+        level: "warning",
+        tags: { route: "/api/ribbon", upstream_status: String(res.status) },
+      });
       return NextResponse.json(
         { enabled: false },
         { status: 200 }
@@ -19,7 +24,12 @@ export async function GET() {
 
     const data = await res.json();
     return NextResponse.json(data);
-  } catch {
+  } catch (err) {
+    Sentry.captureMessage("ribbon fallback triggered", {
+      level: "warning",
+      tags: { route: "/api/ribbon" },
+      extra: { reason: err instanceof Error ? err.message : "unknown" },
+    });
     return NextResponse.json(
       { enabled: false },
       { status: 200 }

@@ -1,14 +1,27 @@
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const BACKEND_URL =
   process.env.BJJ_API_URL ?? "https://api.babyjamjam.com";
 
+interface ConsultationInquiryBody {
+  branchSlug?: string;
+  motherName?: string;
+  phone?: string;
+  address?: string;
+  dueDate?: string;
+  preferredCaregiverName?: string;
+  referralSource?: string;
+  birthExperience?: string;
+}
+
 export async function POST(request: Request) {
   const posthog = getPostHogClient();
+  let body: ConsultationInquiryBody | null = null;
 
   try {
-    const body = await request.json();
+    body = await request.json();
     const res = await fetch(`${BACKEND_URL}/public/consultation-inquiries`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,6 +59,23 @@ export async function POST(request: Request) {
 
     return NextResponse.json(payload, { status: res.status });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { route: "/api/consultation-inquiries" },
+      extra: {
+        hasBody: !!body,
+        fieldPresence: body
+          ? {
+              branchSlug: !!body.branchSlug,
+              motherName: !!body.motherName,
+              phone: !!body.phone,
+              address: !!body.address,
+              dueDate: !!body.dueDate,
+              preferredCaregiverName: !!body.preferredCaregiverName,
+              referralSource: !!body.referralSource,
+            }
+          : null,
+      },
+    });
     posthog.captureException(error, "anonymous");
     return NextResponse.json(
       { error: "상담 신청에 실패했습니다." },

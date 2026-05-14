@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
 
 import type { ChildType } from "@/lib/voucher-type";
@@ -271,7 +272,10 @@ export async function POST(request: Request) {
     ];
 
     return NextResponse.json({ plans: unsubsidizedPlans, addons: ADDON_SERVICES });
-  } catch {
+  } catch (err) {
+    Sentry.captureException(err, {
+      tags: { route: "/api/pricing" },
+    });
     return NextResponse.json(
       { error: "Invalid request" },
       { status: 400 }
