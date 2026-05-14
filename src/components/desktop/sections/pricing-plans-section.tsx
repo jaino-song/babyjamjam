@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
@@ -138,7 +139,14 @@ export function DesktopPricingPlansSection({
                   : plan
               }
               selected={plan.id === selectedPlanId}
-              onSelect={() => onSelectPlan(plan.id)}
+              onSelect={() => {
+                posthog.capture("pricing_plan_selected", {
+                  plan_id: plan.id,
+                  plan_name: plan.name,
+                  source: "desktop",
+                });
+                onSelectPlan(plan.id);
+              }}
               isLoading={isLoading}
               data-component={getComponent(`card-${index + 1}`)}
             />

@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { useMemo, useState, useCallback } from "react";
 
 import { DesktopBookingModal as BookingModal } from "@/components/desktop/chrome/booking-modal";
@@ -157,6 +158,10 @@ export default function DesktopLocationsPage() {
                     data-component="desktop_locations_page_booking_cta"
                     onClick={(event) => {
                       event.stopPropagation();
+                      posthog.capture("consultation_modal_opened", {
+                        source: "desktop_locations_inline",
+                        branch_id: branch.id,
+                      });
                       setBookingRegion(branch.region);
                       setBookingDistrict(branch.district);
                       setBookingBranchSlug(branch.id);
