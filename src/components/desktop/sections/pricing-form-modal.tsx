@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import posthog from "posthog-js";
 
 import { SelectDropdown } from "@/components/ui/select-dropdown";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
@@ -63,6 +64,14 @@ export function DesktopPricingFormModal({
       const nextAnswers = { ...answers, [questionId]: value };
       const nextSteps = buildDesktopSteps(nextAnswers);
       const shouldSubmit = step >= nextSteps.length - 1;
+
+      posthog.capture("pricing_wizard_answer_selected", {
+        question_id: questionId,
+        value,
+        step: step + 1,
+        is_final_step: shouldSubmit,
+        source: "desktop",
+      });
 
       setTimeout(() => {
         if (shouldSubmit) {

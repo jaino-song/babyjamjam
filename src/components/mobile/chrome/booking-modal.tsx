@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import posthog from "posthog-js";
 
 import {
   findBranchByRegionDistrict,
@@ -203,6 +204,11 @@ export function MobileBookingModal({
 
   const handleMunicipalitySelect = useCallback(
     (province: string, municipality: string) => {
+      posthog.capture("consultation_region_selected", {
+        province,
+        municipality,
+        source: "mobile",
+      });
       setSelectedProvince(province);
       setSelectedMuni(municipality);
       setSelectedBranchSlug(
@@ -321,16 +327,28 @@ export function MobileBookingModal({
         throw new Error(message);
       }
 
+      posthog.capture("consultation_form_submitted", {
+        branch_slug: branchSlug,
+        referral_source: form.referralSource,
+        birth_experience: form.birthExperience,
+        has_plan: selectedServices.plan !== null,
+        addon_count: selectedServices.addons.length,
+        source: "mobile",
+      });
       setSubmitted(true);
       setShowBack(false);
       setBreadcrumb([]);
       setForm(EMPTY_CONSULTATION_FORM);
     } catch (error) {
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "상담 신청에 실패했습니다."
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : "상담 신청에 실패했습니다.";
+      posthog.capture("consultation_submission_failed", {
+        error_message: errorMessage,
+        branch_slug: branchSlug,
+        source: "mobile",
+      });
+      posthog.captureException(error);
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
