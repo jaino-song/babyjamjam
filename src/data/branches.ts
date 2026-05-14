@@ -107,7 +107,7 @@ export const BRANCHES: BranchData[] = [
     region: "경북",
     district: "경산시",
     type: "franchise",
-    address: "경상북도 경산시 중방로 31, 4층",
+    address: "경북 경산시 하양읍 대학로1516",
     phone: "053-851-9807",
     hours: "평일 09:00 – 18:00",
     description: "경산·영천·청도 지역 담당. 경산시청 인근 접근성 좋은 지점.",
