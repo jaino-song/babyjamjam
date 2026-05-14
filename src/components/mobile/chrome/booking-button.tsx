@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import posthog from "posthog-js";
 
 import { PillCta } from "@/components/ui/circle-cta";
 
@@ -23,7 +24,10 @@ export function MobileBookingButton({
     <>
       <PillCta
         data-component="mobile_chrome_booking-button_trigger"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          posthog.capture("consultation_modal_opened", { source: "mobile" });
+          setOpen(true);
+        }}
       >
         상담 신청
       </PillCta>

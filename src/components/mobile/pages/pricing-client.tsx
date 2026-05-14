@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import posthog from "posthog-js";
 
 import { MobileFloatingBubble } from "@/components/mobile/chrome/floating-bubble";
 import { MobileAddonServicesSection } from "@/components/mobile/sections/addon-services-section";
@@ -255,7 +256,10 @@ export function MobilePricingClient({
               <button
                 type="button"
                 className="pricing-cta-card__btn"
-                onClick={() => setShowFormModal(true)}
+                onClick={() => {
+                  posthog.capture("pricing_wizard_started", { source: "mobile" });
+                  setShowFormModal(true);
+                }}
                 data-component={getComponent("cta-button")}
               >
                 시작하기

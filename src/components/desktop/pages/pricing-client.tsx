@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import posthog from "posthog-js";
 
 import { DesktopFloatingBubble } from "@/components/desktop/chrome/floating-bubble";
 import { DesktopAddonServicesSection } from "@/components/desktop/sections/addon-services-section";
@@ -251,7 +252,10 @@ export function DesktopPricingClient({
               <button
                 type="button"
                 className="pricing-cta-card__btn"
-                onClick={() => setShowFormModal(true)}
+                onClick={() => {
+                  posthog.capture("pricing_wizard_started", { source: "desktop" });
+                  setShowFormModal(true);
+                }}
                 data-component={getComponent("cta-button")}
               >
                 시작하기
