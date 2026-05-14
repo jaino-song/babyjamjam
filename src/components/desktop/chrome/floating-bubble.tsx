@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import posthog from "posthog-js";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -141,7 +142,12 @@ export function DesktopFloatingBubble({
             </div>
             <PillCta
               className="floating-cart-panel__cta"
-              onClick={() => setIsBookingOpen(true)}
+              onClick={() => {
+                posthog.capture("consultation_modal_opened", {
+                  source: "desktop_floating_bubble",
+                });
+                setIsBookingOpen(true);
+              }}
               data-component={getDataComponent("cart-panel-cta")}
             >
               상담 신청
