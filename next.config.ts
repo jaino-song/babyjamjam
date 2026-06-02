@@ -22,7 +22,13 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 };
 
-export default withSentryConfig(nextConfig, {
+const hasSentryUploadConfig = Boolean(
+  process.env.SENTRY_ORG &&
+    process.env.SENTRY_PROJECT &&
+    process.env.SENTRY_AUTH_TOKEN
+);
+
+const sentryConfig = {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -33,7 +39,11 @@ export default withSentryConfig(nextConfig, {
       removeDebugLogging: true,
     },
   },
-  errorHandler: (error) => {
+  errorHandler: (error: unknown) => {
     console.warn("[sentry] build wrapper error:", error);
   },
-});
+};
+
+export default hasSentryUploadConfig
+  ? withSentryConfig(nextConfig, sentryConfig)
+  : nextConfig;

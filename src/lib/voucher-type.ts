@@ -29,6 +29,22 @@ const CHILD_TYPE_TO_BASE_GRADE: Record<ChildType, GradeLetter> = {
   사태아이상: "D",
 };
 
+const CHILD_TYPES: readonly ChildType[] = [
+  "단태아",
+  "쌍태아",
+  "삼태아",
+  "사태아이상",
+];
+
+const GRADE_LETTERS: readonly GradeLetter[] = ["A", "B", "C", "D"];
+const GRADE_NAMES: readonly GradeName[] = ["가", "통합", "라"];
+const GRADE_TIER_OPTIONS: Record<GradeLetter, readonly number[]> = {
+  A: [1, 2, 3],
+  B: [1, 2],
+  C: [1, 2],
+  D: [1, 2],
+};
+
 const GRADE_UPGRADE: Record<GradeLetter, GradeLetter> = {
   A: "B",
   B: "C",
@@ -103,6 +119,14 @@ export function buildTypeCode(
   return `${grade}${gradeName}${tier}형`;
 }
 
+export const VOUCHER_TYPE_OPTIONS = GRADE_LETTERS.flatMap((grade) =>
+  GRADE_NAMES.flatMap((gradeName) =>
+    GRADE_TIER_OPTIONS[grade].map((tier) =>
+      buildTypeCode(grade, gradeName, tier)
+    )
+  )
+);
+
 /**
  * Convenience: resolve all form answers into a complete type code.
  * Returns null if tier cannot be determined (missing answers).
@@ -117,6 +141,49 @@ export function resolveTypeCode(
     answers.hasDisability
   );
   const tier = resolveTier(grade, answers);
+  if (tier === null) return null;
+  return buildTypeCode(grade, gradeName, tier);
+}
+
+function isChildType(value: string | undefined): value is ChildType {
+  return CHILD_TYPES.includes(value as ChildType);
+}
+
+/**
+ * Resolve the voucher code from pricing wizard answers.
+ * This mirrors the typeCode used by the pricing API request.
+ */
+export function resolveVoucherTypeFromPricingAnswers(
+  formAnswers: Record<string, string | undefined>,
+  gradeName: GradeName
+): string | null {
+  if (formAnswers.subsidy !== "yes" || !isChildType(formAnswers.childType)) {
+    return null;
+  }
+
+  const grade = resolveGrade(
+    formAnswers.childType,
+    formAnswers.premature === "yes",
+    formAnswers.disability === "yes"
+  );
+
+  let tier: number | null;
+  if (grade === "A") {
+    tier = resolveTier(grade, {
+      birthOrder: formAnswers.birthOrder as
+        | SubsidizedFormAnswers["birthOrder"]
+        | undefined,
+    });
+  } else {
+    let staffCount: number | undefined;
+    if (formAnswers.staffCount) {
+      const staffOptions = STAFF_OPTIONS[grade];
+      staffCount =
+        formAnswers.staffCount === "yes" ? staffOptions[1] : staffOptions[0];
+    }
+    tier = resolveTier(grade, { staffCount });
+  }
+
   if (tier === null) return null;
   return buildTypeCode(grade, gradeName, tier);
 }

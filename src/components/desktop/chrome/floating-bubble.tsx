@@ -1,7 +1,6 @@
 "use client";
 
 import { X } from "lucide-react";
-import posthog from "posthog-js";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -10,6 +9,7 @@ import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import { PillCta } from "@/components/ui/circle-cta";
 import { QuantityStepper } from "@/components/ui/quantity-stepper";
 import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 
 import { DesktopBookingModal } from "./booking-modal";
 
@@ -47,6 +47,7 @@ interface DesktopFloatingBubbleProps {
   selectedPlan?: PlanData | null;
   selectedAddons?: SelectedAddonCartItem[];
   selectedServices?: SelectedServicesPayload;
+  selectedVoucherType?: string | null;
   onRemovePlan?: () => void;
   onRemoveAddon?: (addonId: string) => void;
   onQuantityChange?: (addonId: string, quantity: number) => void;
@@ -59,6 +60,7 @@ export function DesktopFloatingBubble({
   selectedPlan = null,
   selectedAddons = [],
   selectedServices = { plan: null, addons: [] },
+  selectedVoucherType = null,
   onRemovePlan = () => {},
   onRemoveAddon = () => {},
   onQuantityChange = () => {},
@@ -143,7 +145,7 @@ export function DesktopFloatingBubble({
             <PillCta
               className="floating-cart-panel__cta"
               onClick={() => {
-                posthog.capture("consultation_modal_opened", {
+                capturePostHogEvent("consultation_modal_opened", {
                   source: "desktop_floating_bubble",
                 });
                 setIsBookingOpen(true);
@@ -373,6 +375,7 @@ export function DesktopFloatingBubble({
             open={isBookingOpen}
             onClose={closeBooking}
             selectedServices={selectedServices}
+            initialVoucherType={selectedVoucherType}
             data-component={getDataComponent("booking-modal")}
           />
         </>

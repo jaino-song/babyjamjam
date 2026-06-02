@@ -54,6 +54,7 @@ export default function RootLayout({
     <html lang="ko">
       <body
         className={`${pretendard.variable} ${paperlogy.variable} ${dmSans.variable} ${robotoMono.variable}`}
+        suppressHydrationWarning
       >
         {children}
       </body>

@@ -1,10 +1,13 @@
+import * as Sentry from "@sentry/nextjs";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
-import type { GradeName, ChildType } from "@/lib/voucher-type";
-import { resolveGrade, resolveTier, buildTypeCode, STAFF_OPTIONS } from "@/lib/voucher-type";
+import type { GradeName } from "@/lib/voucher-type";
+import { resolveVoucherTypeFromPricingAnswers } from "@/lib/voucher-type";
 
 export type PricingState = {
   formAnswers: PricingFormAnswers;
@@ -108,36 +111,10 @@ export const usePricingStore = create<PricingState & PricingActions>()(
         set({ isLoading: true });
         try {
           const isSubsidized = formAnswers.subsidy === "yes";
-          let typeCode: string | undefined;
-
-          if (isSubsidized) {
-            const childType = formAnswers.childType as ChildType;
-            const isPremature = formAnswers.premature === "yes";
-            const hasDisability = formAnswers.disability === "yes";
-            const grade = resolveGrade(childType, isPremature, hasDisability);
-            let tier: number | null;
-
-            if (grade === "A") {
-              tier = resolveTier(grade, {
-                birthOrder: formAnswers.birthOrder as
-                  | "첫째아"
-                  | "둘째아"
-                  | "셋째아이상"
-                  | undefined,
-              });
-            } else {
-              let staffCount: number | undefined;
-              if (formAnswers.staffCount) {
-                const opts = STAFF_OPTIONS[grade as "B" | "C" | "D"];
-                staffCount = formAnswers.staffCount === "yes" ? opts[1] : opts[0];
-              }
-              tier = resolveTier(grade, { staffCount });
-            }
-
-            if (tier !== null) {
-              typeCode = buildTypeCode(grade, gradeName, tier);
-            }
-          }
+          const resolvedVoucherType = isSubsidized
+            ? resolveVoucherTypeFromPricingAnswers(formAnswers, gradeName)
+            : null;
+          const typeCode = resolvedVoucherType ?? undefined;
 
           const res = await fetch("/api/pricing", {
             method: "POST",
@@ -161,7 +138,23 @@ export const usePricingStore = create<PricingState & PricingActions>()(
             selectedPlanId: null,
             addonSelections: new Map(),
           });
-        } catch {
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : "가격 조회에 실패했습니다.";
+          capturePostHogEvent("pricing_fetch_failed", {
+            error_message: errorMessage,
+            subsidy: formAnswers.subsidy,
+            child_type: formAnswers.childType,
+            grade_name: gradeName,
+          });
+          Sentry.captureException(error, {
+            tags: { feature: "pricing" },
+            extra: {
+              subsidy: formAnswers.subsidy,
+              childType: formAnswers.childType,
+              gradeName,
+            },
+          });
           set({ isLoading: false });
         }
       },

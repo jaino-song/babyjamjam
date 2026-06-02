@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 
 import { SelectDropdown } from "@/components/ui/select-dropdown";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import {
   buildAllSteps,
@@ -64,6 +65,14 @@ export function MobilePricingFormModal({
       const nextAnswers = { ...answers, [questionId]: value };
       const nextSteps = buildMobileSteps(nextAnswers);
       const shouldSubmit = step >= nextSteps.length - 1;
+
+      capturePostHogEvent("pricing_wizard_answer_selected", {
+        question_id: questionId,
+        value,
+        step: step + 1,
+        is_final_step: shouldSubmit,
+        source: "mobile",
+      });
 
       setTimeout(() => {
         if (shouldSubmit) {

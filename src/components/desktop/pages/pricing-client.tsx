@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import posthog from "posthog-js";
 
 import { DesktopFloatingBubble } from "@/components/desktop/chrome/floating-bubble";
 import { DesktopAddonServicesSection } from "@/components/desktop/sections/addon-services-section";
@@ -13,6 +12,8 @@ import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import { usePricingStore } from "@/lib/pricing-store";
+import { capturePostHogEvent } from "@/lib/posthog-client";
+import { resolveVoucherTypeFromPricingAnswers } from "@/lib/voucher-type";
 
 const PLACEHOLDER_PLANS: PlanData[] = [
   {
@@ -205,6 +206,12 @@ export function DesktopPricingClient({
       group: addon.group ?? null,
     })),
   };
+  const selectedVoucherType = store.pricesRevealed
+    ? resolveVoucherTypeFromPricingAnswers(
+        store.formAnswers,
+        store.selectedGradeName
+      )
+    : null;
   const distinctCount =
     (store.selectedPlanId ? 1 : 0) + selectedAddons.length;
 
@@ -253,7 +260,7 @@ export function DesktopPricingClient({
                 type="button"
                 className="pricing-cta-card__btn"
                 onClick={() => {
-                  posthog.capture("pricing_wizard_started", { source: "desktop" });
+                  capturePostHogEvent("pricing_wizard_started", { source: "desktop" });
                   setShowFormModal(true);
                 }}
                 data-component={getComponent("cta-button")}
@@ -306,6 +313,7 @@ export function DesktopPricingClient({
         selectedPlan={visibleSelectedPlan}
         selectedAddons={selectedAddons}
         selectedServices={selectedServices}
+        selectedVoucherType={selectedVoucherType}
         onRemovePlan={store.clearSelectedPlan}
         onRemoveAddon={store.removeAddon}
         onQuantityChange={store.setAddonQty}

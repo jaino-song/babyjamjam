@@ -62,6 +62,7 @@ interface FloatingBubbleProps {
   selectedPlan?: LegacyPlanData | null;
   selectedAddons?: SelectedAddonCartItem[];
   selectedServices?: SelectedServicesPayload;
+  selectedVoucherType?: string | null;
   onRemovePlan?: () => void;
   onRemoveAddon?: (addonId: string) => void;
   onQuantityChange?: (addonId: string, quantity: number) => void;
@@ -73,6 +74,7 @@ export function LegacyFloatingBubble({
   selectedPlan = null,
   selectedAddons = [],
   selectedServices = { plan: null, addons: [] },
+  selectedVoucherType = null,
   onRemovePlan = () => {},
   onRemoveAddon = () => {},
   onQuantityChange = () => {},
@@ -340,6 +342,7 @@ export function LegacyFloatingBubble({
             open={isBookingOpen}
             onClose={closeBooking}
             selectedServices={selectedServices}
+            initialVoucherType={selectedVoucherType}
           />
         </>
       )}
