@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import posthog from "posthog-js";
 
 import { SelectDropdown } from "@/components/ui/select-dropdown";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import {
   buildAllSteps,
@@ -65,7 +65,7 @@ export function DesktopPricingFormModal({
       const nextSteps = buildDesktopSteps(nextAnswers);
       const shouldSubmit = step >= nextSteps.length - 1;
 
-      posthog.capture("pricing_wizard_answer_selected", {
+      capturePostHogEvent("pricing_wizard_answer_selected", {
         question_id: questionId,
         value,
         step: step + 1,

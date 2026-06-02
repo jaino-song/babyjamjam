@@ -1,11 +1,11 @@
 "use client";
 
-import posthog from "posthog-js";
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
   type PlanData,
 } from "@/components/molecules/pricing-plan-card";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import type { GradeName } from "@/lib/voucher-type";
 
 const GRADE_NAMES: GradeName[] = ["가", "통합", "라"];
@@ -140,7 +140,7 @@ export function DesktopPricingPlansSection({
               }
               selected={plan.id === selectedPlanId}
               onSelect={() => {
-                posthog.capture("pricing_plan_selected", {
+                capturePostHogEvent("pricing_plan_selected", {
                   plan_id: plan.id,
                   plan_name: plan.name,
                   source: "desktop",

@@ -1,6 +1,5 @@
 "use client";
 
-import posthog from "posthog-js";
 import { useMemo, useState, useCallback } from "react";
 
 import { DesktopBookingModal as BookingModal } from "@/components/desktop/chrome/booking-modal";
@@ -9,6 +8,7 @@ import { KoreaRegionMap } from "@/components/korea-region-map";
 import { Badge } from "@/components/ui/badge";
 import { PillCta } from "@/components/ui/circle-cta";
 import { BRANCHES } from "@/data/branches";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 
 export default function DesktopLocationsPage() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -29,6 +29,10 @@ export default function DesktopLocationsPage() {
     : BRANCHES;
 
   const handleRegionSelect = useCallback((region: string | null) => {
+    capturePostHogEvent("locations_region_selected", {
+      region,
+      source: "desktop_locations_map",
+    });
     setSelectedRegion(region);
   }, []);
 
@@ -158,7 +162,7 @@ export default function DesktopLocationsPage() {
                     data-component="desktop_locations_page_booking_cta"
                     onClick={(event) => {
                       event.stopPropagation();
-                      posthog.capture("consultation_modal_opened", {
+                      capturePostHogEvent("consultation_modal_opened", {
                         source: "desktop_locations_inline",
                         branch_id: branch.id,
                       });
