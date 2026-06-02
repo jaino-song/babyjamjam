@@ -14,6 +14,8 @@ interface ConsultationInquiryBody {
   preferredCaregiverName?: string;
   referralSource?: string;
   birthExperience?: string;
+  voucherType?: string | null;
+  additionalNotes?: string;
 }
 
 export async function POST(request: Request) {
@@ -70,8 +72,10 @@ export async function POST(request: Request) {
               phone: !!body.phone,
               address: !!body.address,
               dueDate: !!body.dueDate,
+              voucherType: body.voucherType != null,
               preferredCaregiverName: !!body.preferredCaregiverName,
               referralSource: !!body.referralSource,
+              additionalNotes: !!body.additionalNotes,
             }
           : null,
       },

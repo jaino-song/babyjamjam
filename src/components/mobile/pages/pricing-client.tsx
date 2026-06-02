@@ -13,6 +13,7 @@ import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { ConsultationSelectedServices as SelectedServicesPayload } from "@/lib/consultation/contracts";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import { usePricingStore } from "@/lib/pricing-store";
+import { resolveVoucherTypeFromPricingAnswers } from "@/lib/voucher-type";
 
 const PLACEHOLDER_PLANS: PlanData[] = [
   {
@@ -205,6 +206,12 @@ export function MobilePricingClient({
       group: addon.group ?? null,
     })),
   };
+  const selectedVoucherType = store.pricesRevealed
+    ? resolveVoucherTypeFromPricingAnswers(
+        store.formAnswers,
+        store.selectedGradeName
+      )
+    : null;
   const distinctCount =
     (store.selectedPlanId ? 1 : 0) + selectedAddons.length;
 
@@ -310,6 +317,7 @@ export function MobilePricingClient({
         selectedPlan={visibleSelectedPlan}
         selectedAddons={selectedAddons}
         selectedServices={selectedServices}
+        selectedVoucherType={selectedVoucherType}
         onRemovePlan={store.clearSelectedPlan}
         onRemoveAddon={store.removeAddon}
         onQuantityChange={store.setAddonQty}

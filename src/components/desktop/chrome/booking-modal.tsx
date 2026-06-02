@@ -9,19 +9,24 @@ import {
   findBranchBySlug,
 } from "@/data/branches";
 import {
+  ADDITIONAL_NOTES_MAX_LENGTH,
   buildConsultationInquiryPayload,
   EMPTY_CONSULTATION_FORM,
+  formatAdditionalNotesInput,
+  formatDueDateInput,
   formatPhoneInput,
   getConsultationSubmitErrorMessage,
   getFieldErrors,
   getServerFieldError,
   sanitizeNameInput,
+  UNKNOWN_VOUCHER_TYPE_VALUE,
 } from "@/lib/consultation/booking-helpers";
 import type {
   ConsultationFormState,
   ConsultationSelectedServices as SelectedServicesPayload,
   ConsultationTouchedState,
 } from "@/lib/consultation/contracts";
+import { VOUCHER_TYPE_OPTIONS } from "@/lib/voucher-type";
 
 import {
   KoreaRegionMap,
@@ -42,6 +47,7 @@ interface DesktopBookingModalProps {
   initialDistrict?: string | null;
   initialBranchSlug?: string | null;
   selectedServices?: SelectedServicesPayload;
+  initialVoucherType?: string | null;
 }
 
 function InlineFieldError({
@@ -108,6 +114,7 @@ export function DesktopBookingModal({
   initialDistrict,
   initialBranchSlug,
   selectedServices = { plan: null, addons: [] },
+  initialVoucherType = null,
 }: DesktopBookingModalProps) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -166,13 +173,22 @@ export function DesktopBookingModal({
         setSelectedBranchSlug(null);
         mapRef.current?.reset();
       }
-      setForm(EMPTY_CONSULTATION_FORM);
+      setForm({
+        ...EMPTY_CONSULTATION_FORM,
+        voucherType: initialVoucherType ?? "",
+      });
       setTouched({});
       setSubmitAttempted(false);
       setSubmitError(null);
       setSubmitted(false);
     }
-  }, [open, initialRegion, initialDistrict, initialBranchSlug]);
+  }, [
+    open,
+    initialRegion,
+    initialDistrict,
+    initialBranchSlug,
+    initialVoucherType,
+  ]);
 
   useEffect(() => {
     if (!open) return;
@@ -266,6 +282,10 @@ export function DesktopBookingModal({
           ? sanitizeNameInput(value)
           : key === "phone" && typeof value === "string"
             ? formatPhoneInput(value)
+            : key === "dueDate" && typeof value === "string"
+              ? formatDueDateInput(value)
+            : key === "additionalNotes" && typeof value === "string"
+              ? formatAdditionalNotesInput(value)
             : value;
 
       setForm((prev) => ({ ...prev, [key]: normalizedValue }));
@@ -640,7 +660,10 @@ export function DesktopBookingModal({
                 </FieldLabel>
                 <input
                   className={`bm__form-input ${visibleError("dueDate") ? "bm__form-input--error" : ""}`}
-                  type="date"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="YYMMDD"
                   value={form.dueDate}
                   onChange={(event) =>
                     updateField("dueDate", event.target.value)
@@ -699,16 +722,24 @@ export function DesktopBookingModal({
                 <FieldLabel data-component={getFieldComponent("voucher-type")}>
                   정부지원 바우처 유형
                 </FieldLabel>
-                <input
-                  className="bm__form-input"
-                  type="text"
-                  placeholder="A통합-0형 (없으면 무기재)"
+                <select
+                  className="bm__form-select"
                   value={form.voucherType}
                   onChange={(event) =>
                     updateField("voucherType", event.target.value)
                   }
-                  data-component={getFieldComponent("voucher-type", "input")}
-                />
+                  data-component={getFieldComponent("voucher-type", "select")}
+                >
+                  <option value="" disabled>
+                    유형을 선택해 주세요
+                  </option>
+                  <option value={UNKNOWN_VOUCHER_TYPE_VALUE}>아직 모름</option>
+                  {VOUCHER_TYPE_OPTIONS.map((voucherType) => (
+                    <option key={voucherType} value={voucherType}>
+                      {voucherType}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div
@@ -799,6 +830,28 @@ export function DesktopBookingModal({
                     타기관 소개
                   </option>
                 </select>
+              </div>
+
+              <div
+                className="bm__form-group"
+                data-component={getFieldComponent("additional-notes")}
+              >
+                <FieldLabel
+                  data-component={getFieldComponent("additional-notes")}
+                >
+                  추가 사항
+                </FieldLabel>
+                <textarea
+                  className="bm__form-input bm__form-textarea"
+                  placeholder="상담 시 참고할 내용을 자유롭게 남겨주세요."
+                  value={form.additionalNotes}
+                  maxLength={ADDITIONAL_NOTES_MAX_LENGTH}
+                  rows={4}
+                  onChange={(event) =>
+                    updateField("additionalNotes", event.target.value)
+                  }
+                  data-component={getFieldComponent("additional-notes", "textarea")}
+                />
               </div>
 
               <label
