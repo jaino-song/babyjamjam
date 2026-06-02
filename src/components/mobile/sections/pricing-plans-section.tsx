@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import { cn } from "@/lib/utils";
 import {
   PricingPlanCard,
@@ -228,7 +229,14 @@ export function MobilePricingPlansSection({
                   : plan
               }
               selected={plan.id === selectedPlanId}
-              onSelect={() => onSelectPlan(plan.id)}
+              onSelect={() => {
+                capturePostHogEvent("pricing_plan_selected", {
+                  plan_id: plan.id,
+                  plan_name: plan.name,
+                  source: "mobile",
+                });
+                onSelectPlan(plan.id);
+              }}
               isLoading={isLoading}
               data-component={getComponent(`card-${index + 1}`)}
             />

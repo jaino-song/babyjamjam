@@ -1,6 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
 import { NextResponse } from "next/server";
-import { getPostHogClient } from "@/lib/posthog-server";
+
+import {
+  capturePostHogServerEvent,
+  capturePostHogServerException,
+} from "@/lib/posthog-server";
 
 const BACKEND_URL =
   process.env.BJJ_API_URL ?? "https://api.babyjamjam.com";
@@ -19,7 +23,6 @@ interface ConsultationInquiryBody {
 }
 
 export async function POST(request: Request) {
-  const posthog = getPostHogClient();
   let body: ConsultationInquiryBody | null = null;
 
   try {
@@ -33,7 +36,7 @@ export async function POST(request: Request) {
     const payload = await res.json().catch(() => null);
 
     if (!res.ok) {
-      posthog.capture({
+      await capturePostHogServerEvent({
         distinctId: body?.branchSlug ?? "anonymous",
         event: "consultation_inquiry_failed",
         properties: {
@@ -49,7 +52,7 @@ export async function POST(request: Request) {
       );
     }
 
-    posthog.capture({
+    await capturePostHogServerEvent({
       distinctId: body?.branchSlug ?? "anonymous",
       event: "consultation_inquiry_submitted",
       properties: {
@@ -76,11 +79,11 @@ export async function POST(request: Request) {
               preferredCaregiverName: !!body.preferredCaregiverName,
               referralSource: !!body.referralSource,
               additionalNotes: !!body.additionalNotes,
-            }
+        }
           : null,
       },
     });
-    posthog.captureException(error, "anonymous");
+    await capturePostHogServerException(error, "anonymous");
     return NextResponse.json(
       { error: "상담 신청에 실패했습니다." },
       { status: 500 }

@@ -9,6 +9,7 @@ import { KoreaRegionMap } from "@/components/korea-region-map";
 import { Badge } from "@/components/ui/badge";
 import { PillCta } from "@/components/ui/circle-cta";
 import { BRANCHES } from "@/data/branches";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 
 export default function MobileLocationsPage() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -29,6 +30,10 @@ export default function MobileLocationsPage() {
     : BRANCHES;
 
   const handleRegionSelect = useCallback((region: string | null) => {
+    capturePostHogEvent("locations_region_selected", {
+      region,
+      source: "mobile_locations_map",
+    });
     setSelectedRegion(region);
   }, []);
 
@@ -162,6 +167,10 @@ export default function MobileLocationsPage() {
                     data-component="mobile_locations_page_booking_cta"
                     onClick={(event) => {
                       event.stopPropagation();
+                      capturePostHogEvent("consultation_modal_opened", {
+                        source: "mobile_locations_inline",
+                        branch_id: branch.id,
+                      });
                       setBookingRegion(branch.region);
                       setBookingDistrict(branch.district);
                       setBookingBranchSlug(branch.id);

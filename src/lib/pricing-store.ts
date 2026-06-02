@@ -1,7 +1,10 @@
+import * as Sentry from "@sentry/nextjs";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+
 import type { PlanData } from "@/components/molecules/pricing-plan-card";
 import type { AddonData } from "@/components/molecules/addon-service-card";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 import type { FormAnswers as PricingFormAnswers } from "@/lib/pricing/contracts";
 import type { GradeName } from "@/lib/voucher-type";
 import { resolveVoucherTypeFromPricingAnswers } from "@/lib/voucher-type";
@@ -135,7 +138,23 @@ export const usePricingStore = create<PricingState & PricingActions>()(
             selectedPlanId: null,
             addonSelections: new Map(),
           });
-        } catch {
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : "가격 조회에 실패했습니다.";
+          capturePostHogEvent("pricing_fetch_failed", {
+            error_message: errorMessage,
+            subsidy: formAnswers.subsidy,
+            child_type: formAnswers.childType,
+            grade_name: gradeName,
+          });
+          Sentry.captureException(error, {
+            tags: { feature: "pricing" },
+            extra: {
+              subsidy: formAnswers.subsidy,
+              childType: formAnswers.childType,
+              gradeName,
+            },
+          });
           set({ isLoading: false });
         }
       },

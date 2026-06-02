@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import posthog from "posthog-js";
 
 import {
   findBranchByRegionDistrict,
@@ -26,6 +25,10 @@ import type {
   ConsultationSelectedServices as SelectedServicesPayload,
   ConsultationTouchedState,
 } from "@/lib/consultation/contracts";
+import {
+  capturePostHogEvent,
+  capturePostHogException,
+} from "@/lib/posthog-client";
 import { VOUCHER_TYPE_OPTIONS } from "@/lib/voucher-type";
 
 import {
@@ -220,7 +223,7 @@ export function DesktopBookingModal({
 
   const handleMunicipalitySelect = useCallback(
     (province: string, municipality: string) => {
-      posthog.capture("consultation_region_selected", {
+      capturePostHogEvent("consultation_region_selected", {
         province,
         municipality,
         source: "desktop",
@@ -308,11 +311,22 @@ export function DesktopBookingModal({
     setSubmitAttempted(true);
 
     if (Object.values(nextErrors).some(Boolean)) {
+      capturePostHogEvent("consultation_validation_failed", {
+        field_errors: Object.keys(nextErrors).filter((key) =>
+          Boolean(nextErrors[key as keyof typeof nextErrors])
+        ),
+        source: "desktop",
+      });
       setSubmitError(null);
       return;
     }
 
     if (!branchSlug) {
+      capturePostHogEvent("consultation_branch_missing", {
+        province: selectedProvince,
+        municipality: selectedMuni,
+        source: "desktop",
+      });
       setSubmitError(
         "상담 가능한 지점을 찾을 수 없습니다. 지역을 다시 선택해 주세요."
       );
@@ -347,7 +361,7 @@ export function DesktopBookingModal({
         throw new Error(message);
       }
 
-      posthog.capture("consultation_form_submitted", {
+      capturePostHogEvent("consultation_form_submitted", {
         branch_slug: branchSlug,
         referral_source: form.referralSource,
         birth_experience: form.birthExperience,
@@ -362,17 +376,24 @@ export function DesktopBookingModal({
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "상담 신청에 실패했습니다.";
-      posthog.capture("consultation_submission_failed", {
+      capturePostHogEvent("consultation_submission_failed", {
         error_message: errorMessage,
         branch_slug: branchSlug,
         source: "desktop",
       });
-      posthog.captureException(error);
+      capturePostHogException(error);
       setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, selectedBranch?.id, selectedBranchSlug, selectedServices]);
+  }, [
+    form,
+    selectedBranch?.id,
+    selectedBranchSlug,
+    selectedMuni,
+    selectedProvince,
+    selectedServices,
+  ]);
 
   const handleSuccessBack = useCallback(() => {
     setSubmitted(false);

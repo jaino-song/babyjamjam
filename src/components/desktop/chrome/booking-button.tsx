@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import posthog from "posthog-js";
 
 import { PillCta } from "@/components/ui/circle-cta";
+import { capturePostHogEvent } from "@/lib/posthog-client";
 
 import { DesktopBookingModal } from "./booking-modal";
 
@@ -25,7 +25,7 @@ export function DesktopBookingButton({
       <PillCta
         data-component="desktop_chrome_booking-button_trigger"
         onClick={() => {
-          posthog.capture("consultation_modal_opened", { source: "desktop" });
+          capturePostHogEvent("consultation_modal_opened", { source: "desktop" });
           setOpen(true);
         }}
       >
