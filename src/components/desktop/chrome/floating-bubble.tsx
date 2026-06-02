@@ -47,6 +47,7 @@ interface DesktopFloatingBubbleProps {
   selectedPlan?: PlanData | null;
   selectedAddons?: SelectedAddonCartItem[];
   selectedServices?: SelectedServicesPayload;
+  selectedVoucherType?: string | null;
   onRemovePlan?: () => void;
   onRemoveAddon?: (addonId: string) => void;
   onQuantityChange?: (addonId: string, quantity: number) => void;
@@ -59,6 +60,7 @@ export function DesktopFloatingBubble({
   selectedPlan = null,
   selectedAddons = [],
   selectedServices = { plan: null, addons: [] },
+  selectedVoucherType = null,
   onRemovePlan = () => {},
   onRemoveAddon = () => {},
   onQuantityChange = () => {},
@@ -373,6 +375,7 @@ export function DesktopFloatingBubble({
             open={isBookingOpen}
             onClose={closeBooking}
             selectedServices={selectedServices}
+            initialVoucherType={selectedVoucherType}
             data-component={getDataComponent("booking-modal")}
           />
         </>

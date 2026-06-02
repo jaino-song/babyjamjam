@@ -8,9 +8,11 @@ import type {
 
 const PHONE_REGEX = /^01[016789]-?\d{3,4}-?\d{4}$/;
 const NAME_PATTERN = /^[\p{L} ]+$/u;
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const DUE_DATE_INPUT_PATTERN = /^\d{6}$/;
 const CONSULTATION_SUBMIT_ERROR_MESSAGE =
   "상담 신청에 실패했습니다.";
+export const ADDITIONAL_NOTES_MAX_LENGTH = 1000;
+export const UNKNOWN_VOUCHER_TYPE_VALUE = "__unknown__";
 
 export const EMPTY_CONSULTATION_FORM: ConsultationFormState = {
   motherName: "",
@@ -21,6 +23,7 @@ export const EMPTY_CONSULTATION_FORM: ConsultationFormState = {
   voucherType: "",
   preferredCaregiverName: "",
   referralSource: "",
+  additionalNotes: "",
   privacyAccepted: false,
 };
 
@@ -41,20 +44,55 @@ export function formatPhoneInput(value: string): string {
   return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
 }
 
-export function isValidDateValue(value: string): boolean {
-  if (!DATE_PATTERN.test(value)) return false;
+export function formatDueDateInput(value: string): string {
+  return value.replace(/\D/g, "").slice(0, 6);
+}
 
-  const [yearText, monthText, dayText] = value.split("-");
-  const year = Number(yearText);
-  const month = Number(monthText);
-  const day = Number(dayText);
+export function formatAdditionalNotesInput(value: string): string {
+  return value.slice(0, ADDITIONAL_NOTES_MAX_LENGTH);
+}
+
+function parseDueDateInput(value: string) {
+  if (!DUE_DATE_INPUT_PATTERN.test(value)) return null;
+
+  const year = 2000 + Number(value.slice(0, 2));
+  const month = Number(value.slice(2, 4));
+  const day = Number(value.slice(4, 6));
   const date = new Date(year, month - 1, day);
 
-  return (
+  if (
     date.getFullYear() === year &&
     date.getMonth() === month - 1 &&
     date.getDate() === day
-  );
+  ) {
+    return { year, month, day };
+  }
+
+  return null;
+}
+
+export function isValidDateValue(value: string): boolean {
+  return parseDueDateInput(value) !== null;
+}
+
+export function formatDueDateForPayload(value: string): string {
+  const parsedDate = parseDueDateInput(value);
+
+  if (!parsedDate) return value;
+
+  return [
+    parsedDate.year,
+    String(parsedDate.month).padStart(2, "0"),
+    String(parsedDate.day).padStart(2, "0"),
+  ].join("-");
+}
+
+export function formatVoucherTypeForPayload(value: string): string | null {
+  const voucherType = value.trim();
+
+  return voucherType && voucherType !== UNKNOWN_VOUCHER_TYPE_VALUE
+    ? voucherType
+    : null;
 }
 
 export function getServerFieldError(
@@ -98,7 +136,7 @@ export function getFieldErrors(
       ? "필수"
       : isValidDateValue(form.dueDate)
         ? undefined
-        : "유효한 날짜를 입력해 주세요.",
+        : "YYMMDD 형식으로 입력해 주세요.",
     birthExperience: form.birthExperience.trim() ? undefined : "필수",
     referralSource: form.referralSource.trim() ? undefined : "필수",
     privacyAccepted: form.privacyAccepted ? undefined : "동의가 필요합니다.",
@@ -110,16 +148,21 @@ export function buildConsultationInquiryPayload(
   form: ConsultationFormState,
   selectedServices: SelectedServicesPayload
 ): ConsultationInquiryPayload {
+  const additionalNotes = formatAdditionalNotesInput(
+    form.additionalNotes
+  ).trim();
+
   return {
     branchSlug,
     motherName: form.motherName.trim(),
     phone: form.phone.trim(),
     address: form.address.trim(),
-    dueDate: form.dueDate,
+    dueDate: formatDueDateForPayload(form.dueDate),
     birthExperience: form.birthExperience,
-    voucherType: form.voucherType.trim(),
+    voucherType: formatVoucherTypeForPayload(form.voucherType),
     preferredCaregiverName: form.preferredCaregiverName.trim(),
     referralSource: form.referralSource,
+    ...(additionalNotes ? { additionalNotes } : {}),
     privacyAccepted: form.privacyAccepted,
     selectedServices,
   };

@@ -23,6 +23,7 @@ export type ConsultationFormState = {
   voucherType: string;
   preferredCaregiverName: string;
   referralSource: string;
+  additionalNotes: string;
   privacyAccepted: boolean;
 };
 
@@ -43,9 +44,10 @@ export interface ConsultationInquiryPayload {
   address: string;
   dueDate: string;
   birthExperience: string;
-  voucherType: string;
+  voucherType: string | null;
   preferredCaregiverName: string;
   referralSource: string;
+  additionalNotes?: string;
   privacyAccepted: boolean;
   selectedServices: ConsultationSelectedServices;
 }
