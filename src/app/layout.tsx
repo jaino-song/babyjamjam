@@ -37,6 +37,11 @@ export const metadata: Metadata = {
   title: "아가잼잼 - 산후도우미 서비스",
   description:
     "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스",
+  verification: {
+    other: {
+      "naver-site-verification": "70ad8d8d9f85500e53fd7e7923c5d7c05cdaf81c",
+    },
+  },
 };
 
 export const viewport: Viewport = {
