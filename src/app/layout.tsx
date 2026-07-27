@@ -3,6 +3,11 @@ import localFont from "next/font/local";
 import { DM_Sans, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
+const SITE_URL = new URL("https://babyjamjam.com");
+const SITE_TITLE = "아가잼잼 - 산후도우미 서비스";
+const SITE_DESCRIPTION =
+  "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스";
+
 const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
   variable: "--font-pretendard",
@@ -34,9 +39,22 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "아가잼잼 - 산후도우미 서비스",
-  description:
-    "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스",
+  metadataBase: SITE_URL,
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: "아가잼잼",
+    locale: "ko_KR",
+    type: "website",
+  },
+  verification: {
+    other: {
+      "naver-site-verification": "70ad8d8d9f85500e53fd7e7923c5d7c05cdaf81c",
+    },
+  },
 };
 
 export const viewport: Viewport = {
