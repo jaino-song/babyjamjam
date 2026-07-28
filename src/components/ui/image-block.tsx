@@ -1,3 +1,6 @@
+import type { CSSProperties } from "react";
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 const IMAGE_BLOCK_VARIANT_CLASSES = {
@@ -15,6 +18,8 @@ interface ImageBlockProps {
   src: string;
   alt: string;
   className?: string;
+  sizes?: string;
+  style?: CSSProperties;
   ["data-component"]?: string;
 }
 
@@ -23,12 +28,17 @@ export function ImageBlock({
   src,
   alt,
   className,
+  sizes = "(max-width: 780px) 74vw, 420px",
+  style,
   "data-component": dataComponent,
 }: ImageBlockProps) {
   return (
-    <img
+    <Image
+      fill
       src={src}
       alt={alt}
+      sizes={sizes}
+      style={style}
       className={cn(IMAGE_BLOCK_VARIANT_CLASSES[variant], className)}
       data-component={dataComponent}
     />

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 const LOGO_VARIANTS = {
@@ -16,9 +18,12 @@ interface LogoProps {
 export function Logo({ variant, className, "data-component": dataComponent }: LogoProps) {
   const config = LOGO_VARIANTS[variant];
   return (
-    <img
+    <Image
       src={config.src}
       alt={config.alt}
+      width={750}
+      height={250}
+      sizes={variant === "footer" ? "180px" : "224px"}
       className={cn(config.className, className)}
       data-component={dataComponent}
     />

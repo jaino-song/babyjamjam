@@ -2,15 +2,31 @@ import type { Metadata } from "next";
 
 import DesktopPricingPage from "@/components/desktop/pages/pricing";
 import MobilePricingPage from "@/components/mobile/pages/pricing";
+import { JsonLd } from "@/components/seo/json-ld";
 import { getDevice } from "@/lib/device";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "서비스 비용 | 아가잼잼",
+export const metadata: Metadata = createPageMetadata({
+  path: "/pricing",
+  title: "산후도우미 비용·정부지원 바우처",
   description:
-    "처음부터 숨김없이 안내하는 아가잼잼 산후도우미 서비스 가격. 정부지원 바우처 대상 여부를 확인하고, 맞춤 플랜을 조회하세요.",
-};
+    "아가잼잼 산후도우미 비용과 정부지원 바우처 적용 여부를 확인하고, 출산 조건과 이용 기간에 맞는 예상 플랜을 조회하세요.",
+});
 
 export default async function PricingPage() {
   const device = await getDevice();
-  return device === "mobile" ? <MobilePricingPage /> : <DesktopPricingPage />;
+  const page =
+    device === "mobile" ? <MobilePricingPage /> : <DesktopPricingPage />;
+
+  return (
+    <>
+      <JsonLd
+        data={createBreadcrumbJsonLd([
+          { name: "홈", path: "/" },
+          { name: "산후도우미 비용", path: "/pricing" },
+        ])}
+      />
+      {page}
+    </>
+  );
 }

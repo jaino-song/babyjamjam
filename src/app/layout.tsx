@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { DM_Sans, Roboto_Mono } from "next/font/google";
+
+import { DEFAULT_SOCIAL_IMAGE, SITE_URL } from "@/lib/seo";
+
 import "./globals.css";
 
-const SITE_URL = new URL("https://babyjamjam.com");
-const SITE_TITLE = "아가잼잼 - 산후도우미 서비스";
+const SITE_TITLE = "산후도우미 아가잼잼 | 산모·신생아 건강관리 서비스";
 const SITE_DESCRIPTION =
-  "엄마의 설레는 첫 만남. 아기의 완벽한 첫 걸음. 아가잼잼 산후도우미 서비스";
+  "산모 회복과 신생아 돌봄을 함께하는 아가잼잼 산후도우미 서비스. 비용, 정부지원 바우처, 서비스 지역과 이용 절차를 확인하세요.";
 
 const pretendard = localFont({
   src: "./fonts/Pretendard.woff2",
@@ -39,9 +41,26 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: SITE_URL,
-  title: SITE_TITLE,
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: "%s | 아가잼잼",
+  },
   description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -49,6 +68,20 @@ export const metadata: Metadata = {
     siteName: "아가잼잼",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: DEFAULT_SOCIAL_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "아가잼잼 산후도우미 서비스",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_SOCIAL_IMAGE],
   },
   verification: {
     other: {

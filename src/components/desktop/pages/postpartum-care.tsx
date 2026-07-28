@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   DesktopCareSectionCarousel,
   type CareCardData,
@@ -8,6 +10,7 @@ import { DesktopFooter as Footer } from "@/components/desktop/sections/footer";
 import { DesktopMoreSection as MoreSection } from "@/components/desktop/sections/more-section";
 import { DesktopProcessSection as ProcessSection } from "@/components/desktop/sections/process-section";
 import { PROCESS_STEPS } from "@/components/mobile/sections/process-section.data";
+import { PostpartumCareGuide } from "@/components/seo/postpartum-care-guide";
 
 const POSTPARTUM_CARE_PROCESS_STEPS = PROCESS_STEPS.map((step, i) => {
   if (i === 0) return { ...step, title: "자격증 보유 전문가만", description: "국가공인자격증을 보유하시고, 아가잼잼의 자체 산후관리 교육을 받으신 믿을 수 있는 산후도우미 전문가만 파견합니다." };
@@ -54,6 +57,7 @@ const NEWBORN_CARE_CARDS: CareCardData[] = [
       "아기 목욕, 기저귀 관리, 젖병 소독 등 신생아 건강에 필수적인 위생 관리를 실시합니다.",
     imageSrc: "/images/care-newborn-hygiene.png",
     imageAlt: "아기 위생 관리 서비스 이미지",
+    focus: "20% center",
   },
   {
     title: "전문가의 육아 팁 전수",
@@ -61,6 +65,7 @@ const NEWBORN_CARE_CARDS: CareCardData[] = [
       "수유, 목욕, 수면 등 신생아 건강에 필수적인 전문가의 지식과 노하우를 전수합니다.",
     imageSrc: "/images/care-newborn-tips.png",
     imageAlt: "전문가의 육아 팁 전수 서비스 이미지",
+    focus: "45% center",
   },
 ];
 
@@ -98,9 +103,12 @@ export default function DesktopPostpartumCarePage() {
             className="relative w-full h-[560px] rounded-[20px] overflow-hidden bg-[#f7f4ef]"
             data-component="desktop_postpartum-care_hero_banner"
           >
-            <img
-              src="/images/hero-bg-22ebe1.png"
-              alt="Hero background"
+            <Image
+              fill
+              preload
+              src="/images/postpartum-care-hero.jpg"
+              alt="산모와 신생아를 돌보는 아가잼잼 산후도우미"
+              sizes="(max-width: 1400px) calc(100vw - 294px), 1056px"
               className="w-full h-full object-cover object-[center_top] shrink-0"
               data-component="desktop_postpartum-care_hero_banner-image"
             />
@@ -126,6 +134,10 @@ export default function DesktopPostpartumCarePage() {
         />
 
         <ProcessSection data-component="desktop_postpartum-care_process-section" title="아가잼잼이면 걱정없죠." steps={POSTPARTUM_CARE_PROCESS_STEPS} titleClassName="min-h-[2.3em]" />
+        <PostpartumCareGuide
+          variant="desktop"
+          data-component="desktop_postpartum-care_guide-section"
+        />
         <MoreSection
           currentPage="postpartum-care"
           data-component="desktop_postpartum-care_more-section"

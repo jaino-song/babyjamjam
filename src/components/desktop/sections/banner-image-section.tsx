@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 interface BannerImageSectionProps {
@@ -59,9 +61,11 @@ export function DesktopBannerImageSection({
       style={{ marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
       data-component={dataComponent}
     >
-      <img
+      <Image
+        fill
         src={imageSrc}
         alt={imageAlt}
+        sizes="100vw"
         className={cn("absolute! inset-0 w-full h-full object-cover", imageClassName)}
         data-component={getComponent("image")}
       />

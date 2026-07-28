@@ -210,6 +210,11 @@ export function MobileCareSectionCarousel({
                       variant="careCard"
                       src={imageSrc}
                       alt={imageAlt}
+                      style={
+                        card.focus
+                          ? { objectPosition: card.focus }
+                          : undefined
+                      }
                       className="care-carousel__card-img"
                       data-component={cardBase ? `${cardBase}_image` : undefined}
                     />

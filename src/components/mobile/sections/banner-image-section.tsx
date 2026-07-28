@@ -1,5 +1,7 @@
 "use client";
 import { Fragment, useEffect, useRef } from "react";
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 interface BannerImageSectionProps {
@@ -57,9 +59,11 @@ export function MobileBannerImageSection({
       style={{ marginLeft: "calc(-50vw + 50%)", alignSelf: "flex-start" }}
       data-component={dataComponent}
     >
-      <img
+      <Image
+        fill
         src={imageSrc}
         alt={imageAlt}
+        sizes="100vw"
         className="absolute! inset-0 w-full h-full object-cover"
         data-component={getComponent("image")}
       />
