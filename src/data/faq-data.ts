@@ -3,6 +3,8 @@ export type FaqItem = {
   question: string;
   answer: string;
   subItems?: string[];
+  guideHref?: string;
+  guideLabel?: string;
 };
 
 export type FaqCategory = {
@@ -45,6 +47,8 @@ export const FAQ_SECTIONS: FaqSection[] = [
             question: "서비스는 언제부터 시작되나요?",
             answer:
               "서비스는 출산 후 퇴원일부터 시작됩니다. 출산예정일 기준으로 미리 예약해 주시면, 실제 출산일에 맞춰 서비스를 시작합니다. 산후조리원 이용 시에는 조리원 퇴소일부터 시작됩니다.",
+            guideHref: "/guides/application-timing",
+            guideLabel: "산후도우미 신청 시기와 절차",
           },
           {
             id: "faq-service-4",
@@ -70,6 +74,8 @@ export const FAQ_SECTIONS: FaqSection[] = [
             question: "정부 바우처도 사용할 수 있나요?",
             answer:
               "네, 정부에서 지원하는 산모·신생아 건강관리 지원사업 바우처를 사용하실 수 있습니다. 바우처 대상 여부는 주민센터 또는 복지로에서 확인해 주세요.",
+            guideHref: "/guides/cost-and-support",
+            guideLabel: "비용과 정부지원 확인 방법",
           },
           {
             id: "faq-booking-3",
@@ -89,6 +95,8 @@ export const FAQ_SECTIONS: FaqSection[] = [
             question: "산후관리사는 어떤 자격을 갖추고 있나요?",
             answer:
               "아가잼잼의 모든 산후관리사는 산모·신생아 건강관리사 자격을 보유하고 있으며, 정기적인 교육과 평가를 통해 서비스 품질을 유지하고 있습니다.",
+            guideHref: "/guides/provider-checklist",
+            guideLabel: "산후도우미 업체 선택 체크리스트",
           },
           {
             id: "faq-caregiver-2",
@@ -114,6 +122,8 @@ export const FAQ_SECTIONS: FaqSection[] = [
             question: "산후관리사의 업무 범위는 어디까지인가요?",
             answer:
               "산모 케어(산후 식단 준비, 좌욕·반신욕 보조, 유방 관리 등)와 신생아 케어(목욕, 수유 보조, 기저귀 교체 등)가 기본 업무입니다. 가벼운 청소와 빨래도 포함됩니다.",
+            guideHref: "/guides/service-scope",
+            guideLabel: "산후도우미 업무 범위 자세히 보기",
           },
           {
             id: "faq-usage-2",

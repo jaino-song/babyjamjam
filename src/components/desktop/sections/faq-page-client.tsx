@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import {
+  ArrowRight,
   ChevronDown,
   MessageCircle,
   CalendarDays,
@@ -48,12 +50,15 @@ function AccordionItem({
 }) {
   const getComponent = (suffix: string) =>
     dataComponent ? `${dataComponent}_${suffix}` : undefined;
+  const answerId = `${item.id}-answer`;
 
   return (
     <div className="faq-accordion__item" data-component={dataComponent}>
       <button
         className="faq-accordion__head"
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={answerId}
         data-component={getComponent("head")}
       >
         <div
@@ -79,26 +84,36 @@ function AccordionItem({
           data-component={getComponent("chevron")}
         />
       </button>
-      {isOpen && (
-        <div
-          className="faq-accordion__body"
-          data-component={getComponent("body")}
-        >
-          <p data-component={getComponent("answer")}>{item.answer}</p>
-          {item.subItems && item.subItems.length > 0 && (
-            <ul data-component={getComponent("sub-items")}>
-              {item.subItems.map((sub, index) => (
-                <li
-                  key={sub}
-                  data-component={getComponent(`sub-item-${index + 1}`)}
-                >
-                  {sub}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <div
+        id={answerId}
+        className="faq-accordion__body"
+        hidden={!isOpen}
+        data-component={getComponent("body")}
+      >
+        <p data-component={getComponent("answer")}>{item.answer}</p>
+        {item.subItems && item.subItems.length > 0 && (
+          <ul data-component={getComponent("sub-items")}>
+            {item.subItems.map((sub, index) => (
+              <li
+                key={sub}
+                data-component={getComponent(`sub-item-${index + 1}`)}
+              >
+                {sub}
+              </li>
+            ))}
+          </ul>
+        )}
+        {item.guideHref && (
+          <Link
+            href={item.guideHref}
+            className="mt-5 inline-flex items-center gap-2 font-bold text-bjj-primary no-underline"
+            data-component={getComponent("guide-link")}
+          >
+            {item.guideLabel ?? "상세 가이드 보기"}
+            <ArrowRight aria-hidden="true" size={16} />
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

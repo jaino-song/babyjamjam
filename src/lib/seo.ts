@@ -21,6 +21,14 @@ interface PageMetadataInput {
   description: string;
 }
 
+interface ArticleJsonLdInput {
+  path: string;
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+}
+
 export function createPageMetadata({
   path,
   title,
@@ -85,6 +93,35 @@ export function createWebsiteJsonLd(): JsonLdValue {
     inLanguage: "ko-KR",
     publisher: {
       "@id": `${SITE_URL}/#organization`,
+    },
+  };
+}
+
+export function createArticleJsonLd({
+  path,
+  headline,
+  description,
+  datePublished,
+  dateModified,
+}: ArticleJsonLdInput): JsonLdValue {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${SITE_URL}${path}#article`,
+    url: `${SITE_URL}${path}`,
+    headline,
+    description,
+    datePublished,
+    dateModified,
+    inLanguage: "ko-KR",
+    author: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    isPartOf: {
+      "@id": `${SITE_URL}/#website`,
     },
   };
 }

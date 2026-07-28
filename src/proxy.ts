@@ -35,5 +35,6 @@ export const config = {
     "/faq/:path*",
     "/postpartum-care/:path*",
     "/locations/:path*",
+    "/guides/:path*",
   ],
 };
