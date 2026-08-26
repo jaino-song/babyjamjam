@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "postinstall": "case \"$(command -v env-bootstrap)\" in '') : ;; */node_modules/*) echo 'env-bootstrap: shadowed inside node_modules, skipping' >&2 ;; *) env-bootstrap || true ;; esac"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.53.1",
