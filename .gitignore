@@ -17,3 +17,6 @@ postpartum-care-desktop.png
 postpartum-care.png
 .gstack/
 .claude/
+
+# env-adopt plan files hold fingerprints and key names — never commit them
+*.adopt-plan.tsv
